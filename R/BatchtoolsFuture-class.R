@@ -605,7 +605,7 @@ delete <- function(...) UseMethod("delete")
 #' @return (invisibly) TRUE if deleted and FALSE otherwise.
 #'
 #' @export
-#' @importFrom batchtools clearRegistry
+#' @importFrom batchtools clearRegistry removeRegistry
 #' @importFrom utils file_test
 #' @keywords internal
 delete.BatchtoolsFuture <- function(future, onRunning=c("warning", "error", "skip"), onFailure=c("error", "warning", "ignore"), onMissing=c("ignore", "warning", "error"), times=10L, delta=getOption("future.wait.interval", 1.0), alpha=getOption("future.wait.alpha", 1.01), ...) {
@@ -669,11 +669,10 @@ delete.BatchtoolsFuture <- function(future, onRunning=c("warning", "error", "ski
 
 
   ## Try to delete registry
-  path <- reg$file.dir
   interval <- delta
   for (kk in seq_len(times)) {
-    try(clearRegistry(reg), silent = TRUE)
-    try(removeDirectory(path, recursive = TRUE), silent = FALSE)
+    try(clearRegistry(reg = reg), silent = TRUE)
+    try(removeRegistry(wait = 0.0, reg = reg), silent = FALSE)
     if (!file_test("-d", path)) break
     Sys.sleep(interval)
     interval <- alpha*interval
