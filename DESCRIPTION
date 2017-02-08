@@ -1,0 +1,25 @@
+Package: future.batchtools
+Version: 0.0.9-9000
+Depends:
+    R (>= 3.2.0),
+    future (>= 1.2.0)
+Imports:
+    batchtools (>= 0.9.1-9000),
+    R.utils
+Suggests:
+    listenv,
+    markdown,
+    R.rsp
+VignetteBuilder: R.rsp
+Title: A Future for batchtools
+Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
+                                          email = "henrikb@braju.com"))
+Description: Simple parallel and distributed processing using futures
+    that utilizes the 'batchtools' framework,
+    e.g. 'fit %<-% { lm(y ~ x) }'.
+    This package implements the Future API of the 'future' package.
+License: LGPL (>= 2.1)
+LazyLoad: TRUE
+URL: https://github.com/HenrikBengtsson/future.batchtools
+BugReports: https://github.com/HenrikBengtsson/future.batchtools/issues
+RoxygenNote: 6.0.1
