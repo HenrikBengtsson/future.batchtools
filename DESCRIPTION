@@ -10,7 +10,10 @@ Suggests:
     listenv,
     markdown,
     R.rsp
-VignetteBuilder: R.rsp
+VignetteBuilder:
+    R.rsp
+Remotes:
+    mllg/batchtools
 Title: A Future for batchtools
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
