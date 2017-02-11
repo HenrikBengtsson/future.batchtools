@@ -47,7 +47,7 @@ for (cores in 1:min(3L, availableCores("multicore"))) {
   ## future.
   a <- 7  ## Make sure globals are frozen
 ##  if ("covr" %in% loadedNamespaces()) v <- 0 else ## WORKAROUND
-  if (globals) {
+  if (globals || f$config$reg$cluster.functions$name == "Multicore") {
     v <- value(f)
     print(v)
     stopifnot(v == 0)
@@ -66,7 +66,7 @@ for (cores in 1:min(3L, availableCores("multicore"))) {
   }
   message(sprintf(" - Resolving %d batchtools_multicore futures", length(x)))
 ##  if ("covr" %in% loadedNamespaces()) v <- 1:4 else ## WORKAROUND
-  if (globals) {
+  if (globals || f$config$reg$cluster.functions$name == "Multicore") {
     v <- sapply(x, FUN=value)
     stopifnot(all(v == 1:4))
   } else {
