@@ -197,30 +197,34 @@ loggedError.BatchtoolsFuture <- function(future, ...) {
 } # loggedError()
 
 
+getLogFiles <- function(ids, reg) {
+  stopifnot(inherits(reg, "Registry"))
+  path <- file.path(reg$file.dir, "logs")
+  stopifnot(file_test("-d", path))
+  
+  status <- reg$status
+  stopifnot(is.data.frame(status))
+
+  if (is.numeric(ids)) {
+    job.id <- ids
+  } else {
+    stopifnot(is.data.frame(ids))
+    job.id <- ids$job.id
+  }
+  stopifnot(is.numeric(job.id))
+  
+  jobs <- subset(status, job.id = job.id)
+  
+  filenames <- sprintf("%s.log", jobs$job.hash)
+  pathnames <- file.path(path, filenames)
+  
+  pathnames
+} ## getLogFiles()
+
 ## @importFrom batchtools getLogFiles
 #' @export
 #' @keywords internal
-loggedOutput.BatchtoolsFuture <- function(future, ...) {
-  getLogFiles <- function(ids, reg) {
-      stopifnot(inherits(reg, "Registry"))
-      path <- file.path(reg$file.dir, "logs")
-      stopifnot(file_test("-d", path))
-      
-      status <- reg$status
-      stopifnot(is.data.frame(status))
-      
-      stopifnot(is.data.frame(ids))
-      job.id <- ids$job.id
-      stopifnot(is.numeric(job.id))
-      
-      jobs <- subset(status, job.id = job.id)
-      
-      filenames <- sprintf("%s.log", jobs$job.hash)
-      pathnames <- file.path(path, filenames)
-      
-      pathnames
-  } ## getLogFiles()
-    
+loggedOutput.BatchtoolsFuture <- function(future, ...) {   
   stat <- status(future)
   if (isNA(stat)) return(NULL)
 
@@ -237,7 +241,7 @@ loggedOutput.BatchtoolsFuture <- function(future, ...) {
   reg <- config$reg
   jobid <- config$jobid
   pathname <- getLogFiles(reg=reg, ids=jobid)  ### FIXME: new function name?
-  stopifnot(length(pathname) == 1)
+  stopifnot(length(pathname) == 1L)
   bfr <- readLines(pathname)
   bfr
 } # loggedOutput()
