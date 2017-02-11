@@ -20,6 +20,8 @@ env:
 
 matrix:
   include:
+    - r_github_packages:
+        - mllg/batchtools
     - os: linux
       r: oldrel
     - os: linux
@@ -44,8 +46,6 @@ matrix:
       r: release
 
 before_install:
-  - r_github_packages:
-      - mllg/batchtools
   - Rscript -e 'c(physical = parallel::detectCores(logical = FALSE), logical = parallel::detectCores())'
 
 notifications:
