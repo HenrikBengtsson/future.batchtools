@@ -1,5 +1,5 @@
 Package: future.batchtools
-Version: 0.0.9-9000
+Version: 0.1.0
 Depends:
     R (>= 3.2.0),
     future (>= 1.2.0)
