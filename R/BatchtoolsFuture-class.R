@@ -373,28 +373,24 @@ run.BatchtoolsFuture <- function(future, ...) {
     ## batchtools::batchExport() validated names of globals using
     ## checkmate::assertList(more.args, names="strict") which doesn't
     ## like names such as "{", although they should be valid indeed.
-    ## Details: https://github.com/tudo-r/batchtools/issues/93
+    ## Details: https://github.com/tudo-r/BatchJobs/issues/93
     keep <- grepl("^[.a-zA-Z]", names(globals))
     if (!all(keep)) {
       names <- names(globals)[!keep]
       globalsToEncode <- c(globalsToEncode, names)
-      msg <- sprintf("WORKAROUND: batchtools does not support exporting of variables with names that does not match pattern '[a-zA-Z0-9._-]+' (see https://github.com/tudo-r/batchtools/issues/93). Encoding/decoding the following global variables: %s", hpaste(sQuote(names)))
+      msg <- sprintf("WORKAROUND: batchtools does not support exporting of variables with names that does not match pattern '[a-zA-Z0-9._-]+' (see https://github.com/tudo-r/BatchJobs/issues/93). Encoding/decoding the following global variables: %s", hpaste(sQuote(names)))
       mdebug(msg)
     }
 
-    ## COMMENTS:
-    ## * The below can be removed with fail (>= 1.3) AND
-    ##   batchtools (>= 1.7) /HB 2015-10-20
-    ## * fail 1.3 is on CRAN but batchtools needs to be
-    ##   updated too /HB 2016-05-01
-    ## batchtools::loadExports() ignores exported variables that
-    ## start with a period.
-    ## Details: https://github.com/tudo-r/batchtools/issues/103
+    ## WORKAROUND:
+    ## batchtools:::loadRegistryDependencies() ignores exported variables
+    ## that start with a period.
+    ## Details: https://github.com/mllg/batchtools/issues/87
     bad <- grepl("^[.]", names(globals))
     if (any(bad)) {
       names <- names(globals)[bad]
       globalsToEncode <- c(globalsToEncode, names)
-      msg <- sprintf("WORKAROUND: batchtools does not support exported variables that start with a period (see https://github.com/tudo-r/batchtools/issues/103). Encoding/decoding the following global variables: %s", hpaste(sQuote(names)))
+      msg <- sprintf("WORKAROUND: batchtools does not support exported variables that start with a period (see https://github.com/mllg/batchtools/issues/87). Encoding/decoding the following global variables: %s", hpaste(sQuote(names)))
       mdebug(msg)
     }
 
