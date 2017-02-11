@@ -143,7 +143,6 @@ status.BatchtoolsFuture <- function(future, ...) {
       oopts <- list()
     }
     on.exit(options(oopts))
-    oopts <- c(oopts, options(warnPartialMatchArgs=FALSE))
     batchtools::getStatus(...)
   } ## getStatus()
 
@@ -155,7 +154,7 @@ status.BatchtoolsFuture <- function(future, ...) {
 
   jobid <- config$jobid
   if (is.na(jobid)) return("not submitted")
-  status <- getStatus(reg, ids=jobid)
+  status <- getStatus(reg=reg, ids=jobid)
   status <- (unlist(status) == 1L)
   status <- status[status]
   status <- sort(names(status))
@@ -191,7 +190,8 @@ loggedError.BatchtoolsFuture <- function(future, ...) {
   config <- future$config
   reg <- config$reg
   jobid <- config$jobid
-  msg <- getErrorMessages(reg, ids=jobid)  ### CHECKED
+  res <- getErrorMessages(reg=reg, ids=jobid)  ### CHECKED
+  msg <- res$message
   msg <- paste(sQuote(msg), collapse=", ")
   msg
 } # loggedError()
@@ -201,6 +201,26 @@ loggedError.BatchtoolsFuture <- function(future, ...) {
 #' @export
 #' @keywords internal
 loggedOutput.BatchtoolsFuture <- function(future, ...) {
+  getLogFiles <- function(ids, reg) {
+      stopifnot(inherits(reg, "Registry"))
+      path <- file.path(reg$file.dir, "logs")
+      stopifnot(file_test("-d", path))
+      
+      status <- reg$status
+      stopifnot(is.data.frame(status))
+      
+      stopifnot(is.data.frame(ids))
+      job.id <- ids$job.id
+      stopifnot(is.numeric(job.id))
+      
+      jobs <- subset(status, job.id = job.id)
+      
+      filenames <- sprintf("%s.log", jobs$job.hash)
+      pathnames <- file.path(path, filenames)
+      
+      pathnames
+  } ## getLogFiles()
+    
   stat <- status(future)
   if (isNA(stat)) return(NULL)
 
@@ -216,7 +236,8 @@ loggedOutput.BatchtoolsFuture <- function(future, ...) {
   config <- future$config
   reg <- config$reg
   jobid <- config$jobid
-  pathname <- getLogFiles(reg, ids=jobid)  ### FIXME: new function name?
+  pathname <- getLogFiles(reg=reg, ids=jobid)  ### FIXME: new function name?
+  stopifnot(length(pathname) == 1)
   bfr <- readLines(pathname)
   bfr
 } # loggedOutput()
@@ -328,7 +349,7 @@ run.BatchtoolsFuture <- function(future, ...) {
     ## will have the same state of (loaded, attached) packages.
 
     reg$packages <- packages
-    saveRegistry(reg)
+    saveRegistry(reg=reg)
 
     mdebug("Attaching %d packages (%s) ... DONE",
                     length(packages), hpaste(sQuote(packages)))
@@ -559,7 +580,7 @@ await.BatchtoolsFuture <- function(future, cleanup=TRUE, times=getOption("future
     label <- future$label
     if (is.null(label)) label <- "<none>"
     if ("done" %in% stat) {
-      res <- loadResult(reg, id=jobid)
+      res <- loadResult(reg=reg, id=jobid)
     } else if ("error" %in% stat) {
       cleanup <- FALSE
       msg <- sprintf("BatchtoolsError in %s ('%s'): %s", class(future)[1], label, loggedError(future))
