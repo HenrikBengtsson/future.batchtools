@@ -10,7 +10,7 @@
 #'
 #' @return A number in [1,Inf].
 #'
-#' @aliases nbrOfWorkers.batchtools_local nbrOfWorkers.batchtools_interactive nbrOfWorkers.batchtools_multicore nbrOfWorkers.batchtools_custom nbrOfWorkers.batchtools_lsf nbrOfWorkers.batchtools_openlava nbrOfWorkers.batchtools_sge nbrOfWorkers.batchtools_slurm nbrOfWorkers.batchtools_torque
+#' @aliases nbrOfWorkers.batchtools_local nbrOfWorkers.batchtools_interactive nbrOfWorkers.batchtools_multicore nbrOfWorkers.batchtools_lsf nbrOfWorkers.batchtools_openlava nbrOfWorkers.batchtools_sge nbrOfWorkers.batchtools_slurm nbrOfWorkers.batchtools_torque
 #' @importFrom future nbrOfWorkers
 #' @export
 #' @keywords internal
@@ -64,26 +64,6 @@ nbrOfWorkers.batchtools <- function(evaluator) {
   NextMethod("nbrOfWorkers")
 }
 
-
-#' @export
-nbrOfWorkers.batchtools_custom <- function(evaluator) {
-  ## Local functions
-  getbatchtoolsConf <- importbatchtools("getbatchtoolsConf")
-
-  ## Infer from 'workers' argument
-  expr <- formals(evaluator)$workers
-  workers <- eval(expr)
-  if (!is.null(workers)) {
-    stopifnot(length(workers) >= 1)
-    if (is.character(workers)) return(length(workers))
-    if (is.numeric(workers)) return(prod(workers))
-
-    stop("Invalid data type of 'workers': ", mode(workers))
-  }
-
-  ## If still not known, fall back to the default of the future package
-  NextMethod("nbrOfWorkers")
-}
 
 
 #' @export

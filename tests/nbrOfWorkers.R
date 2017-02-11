@@ -74,22 +74,6 @@ stopifnot(is.infinite(n))
 message("*** nbrOfWorkers() - templates ... DONE")
 
 
-message("*** nbrOfWorkers() - conf ...")
-
-n <- nbrOfWorkers(batchtools_custom)
-message("Number of workers: ", n)
-stopifnot(n == 1)
-
-n <- nbrOfWorkers(tweak(batchtools_custom, workers=2L))
-message("Number of workers: ", n)
-stopifnot(n == 2)
-
-res <- try(n <- nbrOfWorkers(tweak(batchtools_custom, workers=FALSE)), silent=TRUE)
-print(res)
-stopifnot(inherits(res, "try-error"))
-
-message("*** nbrOfWorkers() - conf ... DONE")
-
 message("*** nbrOfWorkers() ... DONE")
 
 source("incl/end.R")

@@ -5,7 +5,6 @@
 \alias{nbrOfWorkers.batchtools_local}
 \alias{nbrOfWorkers.batchtools_interactive}
 \alias{nbrOfWorkers.batchtools_multicore}
-\alias{nbrOfWorkers.batchtools_custom}
 \alias{nbrOfWorkers.batchtools_lsf}
 \alias{nbrOfWorkers.batchtools_openlava}
 \alias{nbrOfWorkers.batchtools_sge}
