@@ -508,22 +508,27 @@ await <- function(...) UseMethod("await")
 #' again, an error may be thrown.
 #'
 #' @export
-#' @importFrom batchtools getErrorMessages loadResult
-## @importFrom batchtools removeRegistry
+#' @importFrom batchtools getErrorMessages loadResult waitForJobs
 #' @keywords internal
-await.BatchtoolsFuture <- function(future, cleanup=TRUE, times=getOption("future.wait.times", 1000L), delta=getOption("future.wait.interval", 1.0), alpha=getOption("future.wait.alpha", 1.01), ...) {
+await.BatchtoolsFuture <- function(future, cleanup = TRUE, timeout = getOption("future.wait.timeout", 30*24*60*60), delta=getOption("future.wait.interval", 0.2), alpha=getOption("future.wait.alpha", 1.01), ...) {
   mdebug <- importFuture("mdebug")
-  
-  times <- as.integer(times)
+  stopifnot(is.finite(timeout), timeout >= 0)
+  stopifnot(is.finite(alpha), alpha > 0)
 
   debug <- getOption("future.debug", FALSE)
-  mdebug("Polling...")
 
   expr <- future$expr
   config <- future$config
   reg <- config$reg
   jobid <- config$jobid
 
+  mdebug("batchtools::waitForJobs() ...")
+  res <- waitForJobs(ids = jobid, timeout = timeout, stop.on.error = FALSE, reg = reg)
+  mdebug("- batchtools::waitForJobs(): ", res)
+  mdebug("batchtools::waitForJobs() ... done")
+  
+  mdebug("Polling...")
+  
   ## It appears that occassionally a job can shown as 'expired'
   ## just before becoming 'done'.  It's odd and should be reported
   ## but here's a workaround that won't trust 'expired' without
@@ -533,33 +538,36 @@ await.BatchtoolsFuture <- function(future, cleanup=TRUE, times=getOption("future
   final_state_prev <- NULL
   finish_states <- c("done", "error", "expired")
 
-  stat <- NULL
-  tries <- 1L
+  t0 <- Sys.time()
+  dt <- 0
+  iter <- 1L
   interval <- delta
+  stat <- NULL
+  expired_countdown <- 0L
   finished <- FALSE
-  while (tries <= times) {
+  while (dt <= timeout || expired_countdown > 0) {
     stat <- status(future)
-    mdebug(" Status %d: %s\n", tries, paste(stat, collapse=", "))
     if (isNA(stat)) {
       finished <- TRUE
       break
     }
+    mdebug(sprintf("Poll #%d (%s): status = %s", iter, format(round(dt, digits = 2L)), paste(stat, collapse = ", ")))
+    
     if (any(finish_states %in% stat)) {
       final_state <- intersect(stat, finish_states)
 
       ## ROBUSTNESS: Don't trust a single 'expired' status.
       ## Need to see that several times before believing it.
-      ## See batchtools Issue #70.
+      ## See BatchJobs Issue #70.
       if ("expired" %in% final_state) {
         if (!identical(final_state, final_state_prev)) {
           final_state_prev <- final_state
-    	  final_countdown <- 5L
+    	  expired_countdown <- 20L
           interval <- delta
-  	  times <- times + final_countdown
         } else {
-          final_countdown <- final_countdown - 1L
-          mdebug(" 'expired' status countdown: %d", final_countdown)
-          if (final_countdown == 0L) {
+          expired_countdown <- expired_countdown - 1L
+          mdebug(" 'expired' status countdown: %d", expired_countdown)
+          if (expired_countdown == 0L) {
             finished <- TRUE
             break
   	  }
@@ -569,9 +577,13 @@ await.BatchtoolsFuture <- function(future, cleanup=TRUE, times=getOption("future
         break
       }
     }
+
+    ## Wait
     Sys.sleep(interval)
     interval <- alpha*interval
-    tries <- tries + 1L
+
+    iter <- iter + 1L
+    dt <- difftime(Sys.time(), t0)
   }
 
   res <- NULL

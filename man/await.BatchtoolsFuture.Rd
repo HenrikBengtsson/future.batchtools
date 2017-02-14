@@ -5,8 +5,8 @@
 \title{Awaits the value of a batchtools future}
 \usage{
 \method{await}{BatchtoolsFuture}(future, cleanup = TRUE,
-  times = getOption("future.wait.times", 1000L),
-  delta = getOption("future.wait.interval", 1),
+  timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60),
+  delta = getOption("future.wait.interval", 0.2),
   alpha = getOption("future.wait.alpha", 1.01), ...)
 }
 \arguments{
@@ -15,12 +15,12 @@
 \item{cleanup}{If TRUE, the registry is completely removed upon
 success, otherwise not.}
 
-\item{times}{The number of tries before giving up.}
-
 \item{delta}{The number of seconds to wait the first time.}
 
 \item{alpha}{A factor to scale up the waiting time in each iteration
 such that the waiting time in the k:th iteration is \code{alpha^k*delta}.}
+
+\item{times}{The number of tries before giving up.}
 
 \item{\ldots}{Not used.}
 }
