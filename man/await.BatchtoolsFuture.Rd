@@ -6,8 +6,7 @@
 \usage{
 \method{await}{BatchtoolsFuture}(future, cleanup = TRUE,
   timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60),
-  delta = getOption("future.wait.interval", 0.2),
-  alpha = getOption("future.wait.alpha", 1.01), ...)
+  delta = getOption("future.wait.interval", 1), ...)
 }
 \arguments{
 \item{future}{The future.}
@@ -15,12 +14,9 @@
 \item{cleanup}{If TRUE, the registry is completely removed upon
 success, otherwise not.}
 
-\item{delta}{The number of seconds to wait the first time.}
+\item{timeout}{Total time (in seconds) waiting before generating an error.}
 
-\item{alpha}{A factor to scale up the waiting time in each iteration
-such that the waiting time in the k:th iteration is \code{alpha^k*delta}.}
-
-\item{times}{The number of tries before giving up.}
+\item{delta}{The number of seconds to wait between each poll.}
 
 \item{\ldots}{Not used.}
 }

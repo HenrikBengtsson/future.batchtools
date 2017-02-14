@@ -492,10 +492,8 @@ await <- function(...) UseMethod("await")
 #' @param future The future.
 #' @param cleanup If TRUE, the registry is completely removed upon
 #' success, otherwise not.
-#' @param times The number of tries before giving up.
-#' @param delta The number of seconds to wait the first time.
-#' @param alpha A factor to scale up the waiting time in each iteration
-#' such that the waiting time in the k:th iteration is \code{alpha^k*delta}.
+#' @param timeout Total time (in seconds) waiting before generating an error.
+#' @param delta The number of seconds to wait between each poll.
 #' @param \ldots Not used.
 #'
 #' @return The value of the evaluated expression.
@@ -510,10 +508,9 @@ await <- function(...) UseMethod("await")
 #' @export
 #' @importFrom batchtools getErrorMessages loadResult waitForJobs
 #' @keywords internal
-await.BatchtoolsFuture <- function(future, cleanup = TRUE, timeout = getOption("future.wait.timeout", 30*24*60*60), delta=getOption("future.wait.interval", 0.2), alpha=getOption("future.wait.alpha", 1.01), ...) {
+await.BatchtoolsFuture <- function(future, cleanup = TRUE, timeout = getOption("future.wait.timeout", 30*24*60*60), delta=getOption("future.wait.interval", 1.0), ...) {
   mdebug <- importFuture("mdebug")
   stopifnot(is.finite(timeout), timeout >= 0)
-  stopifnot(is.finite(alpha), alpha > 0)
 
   debug <- getOption("future.debug", FALSE)
 
@@ -523,68 +520,16 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE, timeout = getOption("
   jobid <- config$jobid
 
   mdebug("batchtools::waitForJobs() ...")
-  res <- waitForJobs(ids = jobid, timeout = timeout, stop.on.error = FALSE, reg = reg)
-  mdebug("- batchtools::waitForJobs(): ", res)
+  
+  t0 <- Sys.time()
+  res <- waitForJobs(ids = jobid, timeout = timeout, sleep = delta, stop.on.error = FALSE, reg = reg)
+  dt <- difftime(Sys.time(), t0)
+  mdebug("- batchtools::waitForJobs(): %s", res)
+  stat <- status(future)
+  mdebug("- status(): %s", paste(sQuote(stat), collapse = ", "))  
   mdebug("batchtools::waitForJobs() ... done")
   
-  mdebug("Polling...")
-  
-  ## It appears that occassionally a job can shown as 'expired'
-  ## just before becoming 'done'.  It's odd and should be reported
-  ## but here's a workaround that won't trust 'expired' without
-  ## confirming it several times with delay.
-  final_countdown <- 5L
-  final_state <- NULL
-  final_state_prev <- NULL
-  finish_states <- c("done", "error", "expired")
-
-  t0 <- Sys.time()
-  dt <- 0
-  iter <- 1L
-  interval <- delta
-  stat <- NULL
-  expired_countdown <- 0L
-  finished <- FALSE
-  while (dt <= timeout || expired_countdown > 0) {
-    stat <- status(future)
-    if (isNA(stat)) {
-      finished <- TRUE
-      break
-    }
-    mdebug(sprintf("Poll #%d (%s): status = %s", iter, format(round(dt, digits = 2L)), paste(stat, collapse = ", ")))
-    
-    if (any(finish_states %in% stat)) {
-      final_state <- intersect(stat, finish_states)
-
-      ## ROBUSTNESS: Don't trust a single 'expired' status.
-      ## Need to see that several times before believing it.
-      ## See BatchJobs Issue #70.
-      if ("expired" %in% final_state) {
-        if (!identical(final_state, final_state_prev)) {
-          final_state_prev <- final_state
-    	  expired_countdown <- 20L
-          interval <- delta
-        } else {
-          expired_countdown <- expired_countdown - 1L
-          mdebug(" 'expired' status countdown: %d", expired_countdown)
-          if (expired_countdown == 0L) {
-            finished <- TRUE
-            break
-  	  }
-        }
-      } else {
-        finished <- TRUE
-        break
-      }
-    }
-
-    ## Wait
-    Sys.sleep(interval)
-    interval <- alpha*interval
-
-    iter <- iter + 1L
-    dt <- difftime(Sys.time(), t0)
-  }
+  finished <- isNA(stat) || any(c("done", "error", "expired") %in% stat)
 
   res <- NULL
   if (finished) {
@@ -613,13 +558,13 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE, timeout = getOption("
     if (debug) { mstr(res) }
   } else {
     cleanup <- FALSE
-    msg <- sprintf("AsyncNotReadyError: Polled for results %d times every %g seconds, but asynchronous evaluation for future ('%s') is still running: %s", tries-1L, interval, label, reg$file.dir)
+    msg <- sprintf("AsyncNotReadyError: Polled for results for %s seconds every %g seconds, but asynchronous evaluation for future ('%s') is still running: %s", timeout, delta, label, reg$file.dir)
     stop(BatchtoolsFutureError(msg, future=future))
   }
 
   ## Cleanup?
   if (cleanup) {
-    delete(future, delta=0.5*delta, alpha=alpha, ...)
+    delete(future, delta=0.5*delta, ...)
   }
 
   res
