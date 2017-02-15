@@ -361,81 +361,10 @@ run.BatchtoolsFuture <- function(future, ...) {
   ## Not needed anymore
   packages <- NULL
 
-  ## (iii) Export globals
-  globals <- future$globals
-  if (length(globals) > 0) {
-    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    ## Any globals to encode/decore to workaround various
-    ## batchtools limitations.
-    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    globalsToEncode <- NULL
-
-    ## batchtools::batchExport() validated names of globals using
-    ## checkmate::assertList(more.args, names="strict") which doesn't
-    ## like names such as "{", although they should be valid indeed.
-    ## Details: https://github.com/tudo-r/BatchJobs/issues/93
-    keep <- grepl("^[.a-zA-Z]", names(globals))
-    if (!all(keep)) {
-      names <- names(globals)[!keep]
-      globalsToEncode <- c(globalsToEncode, names)
-      msg <- sprintf("WORKAROUND: batchtools does not support exporting of variables with names that does not match pattern '[a-zA-Z0-9._-]+' (see https://github.com/tudo-r/BatchJobs/issues/93). Encoding/decoding the following global variables: %s", hpaste(sQuote(names)))
-      mdebug(msg)
-    }
-
-    ## WORKAROUND:
-    ## batchtools:::loadRegistryDependencies() ignores exported variables
-    ## that start with a period.
-    ## Details: https://github.com/mllg/batchtools/issues/87
-    bad <- grepl("^[.]", names(globals))
-    if (any(bad)) {
-      names <- names(globals)[bad]
-      globalsToEncode <- c(globalsToEncode, names)
-      msg <- sprintf("WORKAROUND: batchtools does not support exported variables that start with a period (see https://github.com/mllg/batchtools/issues/87). Encoding/decoding the following global variables: %s", hpaste(sQuote(names)))
-      mdebug(msg)
-    }
-
-    ## Does any globals need to be encoded/decoded to workaround
-    ## the limitations of batchtools?
-    if (length(globalsToEncode) > 0L) {
-      ## (a) URL encode global variable names
-      globalsToDecode <- sapply(globalsToEncode, FUN=utils::URLencode, reserved=TRUE)
-      ## (b) Substitute '%' with '_.PERCENT._'
-      globalsToDecode <- gsub("%", "_.PERCENT._", globalsToDecode, fixed=TRUE)
-
-      ## (c) Append with 'R_ASYNC_RENAME_'
-      globalsToDecode <- paste("R_ASYNC_RENAME_", globalsToDecode, sep="")
-
-      ## (d) Rename corresponding globals
-      names <- names(globals)
-      idxs <- match(globalsToEncode, names)
-      names[idxs] <- globalsToDecode
-      names(globals) <- names
-
-      ## (d) Record variables which to be renamed by the future
-      globals <- c(globals, list(R_ASYNC_GLOBALS_TO_RENAME=globalsToDecode))
-
-      ## (e) Tweak future expression to decode encoded globals
-      expr <- substitute({
-        ## Decode exported globals (workaround for batchtools)
-        for (..key.. in R_ASYNC_GLOBALS_TO_RENAME) {
-          ..key2.. <- sub("^R_ASYNC_RENAME_", "", ..key..)
-          ..key2.. <- gsub("_.PERCENT._", "%", ..key2.., fixed=TRUE)
-          ..key2.. <- utils::URLdecode(..key2..)
-          assign(..key2.., get(..key.., inherits=FALSE), inherits=FALSE)
-        }
-        rm(list=c("..key..", "..key2..", "R_ASYNC_GLOBALS_TO_RENAME"))
-
-        expr
-      }, list(expr=expr))
-    }
-    ## Not needed anymore
-    globalsToDecode <- NULL
-
-    ## Export via batchtools
-    batchExport(export = globals, reg = reg)
+  ## (iii) Export globals?
+  if (length(future$globals) > 0) {
+    batchExport(export = future$globals, reg = reg)
   }
-  ## Not needed anymore
-  globals <- NULL
 
   ## 1. Add to batchtools for evaluation
   mdebug("batchtools::batchMap()")
@@ -445,11 +374,8 @@ run.BatchtoolsFuture <- function(future, ...) {
   future$config$jobid <- jobid
   mdebug("Created %s future #%d", class(future)[1], jobid$job.id)
 
-  ## 3. Create batchtools backend configuration
-  cluster.functions <- reg$cluster.functions
-
   ## WORKAROUND: (For multicore and OS X only)
-  if (cluster.functions$name == "Multicore") {
+  if (reg$cluster.functions$name == "Multicore") {
     ## On some OS X systems, a system call to 'ps' may output an error message
     ## "dyld: DYLD_ environment variables being ignored because main executable
     ##  (/bin/ps) is setuid or setgid" to standard error that is picked up by
@@ -470,8 +396,7 @@ run.BatchtoolsFuture <- function(future, ...) {
     }, error = function(ex) list())
   }
 
-
-  ## 5. Submit
+  ## 3. Submit
   future$state <- 'running'
   resources <- future$config$resources
   if (is.null(resources)) resources <- list()

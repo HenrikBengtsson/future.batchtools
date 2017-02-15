@@ -1,15 +1,15 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.1.0-9000 [2017-02-11]
+Version: 0.1.0-9000 [2017-02-15]
 
-BUG FIXES:
+GLOBALS:
 
- o Due to NFS cache delays, the underlying batchtools result files
-   may not be available when read. Now value() for BatchtoolsFuture
-   tries to trigger an NFS cache synchronization before reading the
-   results.
-
+ o batchtools (>= 0.9.1-9000) now supports exporting objects with
+   any type of names (previously only possible if they mapped to
+   to strictly valid filenames).  This allowed me to avoid lots of
+   internal workaround code encoding and decoding globals.
+   
 
 Version: 0.1.0 [2017-02-11]
 

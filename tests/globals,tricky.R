@@ -15,7 +15,8 @@ print(x)
 stopifnot(x == col)
 
 
-message("- Globals that needs to be encoded ...")
+## https://github.com/mllg/batchtools/issues/88
+message("- Globals that don't necessarily map to filenames ...")
 .a <- 42L
 x %<-% { .a }
 print(x)
