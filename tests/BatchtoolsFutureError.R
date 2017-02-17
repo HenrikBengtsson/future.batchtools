@@ -50,7 +50,7 @@ for (cleanup in c(FALSE, TRUE)) {
   ## a failure and option future.delete is not TRUE.
   if (!cleanup) {
     stopifnot(file_test("-d", reg$file.dir))
-    log <- getLogFiles(reg=reg, ids=1L)
+    log <- batchtools::getLog(reg=reg, id=1L)
     print(log)
 
     ## Now manually delete batchtools Registry
