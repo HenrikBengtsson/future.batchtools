@@ -418,7 +418,11 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE, timeout = getOption("
   jobid <- config$jobid
 
   mdebug("batchtools::waitForJobs() ...")
-  
+
+  ## Control batchtools info output
+  oopts <- options(batchtools.verbose = debug)
+  on.exit(options(oopts))
+
   t0 <- Sys.time()
   res <- waitForJobs(ids = jobid, timeout = timeout, sleep = delta, stop.on.error = FALSE, reg = reg)
   dt <- difftime(Sys.time(), t0)
