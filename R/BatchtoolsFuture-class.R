@@ -548,7 +548,10 @@ delete.BatchtoolsFuture <- function(future, onRunning=c("warning", "error", "ski
     }
   }
 
-
+  ## Control batchtools info output
+  oopts <- options(batchtools.verbose = debug)
+  on.exit(options(oopts))
+  
   ## Try to delete registry
   interval <- delta
   for (kk in seq_len(times)) {
