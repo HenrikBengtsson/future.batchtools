@@ -439,11 +439,6 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE, timeout = getOption("
     label <- future$label
     if (is.null(label)) label <- "<none>"
     if ("done" %in% stat) {
-      ## AD HOC WORKAROUND: Force NFS cache synchronization
-      ## https://github.com/mllg/batchtools/issues/85
-      ## UPDATE: Now done by batchtools /HB 2017-02-13  
-      ## list.files(path = file.path(reg$file.dir, "results"))
-      
       res <- loadResult(reg=reg, id=jobid)
     } else if ("error" %in% stat) {
       cleanup <- FALSE
