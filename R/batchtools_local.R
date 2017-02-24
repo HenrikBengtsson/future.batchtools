@@ -44,9 +44,6 @@ batchtools_local <- function(expr, envir=parent.frame(), substitute=TRUE, global
 			    cluster.functions=cf,
 			    ...)
 
-  ## BACKWARD COMPATIBILTY: future (<= 1.2.0)
-  if (is.null(future$lazy)) future$lazy <- FALSE
-  
   if (!future$lazy) future <- run(future)
 
   future
