@@ -1,0 +1,16 @@
+.Rhistory
+*~
+**/*~
+.R
+.benchmark
+.check
+.devel
+.test
+*.o
+*.dll
+*.Rout
+.RData
+*.Rproj*
+*.swp
+.covr.rds
+.future
