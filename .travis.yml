@@ -22,35 +22,24 @@ matrix:
   include:
     - os: linux
       r: oldrel
-      r_github_packages:
-        - mllg/batchtools
     - os: linux
       r: release
       r_github_packages:
         - jimhester/covr
-        - mllg/batchtools
       after_success:
         - Rscript -e 'covr::codecov(quiet=FALSE)'
       env:
         - NB='w/ covr'  ## Just a label
     - os: linux
       r: devel
-      r_github_packages:
-        - mllg/batchtools
     - os: linux
       r: devel
-      r_github_packages:
-        - mllg/batchtools
       env:
         - NB='w/ batchtools devel'  ## Just a label
     - os: osx
       r: oldrel
-      r_github_packages:
-        - mllg/batchtools
     - os: osx
       r: release
-      r_github_packages:
-        - mllg/batchtools
 
 before_install:
   - Rscript -e 'c(physical = parallel::detectCores(logical = FALSE), logical = parallel::detectCores())'

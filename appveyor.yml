@@ -42,7 +42,6 @@ build_script:
   - echo Current directory=%CD%
   - travis-tool.sh install_r batchtools future R.utils
   - travis-tool.sh install_r listenv markdown R.rsp
-  - travis-tool.sh install_github mllg/batchtools
 
 test_script:
   - travis-tool.sh run_tests
