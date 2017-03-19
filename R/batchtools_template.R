@@ -89,7 +89,9 @@ batchtools_by_template <- function(expr, envir=parent.frame(), substitute=TRUE, 
   ## Search for a default template file?
   if (is.null(pathname)) {
     pathnames <- NULL
-    
+
+    ## FIXME: this is now future.BatchJobs locates template files, but
+    ## batchtools uses slightly different rules.  /HB 2017-03-19
     paths <- c(".", "~")
     filename <- sprintf(".batchtools.%s.tmpl", type)
     pathnames <- c(pathnames, file.path(paths, filename))
