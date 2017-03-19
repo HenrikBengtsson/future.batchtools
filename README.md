@@ -1,4 +1,4 @@
-# future.batchtools: A Future for batchtools
+# future.batchtools: A Future API for Parallel and Distributed Processing using 'batchtools'
 
 
 ## Installation
