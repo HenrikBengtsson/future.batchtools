@@ -33,7 +33,7 @@
 #' @importFrom batchtools makeClusterFunctionsInteractive
 #' @aliases batchtools_interactive
 #' @export
-batchtools_local <- function(expr, envir=parent.frame(), substitute=TRUE, globals=TRUE, label="batchtools", ...) {
+batchtools_local <- function(expr, envir=parent.frame(), substitute=TRUE, globals=TRUE, label="batchtools", workers=1L, ...) {
   if (substitute) expr <- substitute(expr)
 
   cf <- makeClusterFunctionsInteractive(external = TRUE)
@@ -41,6 +41,7 @@ batchtools_local <- function(expr, envir=parent.frame(), substitute=TRUE, global
   future <- BatchtoolsFuture(expr=expr, envir=envir, substitute=FALSE,
                             globals=globals,
 			    label=label,
+                            workers=workers,
 			    cluster.functions=cf,
 			    ...)
 

@@ -10,8 +10,8 @@
 #' @param conf A batchtools configuration environment.
 #' @param cluster.functions A batchtools \link[batchtools]{ClusterFunctions} object.
 #' @param resources A named list passed to the batchtools template (available as variable \code{resources}).
-#' @param workers (optional) Additional specification for
-#' the batchtools backend.
+#' @param workers (optional) Additional specification for the
+#'        batchtools backend.
 #' @param finalize If TRUE, any underlying registries are
 #' deleted when this object is garbage collected, otherwise not.
 #' @param \ldots Additional arguments passed to \code{\link[future]{Future}()}.

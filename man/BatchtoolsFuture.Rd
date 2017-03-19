@@ -26,8 +26,8 @@ should be located.}
 
 \item{resources}{A named list passed to the batchtools template (available as variable \code{resources}).}
 
-\item{workers}{(optional) Additional specification for
-the batchtools backend.}
+\item{workers}{(optional) Additional specification for the
+batchtools backend.}
 
 \item{finalize}{If TRUE, any underlying registries are
 deleted when this object is garbage collected, otherwise not.}

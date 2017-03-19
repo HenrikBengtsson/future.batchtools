@@ -11,23 +11,23 @@
 \usage{
 batchtools_lsf(expr, envir = parent.frame(), substitute = TRUE,
   globals = TRUE, label = "batchtools", pathname = NULL,
-  resources = list(), ...)
+  resources = list(), workers = Inf, ...)
 
 batchtools_openlava(expr, envir = parent.frame(), substitute = TRUE,
   globals = TRUE, label = "batchtools", pathname = NULL,
-  resources = list(), ...)
+  resources = list(), workers = Inf, ...)
 
 batchtools_sge(expr, envir = parent.frame(), substitute = TRUE,
   globals = TRUE, label = "batchtools", pathname = NULL,
-  resources = list(), ...)
+  resources = list(), workers = Inf, ...)
 
 batchtools_slurm(expr, envir = parent.frame(), substitute = TRUE,
   globals = TRUE, label = "batchtools", pathname = NULL,
-  resources = list(), ...)
+  resources = list(), workers = Inf, ...)
 
 batchtools_torque(expr, envir = parent.frame(), substitute = TRUE,
   globals = TRUE, label = "batchtools", pathname = NULL,
-  resources = list(), ...)
+  resources = list(), workers = Inf, ...)
 }
 \arguments{
 \item{expr}{The R expression to be evaluated}
@@ -45,6 +45,9 @@ should be located.}
 \item{pathname}{A batchtools template file (\pkg{brew} formatted).}
 
 \item{resources}{A named list passed to the batchtools template (available as variable \code{resources}).}
+
+\item{workers}{(optional) Additional specification for the
+batchtools backend.}
 
 \item{\ldots}{Additional arguments passed to \code{\link{BatchtoolsFuture}()}.}
 }

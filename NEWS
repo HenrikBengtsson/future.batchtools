@@ -1,9 +1,20 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.2.0-9000 [2017-02-23]
+Version: 0.2.0-9000 [2017-03-19]
 
  o ...
+ 
+NEW FEATURES:
+
+ o The number of jobs one can add to the queues of HPC schedulers is in
+   principle unlimited, which is why the number of available workers for
+   such batchtools_* backends is reported as +Inf.  However, as the number
+   of workers is used by future_lapply() to decide how many futures should
+   be used to best partition the elements, this means that future_lapply()
+   will always use one future per element.  Because of this, it is now
+   possible to specify plan(batchtools_*, workers = n) where 'n' is the
+   target number of workers.
 
 
 Version: 0.2.0 [2017-02-23]

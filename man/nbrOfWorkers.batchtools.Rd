@@ -2,14 +2,6 @@
 % Please edit documentation in R/nbrOfWorkers.R
 \name{nbrOfWorkers.batchtools}
 \alias{nbrOfWorkers.batchtools}
-\alias{nbrOfWorkers.batchtools_local}
-\alias{nbrOfWorkers.batchtools_interactive}
-\alias{nbrOfWorkers.batchtools_multicore}
-\alias{nbrOfWorkers.batchtools_lsf}
-\alias{nbrOfWorkers.batchtools_openlava}
-\alias{nbrOfWorkers.batchtools_sge}
-\alias{nbrOfWorkers.batchtools_slurm}
-\alias{nbrOfWorkers.batchtools_torque}
 \title{Gets the number of batchtools workers}
 \usage{
 \method{nbrOfWorkers}{batchtools}(evaluator)
