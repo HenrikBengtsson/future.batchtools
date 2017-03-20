@@ -1,4 +1,25 @@
-# future.batchtools: A Future API for Parallel and Distributed Processing using 'batchtools'
+<%@meta language="R-vignette" content="--------------------------------
+%\VignetteIndexEntry{A Future for batchtools}
+%\VignetteAuthor{Henrik Bengtsson}
+%\VignetteKeyword{R}
+%\VignetteKeyword{package}
+%\VignetteKeyword{vignette}
+%\VignetteKeyword{future}
+%\VignetteKeyword{synchronous}
+%\VignetteKeyword{asynchronous}
+%\VignetteKeyword{parallel}
+%\VignetteKeyword{cluster}
+%\VignetteKeyword{HPC}
+%\VignetteKeyword{batchtools}
+%\VignetteEngine{R.rsp::rsp}
+%\VignetteTangle{FALSE}
+--------------------------------------------------------------------"%>
+<%
+library("R.utils")
+options("withCapture/newline"=FALSE)
+options(mc.cores=2L)
+%>
+# A Future for batchtools
 
 ## Introduction
 The [future] package provides a generic API for using futures in R.
@@ -95,13 +116,14 @@ for all batchtools backends.  Below are the most common types of
 batchtools backends.
 
 
-| Backend                 | Description                                                              | Alternative in future package
-|:------------------------|:-------------------------------------------------------------------------|:------------------------------------
+| Backend                  | Description                                                              | Alternative in future package
+|:-------------------------|:-------------------------------------------------------------------------|:------------------------------------
 | `batchtools_torque`      | Futures are evaluated via a [TORQUE] / PBS job scheduler                 | N/A
 | `batchtools_slurm`       | Futures are evaluated via a [Slurm] job scheduler                        | N/A
 | `batchtools_sge`         | Futures are evaluated via a [Sun/Oracle Grid Engine (SGE)] job scheduler | N/A
 | `batchtools_lsf`         | Futures are evaluated via a [Load Sharing Facility (LSF)] job scheduler  | N/A
 | `batchtools_openlava`    | Futures are evaluated via an [OpenLava] job scheduler                    | N/A
+<%-- | `batchtools_slurm`       | Futures are evaluated via a [Docker Swarm] cluster                       | N/A --%>
 | `batchtools_interactive` | sequential evaluation in the calling R environment                       | `plan(transparent)`
 | `batchtools_multicore`   | parallel evaluation by forking the current R process                     | `plan(multicore)`
 | `batchtools_local`       | sequential evaluation in a separate R process (on current machine)       | `plan(cluster, workers = "localhost")`
@@ -116,18 +138,18 @@ file that is used to generate the script used by the scheduler.
 This is what a template file for TORQUE / PBS may look like:
 ```sh
 ## Job name:
-#PBS -N <%= job.name %>
+#PBS -N <%%= job.name %%>
 
 ## Merge standard error and output:
 #PBS -j oe
 
 ## Resource parameters:
-<% for (name in names(resources)) { %>
-#PBS -l <%= name %>=<%= resources[[name]] %>
-<% } %>
+<%% for (name in names(resources)) { %%>
+#PBS -l <%%= name %%>=<%%= resources[[name]] %%>
+<%% } %%>
 
 ## Run R:
-R CMD BATCH --no-save --no-restore "<%= rscript %>" /dev/stdout
+R CMD BATCH --no-save --no-restore "<%%= rscript %%>" /dev/stdout
 ```
 If this template is saved to file `.batchtools.torque.tmpl` in the
 working directory or the user's home directory, then it will be
@@ -186,35 +208,6 @@ demo("mandelbrot", package = "future", ask = FALSE)
 [Sun/Oracle Grid Engine (SGE)]: https://en.wikipedia.org/wiki/Oracle_Grid_Engine
 [Load Sharing Facility (LSF)]: https://en.wikipedia.org/wiki/Platform_LSF
 [OpenLava]: https://en.wikipedia.org/wiki/OpenLava
-
-
-## Installation
-R package future.batchtools is only available via [GitHub](https://github.com/HenrikBengtsson/future.batchtools) and can be installed in R as:
-```r
-source('http://callr.org/install#HenrikBengtsson/future.batchtools')
-```
-
-### Pre-release version
-
-To install the pre-release version that is available in Git branch `develop` on GitHub, use:
-```r
-source('http://callr.org/install#HenrikBengtsson/future.batchtools@develop')
-```
-This will install the package from source.  
-
-
-
-## Contributions
-
-This Git repository uses the [Git Flow](http://nvie.com/posts/a-successful-git-branching-model/) branching model (the [`git flow`](https://github.com/petervanderdoes/gitflow-avh) extension is useful for this).  The [`develop`](https://github.com/HenrikBengtsson/future.batchtools/tree/develop) branch contains the latest contributions and other code that will appear in the next release, and the [`master`](https://github.com/HenrikBengtsson/future.batchtools) branch contains the code of the latest release.
-
-Contributing to this package is easy.  Just send a [pull request](https://help.github.com/articles/using-pull-requests/).  When you send your PR, make sure `develop` is the destination branch on the [future.batchtools repository](https://github.com/HenrikBengtsson/future.batchtools).  Your PR should pass `R CMD check --as-cran`, which will also be checked by <a href="https://travis-ci.org/HenrikBengtsson/future.batchtools">Travis CI</a> and <a href="https://ci.appveyor.com/project/HenrikBengtsson/future-batchtools">AppVeyor CI</a> when the PR is submitted.
-
-
-## Software status
-
-| Resource:     | GitHub        | Travis CI       | Appveyor         |
-| ------------- | ------------------- | --------------- | ---------------- |
-| _Platforms:_  | _Multiple_          | _Linux & macOS_ | _Windows_        |
-| R CMD check   |  | <a href="https://travis-ci.org/HenrikBengtsson/future.batchtools"><img src="https://travis-ci.org/HenrikBengtsson/future.batchtools.svg" alt="Build status"></a>   | <a href="https://ci.appveyor.com/project/HenrikBengtsson/future-batchtools"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/future.batchtools?svg=true" alt="Build status"></a> |
-| Test coverage |                     | <a href="https://codecov.io/gh/HenrikBengtsson/future.batchtools"><img src="https://codecov.io/gh/HenrikBengtsson/future.batchtools/branch/develop/graph/badge.svg" alt="Coverage Status"/></a>     |                  |
+[Docker Swarm]: https://docs.docker.com/swarm/
+---
+Copyright Henrik Bengtsson, 2017

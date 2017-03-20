@@ -1,0 +1,29 @@
+Package: future.batchtools
+Version: 0.3.0
+Depends:
+    R (>= 3.2.0),
+    future (>= 1.4.0)
+Imports:
+    batchtools (>= 0.9.2),
+    R.utils
+Suggests:
+    listenv,
+    markdown,
+    R.rsp
+VignetteBuilder:
+    R.rsp
+Title: A Future API for Parallel and Distributed Processing using 'batchtools'
+Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
+                                          email = "henrikb@braju.com"))
+Description: Implements of the Future API on top of the 'batchtools' package.
+    This allows you to process futures, as defined by the 'future' package,
+    in parallel out of the box, not only on your local machine or ad-hoc
+    cluster of machines, but also via high-performance compute ('HPC') job
+    schedulers such as 'LSF', 'OpenLava', 'Slurm', 'SGE', and 'TORQUE' / 'PBS',
+    as well as 'Docker Swarm' clusters,
+    e.g. 'y <- future_lapply(files, FUN = process)'.
+License: LGPL (>= 2.1)
+LazyLoad: TRUE
+URL: https://github.com/HenrikBengtsson/future.batchtools
+BugReports: https://github.com/HenrikBengtsson/future.batchtools/issues
+RoxygenNote: 6.0.1
