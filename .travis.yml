@@ -38,14 +38,8 @@ matrix:
         - NB='w/ batchtools devel'  ## Just a label
     - os: osx
       r: oldrel
-      r_github_packages:
-        - HenrikBengtsson/globals
-        - HenrikBengtsson/future
     - os: osx
       r: release
-      r_github_packages:
-        - HenrikBengtsson/globals
-        - HenrikBengtsson/future
 
 before_install:
   - Rscript -e 'c(physical = parallel::detectCores(logical = FALSE), logical = parallel::detectCores())'
