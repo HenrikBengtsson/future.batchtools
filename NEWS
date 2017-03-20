@@ -1,10 +1,8 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.2.0-9000 [2017-03-19]
+Version: 0.3.0 [2017-03-19]
 
- o ...
- 
 NEW FEATURES:
 
  o The number of jobs one can add to the queues of HPC schedulers is in
