@@ -1,11 +1,17 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.3.0-9000 [2017-03-19]
+Version: 0.3.0-9000 [2017-03-21]
 
  o ...
  
+BUG FIXES:
 
+ o Under plan(batchjobs_*), futures would give produce an error on
+   "all(is.finite(workers)) is not TRUE" when created due to an outdated
+   sanity check.
+   
+ 
 Version: 0.3.0 [2017-03-19]
 
 NEW FEATURES:

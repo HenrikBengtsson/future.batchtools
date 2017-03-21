@@ -34,8 +34,7 @@ BatchtoolsFuture <- function(expr=NULL, envir=parent.frame(), substitute=TRUE, g
   if (!is.null(workers)) {
     stopifnot(length(workers) >= 1)
     if (is.numeric(workers)) {
-      stopifnot(all(is.finite(workers)), all(workers >= 1),
-                is.finite(prod(workers)))
+      stopifnot(!anyNA(workers), all(workers >= 1))
     } else if (is.character(workers)) {
     } else {
       stopifnot("Argument 'workers' should be either numeric or character: ", mode(workers))
@@ -373,7 +372,6 @@ run.BatchtoolsFuture <- function(future, ...) {
   future$state <- 'running'
   resources <- future$config$resources
   if (is.null(resources)) resources <- list()
-  resources$workers <- future$workers
 
   batchtools::submitJobs(reg=reg, ids=jobid, resources=resources)
   
