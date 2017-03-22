@@ -4,7 +4,11 @@ Package: future.batchtools
 Version: 0.3.0-9000 [2017-03-21]
 
  o ...
- 
+
+SOFTWARE QUALITY:
+
+ o Testing future_lapply() for batchtools backends.
+
 BUG FIXES:
 
  o Under plan(batchjobs_*), futures would give produce an error on
