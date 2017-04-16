@@ -88,6 +88,46 @@ for (kk in seq_along(exprs)) {
 message("*** Globals - lm(<formula>, data=cars) ... DONE")
 
 
+message("*** Globals - map(x, ~ expr) ...")
+
+## A fake purrr::map() function with limited functionality
+map <- function(.x, .f, ...) {
+  if (inherits(.f, "formula")) {
+    expr <- .f[[-1]]
+    .f <- eval(bquote(function(...) {
+      .(expr)
+    }))
+  }
+  eval(lapply(.x, FUN = .f, ...))
+}
+
+inner_function <- function(x) { x + 1 }
+
+outer_function <- function(x) {
+  map(1:2, ~ inner_function(.x))
+}
+
+y0 <- outer_function(1L)
+str(y0)
+
+## Check if globals version installed identifies globals in formulas
+findGlobals <- get("findGlobals", envir = getNamespace("globals"),
+                   mode = "function")
+formulas_supported <- ("x" %in% findGlobals(~ x, substitute = TRUE))
+if (formulas_supported) {
+  f <- future({ outer_function(1L) })
+  y <- value(f)
+  str(y)
+  stopifnot(all.equal(y, y0))
+  
+  y %<-% { outer_function(1L) }
+  str(y)
+  stopifnot(all.equal(y, y0))
+}
+
+message("*** Globals - map(x, ~ expr) ... DONE")
+
+
 message("*** Globals - formulas ... DONE")
 
 source("incl/end.R")
