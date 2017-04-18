@@ -6,7 +6,9 @@
 #'
 #' @inheritParams BatchtoolsFuture
 #' 
-#' @param pathname A batchtools template file (\pkg{brew} formatted).
+#' @param pathname (optional) A batchtools template file or a template string
+#' (in \pkg{brew} format).  If not specified, it is left to the
+#' \pkg{batchtools} package to locate such file using its search rules.
 #' 
 #' @param resources A named list passed to the batchtools template (available
 #' as variable \code{resources}).
@@ -133,29 +135,11 @@ batchtools_by_template <- function(expr, envir=parent.frame(), substitute=TRUE, 
   )
 
   ## Search for a default template file?
-  if (is.null(pathname)) {
-    pathnames <- NULL
-
-    ## FIXME: this is how future.BatchJobs locates template files, but
-    ## batchtools uses slightly different rules.  /HB 2017-03-19
-    paths <- c(".", "~")
-    filename <- sprintf(".batchtools.%s.tmpl", type)
-    pathnames <- c(pathnames, file.path(paths, filename))
-
-    ## Because R CMD check complains about periods in package files
-    path <- system.file("conf", package = "future.batchtools")
-    filename <- sprintf("batchtools.%s.tmpl", type)
-    pathname <- file.path(path, filename)
-    
-    pathnames <- c(pathnames, pathname)
-    pathnames <- pathnames[file_test("-f", pathnames)]
-    if (length(pathnames) == 0L) {
-      stop(sprintf("Failed to locate a %s template file", sQuote(filename)))
-    }
-    pathname <- pathnames[1]
+  if (!is.null(pathname)) {
+    cluster.functions <- makeCFs()
+  } else {
+    cluster.functions <- makeCFs(pathname)
   }
-
-  cluster.functions <- makeCFs(pathname)
   attr(cluster.functions, "pathname") <- pathname
 
   future <- BatchtoolsFuture(expr = expr, envir = envir, substitute = FALSE,

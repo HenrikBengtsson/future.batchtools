@@ -42,7 +42,9 @@ should be located.}
 
 \item{label}{(optional) Label of the future (where applicable, becomes the job name for most job schedulers).}
 
-\item{pathname}{A batchtools template file (\pkg{brew} formatted).}
+\item{pathname}{(optional) A batchtools template file or a template string
+(in \pkg{brew} format).  If not specified, it is left to the
+\pkg{batchtools} package to locate such file using its search rules.}
 
 \item{resources}{A named list passed to the batchtools template (available
 as variable \code{resources}).}

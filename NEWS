@@ -8,6 +8,9 @@ NEW FEATURES:
  o nbrOfWorkers() for batchtools future now defaults to +Inf unless the
    evaluator's 'workers' argument specify something else.
 
+ o batchtools_template(pathname = NULL, type = <type>) now relies on the
+   batchtools package for locating the <type> template file.
+
 SOFTWARE QUALITY:
 
  o Testing future_lapply() for batchtools backends.
