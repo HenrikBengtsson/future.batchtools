@@ -12,7 +12,6 @@ fullTest <- (Sys.getenv("_R_CHECK_FULL_") != "")
 attachedPackages <- future.batchtools:::attachedPackages
 await <- future.batchtools:::await
 delete <- future.batchtools:::delete
-importbatchtools <- future.batchtools:::importbatchtools
 importFuture <- future.batchtools:::importFuture
 isFALSE <- future.batchtools:::isFALSE
 isNA <- future.batchtools:::isNA
