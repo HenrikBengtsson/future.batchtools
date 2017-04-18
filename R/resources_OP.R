@@ -3,7 +3,7 @@
 #' @usage fassignment \%resources\% tweaks
 #'
 #' @param fassignment The future assignment, e.g.
-#'        \code{x \%<=\% \{ expr \}}.
+#'        \code{x \%< = \% \{ expr \}}.
 #' @param tweaks A named list (or vector) of resource
 #' batchtools parameters that should be changed relative to
 #' the current strategy.
@@ -20,12 +20,12 @@
 
   ## Temporarily use a different plan
   oplan <- plan("list")
-  on.exit(plan(oplan, substitute=FALSE, .call=NULL))
+  on.exit(plan(oplan, substitute = FALSE, .call = NULL))
 
   ## Tweak current strategy and apply
-  args <- list(plan(), resources=tweaks, penvir=envir)
-  strategy <- do.call(tweak, args=args)
-  plan(strategy, substitute=FALSE, .call=NULL)
+  args <- list(plan(), resources = tweaks, penvir = envir)
+  strategy <- do.call(tweak, args = args)
+  plan(strategy, substitute = FALSE, .call = NULL)
 
-  eval(fassignment, envir=envir)
+  eval(fassignment, envir = envir)
 }

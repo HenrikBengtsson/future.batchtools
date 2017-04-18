@@ -35,7 +35,7 @@ x %<-% { stopifnot(is.numeric(col)); col }
 stopifnot(x == col)
 
 
-message("- flapply(x, FUN=base::vector, ...) ...")
+message("- flapply(x, FUN = base::vector, ...) ...")
 
 flapply <- function(x, FUN, ...) {
   res <- listenv()
@@ -46,36 +46,36 @@ flapply <- function(x, FUN, ...) {
 
   ## Make sure 'x', 'FUN' and 'ii' are truly
   ## exported to the future environment
-  rm(list=c("x", "FUN", "ii"))
+  rm(list = c("x", "FUN", "ii"))
 
   as.list(res)
 }
 
-x <- list(a="integer", b="numeric", c="character", c="list")
-str(list(x=x))
+x <- list(a = "integer", b = "numeric", c = "character", c = "list")
+str(list(x = x))
 
-y0 <- lapply(x, FUN=base::vector, length=2L)
-str(list(y0=y0))
+y0 <- lapply(x, FUN = base::vector, length = 2L)
+str(list(y0 = y0))
 
-y <- flapply(x, FUN=base::vector, length=2L)
-str(list(y=y))
+y <- flapply(x, FUN = base::vector, length = 2L)
+str(list(y = y))
 stopifnot(identical(y, y0))
 
 
-message("- flapply(x, FUN=future:::hpaste, ...) ...")
+message("- flapply(x, FUN = future:::hpaste, ...) ...")
 
-x <- list(a=c("hello", b=1:100))
-str(list(x=x))
+x <- list(a = c("hello", b = 1:100))
+str(list(x = x))
 
-y0 <- lapply(x, FUN=future:::hpaste, collapse="; ", maxHead=3L)
-str(list(y0=y0))
+y0 <- lapply(x, FUN = future:::hpaste, collapse = "; ", maxHead = 3L)
+str(list(y0 = y0))
 
-y <- flapply(x, FUN=future:::hpaste, collapse="; ", maxHead=3L)
-str(list(y=y))
+y <- flapply(x, FUN = future:::hpaste, collapse = "; ", maxHead = 3L)
+str(list(y = y))
 stopifnot(identical(y, y0))
 
 
-message("- flapply(x, FUN=listenv::listenv, ...) ...")
+message("- flapply(x, FUN = listenv::listenv, ...) ...")
 
 x <- list()
 
@@ -85,16 +85,16 @@ x$a <- y
 
 y <- listenv()
 y$A <- 3L
-y$B <- c("hello", b=1:100)
+y$B <- c("hello", b = 1:100)
 x$b <- y
 
 print(x)
 
-y0 <- lapply(x, FUN=listenv::map)
-str(list(y0=y0))
+y0 <- lapply(x, FUN = listenv::map)
+str(list(y0 = y0))
 
-y <- flapply(x, FUN=listenv::map)
-str(list(y=y))
+y <- flapply(x, FUN = listenv::map)
+str(list(y = y))
 stopifnot(identical(y, y0))
 
 

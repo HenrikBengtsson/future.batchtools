@@ -25,28 +25,28 @@
 #' @importFrom future availableCores
 #' @export
 #' @keywords internal
-batchtools_multicore <- function(expr, envir=parent.frame(), substitute=TRUE, globals=TRUE, label="batchtools", workers=availableCores(constraints="multicore"), ...) {
+batchtools_multicore <- function(expr, envir = parent.frame(), substitute = TRUE, globals = TRUE, label = "batchtools", workers = availableCores(constraints = "multicore"), ...) {
   if (substitute) expr <- substitute(expr)
 
-  if (is.null(workers)) workers <- availableCores(constraints="multicore")
+  if (is.null(workers)) workers <- availableCores(constraints = "multicore")
   stopifnot(length(workers) == 1L, is.numeric(workers),
             is.finite(workers), workers >= 1L)
 
   ## Fall back to batchtools_local if multicore processing is not supported
-  if (workers == 1L || isOS("windows") || isOS("solaris") || availableCores(constraints="multicore") == 1L) {
+  if (workers == 1L || isOS("windows") || isOS("solaris") || availableCores(constraints = "multicore") == 1L) {
     ## covr: skip=1
-    return(batchtools_local(expr, envir=envir, substitute=FALSE, globals=globals, label=label, ...))
+    return(batchtools_local(expr, envir = envir, substitute = FALSE, globals = globals, label = label, ...))
   }
 
-  oopts <- options(mc.cores=workers)
+  oopts <- options(mc.cores = workers)
   on.exit(options(oopts))
 
   cf <- makeClusterFunctionsMulticore(ncpus = workers)
 
-  future <- BatchtoolsFuture(expr=expr, envir=envir, substitute=FALSE,
-                            globals=globals,
-			    label=label,
-                            cluster.functions=cf,
+  future <- BatchtoolsFuture(expr = expr, envir = envir, substitute = FALSE,
+                            globals = globals,
+			    label = label,
+                            cluster.functions = cf,
 			    ...)
 
   if (!future$lazy) future <- run(future)

@@ -40,7 +40,7 @@ message("Number of workers: ", n)
 stopifnot(n == ncores)
 
 workers <- min(2L, ncores)
-plan(batchtools_multicore, workers=workers)
+plan(batchtools_multicore, workers = workers)
 n <- nbrOfWorkers()
 message("Number of workers: ", n)
 stopifnot(n == workers)

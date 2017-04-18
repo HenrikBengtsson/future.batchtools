@@ -15,10 +15,10 @@
 #'
 #' @export
 #' @importFrom utils file_test
-batchtools_custom <- function(expr, envir=parent.frame(), substitute=TRUE,
-                              globals=TRUE, label="batchtools",
+batchtools_custom <- function(expr, envir = parent.frame(), substitute = TRUE,
+                              globals = TRUE, label = "batchtools",
                               cluster.functions,
-                              resources=list(), workers=NULL, ...) {
+                              resources = list(), workers = NULL, ...) {
   if (substitute) expr <- substitute(expr)
   stopifnot(inherits(cluster.functions, "ClusterFunctions"))
 

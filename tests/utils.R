@@ -28,31 +28,31 @@ z <- LETTERS[x]
 printf("x = %s.\n", hpaste(x))
 ## x = 1, 2, 3, ..., 6.
 
-printf("x = %s.\n", hpaste(x, maxHead=2))
+printf("x = %s.\n", hpaste(x, maxHead = 2))
 ## x = 1, 2, ..., 6.
 
-printf("x = %s.\n", hpaste(x), maxHead=3) # Default
+printf("x = %s.\n", hpaste(x), maxHead = 3) # Default
 ## x = 1, 2, 3, ..., 6.
 
 # It will never output 1, 2, 3, 4, ..., 6
-printf("x = %s.\n", hpaste(x, maxHead=4))
+printf("x = %s.\n", hpaste(x, maxHead = 4))
 ## x = 1, 2, 3, 4, 5 and 6.
 
 # Showing the tail
-printf("x = %s.\n", hpaste(x, maxHead=1, maxTail=2))
+printf("x = %s.\n", hpaste(x, maxHead = 1, maxTail = 2))
 ## x = 1, ..., 5, 6.
 
 # Turning off abbreviation
-printf("y = %s.\n", hpaste(y, maxHead=Inf))
+printf("y = %s.\n", hpaste(y, maxHead = Inf))
 ## y = 10, 9, 8, 7, 6, 5, 4, 3, 2, 1
 
 ## ...or simply
-printf("y = %s.\n", paste(y, collapse=", "))
+printf("y = %s.\n", paste(y, collapse = ", "))
 ## y = 10, 9, 8, 7, 6, 5, 4, 3, 2, 1
 
 # Adding a special separator before the last element
 # Change last separator
-printf("x = %s.\n", hpaste(x, lastCollapse=" and "))
+printf("x = %s.\n", hpaste(x, lastCollapse = " and "))
 ## x = 1, 2, 3, 4, 5 and 6.
 
 message("- mcat(), mprintf(), mprint() and mstr() ...")
@@ -83,10 +83,10 @@ message("*** importFuture() ...")
 future <- importFuture("future")
 stopifnot(identical(future, future::future))
 
-future <- importFuture("<unknown function>", default=future::future)
+future <- importFuture("<unknown function>", default = future::future)
 stopifnot(identical(future, future::future))
 
-res <- try(importFuture("<unknown function>"), silent=TRUE)
+res <- try(importFuture("<unknown function>"), silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
 message("*** importFuture() ... DONE")

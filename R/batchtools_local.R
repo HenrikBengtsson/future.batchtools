@@ -22,7 +22,7 @@
 #' An alternative to batchtools local futures is to use
 #' \link[future:cluster]{cluster} futures of the \pkg{future}
 #' package with a single local background session, i.e.
-#' \code{plan(cluster, workers="localhost")}.
+#' \code{plan(cluster, workers = "localhost")}.
 #'
 #' An alternative to batchtools interactive futures is to use
 #' \link[future:transparent]{transparent} futures of the
@@ -33,16 +33,16 @@
 #' @importFrom batchtools makeClusterFunctionsInteractive
 #' @aliases batchtools_interactive
 #' @export
-batchtools_local <- function(expr, envir=parent.frame(), substitute=TRUE, globals=TRUE, label="batchtools", workers=1L, ...) {
+batchtools_local <- function(expr, envir = parent.frame(), substitute = TRUE, globals = TRUE, label = "batchtools", workers = 1L, ...) {
   if (substitute) expr <- substitute(expr)
 
   cf <- makeClusterFunctionsInteractive(external = TRUE)
 
-  future <- BatchtoolsFuture(expr=expr, envir=envir, substitute=FALSE,
-                            globals=globals,
-			    label=label,
-                            workers=workers,
-			    cluster.functions=cf,
+  future <- BatchtoolsFuture(expr = expr, envir = envir, substitute = FALSE,
+                            globals = globals,
+			    label = label,
+                            workers = workers,
+			    cluster.functions = cf,
 			    ...)
 
   if (!future$lazy) future <- run(future)

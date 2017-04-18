@@ -46,8 +46,8 @@ stopifnot(v == 0)
 
 message("*** batchtools_local() with globals (tricky)")
 x <- listenv()
-for (ii in 1:5) x[[ii]] <- batchtools_local({ ii }, globals=TRUE)
-v <- sapply(x, FUN=value)
+for (ii in 1:5) x[[ii]] <- batchtools_local({ ii }, globals = TRUE)
+v <- sapply(x, FUN = value)
 stopifnot(all(v == 1:5))  ## Make sure globals are frozen
 
 
@@ -57,16 +57,16 @@ f <- batchtools_local({
   1
 })
 print(f)
-v <- value(f, signal=FALSE)
+v <- value(f, signal = FALSE)
 print(v)
 stopifnot(inherits(v, "simpleError"))
 
-res <- try({ v <- value(f) }, silent=TRUE)
+res <- try({ v <- value(f) }, silent = TRUE)
 print(res)
 stopifnot(inherits(res, "try-error"))
 
 ## Error is repeated
-res <- try(value(f), silent=TRUE)
+res <- try(value(f), silent = TRUE)
 print(res)
 stopifnot(inherits(res, "try-error"))
 

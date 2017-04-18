@@ -9,7 +9,7 @@ message("*** Globals - formulas ...")
 
 message("*** Globals - lm(<formula>) ...")
 
-## From example("lm", package="stats")
+## From example("lm", package = "stats")
 ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
 trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
 group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
@@ -55,37 +55,37 @@ stopifnot(all.equal(tbl, tbl0))
 message("*** Globals - one-side formulas, e.g. xtabs(~ x) ... DONE")
 
 
-message("*** Globals - lm(<formula>, data=cars) ...")
+message("*** Globals - lm(<formula>, data = cars) ...")
 
 exprs <- list(
   # "remove-intercept-term" form of no-intercept
-  a = substitute({ lm(dist ~ . -1, data=cars) }),
+  a = substitute({ lm(dist ~ . -1, data = cars) }),
   # "make-intercept-zero" form of no-intercept
-  b = substitute({ lm(dist ~ . +0, data=cars) }),
+  b = substitute({ lm(dist ~ . +0, data = cars) }),
   # doesn't do what we want here
-  c = substitute({ lm(dist ~ speed + speed^2, data=cars) }),
+  c = substitute({ lm(dist ~ speed + speed^2, data = cars) }),
   # gets us a quadratic term
-  d = substitute({ lm(dist ~ speed + I(speed^2), data=cars) }),
+  d = substitute({ lm(dist ~ speed + I(speed^2), data = cars) }),
   # avoid potential multicollinearity
-  e = substitute({ lm(dist ~ poly(speed,2), data=cars) })
+  e = substitute({ lm(dist ~ poly(speed,2), data = cars) })
 )
 
 for (kk in seq_along(exprs)) {
   expr <- exprs[[kk]]
   name <- names(exprs)[kk]
-  message(sprintf("- Globals - lm(<formula #%d (%s)>, data=cars) ...", kk, sQuote(name)))
+  message(sprintf("- Globals - lm(<formula #%d (%s)>, data = cars) ...", kk, sQuote(name)))
 
   fit0 <- eval(expr)
   print(fit0)
 
-  f <- future(expr, substitute=FALSE)
+  f <- future(expr, substitute = FALSE)
   fit <- value(f)
   print(fit)
 
   stopifnot(all.equal(fit, fit0))
 } ## for (kk ...)
 
-message("*** Globals - lm(<formula>, data=cars) ... DONE")
+message("*** Globals - lm(<formula>, data = cars) ... DONE")
 
 
 message("*** Globals - map(x, ~ expr) ...")

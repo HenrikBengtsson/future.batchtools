@@ -5,9 +5,9 @@ message("*** BatchtoolsFutureError() ...")
 plan(batchtools_local)
 
 for (cleanup in c(FALSE, TRUE)) {
-  message(sprintf("*** batchtools future error w/ future.delete=%s ...", cleanup))
+  message(sprintf("*** batchtools future error w/ future.delete = %s ...", cleanup))
 
-  options(future.delete=cleanup)
+  options(future.delete = cleanup)
 
   f <- future({
     x <- 1
@@ -25,9 +25,9 @@ for (cleanup in c(FALSE, TRUE)) {
   ## /HB 2016-05-01
   ## Maybe it's because base::geterrmessage() holds on to the
   ## last error preventing it from being garbage collected? /HB 2016-05-04
-##  res <- try(value(f, cleanup=FALSE), silent=TRUE)
+##  res <- try(value(f, cleanup = FALSE), silent = TRUE)
 ##  stopifnot(inherits(res, "try-error"))
-##  rm(list="res") ## IMPORTANT: Because 'res' holds the future 'f' internally
+##  rm(list = "res") ## IMPORTANT: Because 'res' holds the future 'f' internally
 
   ## Assert future is listed as resolved
   stopifnot(resolved(f))
@@ -40,8 +40,8 @@ for (cleanup in c(FALSE, TRUE)) {
     message("Garbage collection future ...")
     print(f)
     message("Garbage collection future ... DONE")
-  }, onexit=TRUE)
-  rm(list="f")
+  }, onexit = TRUE)
+  rm(list = "f")
   gc()
   message(" - Future removed and garbage collected.")
   message(sprintf(" - batchtools Registry path (%s) exists: %s", sQuote(reg$file.dir), file_test("-d", reg$file.dir)))
@@ -50,7 +50,7 @@ for (cleanup in c(FALSE, TRUE)) {
   ## a failure and option future.delete is not TRUE.
   if (!cleanup) {
     stopifnot(file_test("-d", reg$file.dir))
-    log <- batchtools::getLog(reg=reg, id=1L)
+    log <- batchtools::getLog(reg = reg, id = 1L)
     print(log)
 
     ## Now manually delete batchtools Registry
@@ -58,10 +58,10 @@ for (cleanup in c(FALSE, TRUE)) {
   }
 
   stopifnot(!file_test("-d", reg$file.dir))
-  fail <- try(checkIds(reg, ids=1L), silent=TRUE)
+  fail <- try(checkIds(reg, ids = 1L), silent = TRUE)
   stopifnot(inherits(fail, "try-error"))
 
-  message(sprintf("*** batchtools future error w/ future.delete=%s ... DONE", cleanup))
+  message(sprintf("*** batchtools future error w/ future.delete = %s ... DONE", cleanup))
 } ## for (cleanup ...)
 
 
@@ -76,20 +76,20 @@ if (fullTest) {
   })
 
   if (!resolved(f)) {
-    res <- delete(f, onRunning="skip")
+    res <- delete(f, onRunning = "skip")
     stopifnot(isTRUE(res))
   }
 
   if (!resolved(f)) {
     res <- tryCatch({
-      delete(f, onRunning="warning")
+      delete(f, onRunning = "warning")
     }, warning = function(w) w)
     stopifnot(inherits(res, "warning"))
   }
 
   if (!resolved(f)) {
     res <- tryCatch({
-      delete(f, onRunning="error")
+      delete(f, onRunning = "error")
     }, error = function(ex) ex)
     stopifnot(inherits(res, "error"))
   }

@@ -39,9 +39,9 @@
 #' @export
 #' @rdname batchtools_template
 #' @name batchtools_template
-batchtools_lsf <- function(expr, envir=parent.frame(), substitute=TRUE,
-                           globals=TRUE, label="batchtools", pathname=NULL,
-                           resources=list(), workers=Inf, ...) {
+batchtools_lsf <- function(expr, envir = parent.frame(), substitute = TRUE,
+                           globals = TRUE, label = "batchtools", pathname = NULL,
+                           resources = list(), workers = Inf, ...) {
   if (substitute) expr <- substitute(expr)
 
   batchtools_by_template(expr, envir = envir, substitute = FALSE,
@@ -55,9 +55,9 @@ class(batchtools_lsf) <- c("batchtools_lsf", "batchtools_template",
 
 #' @export
 #' @rdname batchtools_template
-batchtools_openlava <- function(expr, envir=parent.frame(), substitute=TRUE,
-                                globals=TRUE, label="batchtools", pathname=NULL,
-                                resources=list(), workers=Inf, ...) {
+batchtools_openlava <- function(expr, envir = parent.frame(), substitute = TRUE,
+                                globals = TRUE, label = "batchtools", pathname = NULL,
+                                resources = list(), workers = Inf, ...) {
   if (substitute) expr <- substitute(expr)
 
   batchtools_by_template(expr, envir = envir, substitute = FALSE,
@@ -71,9 +71,9 @@ class(batchtools_openlava) <- c("batchtools_openlava", "batchtools_template",
 
 #' @export
 #' @rdname batchtools_template
-batchtools_sge <- function(expr, envir=parent.frame(), substitute=TRUE,
-                           globals=TRUE, label="batchtools", pathname=NULL,
-                           resources=list(), workers=Inf, ...) {
+batchtools_sge <- function(expr, envir = parent.frame(), substitute = TRUE,
+                           globals = TRUE, label = "batchtools", pathname = NULL,
+                           resources = list(), workers = Inf, ...) {
   if (substitute) expr <- substitute(expr)
 
   batchtools_by_template(expr, envir = envir, substitute = FALSE,
@@ -87,9 +87,9 @@ class(batchtools_sge) <- c("batchtools_sge", "batchtools_template",
 
 #' @export
 #' @rdname batchtools_template
-batchtools_slurm <- function(expr, envir=parent.frame(), substitute=TRUE,
-                             globals=TRUE, label="batchtools", pathname=NULL,
-                             resources=list(), workers=Inf, ...) {
+batchtools_slurm <- function(expr, envir = parent.frame(), substitute = TRUE,
+                             globals = TRUE, label = "batchtools", pathname = NULL,
+                             resources = list(), workers = Inf, ...) {
   if (substitute) expr <- substitute(expr)
 
   batchtools_by_template(expr, envir = envir, substitute = FALSE,
@@ -103,7 +103,7 @@ class(batchtools_slurm) <- c("batchtools_slurm", "batchtools_template",
 
 #' @export
 #' @rdname batchtools_template
-batchtools_torque <- function(expr, envir=parent.frame(), substitute=TRUE, globals=TRUE, label="batchtools", pathname=NULL, resources=list(), workers=Inf, ...) {
+batchtools_torque <- function(expr, envir = parent.frame(), substitute = TRUE, globals = TRUE, label = "batchtools", pathname = NULL, resources = list(), workers = Inf, ...) {
   if (substitute) expr <- substitute(expr)
 
   batchtools_by_template(expr, envir = envir, substitute = FALSE,
@@ -122,7 +122,7 @@ class(batchtools_torque) <- c("batchtools_torque", "batchtools_template",
 #' @importFrom batchtools makeClusterFunctionsSlurm
 #' @importFrom batchtools makeClusterFunctionsTORQUE
 #' @importFrom utils file_test
-batchtools_by_template <- function(expr, envir=parent.frame(), substitute=TRUE, globals=TRUE, pathname=NULL, type=c("lsf", "openlava", "sge", "slurm", "torque"), resources=list(), label="batchtools", workers=Inf, ...) {
+batchtools_by_template <- function(expr, envir = parent.frame(), substitute = TRUE, globals = TRUE, pathname = NULL, type = c("lsf", "openlava", "sge", "slurm", "torque"), resources = list(), label = "batchtools", workers = Inf, ...) {
   if (substitute) expr <- substitute(expr)
   type <- match.arg(type)
 

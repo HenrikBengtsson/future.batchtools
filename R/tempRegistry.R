@@ -11,14 +11,14 @@ tempRegistry <- local({
     batchtoolsOutput <- getOption("future.batchtools.output", debug)
 
     if (!batchtoolsOutput) {
-      oopts <- options(batchtools.verbose=FALSE, batchtools.progress=FALSE)
+      oopts <- options(batchtools.verbose = FALSE, batchtools.progress = FALSE)
       on.exit(options(oopts))
     }
 
     batchtools::makeRegistry(...)
   } ## makeRegistry()
 
-  function(label = "batchtools", path=NULL, ...) {
+  function(label = "batchtools", path = NULL, ...) {
     if (is.null(label)) label <- "batchtools"
     ## The job label (the name on the job queue) - may be duplicated
     label <- as.character(label)
@@ -38,7 +38,7 @@ tempRegistry <- local({
     unique <- FALSE
     while (!unique) {
       ## The FutureRegistry key for this batchtools future - must be unique
-      key <- tempvar(prefix=prefix, value=NA, envir=regs)
+      key <- tempvar(prefix = prefix, value = NA, envir = regs)
       ## The directory for this batchtools future
       ##   e.g. .future/<datetimestamp>-<unique_id>/<key>/
       pathRegistry <- file.path(path, key)
@@ -51,7 +51,7 @@ tempRegistry <- local({
     ## expression "^[a-zA-Z]+[0-9a-zA-Z_]*$".
     ## /HB 2016-10-19
     regId <- asValidRegistryID(label)
-    makeRegistry(file.dir=pathRegistry, ...)
+    makeRegistry(file.dir = pathRegistry, ...)
   }
 })
 

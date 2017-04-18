@@ -15,7 +15,7 @@
 #' @examples
 #' \donttest{
 #' plan(batchtools_local)
-#' demo("mandelbrot", package="future", ask=FALSE)
+#' demo("mandelbrot", package = "future", ask = FALSE)
 #' }
 #'
 #' @docType package
