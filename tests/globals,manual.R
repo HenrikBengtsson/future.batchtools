@@ -13,7 +13,7 @@ globals <- list(
 )
 
 ## Assign 'globals' globally
-attachLocally(globals)
+attach_locally(globals)
 
 ## Truth
 v0 <- local({
@@ -24,7 +24,7 @@ v0 <- local({
 
 message("*** Globals - automatic ...")
 
-attachLocally(globals)
+attach_locally(globals)
 f <- future({
   x <- 1:10
   sumtwo(a + b * x)
@@ -35,7 +35,7 @@ y <- value(f)
 print(y)
 stopifnot(all.equal(y, v0))
 
-attachLocally(globals)
+attach_locally(globals)
 y %<-% {
   x <- 1:10
   sumtwo(a + b * x)
@@ -50,7 +50,7 @@ print(y)
 stopifnot(identical(y, 1))
 
 ## Exception - missing global
-attachLocally(globals)
+attach_locally(globals)
 f <- future({
   x <- 1:10
   sumtwo(a + b * x)
@@ -91,7 +91,7 @@ message("*** Globals manually specified as named list ... DONE")
 
 message("*** Globals manually specified by their names ...")
 
-attachLocally(globals)
+attach_locally(globals)
 f <- future({
   x <- 1:10
   sumtwo(a + b * x)
@@ -102,7 +102,7 @@ v <- value(f)
 print(v)
 stopifnot(all.equal(v, v0))
 
-attachLocally(globals)
+attach_locally(globals)
 y %<-% {
   x <- 1:10
   sumtwo(a + b * x)

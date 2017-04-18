@@ -6,7 +6,7 @@
 
   ## (b) Remove batchtools root directory if only a set
   ##     of known files exists, i.e. not any directories etc.
-  path <- futureCachePath(create = FALSE)
+  path <- future_cache_path(create = FALSE)
   ## Only known files left?
   files <- dir(path = path)
   known_files <- c("sessioninfo.txt")

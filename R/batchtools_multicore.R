@@ -37,7 +37,7 @@ batchtools_multicore <- function(expr, envir = parent.frame(),
             is.finite(workers), workers >= 1L)
 
   ## Fall back to batchtools_local if multicore processing is not supported
-  if (workers == 1L || isOS("windows") || isOS("solaris") ||
+  if (workers == 1L || is_os("windows") || is_os("solaris") ||
       availableCores(constraints = "multicore") == 1L) {
     ## covr: skip=1
     return(batchtools_local(expr, envir = envir, substitute = FALSE,

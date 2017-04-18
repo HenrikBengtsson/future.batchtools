@@ -8,13 +8,15 @@
 #' Both types of futures will block until the futures are resolved.
 #'
 #' @inheritParams BatchtoolsFuture
-#' @param \ldots Additional arguments passed to \code{\link{BatchtoolsFuture}()}.
+#' 
+#' @param \ldots Additional arguments passed to
+#' \code{\link{BatchtoolsFuture}()}.
 #'
 #' @return An object of class \code{BatchtoolsFuture}.
 #'
 #' @details
-#' batchtools local futures rely on the batchtools backend set
-#' up by \code{\link[batchtools]{makeClusterFunctionsInteractive}(external = TRUE)}
+#' batchtools local futures rely on the batchtools backend set up by
+#' \code{\link[batchtools]{makeClusterFunctionsInteractive}(external = TRUE)}
 #' and batchtools interactive futures on the one set up by
 #' \code{\link[batchtools]{makeClusterFunctionsInteractive}()}.
 #' These are supported by all operating systems.

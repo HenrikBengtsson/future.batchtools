@@ -31,7 +31,8 @@ job name for most job schedulers).}
 \item{workers}{(optional) Additional specification for the batchtools
 backend.}
 
-\item{\ldots}{Additional arguments passed to \code{\link{BatchtoolsFuture}()}.}
+\item{\ldots}{Additional arguments passed to
+\code{\link{BatchtoolsFuture}()}.}
 }
 \value{
 An object of class \code{BatchtoolsFuture}.
@@ -45,8 +46,8 @@ be assigned to the calling environment rather than to a local one).
 Both types of futures will block until the futures are resolved.
 }
 \details{
-batchtools local futures rely on the batchtools backend set
-up by \code{\link[batchtools]{makeClusterFunctionsInteractive}(external = TRUE)}
+batchtools local futures rely on the batchtools backend set up by
+\code{\link[batchtools]{makeClusterFunctionsInteractive}(external = TRUE)}
 and batchtools interactive futures on the one set up by
 \code{\link[batchtools]{makeClusterFunctionsInteractive}()}.
 These are supported by all operating systems.

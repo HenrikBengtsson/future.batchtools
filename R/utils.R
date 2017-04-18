@@ -3,14 +3,14 @@ is_na <- function(x) {
   is.na(x)
 }
 
-isFALSE <- function(x) {
+is_false <- function(x) {
   if (length(x) != 1L) return(FALSE)
   x <- as.logical(x)
   x <- unclass(x)
   identical(FALSE, x)
 }
 
-attachedPackages <- function() {
+attached_packages <- function() {
   pkgs <- search()
   pkgs <- grep("^package:", pkgs, value = TRUE)
   pkgs <- gsub("^package:", "", pkgs)
@@ -24,14 +24,14 @@ mcat <- function(...) message(..., appendLF = FALSE)
 mprintf <- function(...) message(sprintf(...), appendLF = FALSE)
 
 mprint <- function(...) {
-  bfr <- captureOutput(print(...))
+  bfr <- capture_output(print(...))
   bfr <- paste(c(bfr, ""), collapse = "\n")
   message(bfr, appendLF = FALSE)
 }
 
 #' @importFrom utils str
 mstr <- function(...) {
-  bfr <- captureOutput(str(...))
+  bfr <- capture_output(str(...))
   bfr <- paste(c(bfr, ""), collapse = "\n")
   message(bfr, appendLF = FALSE)
 }
@@ -75,7 +75,7 @@ hpaste <- function(..., sep="", collapse=", ", last_collapse=NULL,
 
 ## Adopted R.utils 2.1.0 (2015-06-15)
 #' @importFrom utils capture.output
-captureOutput <- function(expr, envir = parent.frame(), ...) {
+capture_output <- function(expr, envir = parent.frame(), ...) {
   res <- eval({
     file <- rawConnection(raw(0L), open = "w")
     on.exit(close(file))
@@ -91,7 +91,7 @@ trim <- function(x, ...) {
 }
 
 
-importFuture <- function(name, default = NULL) {
+import_future <- function(name, default = NULL) {
   ns <- getNamespace("future")
   if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
     get(name, mode = "function", envir = ns, inherits = FALSE)
@@ -115,10 +115,10 @@ geval <- local(function(expr, substitute = FALSE, envir = .GlobalEnv, ...) {
 
 
 ## Tests if the current OS is of a certain type
-isOS <- function(name) {
+is_os <- function(name) {
   if (name == "windows") {
     return(.Platform$OS.type == "windows")
   } else {
     grepl(paste0("^", name), R.version$os)
   }
-} ## isOS()
+} ## is_os()

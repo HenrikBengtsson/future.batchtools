@@ -7,13 +7,13 @@ stopifnot(is_na(NA), !is_na(TRUE), !is_na(FALSE), !is_na(1),
           !is_na(NULL), !is_na(1:2), !is_na(rep(NA, times = 3)),
           !is_na(rep(TRUE, 3)), !is_na(letters))
 
-message("- isFALSE() ...")
-stopifnot(isFALSE(FALSE), !isFALSE(TRUE), !isFALSE(NA), !isFALSE(1),
-          !isFALSE(NULL), !isFALSE(1:2), !isFALSE(rep(FALSE, times = 3)),
-          !isFALSE(rep(TRUE, times = 3)), !isFALSE(letters))
+message("- is_false() ...")
+stopifnot(is_false(FALSE), !is_false(TRUE), !is_false(NA), !is_false(1),
+          !is_false(NULL), !is_false(1:2), !is_false(rep(FALSE, times = 3)),
+          !is_false(rep(TRUE, times = 3)), !is_false(letters))
 
-message("- attachedPackages() ...")
-print(attachedPackages())
+message("- attached_packages() ...")
+print(attached_packages())
 
 
 message("- hpaste() & printf() ...")
@@ -67,30 +67,30 @@ stopifnot(trim(" hello ") == "hello")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# isOS()
+# is_os()
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-message("- isOS() ...")
+message("- is_os() ...")
 for (os in c("darwin", "freebsd", "irix", "linux", "openbsd",
              "solaris", "windows")) {
-  mprintf("isOS('%s') = %s", os, isOS(os))
+  mprintf("is_os('%s') = %s", os, is_os(os))
 }
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# importFuture()
+# import_future()
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-message("*** importFuture() ...")
+message("*** import_future() ...")
 
-future <- importFuture("future")
+future <- import_future("future")
 stopifnot(identical(future, future::future))
 
-future <- importFuture("<unknown function>", default = future::future)
+future <- import_future("<unknown function>", default = future::future)
 stopifnot(identical(future, future::future))
 
-res <- try(importFuture("<unknown function>"), silent = TRUE)
+res <- try(import_future("<unknown function>"), silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-message("*** importFuture() ... DONE")
+message("*** import_future() ... DONE")
 
 message("*** Utility functions ... DONE")
 

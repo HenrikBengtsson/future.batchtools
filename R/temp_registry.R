@@ -1,22 +1,22 @@
 #' @importFrom R.utils tempvar
 #' @importFrom batchtools makeRegistry
-tempRegistry <- local({
+temp_registry <- local({
   ## All known batchtools registries
   regs <- new.env()
 
-  makeRegistry <- function(...) {
+  make_registry <- function(...) {
     ## Temporarily disable batchtools output?
     ## (i.e. messages and progress bars)
     debug <- getOption("future.debug", FALSE)
-    batchtoolsOutput <- getOption("future.batchtools.output", debug)
+    batchtools_output <- getOption("future.batchtools.output", debug)
 
-    if (!batchtoolsOutput) {
+    if (!batchtools_output) {
       oopts <- options(batchtools.verbose = FALSE, batchtools.progress = FALSE)
       on.exit(options(oopts))
     }
 
     batchtools::makeRegistry(...)
-  } ## makeRegistry()
+  } ## make_registry()
 
   function(label = "batchtools", path = NULL, ...) {
     if (is.null(label)) label <- "batchtools"
@@ -26,14 +26,14 @@ tempRegistry <- local({
 
     ## This session's path holding all of its future batchtools directories
     ##   e.g. .future/<datetimestamp>-<unique_id>/
-    if (is.null(path)) path <- futureCachePath()
+    if (is.null(path)) path <- future_cache_path()
 
     ## The batchtools subfolder for a specific future - must be unique
     prefix <- sprintf("%s_", label)
 
     ## FIXME: We need to make sure 'prefix' consists of only valid
     ## filename characters. /HB 2016-10-19
-    prefix <- asValidDirectoryPrefix(prefix)
+    prefix <- as_valid_directory_prefix(prefix)
 
     unique <- FALSE
     while (!unique) {
@@ -50,35 +50,35 @@ tempRegistry <- local({
     ## batchtools ID characters, i.e. it must match regular
     ## expression "^[a-zA-Z]+[0-9a-zA-Z_]*$".
     ## /HB 2016-10-19
-    reg_id <- asValidRegistryID(label)
-    makeRegistry(file.dir = path_registry, ...)
+    reg_id <- as_valid_registry_id(label)
+    make_registry(file.dir = path_registry, ...)
   }
 })
 
 
 
-dropNonValidCharacters <- function(name, pattern, default = "batchtools") {
-  asString <- (length(name) == 1L)
+drop_non_valid_characters <- function(name, pattern, default = "batchtools") {
+  as_string <- (length(name) == 1L)
   name <- unlist(strsplit(name, split = "", fixed = TRUE), use.names = FALSE)
   name[!grepl(pattern, name)] <- ""
   if (length(name) == 0L) return(default)
-  if (asString) name <- paste(name, collapse = "")
+  if (as_string) name <- paste(name, collapse = "")
   name
-} ## dropNonValidCharacters()
+}
 
-asValidDirectoryPrefix <- function(name) {
+as_valid_directory_prefix <- function(name) {
   pattern <- "^[-._a-zA-Z0-9]+$"
   ## Nothing to do?
   if (grepl(pattern, name)) return(name)
   name <- unlist(strsplit(name, split = "", fixed = TRUE), use.names = FALSE)
   ## All characters must be letters, digits, underscores, dash, or period.
-  name <- dropNonValidCharacters(name, pattern = pattern)
+  name <- drop_non_valid_characters(name, pattern = pattern)
   name <- paste(name, collapse = "")
   stopifnot(grepl(pattern, name))
   name
-} ## asValidDirectoryPrefix()
+}
 
-asValidRegistryID <- function(name) {
+as_valid_registry_id <- function(name) {
   pattern <- "^[a-zA-Z]+[0-9a-zA-Z_]*$"
   ## Nothing to do?
   if (grepl(pattern, name)) return(name)
@@ -86,7 +86,7 @@ asValidRegistryID <- function(name) {
   name <- unlist(strsplit(name, split = "", fixed = TRUE), use.names = FALSE)
 
   ## All characters must be letters, digits, or underscores
-  name <- dropNonValidCharacters(name, pattern = "[0-9a-zA-Z_]")
+  name <- drop_non_valid_characters(name, pattern = "[0-9a-zA-Z_]")
   name <- name[nzchar(name)]
 
   ## First character must be a letter :/
@@ -97,4 +97,4 @@ asValidRegistryID <- function(name) {
   stopifnot(grepl(pattern, name))
 
   name
-} ## asValidRegistryID()
+}

@@ -69,7 +69,7 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
   stopifnot(is.list(resources))
 
   ## Record globals
-  getGlobalsAndPackages <- importFuture("getGlobalsAndPackages")
+  getGlobalsAndPackages <- import_future("getGlobalsAndPackages")
   gp <- getGlobalsAndPackages(expr, envir = envir, globals = globals)
 
   ## Create BatchtoolsFuture object
@@ -80,7 +80,7 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
   future$packages <- gp$packages
 
   ## Create batchtools registry
-  reg <- tempRegistry(label = future$label)
+  reg <- temp_registry(label = future$label)
   if (!is.null(cluster.functions)) {    ### FIXME
     reg$cluster.functions <- cluster.functions
   }
@@ -313,11 +313,11 @@ run.BatchtoolsFuture <- function(future, ...) {
     stop(sprintf("A future ('%s') can only be launched once.", label))
   }
 
-  mdebug <- importFuture("mdebug")
+  mdebug <- import_future("mdebug")
 
   ## Assert that the process that created the future is
   ## also the one that evaluates/resolves/queries it.
-  assertOwner <- importFuture("assertOwner")
+  assertOwner <- import_future("assertOwner")
   assertOwner(future)
 
   ## Temporarily disable batchtools output?
@@ -348,7 +348,7 @@ run.BatchtoolsFuture <- function(future, ...) {
     ## Record which packages in 'pkgs' that are loaded and
     ## which of them are attached (at this point in time).
     is_loaded <- is.element(packages, loadedNamespaces())
-    is_attached <- is.element(packages, attachedPackages())
+    is_attached <- is.element(packages, attached_packages())
 
     ## FIXME: Update the expression such that the new session
     ## will have the same state of (loaded, attached) packages.
@@ -440,7 +440,7 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
                                    delta = getOption("future.wait.interval",
                                                      1.0),
                                    ...) {
-  mdebug <- importFuture("mdebug")
+  mdebug <- import_future("mdebug")
   stopifnot(is.finite(timeout), timeout >= 0)
 
   debug <- getOption("future.debug", FALSE)
@@ -456,7 +456,6 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
   oopts <- options(batchtools.verbose = debug)
   on.exit(options(oopts))
 
-  t0 <- Sys.time()
   res <- waitForJobs(ids = jobid, timeout = timeout, sleep = delta,
                      stop.on.error = FALSE, reg = reg)
   mdebug("- batchtools::waitForJobs(): %s", res)
@@ -533,7 +532,7 @@ delete.BatchtoolsFuture <- function(future,
                                 delta = getOption("future.wait.interval", 1.0),
                                 alpha = getOption("future.wait.alpha", 1.01),
                                 ...) {
-  mdebug <- importFuture("mdebug")
+  mdebug <- import_future("mdebug")
 
   onRunning <- match.arg(onRunning)
   onMissing <- match.arg(onMissing)
