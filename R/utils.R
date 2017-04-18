@@ -98,17 +98,6 @@ importFuture <- function(name, default=NULL) {
 }
 
 
-importbatchtools <- function(name, default=NULL) {
-  ns <- getNamespace("batchtools")
-  if (exists(name, mode="function", envir=ns, inherits=FALSE)) {
-    get(name, mode="function", envir=ns, inherits=FALSE)
-  } else if (!is.null(default)) {
-    default
-  } else {
-    stop(sprintf("No such 'batchtools' function: %s()", name))
-  }
-}
-
 ## Evaluates an expression in global environment.
 ## Because geval() is exported, we want to keep its environment()
 ## as small as possible, which is why we use local().  Without,

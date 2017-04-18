@@ -125,7 +125,7 @@ batchtools_by_template <- function(expr, envir=parent.frame(), substitute=TRUE, 
 
   makeCFs <- switch(type,
     lsf      = makeClusterFunctionsLSF,
-    openlava = importbatchtools("makeClusterFunctionsOpenLava"),
+    openlava = makeClusterFunctionsOpenLava,
     sge      = makeClusterFunctionsSGE,
     slurm    = makeClusterFunctionsSlurm,
     torque   = makeClusterFunctionsTORQUE
