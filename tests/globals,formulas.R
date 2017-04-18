@@ -119,7 +119,7 @@ if (formulas_supported) {
   y <- value(f)
   str(y)
   stopifnot(all.equal(y, y0))
-  
+
   y %<-% { outer_function(1L) }
   str(y)
   stopifnot(all.equal(y, y0))

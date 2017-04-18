@@ -69,31 +69,31 @@ if (fullTest) {
   message("*** BatchtoolsFuture - deleting running ...")
 
   plan(batchtools_multicore)
-  
+
   f <- future({
     Sys.sleep(5)
     42L
   })
-  
+
   if (!resolved(f)) {
     res <- delete(f, onRunning="skip")
     stopifnot(isTRUE(res))
   }
-  
+
   if (!resolved(f)) {
     res <- tryCatch({
       delete(f, onRunning="warning")
     }, warning = function(w) w)
     stopifnot(inherits(res, "warning"))
   }
-  
+
   if (!resolved(f)) {
     res <- tryCatch({
       delete(f, onRunning="error")
     }, error = function(ex) ex)
     stopifnot(inherits(res, "error"))
   }
-  
+
   message("*** BatchtoolsFuture - deleting running ... DONE")
 } ## if (fullTest)
 

@@ -19,4 +19,3 @@
     try(removeDirectory(path, recursive=FALSE, mustExist=FALSE), silent=TRUE)
   }
 }
-

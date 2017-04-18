@@ -5,9 +5,9 @@ library("listenv")
 message("*** batchtools_multicore() ...")
 
 for (cores in 1:min(3L, availableCores("multicore"))) {
-  ## FIXME: 
+  ## FIXME:
   if (!fullTest && cores > 1) next
-  
+
   message(sprintf("Testing with %d cores ...", cores))
   options(mc.cores=cores-1L)
 

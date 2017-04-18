@@ -29,7 +29,7 @@ nbrOfWorkers.batchtools <- function(evaluator) {
   cf <- eval(expr)
   if (!is.null(cf)) {
     stopifnot(inherits(cf, "ClusterFunctions"))
-    
+
     name <- cf$name
     if (is.null(name)) name <- cf$Name
     if (is.null(name)) return(Inf)

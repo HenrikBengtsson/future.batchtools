@@ -1,13 +1,13 @@
 #' Batchtools futures for custom batchtools configuration
 #'
 #' @inheritParams BatchtoolsFuture
-#' 
+#'
 #' @param cluster.functions A
 #' \link[batchtools:ClusterFunctions]{ClusterFunctions} object.
-#' 
+#'
 #' @param resources A named list passed to the batchtools template (available
 #' as variable \code{resources}).
-#' 
+#'
 #' @param \ldots Additional arguments passed to
 #' \code{\link{BatchtoolsFuture}()}.
 #'

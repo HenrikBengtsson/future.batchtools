@@ -26,7 +26,7 @@ BatchtoolsFuture <- function(expr=NULL, envir=parent.frame(), substitute=TRUE, g
   if (substitute) expr <- substitute(expr)
 
   if (!is.null(label)) label <- as.character(label)
-  
+
   if (!is.null(cluster.functions)) {
     stopifnot(is.list(cluster.functions))
   }
@@ -64,9 +64,9 @@ BatchtoolsFuture <- function(expr=NULL, envir=parent.frame(), substitute=TRUE, g
   ## batchtools configuration
   config <- list(reg=reg, jobid=NA_integer_,
                  resources=resources)
-  
+
   future$config <- config
- 
+
   future <- structure(future, class=c("BatchtoolsFuture", class(future)))
 
   ## Register finalizer?
@@ -88,10 +88,10 @@ print.BatchtoolsFuture <- function(x, ...) {
 
   ## batchtools specific
   reg <- x$config$reg
-  
+
   ## Type of batchtools future
   printf("batchtools cluster functions: %s\n", sQuote(reg$cluster.functions$name))
-  
+
   ## Ask for status once
   status <- status(x)
   printf("batchtools status: %s\n", paste(sQuote(status), collapse=", "))
@@ -199,7 +199,7 @@ loggedError.BatchtoolsFuture <- function(future, ...) {
 #' @importFrom batchtools getLog
 #' @export
 #' @keywords internal
-loggedOutput.BatchtoolsFuture <- function(future, ...) {   
+loggedOutput.BatchtoolsFuture <- function(future, ...) {
   stat <- status(future)
   if (isNA(stat)) return(NULL)
 
@@ -283,7 +283,7 @@ run.BatchtoolsFuture <- function(future, ...) {
     if (is.null(label)) label <- "<none>"
     stop(sprintf("A future ('%s') can only be launched once.", label))
   }
-  
+
   mdebug <- importFuture("mdebug")
 
   ## Assert that the process that created the future is
@@ -374,7 +374,7 @@ run.BatchtoolsFuture <- function(future, ...) {
   if (is.null(resources)) resources <- list()
 
   batchtools::submitJobs(reg=reg, ids=jobid, resources=resources)
-  
+
   mdebug("Launched future #%d", jobid$job.id)
 
   invisible(future)
@@ -426,9 +426,9 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE, timeout = getOption("
   dt <- difftime(Sys.time(), t0)
   mdebug("- batchtools::waitForJobs(): %s", res)
   stat <- status(future)
-  mdebug("- status(): %s", paste(sQuote(stat), collapse = ", "))  
+  mdebug("- status(): %s", paste(sQuote(stat), collapse = ", "))
   mdebug("batchtools::waitForJobs() ... done")
-  
+
   finished <- isNA(stat) || any(c("done", "error", "expired") %in% stat)
 
   res <- NULL
@@ -488,7 +488,7 @@ delete <- function(...) UseMethod("delete")
 #' @keywords internal
 delete.BatchtoolsFuture <- function(future, onRunning=c("warning", "error", "skip"), onFailure=c("error", "warning", "ignore"), onMissing=c("ignore", "warning", "error"), times=10L, delta=getOption("future.wait.interval", 1.0), alpha=getOption("future.wait.alpha", 1.01), ...) {
   mdebug <- importFuture("mdebug")
-  
+
   onRunning <- match.arg(onRunning)
   onMissing <- match.arg(onMissing)
   onFailure <- match.arg(onFailure)
@@ -548,7 +548,7 @@ delete.BatchtoolsFuture <- function(future, onRunning=c("warning", "error", "ski
   ## Control batchtools info output
   oopts <- options(batchtools.verbose = debug)
   on.exit(options(oopts))
-  
+
   ## Try to delete registry
   interval <- delta
   for (kk in seq_len(times)) {

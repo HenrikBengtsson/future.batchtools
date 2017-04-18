@@ -5,14 +5,14 @@
 #' cluster via a job scheduler.
 #'
 #' @inheritParams BatchtoolsFuture
-#' 
+#'
 #' @param pathname (optional) A batchtools template file or a template string
 #' (in \pkg{brew} format).  If not specified, it is left to the
 #' \pkg{batchtools} package to locate such file using its search rules.
-#' 
+#'
 #' @param resources A named list passed to the batchtools template (available
 #' as variable \code{resources}).
-#' 
+#'
 #' @param \ldots Additional arguments passed to
 #' \code{\link{BatchtoolsFuture}()}.
 #'

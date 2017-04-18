@@ -19,7 +19,7 @@ for (strategy in strategies) {
     stopifnot(identical(f$label, label))
     v <- value(f)
     stopifnot(v == 42)
-    
+
     f <- future(42, label = label)
     print(f)
     stopifnot(identical(f$label, label))

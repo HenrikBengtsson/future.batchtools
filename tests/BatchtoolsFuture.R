@@ -105,15 +105,15 @@ message("*** BatchtoolsFuture() - timeout ...")
 
 if (fullTest && availableCores(constraints="multicore") > 1) {
   plan(batchtools_multicore)
-  
+
   options(future.wait.timeout=0.15, future.wait.interval=0.1)
-  
+
   f <- future({
     Sys.sleep(5)
     x <- 1
   })
   print(f)
-  
+
   res <- tryCatch({
     value(f)
   }, error = function(ex) ex)

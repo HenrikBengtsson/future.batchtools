@@ -1,6 +1,6 @@
 #' @importFrom R.utils tempvar
 #' @importFrom batchtools makeRegistry
-tempRegistry <- local({ 
+tempRegistry <- local({
   ## All known batchtools registries
   regs <- new.env()
 
@@ -23,18 +23,18 @@ tempRegistry <- local({
     ## The job label (the name on the job queue) - may be duplicated
     label <- as.character(label)
     stopifnot(length(label) == 1L, nchar(label) > 0L)
-    
+
     ## This session's path holding all of its future batchtools directories
     ##   e.g. .future/<datetimestamp>-<unique_id>/
     if (is.null(path)) path <- futureCachePath()
-    
+
     ## The batchtools subfolder for a specific future - must be unique
     prefix <- sprintf("%s_", label)
-    
+
     ## FIXME: We need to make sure 'prefix' consists of only valid
     ## filename characters. /HB 2016-10-19
     prefix <- asValidDirectoryPrefix(prefix)
-    
+
     unique <- FALSE
     while (!unique) {
       ## The FutureRegistry key for this batchtools future - must be unique
@@ -84,7 +84,7 @@ asValidRegistryID <- function(name) {
   if (grepl(pattern, name)) return(name)
 
   name <- unlist(strsplit(name, split = "", fixed = TRUE), use.names = FALSE)
-  
+
   ## All characters must be letters, digits, or underscores
   name <- dropNonValidCharacters(name, pattern = "[0-9a-zA-Z_]")
   name <- name[nzchar(name)]
@@ -93,8 +93,8 @@ asValidRegistryID <- function(name) {
   if (!grepl("^[a-zA-Z]+", name[1])) name[1] <- "z"
 
   name <- paste(name, collapse = "")
-  
+
   stopifnot(grepl(pattern, name))
-  
+
   name
 } ## asValidRegistryID()

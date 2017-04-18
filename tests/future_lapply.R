@@ -30,7 +30,7 @@ for (scheduling in list(FALSE, TRUE)) {
     message(sprintf("- plan('%s') ...", strategy))
     plan(strategy)
     stopifnot(nbrOfWorkers() < Inf)
-    
+
     y <- future_lapply(x, FUN=vector, length=2L,
                        future.scheduling = scheduling)
     str(list(y=y))
@@ -52,7 +52,7 @@ for (scheduling in list(FALSE, TRUE)) {
     message(sprintf("- plan('%s') ...", strategy))
     plan(strategy)
     stopifnot(nbrOfWorkers() < Inf)
-    
+
     y <- future_lapply(x, FUN=base::vector, length=2L,
                        future.scheduling = scheduling)
     str(list(y=y))
@@ -73,7 +73,7 @@ for (scheduling in list(FALSE, TRUE)) {
     message(sprintf("- plan('%s') ...", strategy))
     plan(strategy)
     stopifnot(nbrOfWorkers() < Inf)
-    
+
     y <- future_lapply(x, FUN=future:::hpaste, collapse="; ",
                        maxHead=3L, future.scheduling = scheduling)
     str(list(y=y))
@@ -105,7 +105,7 @@ for (scheduling in list(FALSE, TRUE)) {
     message(sprintf("- plan('%s') ...", strategy))
     plan(strategy)
     stopifnot(nbrOfWorkers() < Inf)
-    
+
     y <- future_lapply(x, FUN=listenv::map, future.scheduling = scheduling)
     str(list(y=y))
     stopifnot(identical(y, y0))
