@@ -1,7 +1,7 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.3.0-9000 [2017-04-17]
+Version: 0.3.0-9000 [2017-04-18]
 
 NEW FEATURES:
 
@@ -14,6 +14,8 @@ NEW FEATURES:
  o nbrOfWorkers() for batchtools future now defaults to +Inf unless the
    evaluator's 'workers' or 'cluster.functions' arguments specify something
    else.
+
+ o Renamed argument 'pathname' to 'template' for batchtools_<tmpl>() functions.
 
 SOFTWARE QUALITY:
 

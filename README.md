@@ -155,9 +155,9 @@ A similar filename format is used for the other types of job schedulers supporte
 ```r
 > plan(batchtools_slurm)
 ```
-to locate the file automatically.  To specify this template file explicitly, use argument `pathname`, e.g.
+to locate the file automatically.  To specify this template file explicitly, use argument `template`, e.g.
 ```r
-> plan(batchtools_slurm, pathname = "/path/to/batchtools.slurm.tmpl")
+> plan(batchtools_slurm, template = "/path/to/batchtools.slurm.tmpl")
 ```
 
 For further details and examples on how to configure batchtools per se, see the [batchtools configuration] wiki page.

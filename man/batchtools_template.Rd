@@ -10,23 +10,23 @@
 \title{Batchtools futures for LSF, OpenLava, SGE, Slurm, TORQUE etc.}
 \usage{
 batchtools_lsf(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = "batchtools", pathname = NULL,
+  globals = TRUE, label = "batchtools", template = NULL,
   resources = list(), workers = Inf, ...)
 
 batchtools_openlava(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = "batchtools", pathname = NULL,
+  globals = TRUE, label = "batchtools", template = NULL,
   resources = list(), workers = Inf, ...)
 
 batchtools_sge(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = "batchtools", pathname = NULL,
+  globals = TRUE, label = "batchtools", template = NULL,
   resources = list(), workers = Inf, ...)
 
 batchtools_slurm(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = "batchtools", pathname = NULL,
+  globals = TRUE, label = "batchtools", template = NULL,
   resources = list(), workers = Inf, ...)
 
 batchtools_torque(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = "batchtools", pathname = NULL,
+  globals = TRUE, label = "batchtools", template = NULL,
   resources = list(), workers = Inf, ...)
 }
 \arguments{
@@ -49,7 +49,7 @@ globals are used as is.}
 \item{label}{(optional) Label of the future (where applicable, becomes the
 job name for most job schedulers).}
 
-\item{pathname}{(optional) A batchtools template file or a template string
+\item{template}{(optional) A batchtools template file or a template string
 (in \pkg{brew} format).  If not specified, it is left to the
 \pkg{batchtools} package to locate such file using its search rules.}
 
