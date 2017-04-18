@@ -73,6 +73,17 @@ stopifnot(is.infinite(n))
 
 message("*** nbrOfWorkers() - templates ... DONE")
 
+message("*** nbrOfWorkers() - custom ...")
+
+cf <- batchtools::makeClusterFunctionsInteractive(external = TRUE)
+str(cf)
+
+plan(batchtools_custom, cluster.functions = cf)
+n <- nbrOfWorkers()
+message("Number of workers: ", n)
+stopifnot(n == 1L)
+
+message("*** nbrOfWorkers() - custom ... DONE")
 
 message("*** nbrOfWorkers() ... DONE")
 

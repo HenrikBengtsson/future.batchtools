@@ -5,11 +5,15 @@ Version: 0.3.0-9000 [2017-04-17]
 
 NEW FEATURES:
 
- o nbrOfWorkers() for batchtools future now defaults to +Inf unless the
-   evaluator's 'workers' argument specify something else.
-
+ o Added batchtools_custom() for specifying batchtools futures using any
+   type of batchtools cluster functions.
+   
  o batchtools_template(pathname = NULL, type = <type>) now relies on the
    batchtools package for locating the <type> template file.
+   
+ o nbrOfWorkers() for batchtools future now defaults to +Inf unless the
+   evaluator's 'workers' or 'cluster.functions' arguments specify something
+   else.
 
 SOFTWARE QUALITY:
 

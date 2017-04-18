@@ -1,8 +1,19 @@
 source("incl/start.R")
 library("listenv")
 
+cf <- batchtools::makeClusterFunctionsInteractive(external = TRUE)
+batchtools_custom_local <- function(expr, substitute = TRUE,
+                                    cluster.functions = cf, ...) {
+  if (substitute) expr <- substitute(expr)
+  batchtools_custom(expr, substitute = FALSE, ...,
+                    cluster.functions = cluster.functions)
+}
+class(batchtools_custom_local) <- c("batchtools_custom_local",
+                                    class(batchtools_custom))
+
 strategies <- c("sequential", "multisession",
-                "batchtools_interactive", "batchtools_local")
+                "batchtools_interactive", "batchtools_local",
+                "batchtools_custom_local")
 
 message("*** future_lapply() ...")
 
@@ -18,7 +29,10 @@ for (scheduling in list(FALSE, TRUE)) {
   for (strategy in strategies) {
     message(sprintf("- plan('%s') ...", strategy))
     plan(strategy)
-    y <- future_lapply(x, FUN=vector, length=2L, future.scheduling = scheduling)
+    stopifnot(nbrOfWorkers() < Inf)
+    
+    y <- future_lapply(x, FUN=vector, length=2L,
+                       future.scheduling = scheduling)
     str(list(y=y))
     stopifnot(identical(y, y0))
   }
@@ -37,7 +51,10 @@ for (scheduling in list(FALSE, TRUE)) {
   for (strategy in strategies) {
     message(sprintf("- plan('%s') ...", strategy))
     plan(strategy)
-    y <- future_lapply(x, FUN=base::vector, length=2L, future.scheduling = scheduling)
+    stopifnot(nbrOfWorkers() < Inf)
+    
+    y <- future_lapply(x, FUN=base::vector, length=2L,
+                       future.scheduling = scheduling)
     str(list(y=y))
     stopifnot(identical(y, y0))
   }
@@ -55,7 +72,10 @@ for (scheduling in list(FALSE, TRUE)) {
   for (strategy in strategies) {
     message(sprintf("- plan('%s') ...", strategy))
     plan(strategy)
-    y <- future_lapply(x, FUN=future:::hpaste, collapse="; ", maxHead=3L, future.scheduling = scheduling)
+    stopifnot(nbrOfWorkers() < Inf)
+    
+    y <- future_lapply(x, FUN=future:::hpaste, collapse="; ",
+                       maxHead=3L, future.scheduling = scheduling)
     str(list(y=y))
     stopifnot(identical(y, y0))
   }
@@ -84,6 +104,8 @@ for (scheduling in list(FALSE, TRUE)) {
   for (strategy in strategies) {
     message(sprintf("- plan('%s') ...", strategy))
     plan(strategy)
+    stopifnot(nbrOfWorkers() < Inf)
+    
     y <- future_lapply(x, FUN=listenv::map, future.scheduling = scheduling)
     str(list(y=y))
     stopifnot(identical(y, y0))

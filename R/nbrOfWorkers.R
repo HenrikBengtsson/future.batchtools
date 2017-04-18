@@ -24,6 +24,23 @@ nbrOfWorkers.batchtools <- function(evaluator) {
     stop("Invalid data type of 'workers': ", mode(workers))
   }
 
+  ## 2. Infer from 'cluster.functions' argument
+  expr <- formals(evaluator)$cluster.functions
+  cf <- eval(expr)
+  if (!is.null(cf)) {
+    stopifnot(inherits(cf, "ClusterFunctions"))
+    
+    name <- cf$name
+    if (is.null(name)) name <- cf$Name
+    if (is.null(name)) return(Inf)
+
+    ## Uni-process backends
+    if (name %in% c("Local", "Interactive")) return(1L)
+
+    ## Cluster backends (infinite queue available)
+    if (name %in% c("TORQUE", "Slurm", "SGE", "OpenLava", "LSF")) return(Inf)
+  }
+
   ## If still not known, assume Inf
   Inf
 }
