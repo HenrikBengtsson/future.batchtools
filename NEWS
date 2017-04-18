@@ -1,16 +1,19 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.3.0-9000 [2017-03-21]
+Version: 0.3.0-9000 [2017-04-17]
 
- o ...
+NEW FEATURES:
+
+ o nbrOfWorkers() for batchtools future now defaults to +Inf unless the
+   evaluator's 'workers' argument specify something else.
 
 SOFTWARE QUALITY:
 
  o Testing future_lapply() for batchtools backends.
 
 BUG FIXES:
-
+   
  o Under plan(batchjobs_*), futures would give produce an error on
    "all(is.finite(workers)) is not TRUE" when created due to an outdated
    sanity check.
