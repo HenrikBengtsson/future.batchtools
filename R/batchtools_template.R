@@ -70,6 +70,7 @@ class(batchtools_torque) <- c("batchtools_torque", "batchtools_template", "batch
 
 
 #' @importFrom batchtools makeClusterFunctionsLSF
+#' @importFrom batchtools makeClusterFunctionsOpenLava
 #' @importFrom batchtools makeClusterFunctionsSGE
 #' @importFrom batchtools makeClusterFunctionsSlurm
 #' @importFrom batchtools makeClusterFunctionsTORQUE

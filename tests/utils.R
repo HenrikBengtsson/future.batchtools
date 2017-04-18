@@ -76,7 +76,7 @@ for (os in c("darwin", "freebsd", "irix", "linux", "openbsd", "solaris", "window
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# importFuture() and importbatchtools()
+# importFuture()
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 message("*** importFuture() ...")
 
@@ -90,21 +90,6 @@ res <- try(importFuture("<unknown function>"), silent=TRUE)
 stopifnot(inherits(res, "try-error"))
 
 message("*** importFuture() ... DONE")
-
-
-message("*** importbatchtools() ...")
-
-batchMap <- importbatchtools("batchMap")
-stopifnot(identical(batchMap, batchtools::batchMap))
-
-batchMap <- importbatchtools("<unknown function>", default=batchtools::batchMap)
-stopifnot(identical(batchMap, batchtools::batchMap))
-
-res <- try(importbatchtools("<unknown function>"), silent=TRUE)
-stopifnot(inherits(res, "try-error"))
-
-message("*** importbatchtools() ... DONE")
-
 
 message("*** Utility functions ... DONE")
 
