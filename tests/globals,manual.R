@@ -94,7 +94,7 @@ message("*** Globals manually specified by their names ...")
 attachLocally(globals)
 f <- future({
   x <- 1:10
-  sumtwo(a + b*x)
+  sumtwo(a + b * x)
 }, globals = c("a", "b", "sumtwo"))
 print(f)
 rm(list = names(globals))
@@ -105,7 +105,7 @@ stopifnot(all.equal(v, v0))
 attachLocally(globals)
 y %<-% {
   x <- 1:10
-  sumtwo(a + b*x)
+  sumtwo(a + b * x)
 } %globals% c("a", "b", "sumtwo")
 rm(list = names(globals))
 print(y)

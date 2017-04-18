@@ -8,7 +8,7 @@ strategies <- setdiff(strategies, "multiprocess")
 strategies <- c("batchtools_local")
 
 for (strategy in strategies) {
-  message(sprintf("- plan('%s') ...", strategy))
+  mprintf("- plan('%s') ...", strategy)
   plan(strategy)
 
   for (label in list(NULL, sprintf("strategy = %s", strategy))) {
@@ -34,7 +34,7 @@ for (strategy in strategies) {
 
   } ## for (label ...)
 
-  message(sprintf("- plan('%s') ... DONE", strategy))
+  mprintf("- plan('%s') ... DONE", strategy)
 } ## for (strategy ...)
 
 message("*** Futures - labels ... DONE")

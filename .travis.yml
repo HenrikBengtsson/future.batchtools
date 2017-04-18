@@ -28,8 +28,8 @@ matrix:
         - jimhester/covr
       after_success:
         - Rscript -e 'covr::codecov(quiet=FALSE)'
-      env:
-        - NB='w/ covr'  ## Just a label
+        - Rscript -e 'library(lintr); lint_package(linters = with_defaults(commented_code_linter = NULL, closed_curly_linter = closed_curly_linter(allow_single_line = TRUE), open_curly_linter = open_curly_linter(allow_single_line = TRUE)))'
+      env: NB='w/ covr & lintr' ## Just a label
     - os: linux
       r: devel
     - os: linux

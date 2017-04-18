@@ -45,7 +45,6 @@ print(f)
 ## created.  Because of this, 'a' preserved the
 ## zero value although we reassign it below
 a <- 7  ## Make sure globals are frozen
-##if ("covr" %in% loadedNamespaces()) v <- 0 else ## WORKAROUND
 v <- value(f)
 print(v)
 stopifnot(v == 0)
@@ -53,7 +52,9 @@ stopifnot(v == 0)
 
 message("*** batchtools_custom() with globals (tricky)")
 x <- listenv()
-for (ii in 1:5) x[[ii]] <- batchtools_custom({ ii }, globals = TRUE, cluster.functions = cf)
+for (ii in 1:5) {
+  x[[ii]] <- batchtools_custom({ ii }, globals = TRUE, cluster.functions = cf)
+}
 v <- sapply(x, FUN = value)
 stopifnot(all(v == 1:5))  ## Make sure globals are frozen
 

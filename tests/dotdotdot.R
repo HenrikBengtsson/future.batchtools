@@ -34,11 +34,12 @@ sum_fcns$D <- function(x, y) {
 }
 
 
-for (strategy in c("sequential", "multiprocess", "batchtools_interactive", "batchtools_local")) {
+for (strategy in c("sequential", "multiprocess",
+                   "batchtools_interactive", "batchtools_local")) {
   plan(strategy, substitute = FALSE)
 
   for (name in names(sum_fcns)) {
-    message(sprintf("** Sum function '%s' with plan('%s') ...", name, strategy))
+    mprintf("** Sum function '%s' with plan('%s') ...", name, strategy)
     sum_fcn <- sum_fcns[[name]]
     print(sum_fcn)
     y <- try(sum_fcn(1:2, 3))

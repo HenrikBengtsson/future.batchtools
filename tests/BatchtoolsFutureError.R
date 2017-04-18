@@ -5,7 +5,7 @@ message("*** BatchtoolsFutureError() ...")
 plan(batchtools_local)
 
 for (cleanup in c(FALSE, TRUE)) {
-  message(sprintf("*** batchtools future error w/ future.delete = %s ...", cleanup))
+  mprintf("*** batchtools future error w/ future.delete = %s ...", cleanup)
 
   options(future.delete = cleanup)
 
@@ -33,7 +33,8 @@ for (cleanup in c(FALSE, TRUE)) {
   rm(list = "f")
   gc()
   message(" - Future removed and garbage collected.")
-  message(sprintf(" - batchtools Registry path (%s) exists: %s", sQuote(reg$file.dir), file_test("-d", reg$file.dir)))
+  mprintf(" - batchtools Registry path (%s) exists: %s",
+          sQuote(reg$file.dir), file_test("-d", reg$file.dir))
 
   ## Assert removal of files only happens if there was not
   ## a failure and option future.delete is not TRUE.
@@ -50,7 +51,7 @@ for (cleanup in c(FALSE, TRUE)) {
   fail <- try(checkIds(reg, ids = 1L), silent = TRUE)
   stopifnot(inherits(fail, "try-error"))
 
-  message(sprintf("*** batchtools future error w/ future.delete = %s ... DONE", cleanup))
+  mprintf("*** batchtools future error w/ future.delete = %s ... DONE", cleanup)
 } ## for (cleanup ...)
 
 

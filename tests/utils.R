@@ -4,13 +4,13 @@ message("*** Utility functions ...")
 
 message("- isNA() ...")
 stopifnot(isNA(NA), !isNA(TRUE), !isNA(FALSE), !isNA(1),
-          !isNA(NULL), !isNA(1:2), !isNA(rep(NA, 3)),
+          !isNA(NULL), !isNA(1:2), !isNA(rep(NA, times = 3)),
           !isNA(rep(TRUE, 3)), !isNA(letters))
 
 message("- isFALSE() ...")
 stopifnot(isFALSE(FALSE), !isFALSE(TRUE), !isFALSE(NA), !isFALSE(1),
-          !isFALSE(NULL), !isFALSE(1:2), !isFALSE(rep(FALSE, 3)),
-          !isFALSE(rep(TRUE, 3)), !isFALSE(letters))
+          !isFALSE(NULL), !isFALSE(1:2), !isFALSE(rep(FALSE, times = 3)),
+          !isFALSE(rep(TRUE, times = 3)), !isFALSE(letters))
 
 message("- attachedPackages() ...")
 print(attachedPackages())
@@ -70,8 +70,9 @@ stopifnot(trim(" hello ") == "hello")
 # isOS()
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 message("- isOS() ...")
-for (os in c("darwin", "freebsd", "irix", "linux", "openbsd", "solaris", "windows")) {
-  message(sprintf("isOS('%s') = %s", os, isOS(os)))
+for (os in c("darwin", "freebsd", "irix", "linux", "openbsd",
+             "solaris", "windows")) {
+  mprintf("isOS('%s') = %s", os, isOS(os))
 }
 
 

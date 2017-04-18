@@ -27,7 +27,7 @@ str(list(y0 = y0))
 
 for (scheduling in list(FALSE, TRUE)) {
   for (strategy in strategies) {
-    message(sprintf("- plan('%s') ...", strategy))
+    mprintf("- plan('%s') ...", strategy)
     plan(strategy)
     stopifnot(nbrOfWorkers() < Inf)
 
@@ -49,7 +49,7 @@ str(list(y0 = y0))
 
 for (scheduling in list(FALSE, TRUE)) {
   for (strategy in strategies) {
-    message(sprintf("- plan('%s') ...", strategy))
+    mprintf("- plan('%s') ...", strategy)
     plan(strategy)
     stopifnot(nbrOfWorkers() < Inf)
 
@@ -70,7 +70,7 @@ str(list(y0 = y0))
 
 for (scheduling in list(FALSE, TRUE)) {
   for (strategy in strategies) {
-    message(sprintf("- plan('%s') ...", strategy))
+    mprintf("- plan('%s') ...", strategy)
     plan(strategy)
     stopifnot(nbrOfWorkers() < Inf)
 
@@ -102,7 +102,7 @@ str(list(y0 = y0))
 
 for (scheduling in list(FALSE, TRUE)) {
   for (strategy in strategies) {
-    message(sprintf("- plan('%s') ...", strategy))
+    mprintf("- plan('%s') ...", strategy)
     plan(strategy)
     stopifnot(nbrOfWorkers() < Inf)
 

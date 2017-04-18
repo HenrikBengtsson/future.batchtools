@@ -59,13 +59,13 @@ message("*** Globals - lm(<formula>, data = cars) ...")
 
 exprs <- list(
   # "remove-intercept-term" form of no-intercept
-  a = substitute({ lm(dist ~ . -1, data = cars) }),
+  a = substitute({ lm(dist ~ . - 1, data = cars) }),
   # "make-intercept-zero" form of no-intercept
-  b = substitute({ lm(dist ~ . +0, data = cars) }),
+  b = substitute({ lm(dist ~ . + 0, data = cars) }),
   # doesn't do what we want here
-  c = substitute({ lm(dist ~ speed + speed^2, data = cars) }),
+  c = substitute({ lm(dist ~ speed + speed ^ 2, data = cars) }),
   # gets us a quadratic term
-  d = substitute({ lm(dist ~ speed + I(speed^2), data = cars) }),
+  d = substitute({ lm(dist ~ speed + I(speed ^ 2), data = cars) }),
   # avoid potential multicollinearity
   e = substitute({ lm(dist ~ poly(speed, 2), data = cars) })
 )
@@ -73,7 +73,8 @@ exprs <- list(
 for (kk in seq_along(exprs)) {
   expr <- exprs[[kk]]
   name <- names(exprs)[kk]
-  message(sprintf("- Globals - lm(<formula #%d (%s)>, data = cars) ...", kk, sQuote(name)))
+  mprintf("- Globals - lm(<formula #%d (%s)>, data = cars) ...",
+          kk, sQuote(name))
 
   fit0 <- eval(expr)
   print(fit0)
