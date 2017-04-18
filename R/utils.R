@@ -17,6 +17,18 @@ attached_packages <- function() {
   pkgs
 }
 
+## Adopted R.utils 2.1.0 (2015-06-15)
+#' @importFrom utils capture.output
+capture_output <- function(expr, envir = parent.frame(), ...) {
+  res <- eval({
+    file <- rawConnection(raw(0L), open = "w")
+    on.exit(close(file))
+    capture.output(expr, file = file)
+    rawToChar(rawConnectionValue(file))
+  }, envir = envir, enclos = envir)
+  unlist(strsplit(res, split = "\n", fixed = TRUE), use.names = FALSE)
+}
+
 printf <- function(...) cat(sprintf(...))
 
 mcat <- function(...) message(..., appendLF = FALSE)
@@ -73,18 +85,6 @@ hpaste <- function(..., sep="", collapse=", ", last_collapse=NULL,
   x
 }
 
-## Adopted R.utils 2.1.0 (2015-06-15)
-#' @importFrom utils capture.output
-capture_output <- function(expr, envir = parent.frame(), ...) {
-  res <- eval({
-    file <- rawConnection(raw(0L), open = "w")
-    on.exit(close(file))
-    capture.output(expr, file = file)
-    rawToChar(rawConnectionValue(file))
-  }, envir = envir, enclos = envir)
-  unlist(strsplit(res, split = "\n", fixed = TRUE), use.names = FALSE)
-}
-
 ## Adopted from R.oo 1.19.0 (2015-06-15)
 trim <- function(x, ...) {
   sub("[\t\n\f\r ]*$", "", sub("^[\t\n\f\r ]*", "", x))
@@ -121,4 +121,4 @@ is_os <- function(name) {
   } else {
     grepl(paste0("^", name), R.version$os)
   }
-} ## is_os()
+}
