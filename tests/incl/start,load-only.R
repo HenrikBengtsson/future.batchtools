@@ -1,6 +1,6 @@
 ## Record original state
 ovars <- ls()
-oopts <- options(warn=1L, mc.cores=2L, future.debug=TRUE)
+oopts <- options(warn = 1L, mc.cores = 2L, future.debug = TRUE)
 oopts$future.delete <- getOption("future.delete")
 oplan <- future::plan()
 
@@ -24,8 +24,8 @@ mstr <- future.batchtools:::mstr
 printf <- future.batchtools:::printf
 tempRegistry <- future.batchtools:::tempRegistry
 trim <- future.batchtools:::trim
-attachLocally <- function(x, envir=parent.frame()) {
+attachLocally <- function(x, envir = parent.frame()) {
   for (name in names(x)) {
-    assign(name, value=x[[name]], envir=envir)
+    assign(name, value = x[[name]], envir = envir)
   }
 }
