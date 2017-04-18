@@ -5,8 +5,8 @@
 #' @param cluster.functions A
 #' \link[batchtools:ClusterFunctions]{ClusterFunctions} object.
 #'
-#' @param resources A named list passed to the batchtools template (available
-#' as variable \code{resources}).
+#' @param resources A named list passed to the batchtools template
+#' (available as variable \code{resources}).
 #'
 #' @param \ldots Additional arguments passed to
 #' \code{\link{BatchtoolsFuture}()}.
@@ -24,11 +24,11 @@ batchtools_custom <- function(expr, envir = parent.frame(), substitute = TRUE,
 
   future <- BatchtoolsFuture(expr = expr, envir = envir, substitute = FALSE,
                             globals = globals,
-			    label = label,
+                            label = label,
                             cluster.functions = cluster.functions,
-			    resources = resources,
+                            resources = resources,
                             workers = workers,
-			    ...)
+                            ...)
 
   if (!future$lazy) future <- run(future)
 

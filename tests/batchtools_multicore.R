@@ -26,12 +26,12 @@ for (cores in 1:min(3L, availableCores("multicore"))) {
       inherits(f, "BatchtoolsFuture") ||
       ((cores == 1 || !supportsMulticore()) && inherits(f, "EagerFuture"))
     )
-  
+
     print(resolved(f))
     y <- value(f)
     print(y)
     stopifnot(y == 42L)
-  
+
     mprintf("*** batchtools_multicore(..., globals = %s) with globals",
           globals)
     ## A global variable
@@ -42,8 +42,8 @@ for (cores in 1:min(3L, availableCores("multicore"))) {
       a * b * c
     }, globals = globals)
     print(f)
-  
-  
+
+
     ## A multicore future is evaluated in a separated
     ## forked process.  Changing the value of a global
     ## variable should not affect the result of the
@@ -58,8 +58,8 @@ for (cores in 1:min(3L, availableCores("multicore"))) {
       print(res)
       stopifnot(inherits(res, "simpleError"))
     }
-  
-  
+
+
     mprintf("*** batchtools_multicore(..., globals = %s) with globals and blocking", globals) #nolint
     x <- listenv()
     for (ii in 1:4) {
@@ -74,7 +74,7 @@ for (cores in 1:min(3L, availableCores("multicore"))) {
       v <- lapply(x, FUN = function(f) tryCatch(value(f), error = identity))
       stopifnot(all(sapply(v, FUN = inherits, "simpleError")))
     }
-  
+
     mprintf("*** batchtools_multicore(..., globals = %s) and errors", globals)
     f <- batchtools_multicore({
       stop("Whoops!")
@@ -84,11 +84,11 @@ for (cores in 1:min(3L, availableCores("multicore"))) {
     v <- value(f, signal = FALSE)
     print(v)
     stopifnot(inherits(v, "simpleError"))
-  
+
     res <- try(value(f), silent = TRUE)
     print(res)
     stopifnot(inherits(res, "try-error"))
-  
+
     ## Error is repeated
     res <- try(value(f), silent = TRUE)
     print(res)

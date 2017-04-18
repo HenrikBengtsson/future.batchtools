@@ -40,8 +40,9 @@
 #' @rdname batchtools_template
 #' @name batchtools_template
 batchtools_lsf <- function(expr, envir = parent.frame(), substitute = TRUE,
-                           globals = TRUE, label = "batchtools", pathname = NULL,
-                           resources = list(), workers = Inf, ...) {
+                           globals = TRUE, label = "batchtools",
+                           pathname = NULL, resources = list(),
+                           workers = Inf, ...) {
   if (substitute) expr <- substitute(expr)
 
   batchtools_by_template(expr, envir = envir, substitute = FALSE,
@@ -56,8 +57,9 @@ class(batchtools_lsf) <- c("batchtools_lsf", "batchtools_template",
 #' @export
 #' @rdname batchtools_template
 batchtools_openlava <- function(expr, envir = parent.frame(), substitute = TRUE,
-                                globals = TRUE, label = "batchtools", pathname = NULL,
-                                resources = list(), workers = Inf, ...) {
+                                globals = TRUE, label = "batchtools",
+                                pathname = NULL, resources = list(),
+                                workers = Inf, ...) {
   if (substitute) expr <- substitute(expr)
 
   batchtools_by_template(expr, envir = envir, substitute = FALSE,
@@ -72,8 +74,9 @@ class(batchtools_openlava) <- c("batchtools_openlava", "batchtools_template",
 #' @export
 #' @rdname batchtools_template
 batchtools_sge <- function(expr, envir = parent.frame(), substitute = TRUE,
-                           globals = TRUE, label = "batchtools", pathname = NULL,
-                           resources = list(), workers = Inf, ...) {
+                           globals = TRUE, label = "batchtools",
+                           pathname = NULL, resources = list(),
+                           workers = Inf, ...) {
   if (substitute) expr <- substitute(expr)
 
   batchtools_by_template(expr, envir = envir, substitute = FALSE,
@@ -88,8 +91,9 @@ class(batchtools_sge) <- c("batchtools_sge", "batchtools_template",
 #' @export
 #' @rdname batchtools_template
 batchtools_slurm <- function(expr, envir = parent.frame(), substitute = TRUE,
-                             globals = TRUE, label = "batchtools", pathname = NULL,
-                             resources = list(), workers = Inf, ...) {
+                             globals = TRUE, label = "batchtools",
+                             pathname = NULL, resources = list(),
+                             workers = Inf, ...) {
   if (substitute) expr <- substitute(expr)
 
   batchtools_by_template(expr, envir = envir, substitute = FALSE,
@@ -103,7 +107,10 @@ class(batchtools_slurm) <- c("batchtools_slurm", "batchtools_template",
 
 #' @export
 #' @rdname batchtools_template
-batchtools_torque <- function(expr, envir = parent.frame(), substitute = TRUE, globals = TRUE, label = "batchtools", pathname = NULL, resources = list(), workers = Inf, ...) {
+batchtools_torque <- function(expr, envir = parent.frame(), substitute = TRUE,
+                              globals = TRUE, label = "batchtools",
+                              pathname = NULL, resources = list(),
+                              workers = Inf, ...) {
   if (substitute) expr <- substitute(expr)
 
   batchtools_by_template(expr, envir = envir, substitute = FALSE,
@@ -122,11 +129,17 @@ class(batchtools_torque) <- c("batchtools_torque", "batchtools_template",
 #' @importFrom batchtools makeClusterFunctionsSlurm
 #' @importFrom batchtools makeClusterFunctionsTORQUE
 #' @importFrom utils file_test
-batchtools_by_template <- function(expr, envir = parent.frame(), substitute = TRUE, globals = TRUE, pathname = NULL, type = c("lsf", "openlava", "sge", "slurm", "torque"), resources = list(), label = "batchtools", workers = Inf, ...) {
+batchtools_by_template <- function(expr, envir = parent.frame(),
+                                   substitute = TRUE, globals = TRUE,
+                                   pathname = NULL,
+                                   type = c("lsf", "openlava", "sge",
+                                            "slurm", "torque"),
+                                   resources = list(), label = "batchtools",
+                                   workers = Inf, ...) {
   if (substitute) expr <- substitute(expr)
   type <- match.arg(type)
 
-  makeCFs <- switch(type,
+  make_cfs <- switch(type,
     lsf      = makeClusterFunctionsLSF,
     openlava = makeClusterFunctionsOpenLava,
     sge      = makeClusterFunctionsSGE,
@@ -136,19 +149,19 @@ batchtools_by_template <- function(expr, envir = parent.frame(), substitute = TR
 
   ## Search for a default template file?
   if (!is.null(pathname)) {
-    cluster.functions <- makeCFs()
+    cluster.functions <- make_cfs()
   } else {
-    cluster.functions <- makeCFs(pathname)
+    cluster.functions <- make_cfs(pathname)
   }
   attr(cluster.functions, "pathname") <- pathname
 
   future <- BatchtoolsFuture(expr = expr, envir = envir, substitute = FALSE,
                             globals = globals,
-			    label = label,
+                            label = label,
                             cluster.functions = cluster.functions,
-			    resources = resources,
+                            resources = resources,
                             workers = workers,
-			    ...)
+                            ...)
 
   if (!future$lazy) future <- run(future)
 

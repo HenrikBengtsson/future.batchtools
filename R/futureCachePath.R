@@ -10,13 +10,13 @@ futureCachePath <- local({
       id <- gsub("Rtmp", "", id, fixed = TRUE)
       timestamp <- format(Sys.time(), format = "%Y%m%d_%H%M%S")
       dir <- sprintf("%s-%s", timestamp, id)
-      pathT <- file.path(rootPath, dir)
-      if (create && !isDirectory(pathT)) {
-        mkdirs(pathT)
-        pathnameT <- file.path(pathT, "sessioninfo.txt")
-        writeLines(captureOutput(print(sessionInfo())), con = pathnameT)
+      path_tmp <- file.path(rootPath, dir)
+      if (create && !isDirectory(path_tmp)) {
+        mkdirs(path_tmp)
+        pathname_tmp <- file.path(path_tmp, "sessioninfo.txt")
+        writeLines(captureOutput(print(sessionInfo())), con = pathname_tmp)
       }
-      path <<- pathT
+      path <<- path_tmp
     }
     if (absolute) path <- file.path(getwd(), path)
 

@@ -41,17 +41,17 @@ tempRegistry <- local({
       key <- tempvar(prefix = prefix, value = NA, envir = regs)
       ## The directory for this batchtools future
       ##   e.g. .future/<datetimestamp>-<unique_id>/<key>/
-      pathRegistry <- file.path(path, key)
+      path_registry <- file.path(path, key)
       ## Should not happen, but just in case.
-      unique <- !file.exists(pathRegistry)
+      unique <- !file.exists(path_registry)
     }
 
     ## FIXME: We need to make sure 'label' consists of only valid
     ## batchtools ID characters, i.e. it must match regular
     ## expression "^[a-zA-Z]+[0-9a-zA-Z_]*$".
     ## /HB 2016-10-19
-    regId <- asValidRegistryID(label)
-    makeRegistry(file.dir = pathRegistry, ...)
+    reg_id <- asValidRegistryID(label)
+    makeRegistry(file.dir = path_registry, ...)
   }
 })
 
