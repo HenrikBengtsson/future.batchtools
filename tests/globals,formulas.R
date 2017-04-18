@@ -112,10 +112,7 @@ y0 <- outer_function(1L)
 str(y0)
 
 ## Check if globals version installed identifies globals in formulas
-findGlobals <- get("findGlobals", envir = getNamespace("globals"),
-                   mode = "function")
-formulas_supported <- ("x" %in% findGlobals(~ x, substitute = TRUE))
-if (formulas_supported) {
+if (packageVersion("globals") >= "0.10.0") {
   f <- future({ outer_function(1L) })
   y <- value(f)
   str(y)
