@@ -4,7 +4,7 @@ Depends:
     R (>= 3.2.0),
     future (>= 1.4.0)
 Imports:
-    batchtools (>= 0.9.2),
+    batchtools (>= 0.9.3),
     R.utils
 Suggests:
     listenv,
