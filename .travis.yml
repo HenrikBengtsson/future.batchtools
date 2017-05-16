@@ -44,7 +44,7 @@ matrix:
       env: NB='w/ covr' ## Just a label
     - os: linux
       r: release
-       r_github_packages:
+      r_github_packages:
         - jimhester/lintr
       r_check_args: --no-codoc --no-examples --no-tests --ignore-vignettes
       after_success:
