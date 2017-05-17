@@ -23,7 +23,10 @@ BUG FIXES:
 
 SOFTWARE QUALITY:
 
- o Testing future_lapply() for batchtools backends.
+ o TESTS: Added test of future_lapply() for batchtools backends.
+
+ o TESTS: Added optional tests for batchjobs_* HPC schedulers listed in
+   environment variable 'R_FUTURE_TESTS_STRATEGIES'.
 
  
 Version: 0.3.0 [2017-03-19]

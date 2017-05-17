@@ -9,6 +9,19 @@ future::plan(future.batchtools:::batchtools_local)
 
 fullTest <- (Sys.getenv("_R_CHECK_FULL_") != "")
 
+all_strategies <- function() {
+  strategies <- Sys.getenv("R_FUTURE_TESTS_STRATEGIES")
+  strategies <- unlist(strsplit(strategies, split = ","))
+  strategies <- gsub(" ", "", strategies)
+  strategies <- strategies[nzchar(strategies)]
+  strategies <- c(future:::supportedStrategies(), strategies)
+  unique(strategies)
+}
+
+test_strategy <- function(strategy) {
+  strategy %in% all_strategies()
+}
+
 attached_packages <- future.batchtools:::attached_packages
 await <- future.batchtools:::await
 delete <- future.batchtools:::delete
