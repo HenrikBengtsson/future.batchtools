@@ -1,16 +1,23 @@
 source("incl/start.R")
+library("batchtools")
 library("listenv")
 
-message("*** batchtools_interactive() ...")
+message("*** batchtools_custom() ...")
 
-message("*** batchtools_interactive() without globals")
+cf <- makeClusterFunctionsInteractive(external = TRUE)
+str(cf)
 
-f <- batchtools_interactive({
+
+message("*** batchtools_custom() ...")
+
+message("*** batchtools_custom() without globals")
+
+f <- batchtools_custom({
   42L
-})
+}, cluster.functions = cf)
 stopifnot(inherits(f, "BatchtoolsFuture"))
 
-## Check whether a batchtools_interactive future is resolved
+## Check whether a batchtools_custom future is resolved
 ## or not will force evaluation
 print(resolved(f))
 stopifnot(resolved(f))
@@ -20,17 +27,17 @@ print(y)
 stopifnot(y == 42L)
 
 
-message("*** batchtools_interactive() with globals")
+message("*** batchtools_custom() with globals")
 ## A global variable
 a <- 0
-f <- batchtools_interactive({
+f <- batchtools_custom({
   b <- 3
   c <- 2
   a * b * c
-})
+}, cluster.functions = cf)
 print(f)
 
-## Although 'f' is a batchtools_interactive future and therefore
+## Although 'f' is a batchtools_custom future and therefore
 ## resolved/evaluates the future expression only
 ## when the value is requested, any global variables
 ## identified in the expression (here 'a') are
@@ -43,18 +50,20 @@ print(v)
 stopifnot(v == 0)
 
 
-message("*** batchtools_interactive() with globals (tricky)")
+message("*** batchtools_custom() with globals (tricky)")
 x <- listenv()
-for (ii in 1:5) x[[ii]] <- batchtools_interactive({ ii }, globals = TRUE)
+for (ii in 1:5) {
+  x[[ii]] <- batchtools_custom({ ii }, globals = TRUE, cluster.functions = cf)
+}
 v <- sapply(x, FUN = value)
 stopifnot(all(v == 1:5))  ## Make sure globals are frozen
 
 
-message("*** batchtools_interactive() and errors")
-f <- batchtools_interactive({
+message("*** batchtools_custom() and errors")
+f <- batchtools_custom({
   stop("Whoops!")
   1
-})
+}, cluster.functions = cf)
 print(f)
 v <- value(f, signal = FALSE)
 print(v)
@@ -69,6 +78,6 @@ res <- try(value(f), silent = TRUE)
 print(res)
 stopifnot(inherits(res, "try-error"))
 
-message("*** batchtools_interactive() ... DONE")
+message("*** batchtools_custom() ... DONE")
 
 source("incl/end.R")

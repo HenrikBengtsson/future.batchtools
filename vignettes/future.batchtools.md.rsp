@@ -15,9 +15,7 @@
 %\VignetteTangle{FALSE}
 --------------------------------------------------------------------"%>
 <%
-library("R.utils")
-options("withCapture/newline"=FALSE)
-options(mc.cores=2L)
+options(mc.cores = 2L)
 %>
 # A Future for batchtools
 
@@ -123,7 +121,8 @@ batchtools backends.
 | `batchtools_sge`         | Futures are evaluated via a [Sun/Oracle Grid Engine (SGE)] job scheduler | N/A
 | `batchtools_lsf`         | Futures are evaluated via a [Load Sharing Facility (LSF)] job scheduler  | N/A
 | `batchtools_openlava`    | Futures are evaluated via an [OpenLava] job scheduler                    | N/A
-<%-- | `batchtools_slurm`       | Futures are evaluated via a [Docker Swarm] cluster                       | N/A --%>
+<%-- | `batchtools_docker`       | Futures are evaluated via a [Docker Swarm] cluster                       | N/A --%>
+| `batchtools_custom`      | Futures are evaluated via a custom set of cluster functions                   | N/A
 | `batchtools_interactive` | sequential evaluation in the calling R environment                       | `plan(transparent)`
 | `batchtools_multicore`   | parallel evaluation by forking the current R process                     | `plan(multicore)`
 | `batchtools_local`       | sequential evaluation in a separate R process (on current machine)       | `plan(cluster, workers = "localhost")`
@@ -151,9 +150,10 @@ This is what a template file for TORQUE / PBS may look like:
 ## Run R:
 R CMD BATCH --no-save --no-restore "<%%= rscript %%>" /dev/stdout
 ```
-If this template is saved to file `.batchtools.torque.tmpl` in the
-working directory or the user's home directory, then it will be
-automatically located and loaded when doing:
+If this template is saved to file `batchtools.torque.tmpl` (without period)
+in the working directory or as `.batchtools.torque.tmpl` (with period) the
+user's home directory, then it will be automatically located by the
+batchtools framework and loaded when doing:
 ```r
 > plan(batchtools_torque)
 ```
@@ -171,18 +171,16 @@ plan(list(
 ```
 causes the first level of futures to be submitted via the TORQUE job scheduler requesting 12 cores and 5 GiB of memory per job.  The second level of futures will be evaluated using multiprocessing using the 12 cores given to each job by the scheduler.
 
-A similar filename format is used for the other types of job schedulers supported.  For instance, for Slurm the template file should be named `.batchtools.slurm.tmpl` in order for
+A similar filename format is used for the other types of job schedulers supported.  For instance, for Slurm the template file should be named `./batchtools.slurm.tmpl` or `~/.batchtools.slurm.tmpl` in order for
 ```r
 > plan(batchtools_slurm)
 ```
-to locate the file automatically.  To specify this template file explicitly, use argument `pathname`, e.g.
+to locate the file automatically.  To specify this template file explicitly, use argument `template`, e.g.
 ```r
-> plan(batchtools_slurm, pathname = "./.batchtools.slurm.tmpl")
+> plan(batchtools_slurm, template = "/path/to/batchtools.slurm.tmpl")
 ```
 
-
-Note that it is still possible to use a `.batchtools.R` and load the template file using a standard batchtools approach for maximum control.  For further details and examples on how to configure batchtools per se, see the [batchtools configuration] wiki page.
-
+For further details and examples on how to configure batchtools per se, see the [batchtools configuration] wiki page.
 
 
 ## Demos

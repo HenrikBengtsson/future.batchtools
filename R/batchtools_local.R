@@ -8,13 +8,15 @@
 #' Both types of futures will block until the futures are resolved.
 #'
 #' @inheritParams BatchtoolsFuture
-#' @param \ldots Additional arguments passed to \code{\link{BatchtoolsFuture}()}.
+#' 
+#' @param \ldots Additional arguments passed to
+#' \code{\link{BatchtoolsFuture}()}.
 #'
 #' @return An object of class \code{BatchtoolsFuture}.
 #'
 #' @details
-#' batchtools local futures rely on the batchtools backend set
-#' up by \code{\link[batchtools]{makeClusterFunctionsInteractive}(external = TRUE)}
+#' batchtools local futures rely on the batchtools backend set up by
+#' \code{\link[batchtools]{makeClusterFunctionsInteractive}(external = TRUE)}
 #' and batchtools interactive futures on the one set up by
 #' \code{\link[batchtools]{makeClusterFunctionsInteractive}()}.
 #' These are supported by all operating systems.
@@ -22,7 +24,7 @@
 #' An alternative to batchtools local futures is to use
 #' \link[future:cluster]{cluster} futures of the \pkg{future}
 #' package with a single local background session, i.e.
-#' \code{plan(cluster, workers="localhost")}.
+#' \code{plan(cluster, workers = "localhost")}.
 #'
 #' An alternative to batchtools interactive futures is to use
 #' \link[future:transparent]{transparent} futures of the
@@ -33,20 +35,23 @@
 #' @importFrom batchtools makeClusterFunctionsInteractive
 #' @aliases batchtools_interactive
 #' @export
-batchtools_local <- function(expr, envir=parent.frame(), substitute=TRUE, globals=TRUE, label="batchtools", workers=1L, ...) {
+batchtools_local <- function(expr, envir = parent.frame(), substitute = TRUE,
+                             globals = TRUE, label = "batchtools",
+                             workers = 1L, ...) {
   if (substitute) expr <- substitute(expr)
 
   cf <- makeClusterFunctionsInteractive(external = TRUE)
 
-  future <- BatchtoolsFuture(expr=expr, envir=envir, substitute=FALSE,
-                            globals=globals,
-			    label=label,
-                            workers=workers,
-			    cluster.functions=cf,
-			    ...)
+  future <- BatchtoolsFuture(expr = expr, envir = envir, substitute = FALSE,
+                            globals = globals,
+                            label = label,
+                            workers = workers,
+                            cluster.functions = cf,
+                            ...)
 
   if (!future$lazy) future <- run(future)
 
   future
 }
-class(batchtools_local) <- c("batchtools_local", "batchtools", "uniprocess", "future", "function")
+class(batchtools_local) <- c("batchtools_local", "batchtools", "uniprocess",
+                             "future", "function")

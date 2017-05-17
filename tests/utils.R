@@ -2,18 +2,18 @@ source("incl/start.R")
 
 message("*** Utility functions ...")
 
-message("- isNA() ...")
-stopifnot(isNA(NA), !isNA(TRUE), !isNA(FALSE), !isNA(1),
-          !isNA(NULL), !isNA(1:2), !isNA(rep(NA,3)),
-          !isNA(rep(TRUE,3)), !isNA(letters))
+message("- is_na() ...")
+stopifnot(is_na(NA), !is_na(TRUE), !is_na(FALSE), !is_na(1),
+          !is_na(NULL), !is_na(1:2), !is_na(rep(NA, times = 3)),
+          !is_na(rep(TRUE, 3)), !is_na(letters))
 
-message("- isFALSE() ...")
-stopifnot(isFALSE(FALSE), !isFALSE(TRUE), !isFALSE(NA), !isFALSE(1),
-          !isFALSE(NULL), !isFALSE(1:2), !isFALSE(rep(FALSE,3)),
-          !isFALSE(rep(TRUE,3)), !isFALSE(letters))
+message("- is_false() ...")
+stopifnot(is_false(FALSE), !is_false(TRUE), !is_false(NA), !is_false(1),
+          !is_false(NULL), !is_false(1:2), !is_false(rep(FALSE, times = 3)),
+          !is_false(rep(TRUE, times = 3)), !is_false(letters))
 
-message("- attachedPackages() ...")
-print(attachedPackages())
+message("- attached_packages() ...")
+print(attached_packages())
 
 
 message("- hpaste() & printf() ...")
@@ -28,31 +28,31 @@ z <- LETTERS[x]
 printf("x = %s.\n", hpaste(x))
 ## x = 1, 2, 3, ..., 6.
 
-printf("x = %s.\n", hpaste(x, maxHead=2))
+printf("x = %s.\n", hpaste(x, max_head = 2))
 ## x = 1, 2, ..., 6.
 
-printf("x = %s.\n", hpaste(x), maxHead=3) # Default
+printf("x = %s.\n", hpaste(x), max_head = 3) # Default
 ## x = 1, 2, 3, ..., 6.
 
 # It will never output 1, 2, 3, 4, ..., 6
-printf("x = %s.\n", hpaste(x, maxHead=4))
+printf("x = %s.\n", hpaste(x, max_head = 4))
 ## x = 1, 2, 3, 4, 5 and 6.
 
 # Showing the tail
-printf("x = %s.\n", hpaste(x, maxHead=1, maxTail=2))
+printf("x = %s.\n", hpaste(x, max_head = 1, max_tail = 2))
 ## x = 1, ..., 5, 6.
 
 # Turning off abbreviation
-printf("y = %s.\n", hpaste(y, maxHead=Inf))
+printf("y = %s.\n", hpaste(y, max_head = Inf))
 ## y = 10, 9, 8, 7, 6, 5, 4, 3, 2, 1
 
 ## ...or simply
-printf("y = %s.\n", paste(y, collapse=", "))
+printf("y = %s.\n", paste(y, collapse = ", "))
 ## y = 10, 9, 8, 7, 6, 5, 4, 3, 2, 1
 
 # Adding a special separator before the last element
 # Change last separator
-printf("x = %s.\n", hpaste(x, lastCollapse=" and "))
+printf("x = %s.\n", hpaste(x, last_collapse = " and "))
 ## x = 1, 2, 3, 4, 5 and 6.
 
 message("- mcat(), mprintf(), mprint() and mstr() ...")
@@ -67,44 +67,30 @@ stopifnot(trim(" hello ") == "hello")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# isOS()
+# is_os()
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-message("- isOS() ...")
-for (os in c("darwin", "freebsd", "irix", "linux", "openbsd", "solaris", "windows")) {
-  message(sprintf("isOS('%s') = %s", os, isOS(os)))
+message("- is_os() ...")
+for (os in c("darwin", "freebsd", "irix", "linux", "openbsd",
+             "solaris", "windows")) {
+  mprintf("is_os('%s') = %s", os, is_os(os))
 }
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# importFuture() and importbatchtools()
+# import_future()
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-message("*** importFuture() ...")
+message("*** import_future() ...")
 
-future <- importFuture("future")
+future <- import_future("future")
 stopifnot(identical(future, future::future))
 
-future <- importFuture("<unknown function>", default=future::future)
+future <- import_future("<unknown function>", default = future::future)
 stopifnot(identical(future, future::future))
 
-res <- try(importFuture("<unknown function>"), silent=TRUE)
+res <- try(import_future("<unknown function>"), silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-message("*** importFuture() ... DONE")
-
-
-message("*** importbatchtools() ...")
-
-batchMap <- importbatchtools("batchMap")
-stopifnot(identical(batchMap, batchtools::batchMap))
-
-batchMap <- importbatchtools("<unknown function>", default=batchtools::batchMap)
-stopifnot(identical(batchMap, batchtools::batchMap))
-
-res <- try(importbatchtools("<unknown function>"), silent=TRUE)
-stopifnot(inherits(res, "try-error"))
-
-message("*** importbatchtools() ... DONE")
-
+message("*** import_future() ... DONE")
 
 message("*** Utility functions ... DONE")
 

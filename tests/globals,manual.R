@@ -7,40 +7,40 @@ message("*** Globals - manually ...")
 message("*** Globals manually specified as named list ...")
 
 globals <- list(
-  a=1,
-  b=2,
-  sumtwo=function(x) x[1] + x[2]
+  a = 1,
+  b = 2,
+  sumtwo = function(x) x[1] + x[2]
 )
 
 ## Assign 'globals' globally
-attachLocally(globals)
+attach_locally(globals)
 
 ## Truth
 v0 <- local({
   x <- 1:10
-  sumtwo(a + b*x)
+  sumtwo(a + b * x)
 })
 
 
 message("*** Globals - automatic ...")
 
-attachLocally(globals)
+attach_locally(globals)
 f <- future({
   x <- 1:10
-  sumtwo(a + b*x)
-}, globals=TRUE)
+  sumtwo(a + b * x)
+}, globals = TRUE)
 print(f)
-rm(list=names(globals))
+rm(list = names(globals))
 y <- value(f)
 print(y)
 stopifnot(all.equal(y, v0))
 
-attachLocally(globals)
+attach_locally(globals)
 y %<-% {
   x <- 1:10
-  sumtwo(a + b*x)
+  sumtwo(a + b * x)
 } %globals% TRUE
-rm(list=names(globals))
+rm(list = names(globals))
 print(y)
 stopifnot(all.equal(y, v0))
 
@@ -50,13 +50,13 @@ print(y)
 stopifnot(identical(y, 1))
 
 ## Exception - missing global
-attachLocally(globals)
+attach_locally(globals)
 f <- future({
   x <- 1:10
-  sumtwo(a + b*x)
-}, globals=FALSE)
+  sumtwo(a + b * x)
+}, globals = FALSE)
 print(f)
-rm(list=names(globals))
+rm(list = names(globals))
 y <- tryCatch(value(f), error = identity)
 if (!inherits(f, c("EagerFuture", "MulticoreFuture"))) {
   stopifnot(inherits(y, "simpleError"))
@@ -68,12 +68,12 @@ message("*** Globals - automatic ... DONE")
 message("*** Globals manually specified as named list ...")
 
 ## Make sure globals do not exist
-rm(list=names(globals))
+rm(list = names(globals))
 
 f <- future({
   x <- 1:10
-  sumtwo(a + b*x)
-}, globals=globals)
+  sumtwo(a + b * x)
+}, globals = globals)
 print(f)
 v <- value(f)
 print(v)
@@ -81,7 +81,7 @@ stopifnot(all.equal(v, v0))
 
 y %<-% {
   x <- 1:10
-  sumtwo(a + b*x)
+  sumtwo(a + b * x)
 } %globals% globals
 print(y)
 stopifnot(all.equal(y, v0))
@@ -91,23 +91,23 @@ message("*** Globals manually specified as named list ... DONE")
 
 message("*** Globals manually specified by their names ...")
 
-attachLocally(globals)
+attach_locally(globals)
 f <- future({
   x <- 1:10
-  sumtwo(a + b*x)
-}, globals=c("a", "b", "sumtwo"))
+  sumtwo(a + b * x)
+}, globals = c("a", "b", "sumtwo"))
 print(f)
-rm(list=names(globals))
+rm(list = names(globals))
 v <- value(f)
 print(v)
 stopifnot(all.equal(v, v0))
 
-attachLocally(globals)
+attach_locally(globals)
 y %<-% {
   x <- 1:10
-  sumtwo(a + b*x)
+  sumtwo(a + b * x)
 } %globals% c("a", "b", "sumtwo")
-rm(list=names(globals))
+rm(list = names(globals))
 print(y)
 stopifnot(all.equal(y, v0))
 

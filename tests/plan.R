@@ -2,7 +2,7 @@ source("incl/start,load-only.R")
 
 message("*** plan() ...")
 
-message("*** Set strategy via future::plan(future.batchtools::batchtools_local)")
+message("*** future::plan(future.batchtools::batchtools_local)")
 oplan <- future::plan(future.batchtools::batchtools_local)
 print(future::plan())
 future::plan(oplan)
@@ -13,7 +13,7 @@ library("future.batchtools")
 plan(batchtools_local)
 
 for (type in c("batchtools_interactive", "batchtools_local")) {
-  message(sprintf("*** plan('%s') ...", type))
+  mprintf("*** plan('%s') ...", type)
 
   plan(type)
   stopifnot(inherits(plan(), "batchtools"))
@@ -29,7 +29,7 @@ for (type in c("batchtools_interactive", "batchtools_local")) {
   print(v)
   stopifnot(v == 0)
 
-  message(sprintf("*** plan('%s') ... DONE", type))
+  mprintf("*** plan('%s') ... DONE", type)
 } # for (type ...)
 
 

@@ -20,7 +20,7 @@ select the type of future you wish to use via
 \examples{
 \donttest{
 plan(batchtools_local)
-demo("mandelbrot", package="future", ask=FALSE)
+demo("mandelbrot", package = "future", ask = FALSE)
 }
 
 ## Use local batchtools futures

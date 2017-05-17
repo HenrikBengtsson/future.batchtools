@@ -1,11 +1,10 @@
 Package: future.batchtools
-Version: 0.3.0
+Version: 0.4.0
 Depends:
     R (>= 3.2.0),
     future (>= 1.4.0)
 Imports:
-    batchtools (>= 0.9.2),
-    R.utils
+    batchtools (>= 0.9.3)
 Suggests:
     listenv,
     markdown,

@@ -6,7 +6,7 @@ message("*** BatchtoolsFuture() - cleanup ...")
 
 f <- batchtools_local({ 1L })
 print(f)
-res <- await(f, cleanup=TRUE)
+res <- await(f, cleanup = TRUE)
 print(res)
 stopifnot(res == 1L)
 
@@ -47,14 +47,14 @@ print(f)
 ## Hack to emulate where batchtools registry is deleted or fails
 f$state <- "running"
 path <- f$config$reg$file.dir
-unlink(path, recursive=TRUE)
+unlink(path, recursive = TRUE)
 
-res <- value(f, onMissing="default")
+res <- value(f, onMissing = "default")
 print(res)
 stopifnot(is.null(res))
 
 res <- tryCatch({
-  value(f, onMissing="error")
+  value(f, onMissing = "error")
 }, error = function(ex) ex)
 print(res)
 stopifnot(inherits(res, "error"))
@@ -86,15 +86,15 @@ res <- tryCatch({
 print(res)
 stopifnot(inherits(res, "error"))
 
-res <- try(f <- BatchtoolsFuture(42L, workers=integer(0)), silent=TRUE)
+res <- try(f <- BatchtoolsFuture(42L, workers = integer(0)), silent = TRUE)
 print(res)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(f <- BatchtoolsFuture(42L, workers=0L), silent=TRUE)
+res <- try(f <- BatchtoolsFuture(42L, workers = 0L), silent = TRUE)
 print(res)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(f <- BatchtoolsFuture(42L, workers=TRUE), silent=TRUE)
+res <- try(f <- BatchtoolsFuture(42L, workers = TRUE), silent = TRUE)
 print(res)
 stopifnot(inherits(res, "try-error"))
 
@@ -103,17 +103,17 @@ message("*** BatchtoolsFuture() - exceptions ... DONE")
 
 message("*** BatchtoolsFuture() - timeout ...")
 
-if (fullTest && availableCores(constraints="multicore") > 1) {
+if (fullTest && availableCores(constraints = "multicore") > 1) {
   plan(batchtools_multicore)
-  
-  options(future.wait.timeout=0.15, future.wait.interval=0.1)
-  
+
+  options(future.wait.timeout = 0.15, future.wait.interval = 0.1)
+
   f <- future({
     Sys.sleep(5)
     x <- 1
   })
   print(f)
-  
+
   res <- tryCatch({
     value(f)
   }, error = function(ex) ex)

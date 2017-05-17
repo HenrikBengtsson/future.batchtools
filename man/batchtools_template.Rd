@@ -7,26 +7,26 @@
 \alias{batchtools_sge}
 \alias{batchtools_slurm}
 \alias{batchtools_torque}
-\title{batchtools LSF, OpenLava, SGE, Slurm and TORQUE futures}
+\title{Batchtools futures for LSF, OpenLava, SGE, Slurm, TORQUE etc.}
 \usage{
 batchtools_lsf(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = "batchtools", pathname = NULL,
+  globals = TRUE, label = "batchtools", template = NULL,
   resources = list(), workers = Inf, ...)
 
 batchtools_openlava(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = "batchtools", pathname = NULL,
+  globals = TRUE, label = "batchtools", template = NULL,
   resources = list(), workers = Inf, ...)
 
 batchtools_sge(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = "batchtools", pathname = NULL,
+  globals = TRUE, label = "batchtools", template = NULL,
   resources = list(), workers = Inf, ...)
 
 batchtools_slurm(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = "batchtools", pathname = NULL,
+  globals = TRUE, label = "batchtools", template = NULL,
   resources = list(), workers = Inf, ...)
 
 batchtools_torque(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = "batchtools", pathname = NULL,
+  globals = TRUE, label = "batchtools", template = NULL,
   resources = list(), workers = Inf, ...)
 }
 \arguments{
@@ -38,35 +38,53 @@ should be located.}
 \item{substitute}{Controls whether \code{expr} should be
 \code{substitute()}:d or not.}
 
-\item{globals}{(optional) a logical, a character vector, a named list, or a \link[globals]{Globals} object.  If TRUE, globals are identified by code inspection based on \code{expr} and \code{tweak} searching from environment \code{envir}.  If FALSE, no globals are used.  If a character vector, then globals are identified by lookup based their names \code{globals} searching from environment \code{envir}.  If a named list or a Globals object, the globals are used as is.}
+\item{globals}{(optional) a logical, a character vector, a named list, or
+a \link[globals]{Globals} object.  If TRUE, globals are identified by code
+inspection based on \code{expr} and \code{tweak} searching from environment
+\code{envir}.  If FALSE, no globals are used.  If a character vector, then
+globals are identified by lookup based their names \code{globals} searching
+from environment \code{envir}.  If a named list or a Globals object, the
+globals are used as is.}
 
-\item{label}{(optional) Label of the future (where applicable, becomes the job name for most job schedulers).}
+\item{label}{(optional) Label of the future (where applicable, becomes the
+job name for most job schedulers).}
 
-\item{pathname}{A batchtools template file (\pkg{brew} formatted).}
+\item{template}{(optional) A batchtools template file or a template string
+(in \pkg{brew} format).  If not specified, it is left to the
+\pkg{batchtools} package to locate such file using its search rules.}
 
-\item{resources}{A named list passed to the batchtools template (available as variable \code{resources}).}
+\item{resources}{A named list passed to the batchtools template (available
+as variable \code{resources}).}
 
-\item{workers}{(optional) Additional specification for the
-batchtools backend.}
+\item{workers}{(optional) Additional specification for the batchtools
+backend.}
 
-\item{\ldots}{Additional arguments passed to \code{\link{BatchtoolsFuture}()}.}
+\item{\ldots}{Additional arguments passed to
+\code{\link{BatchtoolsFuture}()}.}
 }
 \value{
 An object of class \code{BatchtoolsFuture}.
 }
 \description{
-LSF, OpenLava, SGE, Slurm and TORQUE batchtools futures are
-asynchronous multiprocess futures that will be evaluated on
-a compute cluster via a job scheduler.
+Batchtools futures for LSF, OpenLava, SGE, Slurm, TORQUE etc. are
+asynchronous multiprocess futures that will be evaluated on a compute
+cluster via a job scheduler.
 }
 \details{
 These type of batchtools futures rely on batchtools backends set
 up using the following \pkg{batchtools} functions:
 \itemize{
- \item \code{\link[batchtools]{makeClusterFunctionsLSF}()} for \href{https://en.wikipedia.org/wiki/Platform_LSF}{Load Sharing Facility (LSF)}
- \item \code{makeClusterFunctionsOpenLava()} for \href{https://en.wikipedia.org/wiki/OpenLava}{OpenLava} (only batchtools (>= 1.7.0))
- \item \code{\link[batchtools]{makeClusterFunctionsSGE}()} for \href{https://en.wikipedia.org/wiki/Oracle_Grid_Engine}{Sun/Oracle Grid Engine (SGE)}
- \item \code{\link[batchtools]{makeClusterFunctionsSlurm}()} for \href{https://en.wikipedia.org/wiki/Slurm_Workload_Manager}{Slurm}
- \item \code{\link[batchtools]{makeClusterFunctionsTORQUE}()} for \href{https://en.wikipedia.org/wiki/TORQUE}{TORQUE} / PBS
+ \item \code{\link[batchtools]{makeClusterFunctionsLSF}()} for
+   \href{https://en.wikipedia.org/wiki/Platform_LSF}{Load Sharing
+         Facility (LSF)}
+ \item \code{makeClusterFunctionsOpenLava()} for
+   \href{https://en.wikipedia.org/wiki/OpenLava}{OpenLava}
+ \item \code{\link[batchtools]{makeClusterFunctionsSGE}()} for
+   \href{https://en.wikipedia.org/wiki/Oracle_Grid_Engine}{Sun/Oracle
+         Grid Engine (SGE)}
+ \item \code{\link[batchtools]{makeClusterFunctionsSlurm}()} for
+   \href{https://en.wikipedia.org/wiki/Slurm_Workload_Manager}{Slurm}
+ \item \code{\link[batchtools]{makeClusterFunctionsTORQUE}()} for
+   \href{https://en.wikipedia.org/wiki/TORQUE}{TORQUE} / PBS
 }
 }

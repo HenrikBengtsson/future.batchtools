@@ -24,12 +24,6 @@ matrix:
       r: oldrel
     - os: linux
       r: release
-      r_github_packages:
-        - jimhester/covr
-      after_success:
-        - Rscript -e 'covr::codecov(quiet=FALSE)'
-      env:
-        - NB='w/ covr'  ## Just a label
     - os: linux
       r: devel
     - os: linux
@@ -38,14 +32,24 @@ matrix:
         - NB='w/ batchtools devel'  ## Just a label
     - os: osx
       r: oldrel
-      r_github_packages:
-        - HenrikBengtsson/globals
-        - HenrikBengtsson/future
     - os: osx
       r: release
+    - os: linux
+      r: release
       r_github_packages:
-        - HenrikBengtsson/globals
-        - HenrikBengtsson/future
+        - jimhester/covr
+      r_check_args: --no-codoc --no-examples --no-tests --ignore-vignettes
+      after_success:
+        - Rscript -e 'covr::codecov(quiet=FALSE)'
+      env: NB='w/ covr' ## Just a label
+    - os: linux
+      r: release
+      r_github_packages:
+        - jimhester/lintr
+      r_check_args: --no-codoc --no-examples --no-tests --ignore-vignettes
+      after_success:
+        - Rscript -e 'library(lintr); lint_package(linters = with_defaults(commented_code_linter = NULL, closed_curly_linter = closed_curly_linter(allow_single_line = TRUE), open_curly_linter = open_curly_linter(allow_single_line = TRUE)))'
+      env: NB='w/ lintr' ## Just a label
 
 before_install:
   - Rscript -e 'c(physical = parallel::detectCores(logical = FALSE), logical = parallel::detectCores())'

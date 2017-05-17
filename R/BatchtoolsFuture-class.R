@@ -1,19 +1,38 @@
 #' A batchtools future is a future whose value will be resolved via batchtools
 #'
 #' @param expr The R expression to be evaluated
+#'
 #' @param envir The environment in which global environment
 #' should be located.
+#'
 #' @param substitute Controls whether \code{expr} should be
 #' \code{substitute()}:d or not.
-#' @param globals (optional) a logical, a character vector, a named list, or a \link[globals]{Globals} object.  If TRUE, globals are identified by code inspection based on \code{expr} and \code{tweak} searching from environment \code{envir}.  If FALSE, no globals are used.  If a character vector, then globals are identified by lookup based their names \code{globals} searching from environment \code{envir}.  If a named list or a Globals object, the globals are used as is.
-#' @param label (optional) Label of the future (where applicable, becomes the job name for most job schedulers).
+#'
+#' @param globals (optional) a logical, a character vector, a named list, or
+#' a \link[globals]{Globals} object.  If TRUE, globals are identified by code
+#' inspection based on \code{expr} and \code{tweak} searching from environment
+#' \code{envir}.  If FALSE, no globals are used.  If a character vector, then
+#' globals are identified by lookup based their names \code{globals} searching
+#' from environment \code{envir}.  If a named list or a Globals object, the
+#' globals are used as is.
+#'
+#' @param label (optional) Label of the future (where applicable, becomes the
+#' job name for most job schedulers).
+#'
 #' @param conf A batchtools configuration environment.
-#' @param cluster.functions A batchtools \link[batchtools]{ClusterFunctions} object.
-#' @param resources A named list passed to the batchtools template (available as variable \code{resources}).
-#' @param workers (optional) Additional specification for the
-#'        batchtools backend.
+#'
+#' @param cluster.functions A batchtools \link[batchtools]{ClusterFunctions}
+#' object.
+#'
+#' @param resources A named list passed to the batchtools template (available
+#' as variable \code{resources}).
+#'
+#' @param workers (optional) Additional specification for the batchtools
+#' backend.
+#'
 #' @param finalize If TRUE, any underlying registries are
 #' deleted when this object is garbage collected, otherwise not.
+#'
 #' @param \ldots Additional arguments passed to \code{\link[future]{Future}()}.
 #'
 #' @return A BatchtoolsFuture object
@@ -22,11 +41,16 @@
 #' @importFrom future Future
 #' @importFrom batchtools submitJobs
 #' @keywords internal
-BatchtoolsFuture <- function(expr=NULL, envir=parent.frame(), substitute=TRUE, globals=TRUE, label="batchtools", cluster.functions=NULL, resources=list(), workers=NULL, finalize=getOption("future.finalize", TRUE), ...) {
+BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
+                             substitute = TRUE, globals = TRUE,
+                             label = "batchtools", cluster.functions = NULL,
+                             resources = list(), workers = NULL,
+                             finalize = getOption("future.finalize", TRUE),
+                             ...) {
   if (substitute) expr <- substitute(expr)
 
   if (!is.null(label)) label <- as.character(label)
-  
+
   if (!is.null(cluster.functions)) {
     stopifnot(is.list(cluster.functions))
   }
@@ -34,28 +58,29 @@ BatchtoolsFuture <- function(expr=NULL, envir=parent.frame(), substitute=TRUE, g
   if (!is.null(workers)) {
     stopifnot(length(workers) >= 1)
     if (is.numeric(workers)) {
-      stopifnot(all(is.finite(workers)), all(workers >= 1),
-                is.finite(prod(workers)))
+      stopifnot(!anyNA(workers), all(workers >= 1))
     } else if (is.character(workers)) {
     } else {
-      stopifnot("Argument 'workers' should be either numeric or character: ", mode(workers))
+      stopifnot("Argument 'workers' should be either numeric or character: ",
+                mode(workers))
     }
   }
 
   stopifnot(is.list(resources))
 
   ## Record globals
-  getGlobalsAndPackages <- importFuture("getGlobalsAndPackages")
-  gp <- getGlobalsAndPackages(expr, envir=envir, globals=globals)
+  getGlobalsAndPackages <- import_future("getGlobalsAndPackages")
+  gp <- getGlobalsAndPackages(expr, envir = envir, globals = globals)
 
   ## Create BatchtoolsFuture object
-  future <- Future(expr=gp$expr, envir=envir, substitute=FALSE, workers=workers, label=label, ...)
+  future <- Future(expr = gp$expr, envir = envir, substitute = FALSE,
+                   workers = workers, label = label, ...)
 
   future$globals <- gp$globals
   future$packages <- gp$packages
 
   ## Create batchtools registry
-  reg <- tempRegistry(label=future$label)
+  reg <- temp_registry(label = future$label)
   if (!is.null(cluster.functions)) {    ### FIXME
     reg$cluster.functions <- cluster.functions
   }
@@ -63,12 +88,12 @@ BatchtoolsFuture <- function(expr=NULL, envir=parent.frame(), substitute=TRUE, g
   if (debug) mprint(reg)
 
   ## batchtools configuration
-  config <- list(reg=reg, jobid=NA_integer_,
-                 resources=resources)
-  
+  config <- list(reg = reg, jobid = NA_integer_,
+                 resources = resources)
+
   future$config <- config
- 
-  future <- structure(future, class=c("BatchtoolsFuture", class(future)))
+
+  future <- structure(future, class = c("BatchtoolsFuture", class(future)))
 
   ## Register finalizer?
   if (finalize) future <- add_finalizer(future)
@@ -89,17 +114,19 @@ print.BatchtoolsFuture <- function(x, ...) {
 
   ## batchtools specific
   reg <- x$config$reg
-  
+
   ## Type of batchtools future
-  printf("batchtools cluster functions: %s\n", sQuote(reg$cluster.functions$name))
-  
+  printf("batchtools cluster functions: %s\n",
+         sQuote(reg$cluster.functions$name))
+
   ## Ask for status once
   status <- status(x)
-  printf("batchtools status: %s\n", paste(sQuote(status), collapse=", "))
+  printf("batchtools status: %s\n", paste(sQuote(status), collapse = ", "))
   if ("error" %in% status) printf("Error: %s\n", loggedError(x))
 
-  if (isNA(status)) {
-    printf("batchtools %s: Not found (happens when finished and deleted)\n", class(reg))
+  if (is_na(status)) {
+    printf("batchtools %s: Not found (happens when finished and deleted)\n",
+           class(reg))
   } else {
     printf("batchtools Registry:\n  ")
     print(reg)
@@ -132,19 +159,19 @@ loggedOutput <- function(...) UseMethod("loggedOutput")
 #' @importFrom batchtools getStatus
 status.BatchtoolsFuture <- function(future, ...) {
   ## WORKAROUND: Avoid warnings on partially matched arguments
-  getStatus <- function(...) {
+  get_status <- function(...) {
     ## Temporarily disable batchtools output?
     ## (i.e. messages and progress bars)
     debug <- getOption("future.debug", FALSE)
-    batchtoolsOutput <- getOption("future.batchtools.output", debug)
-    if (!batchtoolsOutput) {
-      oopts <- options(batchtools.verbose=FALSE, batchtools.progress=FALSE)
+    batchtools_output <- getOption("future.batchtools.output", debug)
+    if (!batchtools_output) {
+      oopts <- options(batchtools.verbose = FALSE, batchtools.progress = FALSE)
     } else {
       oopts <- list()
     }
     on.exit(options(oopts))
     batchtools::getStatus(...)
-  } ## getStatus()
+  } ## get_status()
 
   config <- future$config
   reg <- config$reg
@@ -154,21 +181,20 @@ status.BatchtoolsFuture <- function(future, ...) {
 
   jobid <- config$jobid
   if (is.na(jobid)) return("not submitted")
-  status <- getStatus(reg=reg, ids=jobid)
+  status <- get_status(reg = reg, ids = jobid)
   status <- (unlist(status) == 1L)
   status <- status[status]
   status <- sort(names(status))
   status <- setdiff(status, c("n"))
   status
-} # status()
-
+}
 
 
 #' @export
 #' @keywords internal
 finished.BatchtoolsFuture <- function(future, ...) {
   status <- status(future)
-  if (isNA(status)) return(NA)
+  if (is_na(status)) return(NA)
   any(c("done", "error", "expired") %in% status)
 }
 
@@ -176,13 +202,13 @@ finished.BatchtoolsFuture <- function(future, ...) {
 #' @keywords internal
 loggedError.BatchtoolsFuture <- function(future, ...) {
   stat <- status(future)
-  if (isNA(stat)) return(NULL)
+  if (is_na(stat)) return(NULL)
 
   if (!finished(future)) {
     label <- future$label
     if (is.null(label)) label <- "<none>"
     msg <- sprintf("%s ('%s') has not finished yet", class(future)[1L], label)
-    stop(BatchtoolsFutureError(msg, future=future))
+    stop(BatchtoolsFutureError(msg, future = future))
   }
 
   if (!"error" %in% stat) return(NULL)
@@ -190,9 +216,9 @@ loggedError.BatchtoolsFuture <- function(future, ...) {
   config <- future$config
   reg <- config$reg
   jobid <- config$jobid
-  res <- getErrorMessages(reg=reg, ids=jobid)  ### CHECKED
+  res <- getErrorMessages(reg = reg, ids = jobid)  ### CHECKED
   msg <- res$message
-  msg <- paste(sQuote(msg), collapse=", ")
+  msg <- paste(sQuote(msg), collapse = ", ")
   msg
 } # loggedError()
 
@@ -200,15 +226,15 @@ loggedError.BatchtoolsFuture <- function(future, ...) {
 #' @importFrom batchtools getLog
 #' @export
 #' @keywords internal
-loggedOutput.BatchtoolsFuture <- function(future, ...) {   
+loggedOutput.BatchtoolsFuture <- function(future, ...) {
   stat <- status(future)
-  if (isNA(stat)) return(NULL)
+  if (is_na(stat)) return(NULL)
 
   if (!finished(future)) {
     label <- future$label
     if (is.null(label)) label <- "<none>"
     msg <- sprintf("%s ('%s') has not finished yet", class(future)[1L], label)
-    stop(BatchtoolsFutureError(msg, future=future))
+    stop(BatchtoolsFutureError(msg, future = future))
   }
 
   if (!"error" %in% stat) return(NULL)
@@ -216,7 +242,7 @@ loggedOutput.BatchtoolsFuture <- function(future, ...) {
   config <- future$config
   reg <- config$reg
   jobid <- config$jobid
-  getLog(id=jobid, reg=reg)
+  getLog(id = jobid, reg = reg)
 } # loggedOutput()
 
 
@@ -241,31 +267,33 @@ resolved.BatchtoolsFuture <- function(x, ...) {
 #' @importFrom future value
 #' @export
 #' @keywords internal
-value.BatchtoolsFuture <- function(future, signal=TRUE, onMissing=c("default", "error"), default=NULL, cleanup=TRUE, ...) {
+value.BatchtoolsFuture <- function(future, signal = TRUE,
+                                   onMissing = c("default", "error"),
+                                   default = NULL, cleanup = TRUE, ...) {
   ## Has the value already been collected?
-  if (future$state %in% c('finished', 'failed', 'interrupted')) {
+  if (future$state %in% c("finished", "failed", "interrupted")) {
     return(NextMethod("value"))
   }
 
-  if (future$state == 'created') {
+  if (future$state == "created") {
     future <- run(future)
   }
 
   stat <- status(future)
-  if (isNA(stat)) {
+  if (is_na(stat)) {
     onMissing <- match.arg(onMissing)
     if (onMissing == "default") return(default)
     label <- future$label
     if (is.null(label)) label <- "<none>"
-    stop(sprintf("The value no longer exists (or never existed) for Future ('%s') of class %s", label, paste(sQuote(class(future)), collapse=", ")))
+    stop(sprintf("The value no longer exists (or never existed) for Future ('%s') of class %s", label, paste(sQuote(class(future)), collapse = ", "))) #nolint
   }
 
   tryCatch({
-    future$value <- await(future, cleanup=FALSE)
-    future$state <- 'finished'
+    future$value <- await(future, cleanup = FALSE)
+    future$state <- "finished"
     if (cleanup) delete(future, ...)
   }, simpleError = function(ex) {
-    future$state <- 'failed'
+    future$state <- "failed"
     future$value <- ex
   })
 
@@ -279,25 +307,25 @@ run <- function(...) UseMethod("run")
 #' @importFrom future getExpression
 #' @importFrom batchtools batchExport batchMap saveRegistry
 run.BatchtoolsFuture <- function(future, ...) {
-  if (future$state != 'created') {
+  if (future$state != "created") {
     label <- future$label
     if (is.null(label)) label <- "<none>"
     stop(sprintf("A future ('%s') can only be launched once.", label))
   }
-  
-  mdebug <- importFuture("mdebug")
+
+  mdebug <- import_future("mdebug")
 
   ## Assert that the process that created the future is
   ## also the one that evaluates/resolves/queries it.
-  assertOwner <- importFuture("assertOwner")
+  assertOwner <- import_future("assertOwner")
   assertOwner(future)
 
   ## Temporarily disable batchtools output?
   ## (i.e. messages and progress bars)
   debug <- getOption("future.debug", FALSE)
-  batchtoolsOutput <- getOption("future.batchtools.output", debug)
-  if (!batchtoolsOutput) {
-    oopts <- options(batchtools.verbose=FALSE, batchtools.progress=FALSE)
+  batchtools_output <- getOption("future.batchtools.output", debug)
+  if (!batchtools_output) {
+    oopts <- options(batchtools.verbose = FALSE, batchtools.progress = FALSE)
   } else {
     oopts <- list()
   }
@@ -306,7 +334,7 @@ run.BatchtoolsFuture <- function(future, ...) {
   expr <- getExpression(future)
 
   ## Always evaluate in local environment
-  expr <- substitute(local(expr), list(expr=expr))
+  expr <- substitute(local(expr), list(expr = expr))
 
   reg <- future$config$reg
   stopifnot(inherits(reg, "Registry"))
@@ -319,14 +347,14 @@ run.BatchtoolsFuture <- function(future, ...) {
 
     ## Record which packages in 'pkgs' that are loaded and
     ## which of them are attached (at this point in time).
-    isLoaded <- is.element(packages, loadedNamespaces())
-    isAttached <- is.element(packages, attachedPackages())
+    is_loaded <- is.element(packages, loadedNamespaces())
+    is_attached <- is.element(packages, attached_packages())
 
     ## FIXME: Update the expression such that the new session
     ## will have the same state of (loaded, attached) packages.
 
     reg$packages <- packages
-    saveRegistry(reg=reg)
+    saveRegistry(reg = reg)
 
     mdebug("Attaching %d packages (%s) ... DONE",
                     length(packages), hpaste(sQuote(packages)))
@@ -341,7 +369,8 @@ run.BatchtoolsFuture <- function(future, ...) {
 
   ## 1. Add to batchtools for evaluation
   mdebug("batchtools::batchMap()")
-  jobid <- batchMap(fun = geval, list(expr), more.args = list(substitute = TRUE), reg = reg)
+  jobid <- batchMap(fun = geval, list(expr),
+                    more.args = list(substitute = TRUE), reg = reg)
 
   ## 2. Update
   future$config$jobid <- jobid
@@ -359,24 +388,23 @@ run.BatchtoolsFuture <- function(future, ...) {
     ## /HB 2016-05-07
     dyld_envs <- tryCatch({
       envs <- list()
-      res <- system2("ps", stdout=TRUE, stderr=TRUE)
+      res <- system2("ps", stdout = TRUE, stderr = TRUE)
       if (any(grepl("DYLD_", res))) {
         envs <- Sys.getenv()
         envs <- envs[grepl("^DYLD_", names(envs))]
-        if (length(envs) > 0L) lapply(names(envs), FUN=Sys.unsetenv)
+        if (length(envs) > 0L) lapply(names(envs), FUN = Sys.unsetenv)
       }
       envs
     }, error = function(ex) list())
   }
 
   ## 3. Submit
-  future$state <- 'running'
+  future$state <- "running"
   resources <- future$config$resources
   if (is.null(resources)) resources <- list()
-  resources$workers <- future$workers
 
-  batchtools::submitJobs(reg=reg, ids=jobid, resources=resources)
-  
+  batchtools::submitJobs(reg = reg, ids = jobid, resources = resources)
+
   mdebug("Launched future #%d", jobid$job.id)
 
   invisible(future)
@@ -406,8 +434,13 @@ await <- function(...) UseMethod("await")
 #' @export
 #' @importFrom batchtools getErrorMessages loadResult waitForJobs
 #' @keywords internal
-await.BatchtoolsFuture <- function(future, cleanup = TRUE, timeout = getOption("future.wait.timeout", 30*24*60*60), delta=getOption("future.wait.interval", 1.0), ...) {
-  mdebug <- importFuture("mdebug")
+await.BatchtoolsFuture <- function(future, cleanup = TRUE,
+                                   timeout = getOption("future.wait.timeout",
+                                                       30 * 24 * 60 * 60),
+                                   delta = getOption("future.wait.interval",
+                                                     1.0),
+                                   ...) {
+  mdebug <- import_future("mdebug")
   stopifnot(is.finite(timeout), timeout >= 0)
 
   debug <- getOption("future.debug", FALSE)
@@ -423,15 +456,14 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE, timeout = getOption("
   oopts <- options(batchtools.verbose = debug)
   on.exit(options(oopts))
 
-  t0 <- Sys.time()
-  res <- waitForJobs(ids = jobid, timeout = timeout, sleep = delta, stop.on.error = FALSE, reg = reg)
-  dt <- difftime(Sys.time(), t0)
+  res <- waitForJobs(ids = jobid, timeout = timeout, sleep = delta,
+                     stop.on.error = FALSE, reg = reg)
   mdebug("- batchtools::waitForJobs(): %s", res)
   stat <- status(future)
-  mdebug("- status(): %s", paste(sQuote(stat), collapse = ", "))  
+  mdebug("- status(): %s", paste(sQuote(stat), collapse = ", "))
   mdebug("batchtools::waitForJobs() ... done")
-  
-  finished <- isNA(stat) || any(c("done", "error", "expired") %in% stat)
+
+  finished <- is_na(stat) || any(c("done", "error", "expired") %in% stat)
 
   res <- NULL
   if (finished) {
@@ -439,29 +471,33 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE, timeout = getOption("
     label <- future$label
     if (is.null(label)) label <- "<none>"
     if ("done" %in% stat) {
-      res <- loadResult(reg=reg, id=jobid)
+      res <- loadResult(reg = reg, id = jobid)
     } else if ("error" %in% stat) {
       cleanup <- FALSE
-      msg <- sprintf("BatchtoolsError in %s ('%s'): %s", class(future)[1], label, loggedError(future))
-      stop(BatchtoolsFutureError(msg, future=future, output=loggedOutput(future)))
+      msg <- sprintf("BatchtoolsError in %s ('%s'): %s",
+                     class(future)[1], label, loggedError(future))
+      stop(BatchtoolsFutureError(msg, future = future,
+                                 output = loggedOutput(future)))
     } else if ("expired" %in% stat) {
       cleanup <- FALSE
-      msg <- sprintf("BatchtoolsExpiration: Future ('%s') expired: %s", label, reg$file.dir)
-      stop(BatchtoolsFutureError(msg, future=future, output=loggedOutput(future)))
-    } else if (isNA(stat)) {
-      msg <- sprintf("BatchtoolsDeleted: Cannot retrieve value. Future ('%s') deleted: %s", label, reg$file.dir)
-      stop(BatchtoolsFutureError(msg, future=future))
+      msg <- sprintf("BatchtoolsExpiration: Future ('%s') expired: %s",
+                     label, reg$file.dir)
+      stop(BatchtoolsFutureError(msg, future = future,
+                                 output = loggedOutput(future)))
+    } else if (is_na(stat)) {
+      msg <- sprintf("BatchtoolsDeleted: Cannot retrieve value. Future ('%s') deleted: %s", label, reg$file.dir) #nolint
+      stop(BatchtoolsFutureError(msg, future = future))
     }
     if (debug) { mstr(res) }
   } else {
     cleanup <- FALSE
-    msg <- sprintf("AsyncNotReadyError: Polled for results for %s seconds every %g seconds, but asynchronous evaluation for future ('%s') is still running: %s", timeout, delta, label, reg$file.dir)
-    stop(BatchtoolsFutureError(msg, future=future))
+    msg <- sprintf("AsyncNotReadyError: Polled for results for %s seconds every %g seconds, but asynchronous evaluation for future ('%s') is still running: %s", timeout, delta, label, reg$file.dir) #nolint
+    stop(BatchtoolsFutureError(msg, future = future))
   }
 
   ## Cleanup?
   if (cleanup) {
-    delete(future, delta=0.5*delta, ...)
+    delete(future, delta = 0.5 * delta, ...)
   }
 
   res
@@ -488,9 +524,16 @@ delete <- function(...) UseMethod("delete")
 #' @importFrom batchtools clearRegistry removeRegistry
 #' @importFrom utils file_test
 #' @keywords internal
-delete.BatchtoolsFuture <- function(future, onRunning=c("warning", "error", "skip"), onFailure=c("error", "warning", "ignore"), onMissing=c("ignore", "warning", "error"), times=10L, delta=getOption("future.wait.interval", 1.0), alpha=getOption("future.wait.alpha", 1.01), ...) {
-  mdebug <- importFuture("mdebug")
-  
+delete.BatchtoolsFuture <- function(future,
+                                onRunning = c("warning", "error", "skip"),
+                                onFailure = c("error", "warning", "ignore"),
+                                onMissing = c("ignore", "warning", "error"),
+                                times = 10L,
+                                delta = getOption("future.wait.interval", 1.0),
+                                alpha = getOption("future.wait.alpha", 1.01),
+                                ...) {
+  mdebug <- import_future("mdebug")
+
   onRunning <- match.arg(onRunning)
   onMissing <- match.arg(onMissing)
   onFailure <- match.arg(onFailure)
@@ -505,12 +548,12 @@ delete.BatchtoolsFuture <- function(future, onRunning=c("warning", "error", "ski
   ## Already deleted?
   if (is.null(path) || !file_test("-d", path)) {
     if (onMissing %in% c("warning", "error")) {
-      msg <- sprintf("Cannot remove batchtools registry, because directory does not exist: %s", sQuote(path))
+      msg <- sprintf("Cannot remove batchtools registry, because directory does not exist: %s", sQuote(path)) #nolint
       mdebug("delete(): %s", msg)
       if (onMissing == "warning") {
         warning(msg)
       } else if (onMissing == "error") {
-        stop(BatchtoolsFutureError(msg, future=future))
+        stop(BatchtoolsFutureError(msg, future = future))
       }
     }
     return(invisible(TRUE))
@@ -523,24 +566,25 @@ delete.BatchtoolsFuture <- function(future, onRunning=c("warning", "error", "ski
     status <- status(future)
     label <- future$label
     if (is.null(label)) label <- "<none>"
-    msg <- sprintf("Will not remove batchtools registry, because is appears to hold a non-resolved future (%s; state=%s; batchtools status=%s): %s", sQuote(label), sQuote(future$state), paste(sQuote(status), collapse=", "), sQuote(path))
+    msg <- sprintf("Will not remove batchtools registry, because is appears to hold a non-resolved future (%s; state = %s; batchtools status = %s): %s", sQuote(label), sQuote(future$state), paste(sQuote(status), collapse = ", "), sQuote(path)) #nolint
     mdebug("delete(): %s", msg)
     if (onRunning == "warning") {
       warning(msg)
       return(invisible(TRUE))
     } else if (onRunning == "error") {
-      stop(BatchtoolsFutureError(msg, future=future))
+      stop(BatchtoolsFutureError(msg, future = future))
     }
   }
 
 
   ## To simplify post mortem troubleshooting in non-interactive sessions,
   ## should the batchtools registry files be removed or not?
-  mdebug("delete(): Option 'future.delete=%s", sQuote(getOption("future.delete", "<NULL>")))
+  mdebug("delete(): Option 'future.delete = %s",
+         sQuote(getOption("future.delete", "<NULL>")))
   if (!getOption("future.delete", interactive())) {
     status <- status(future)
     if (any(c("error", "expired") %in% status)) {
-      msg <- sprintf("Will not remove batchtools registry, because the status of the batchtools was %s and option 'future.delete' is FALSE or running in an interactive session: %s", paste(sQuote(status), collapse=", "), sQuote(path))
+      msg <- sprintf("Will not remove batchtools registry, because the status of the batchtools was %s and option 'future.delete' is FALSE or running in an interactive session: %s", paste(sQuote(status), collapse = ", "), sQuote(path)) #nolint
       mdebug("delete(): %s", msg)
       warning(msg)
       return(invisible(FALSE))
@@ -550,7 +594,7 @@ delete.BatchtoolsFuture <- function(future, onRunning=c("warning", "error", "ski
   ## Control batchtools info output
   oopts <- options(batchtools.verbose = debug)
   on.exit(options(oopts))
-  
+
   ## Try to delete registry
   interval <- delta
   for (kk in seq_len(times)) {
@@ -558,7 +602,7 @@ delete.BatchtoolsFuture <- function(future, onRunning=c("warning", "error", "ski
     try(removeRegistry(wait = 0.0, reg = reg), silent = FALSE)
     if (!file_test("-d", path)) break
     Sys.sleep(interval)
-    interval <- alpha*interval
+    interval <- alpha * interval
   }
 
 
@@ -570,7 +614,7 @@ delete.BatchtoolsFuture <- function(future, onRunning=c("warning", "error", "ski
       if (onMissing == "warning") {
         warning(msg)
       } else if (onMissing == "error") {
-        stop(BatchtoolsFutureError(msg, future=future))
+        stop(BatchtoolsFutureError(msg, future = future))
       }
     }
     return(invisible(FALSE))
@@ -587,13 +631,15 @@ add_finalizer <- function(...) UseMethod("add_finalizer")
 add_finalizer.BatchtoolsFuture <- function(future, ...) {
   ## Register finalizer (will clean up registries etc.)
 
-  reg.finalizer(future, f=function(gcenv) {
-    if (inherits(future, "BatchtoolsFuture") && "future.batchtools" %in% loadedNamespaces()) {
+  reg.finalizer(future, f = function(gcenv) {
+    if (inherits(future, "BatchtoolsFuture") &&
+        "future.batchtools" %in% loadedNamespaces()) {
       try({
-        delete(future, onRunning="skip", onMissing="ignore", onFailure="warning")
+        delete(future, onRunning = "skip", onMissing = "ignore",
+               onFailure = "warning")
       })
     }
-  }, onexit=TRUE)
+  }, onexit = TRUE)
 
   invisible(future)
 }

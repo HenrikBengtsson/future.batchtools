@@ -8,7 +8,7 @@ fassignment \%resources\% tweaks
 }
 \arguments{
 \item{fassignment}{The future assignment, e.g.
-\code{x \%<=\% \{ expr \}}.}
+\code{x \%< = \% \{ expr \}}.}
 
 \item{tweaks}{A named list (or vector) of resource
 batchtools parameters that should be changed relative to

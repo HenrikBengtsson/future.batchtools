@@ -8,18 +8,18 @@ strategies <- setdiff(strategies, "multiprocess")
 strategies <- c("batchtools_local")
 
 for (strategy in strategies) {
-  message(sprintf("- plan('%s') ...", strategy))
+  mprintf("- plan('%s') ...", strategy)
   plan(strategy)
 
-  for (label in list(NULL, sprintf("strategy=%s", strategy))) {
-    fcn <- get(strategy, mode="function")
+  for (label in list(NULL, sprintf("strategy = %s", strategy))) {
+    fcn <- get(strategy, mode = "function")
     stopifnot(inherits(fcn, strategy))
     f <- fcn(42, label = label)
     print(f)
     stopifnot(identical(f$label, label))
     v <- value(f)
     stopifnot(v == 42)
-    
+
     f <- future(42, label = label)
     print(f)
     stopifnot(identical(f$label, label))
@@ -34,7 +34,7 @@ for (strategy in strategies) {
 
   } ## for (label ...)
 
-  message(sprintf("- plan('%s') ... DONE", strategy))
+  mprintf("- plan('%s') ... DONE", strategy)
 } ## for (strategy ...)
 
 message("*** Futures - labels ... DONE")
