@@ -148,7 +148,7 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
   )
 
   ## Search for a default template file?
-  if (!is.null(template)) {
+  if (is.null(template)) {
     cluster.functions <- make_cfs()
   } else {
     cluster.functions <- make_cfs(template)
