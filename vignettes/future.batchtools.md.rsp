@@ -15,8 +15,6 @@
 %\VignetteTangle{FALSE}
 --------------------------------------------------------------------"%>
 <%
-library("R.utils")
-options("withCapture/newline" = FALSE)
 options(mc.cores = 2L)
 %>
 # A Future for batchtools
