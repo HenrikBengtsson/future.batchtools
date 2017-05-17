@@ -28,6 +28,10 @@ SOFTWARE QUALITY:
  o TESTS: Added optional tests for batchjobs_* HPC schedulers listed in
    environment variable 'R_FUTURE_TESTS_STRATEGIES'.
 
+CODE REFACTORING:
+
+ o CLEANUP: Package no longer depend on R.utils.
+
  
 Version: 0.3.0 [2017-03-19]
 

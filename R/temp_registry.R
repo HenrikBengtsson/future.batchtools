@@ -1,4 +1,3 @@
-#' @importFrom R.utils tempvar
 #' @importFrom batchtools makeRegistry
 temp_registry <- local({
   ## All known batchtools registries

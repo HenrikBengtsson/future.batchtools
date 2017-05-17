@@ -122,3 +122,28 @@ is_os <- function(name) {
     grepl(paste0("^", name), R.version$os)
   }
 }
+
+
+## From R.utils 2.5.0
+tempvar <- function(prefix = "var", value = NA, envir = parent.frame()) {
+  max_tries <- 1e6
+  max_int <- .Machine$integer.max
+
+  ii <- 0L
+  while (ii < max_tries) {
+    # Generate random variable name
+    idx <- sample.int(max_int, size = 1L)
+    name <- sprintf("%s%d", prefix, idx)
+
+    # Available?
+    if (!exists(name, envir = envir, inherits = FALSE)) {
+      assign(name, value, envir = envir, inherits = FALSE)
+      return(name)
+    }
+
+    ii <- ii + 1L
+  }
+
+  # Failed to find a unique temporary variable name
+  stop(sprintf("Failed to generate a unique non-existing temporary variable with prefix '%s'", prefix)) #nolint
+}
