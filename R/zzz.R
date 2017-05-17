@@ -1,4 +1,4 @@
-#' @importFrom R.utils removeDirectory isFile
+#' @importFrom utils file_test
 .onUnload <- function(libpath) {
   ## (a) Force finalizer of Future objects to run such
   ##     that their batchtools directories are removed
@@ -13,9 +13,8 @@
   if (all(files %in% known_files)) {
     for (file in known_files) {
       pathname_tmp <- file.path(path, file)
-      if (isFile(pathname_tmp)) try(file.remove(pathname_tmp))
+      if (file_test("-f", pathname_tmp)) try(file.remove(pathname_tmp))
     }
-    try(removeDirectory(path, recursive = FALSE, mustExist = FALSE),
-        silent = TRUE)
+    try(unlink(path, recursive = FALSE, force = TRUE), silent = TRUE)
   }
 }
