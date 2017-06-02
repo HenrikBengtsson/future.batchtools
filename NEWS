@@ -5,6 +5,10 @@ Version: 0.4.0-9000 [2017-06-01]
 
  o ...
  
+SOFTWARE QUALITY:
+
+ o Added more tests; test coverage now at 93%.
+ 
 
 Version: 0.4.0 [2017-05-16]
 
