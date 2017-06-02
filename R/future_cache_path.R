@@ -17,7 +17,7 @@ future_cache_path <- local({
       }
       path <<- path_tmp
     }
-    if (absolute) path <- normalizePath(path)
+    if (absolute) path <- normalizePath(path, mustWork = FALSE)
 
     path
   }
