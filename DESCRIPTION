@@ -14,7 +14,7 @@ VignetteBuilder:
 Title: A Future API for Parallel and Distributed Processing using 'batchtools'
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
-Description: Implements of the Future API on top of the 'batchtools' package.
+Description: Implementation of the Future API on top of the 'batchtools' package.
     This allows you to process futures, as defined by the 'future' package,
     in parallel out of the box, not only on your local machine or ad-hoc
     cluster of machines, but also via high-performance compute ('HPC') job
