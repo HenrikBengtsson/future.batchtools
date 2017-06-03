@@ -111,17 +111,14 @@ outer_function <- function(x) {
 y0 <- outer_function(1L)
 str(y0)
 
-## Check if globals version installed identifies globals in formulas
-if (packageVersion("globals") >= "0.10.0") {
-  f <- future({ outer_function(1L) })
-  y <- value(f)
-  str(y)
-  stopifnot(all.equal(y, y0))
+f <- future({ outer_function(1L) })
+y <- value(f)
+str(y)
+stopifnot(all.equal(y, y0))
 
-  y %<-% { outer_function(1L) }
-  str(y)
-  stopifnot(all.equal(y, y0))
-}
+y %<-% { outer_function(1L) }
+str(y)
+stopifnot(all.equal(y, y0))
 
 message("*** Globals - map(x, ~ expr) ... DONE")
 

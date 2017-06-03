@@ -1,6 +1,15 @@
 Package: future.batchtools
 ==========================
 
+Version: 0.5.0 [2017-06-02]
+
+ o First version submitted to CRAN.
+ 
+SOFTWARE QUALITY:
+
+ o Added more tests; test coverage now at 93%.
+ 
+
 Version: 0.4.0 [2017-05-16]
 
 NEW FEATURES:

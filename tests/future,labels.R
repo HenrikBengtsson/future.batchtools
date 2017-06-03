@@ -1,10 +1,7 @@
 source("incl/start.R")
-supportedStrategies <- future:::supportedStrategies
 
 message("*** Futures - labels ...")
 
-strategies <- supportedStrategies()
-strategies <- setdiff(strategies, "multiprocess")
 strategies <- c("batchtools_local")
 
 for (strategy in strategies) {
