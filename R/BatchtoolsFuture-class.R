@@ -131,6 +131,8 @@ print.BatchtoolsFuture <- function(x, ...) {
     printf("batchtools Registry:\n  ")
     print(reg)
   }
+
+  invisible(x)
 }
 
 
