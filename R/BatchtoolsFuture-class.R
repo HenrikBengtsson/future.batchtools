@@ -484,9 +484,9 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
       cleanup <- FALSE
       msg <- sprintf("BatchtoolsExpiration: Future ('%s') expired (registry path %s).", label, reg$file.dir)
       output <- loggedOutput(future)
-      output <- unlist(strsplit(output, split = "\n", fixed = TRUE))
-      output <- output[nzchar(output)]
-      hint <- tail(output, n = 6L)
+      hint <- unlist(strsplit(output, split = "\n", fixed = TRUE))
+      hint <- hint[nzchar(hint)]
+      hint <- tail(hint, n = 6L)
       if (length(hint) > 0) {
         hint <- paste(hint, collapse = "\n")
         msg <- sprintf("%s. The last few lines of the logged output:\n%s",

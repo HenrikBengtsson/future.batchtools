@@ -7,8 +7,6 @@ Version: 0.5.0-9000 [2017-07-19]
 
 NEW FEATURES:
 
- o print() for BatchtoolsFuture returns the object invisibly.
-
  o The error message for expired batchtools futures now include the last few
    lines of the logged output, which sometimes includes clues on why the future
    expired.  For instance, if a TORQUE / PBS job use more than the allocated
@@ -18,6 +16,8 @@ NEW FEATURES:
  o If the built-in attempts of batchtools for finding a default template file
    failes, then system("templates", package = "future.batchtools") is searched
    for template files as well.  Currently, there exists a `torque.tmpl` file.
+
+ o print() for BatchtoolsFuture returns the object invisibly.
 
 BUG FIXES:
 
