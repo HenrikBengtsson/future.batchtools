@@ -15,6 +15,12 @@ NEW FEATURES:
    amount of memory it might be terminated by the scheduler leaving the message
    "PBS: job killed: vmem 1234000 exceeded limit 1048576" in the output.
 
+BUG FIXES:
+
+ o loggedOutput() for BatchtoolsFuture would always return NULL unless an error
+   had occured.
+   
+
 Version: 0.5.0 [2017-06-02]
 
  o First version submitted to CRAN.
