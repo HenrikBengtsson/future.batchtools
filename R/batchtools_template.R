@@ -147,12 +147,30 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
     torque   = makeClusterFunctionsTORQUE
   )
 
-  ## Search for a default template file?
+  ## Get the default template?
   if (is.null(template)) {
-    cluster.functions <- make_cfs()
-  } else {
-    cluster.functions <- make_cfs(template)
+    template <- formals(make_cfs)$template
   }
+
+  stopifnot(is.character(template), length(template) == 1, nzchar(template))
+
+  ## Tweaked search for template file
+  findTemplateFile <- import_batchtools("findTemplateFile", default = NA)
+  if (!identical(findTemplateFile, NA)) {
+    template <- tryCatch({
+      findTemplateFile(template)
+    }, error = function(ex) {
+      ## Try to find it in this package?
+      if (grepl("Argument 'template'", conditionMessage(ex))) {
+        pathname <- system.file("templates", sprintf("%s.tmpl", template),
+                                package = "future.batchtools")
+        if (file_test("-f", pathname)) return(pathname)
+      }
+      stop(ex)
+    })
+  }
+
+  cluster.functions <- make_cfs(template)
   attr(cluster.functions, "template") <- template
 
   future <- BatchtoolsFuture(expr = expr, envir = envir, substitute = FALSE,

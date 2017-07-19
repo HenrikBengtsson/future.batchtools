@@ -15,6 +15,10 @@ NEW FEATURES:
    amount of memory it might be terminated by the scheduler leaving the message
    "PBS: job killed: vmem 1234000 exceeded limit 1048576" in the output.
 
+ o If the built-in attempts of batchtools for finding a default template file
+   failes, then system("templates", package = "future.batchtools") is searched
+   for template files as well.  Currently, there exists a `torque.tmpl` file.
+
 BUG FIXES:
 
  o loggedOutput() for BatchtoolsFuture would always return NULL unless an error
