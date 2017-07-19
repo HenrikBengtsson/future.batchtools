@@ -1,7 +1,7 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.5.0-9000 [2017-07-17]
+Version: 0.5.0-9000 [2017-07-19]
 
  o ...
 
@@ -9,6 +9,11 @@ NEW FEATURES:
 
  o print() for BatchtoolsFuture returns the object invisibly.
 
+ o The error message for expired batchtools futures now include the last few
+   lines of the logged output, which sometimes includes clues on why the future
+   expired.  For instance, if a TORQUE / PBS job use more than the allocated
+   amount of memory it might be terminated by the scheduler leaving the message
+   "PBS: job killed: vmem 1234000 exceeded limit 1048576" in the output.
 
 Version: 0.5.0 [2017-06-02]
 
