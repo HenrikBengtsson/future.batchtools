@@ -42,7 +42,8 @@
 #' @importFrom batchtools submitJobs
 #' @keywords internal
 BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
-                             substitute = TRUE, globals = TRUE,
+                             substitute = TRUE,
+                             globals = TRUE, packages = NULL,
                              label = "batchtools", cluster.functions = NULL,
                              resources = list(), workers = NULL,
                              finalize = getOption("future.finalize", TRUE),
@@ -77,7 +78,7 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
                    workers = workers, label = label, ...)
 
   future$globals <- gp$globals
-  future$packages <- gp$packages
+  future$packages <- unique(c(packages, gp$packages))
 
   ## Create batchtools registry
   reg <- temp_registry(label = future$label)

@@ -21,9 +21,14 @@ NEW FEATURES:
 
 BUG FIXES:
 
+ o Calling future_lapply() with functions containing globals part of non-default
+   packages would when using batchtools futures give an error complaining that
+   the global is missing. This was due to updates in future (>= 1.4.0) that
+   broke this package.
+ 
  o loggedOutput() for BatchtoolsFuture would always return NULL unless an error
    had occured.
-   
+
 
 Version: 0.5.0 [2017-06-02]
 

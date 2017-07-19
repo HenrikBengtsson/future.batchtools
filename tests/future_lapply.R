@@ -122,6 +122,18 @@ y <- unlist(y, use.names = FALSE)
 
 stopifnot(all.equal(y, sqrt(x + a)))
 
+
+message("- future_lapply() with global in non-attached package ...")
+library("tools")
+my_ext <- function(x) file_ext(x)
+y_truth <- lapply("abc.txt", FUN = my_ext)
+
+for (strategy in strategies) {
+  plan(strategy)
+  y <- future_lapply("abc.txt", FUN = my_ext)
+  stopifnot(identical(y, y_truth))
+}
+
 message("*** future_lapply() ... DONE")
 
 source("incl/end.R")
