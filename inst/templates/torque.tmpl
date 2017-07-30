@@ -6,7 +6,7 @@
 ######################################################################
 
 ## Job name:
-#PBS -N <%= job.hash %>
+#PBS -N <%= if (exists("job.name", mode = "character")) job.name else job.hash %>
 
 ## Direct streams to logfile:
 #PBS -o <%= log.file %>
