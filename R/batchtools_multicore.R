@@ -27,7 +27,7 @@
 #' @keywords internal
 batchtools_multicore <- function(expr, envir = parent.frame(),
                             substitute = TRUE, globals = TRUE,
-                            label = "batchtools",
+                            label = NULL,
                             workers = availableCores(constraints = "multicore"),
                             ...) {
   if (substitute) expr <- substitute(expr)

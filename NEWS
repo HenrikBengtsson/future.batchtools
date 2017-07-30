@@ -18,7 +18,8 @@ NEW FEATURES:
    for template files as well.  Currently, there exists a `torque.tmpl` file.
 
  o A job's name in the scheduler is now set as the future's label (requires
-   batchtools 0.9.4 or newer).
+   batchtools 0.9.4 or newer).  If no label is specified, the default job name
+   is controlled by batchtools.
    
  o print() for BatchtoolsFuture returns the object invisibly.
 

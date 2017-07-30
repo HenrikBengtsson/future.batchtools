@@ -36,7 +36,7 @@
 #' @aliases batchtools_interactive
 #' @export
 batchtools_local <- function(expr, envir = parent.frame(), substitute = TRUE,
-                             globals = TRUE, label = "batchtools",
+                             globals = TRUE, label = NULL,
                              workers = 1L, ...) {
   if (substitute) expr <- substitute(expr)
 

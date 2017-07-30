@@ -5,8 +5,8 @@
 \title{Batchtools futures for custom batchtools configuration}
 \usage{
 batchtools_custom(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = "batchtools", cluster.functions,
-  resources = list(), workers = NULL, ...)
+  globals = TRUE, label = NULL, cluster.functions, resources = list(),
+  workers = NULL, ...)
 }
 \arguments{
 \item{expr}{The R expression to be evaluated}

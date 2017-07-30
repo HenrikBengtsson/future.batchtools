@@ -6,7 +6,7 @@
 \title{batchtools local and interactive futures}
 \usage{
 batchtools_local(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = "batchtools", workers = 1L, ...)
+  globals = TRUE, label = NULL, workers = 1L, ...)
 }
 \arguments{
 \item{expr}{The R expression to be evaluated}
