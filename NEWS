@@ -1,7 +1,7 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.5.0-9000 [2017-07-19]
+Version: 0.5.0-9000 [2017-07-30]
 
  o ...
 
@@ -17,6 +17,9 @@ NEW FEATURES:
    failes, then system("templates", package = "future.batchtools") is searched
    for template files as well.  Currently, there exists a `torque.tmpl` file.
 
+ o A job's name in the scheduler is now set as the future's label (requires
+   batchtools 0.9.4 or newer).
+   
  o print() for BatchtoolsFuture returns the object invisibly.
 
 BUG FIXES:

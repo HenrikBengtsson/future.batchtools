@@ -44,7 +44,7 @@
 BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
                              substitute = TRUE,
                              globals = TRUE, packages = NULL,
-                             label = "batchtools", cluster.functions = NULL,
+                             label = NULL, cluster.functions = NULL,
                              resources = list(), workers = NULL,
                              finalize = getOption("future.finalize", TRUE),
                              ...) {
@@ -373,6 +373,13 @@ run.BatchtoolsFuture <- function(future, ...) {
   jobid <- batchMap(fun = geval, list(expr),
                     more.args = list(substitute = TRUE), reg = reg)
 
+  ## 1b. Set job name, if specified
+  label <- future$label
+  if (!is.null(label)) {
+    setJobNames <- import_batchtools("setJobNames", default = function(...) {})
+    setJobNames(ids = jobid, names = label, reg = reg)
+  }
+  
   ## 2. Update
   future$config$jobid <- jobid
   mdebug("Created %s future #%d", class(future)[1], jobid$job.id)
