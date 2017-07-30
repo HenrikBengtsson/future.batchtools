@@ -428,6 +428,8 @@ await <- function(...) UseMethod("await")
 #' success, otherwise not.
 #' @param timeout Total time (in seconds) waiting before generating an error.
 #' @param delta The number of seconds to wait between each poll.
+#' @param alpha A factor to scale up the waiting time in each iteration such
+#' that the waiting time in the k:th iteration is \code{alpha ^ k * delta}.
 #' @param \ldots Not used.
 #'
 #' @return The value of the evaluated expression.
@@ -448,10 +450,12 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
                                                        30 * 24 * 60 * 60),
                                    delta = getOption("future.wait.interval",
                                                      1.0),
+                                   alpha = getOption("future.wait.alpha", 1.01),
                                    ...) {
   mdebug <- import_future("mdebug")
   stopifnot(is.finite(timeout), timeout >= 0)
-
+  stopifnot(is.finite(alpha), alpha > 0)
+  
   debug <- getOption("future.debug", FALSE)
 
   expr <- future$expr
@@ -465,7 +469,10 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
   oopts <- options(batchtools.verbose = debug)
   on.exit(options(oopts))
 
-  res <- waitForJobs(ids = jobid, timeout = timeout, sleep = delta,
+  ## Sleep function - increases geometrically as a function of iterations
+  sleep_fcn <- function(i) delta * alpha ^ (i - 1)
+ 
+  res <- waitForJobs(ids = jobid, timeout = timeout, sleep = sleep_fcn,
                      stop.on.error = FALSE, reg = reg)
   mdebug("- batchtools::waitForJobs(): %s", res)
   stat <- status(future)

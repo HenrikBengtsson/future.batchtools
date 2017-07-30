@@ -20,6 +20,10 @@ NEW FEATURES:
  o A job's name in the scheduler is now set as the future's label (requires
    batchtools 0.9.4 or newer).  If no label is specified, the default job name
    is controlled by batchtools.
+
+ o The period between each poll of the scheduler to check whether a future
+   (job) is finished or not now increases geometrically as a function of number
+   of polls.  This lowers the load on the scheduler for long running jobs.
    
  o print() for BatchtoolsFuture returns the object invisibly.
 
