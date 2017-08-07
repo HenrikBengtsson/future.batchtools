@@ -306,7 +306,7 @@ value.BatchtoolsFuture <- function(future, signal = TRUE,
 run <- function(...) UseMethod("run")
 
 #' @importFrom future getExpression
-#' @importFrom batchtools batchExport batchMap saveRegistry
+#' @importFrom batchtools batchExport batchMap saveRegistry setJobNames
 run.BatchtoolsFuture <- function(future, ...) {
   if (future$state != "created") {
     label <- future$label
@@ -376,7 +376,6 @@ run.BatchtoolsFuture <- function(future, ...) {
   ## 1b. Set job name, if specified
   label <- future$label
   if (!is.null(label)) {
-    setJobNames <- import_batchtools("setJobNames", default = function(...) {})
     setJobNames(ids = jobid, names = label, reg = reg)
   }
   
