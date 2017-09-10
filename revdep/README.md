@@ -41,5 +41,5 @@
 
 |package                        |version |error |warning |note |
 |:------------------------------|:-------|:-----|:-------|:----|
-|[origami](problems.md#origami) |0.8.0   |      |2       |1    |
+|[origami](problems.md#origami) |0.8.0   |      |1       |1    |
 
