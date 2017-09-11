@@ -38,7 +38,7 @@
 #' @return A BatchtoolsFuture object
 #'
 #' @export
-#' @importFrom future Future
+#' @importFrom future Future getGlobalsAndPackages
 #' @importFrom batchtools submitJobs
 #' @keywords internal
 BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
@@ -70,7 +70,6 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
   stopifnot(is.list(resources))
 
   ## Record globals
-  getGlobalsAndPackages <- import_future("getGlobalsAndPackages")
   gp <- getGlobalsAndPackages(expr, envir = envir, globals = globals)
 
   ## Create BatchtoolsFuture object
