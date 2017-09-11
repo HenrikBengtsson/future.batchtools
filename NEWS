@@ -1,6 +1,41 @@
 Package: future.batchtools
 ==========================
 
+Version: 0.6.0 [2017-09-10]
+
+NEW FEATURES:
+
+ o If the built-in attempts of batchtools for finding a default template file
+   fails, then system("templates", package = "future.batchtools") is searched
+   for template files as well.  Currently, there exists a `torque.tmpl` file.
+
+ o A job's name in the scheduler is now set as the future's label (requires
+   batchtools 0.9.4 or newer).  If no label is specified, the default job name
+   is controlled by batchtools.
+
+ o The period between each poll of the scheduler to check whether a future
+   (job) is finished or not now increases geometrically as a function of number
+   of polls.  This lowers the load on the scheduler for long running jobs.
+
+ o The error message for expired batchtools futures now include the last few
+   lines of the logged output, which sometimes includes clues on why the future
+   expired.  For instance, if a TORQUE / PBS job use more than the allocated
+   amount of memory it might be terminated by the scheduler leaving the message
+   "PBS: job killed: vmem 1234000 exceeded limit 1048576" in the output.
+   
+ o print() for BatchtoolsFuture returns the object invisibly.
+
+BUG FIXES:
+
+ o Calling future_lapply() with functions containing globals part of non-default
+   packages would when using batchtools futures give an error complaining that
+   the global is missing. This was due to updates in future (>= 1.4.0) that
+   broke this package.
+ 
+ o loggedOutput() for BatchtoolsFuture would always return NULL unless an error
+   had occurred.
+
+
 Version: 0.5.0 [2017-06-02]
 
  o First version submitted to CRAN.
@@ -68,5 +103,5 @@ GLOBALS:
 Version: 0.1.0 [2017-02-11]
 
  o Package created by porting the code of future.BatchJobs. This version passes
-   'R CMD check --as-cran' with all OK after a minimial amount of adjustments
+   'R CMD check --as-cran' with all OK after a minimal amount of adjustments
    to the ported code.

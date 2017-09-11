@@ -8,7 +8,7 @@ for (strategy in strategies) {
   mprintf("- plan('%s') ...", strategy)
   plan(strategy)
 
-  for (label in list(NULL, sprintf("strategy = %s", strategy))) {
+  for (label in list(NULL, sprintf("strategy_%s", strategy))) {
     fcn <- get(strategy, mode = "function")
     stopifnot(inherits(fcn, strategy))
     f <- fcn(42, label = label)

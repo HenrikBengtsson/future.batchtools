@@ -42,8 +42,9 @@
 #' @importFrom batchtools submitJobs
 #' @keywords internal
 BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
-                             substitute = TRUE, globals = TRUE,
-                             label = "batchtools", cluster.functions = NULL,
+                             substitute = TRUE,
+                             globals = TRUE, packages = NULL,
+                             label = NULL, cluster.functions = NULL,
                              resources = list(), workers = NULL,
                              finalize = getOption("future.finalize", TRUE),
                              ...) {
@@ -77,7 +78,7 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
                    workers = workers, label = label, ...)
 
   future$globals <- gp$globals
-  future$packages <- gp$packages
+  future$packages <- unique(c(packages, gp$packages))
 
   ## Create batchtools registry
   reg <- temp_registry(label = future$label)
@@ -131,6 +132,8 @@ print.BatchtoolsFuture <- function(x, ...) {
     printf("batchtools Registry:\n  ")
     print(reg)
   }
+
+  invisible(x)
 }
 
 
@@ -237,8 +240,6 @@ loggedOutput.BatchtoolsFuture <- function(future, ...) {
     stop(BatchtoolsFutureError(msg, future = future))
   }
 
-  if (!"error" %in% stat) return(NULL)
-
   config <- future$config
   reg <- config$reg
   jobid <- config$jobid
@@ -305,7 +306,7 @@ value.BatchtoolsFuture <- function(future, signal = TRUE,
 run <- function(...) UseMethod("run")
 
 #' @importFrom future getExpression
-#' @importFrom batchtools batchExport batchMap saveRegistry
+#' @importFrom batchtools batchExport batchMap saveRegistry setJobNames
 run.BatchtoolsFuture <- function(future, ...) {
   if (future$state != "created") {
     label <- future$label
@@ -372,6 +373,12 @@ run.BatchtoolsFuture <- function(future, ...) {
   jobid <- batchMap(fun = geval, list(expr),
                     more.args = list(substitute = TRUE), reg = reg)
 
+  ## 1b. Set job name, if specified
+  label <- future$label
+  if (!is.null(label)) {
+    setJobNames(ids = jobid, names = label, reg = reg)
+  }
+  
   ## 2. Update
   future$config$jobid <- jobid
   mdebug("Created %s future #%d", class(future)[1], jobid$job.id)
@@ -420,6 +427,8 @@ await <- function(...) UseMethod("await")
 #' success, otherwise not.
 #' @param timeout Total time (in seconds) waiting before generating an error.
 #' @param delta The number of seconds to wait between each poll.
+#' @param alpha A factor to scale up the waiting time in each iteration such
+#' that the waiting time in the k:th iteration is \code{alpha ^ k * delta}.
 #' @param \ldots Not used.
 #'
 #' @return The value of the evaluated expression.
@@ -433,16 +442,19 @@ await <- function(...) UseMethod("await")
 #'
 #' @export
 #' @importFrom batchtools getErrorMessages loadResult waitForJobs
+#' @importFrom utils tail
 #' @keywords internal
 await.BatchtoolsFuture <- function(future, cleanup = TRUE,
                                    timeout = getOption("future.wait.timeout",
                                                        30 * 24 * 60 * 60),
                                    delta = getOption("future.wait.interval",
                                                      1.0),
+                                   alpha = getOption("future.wait.alpha", 1.01),
                                    ...) {
   mdebug <- import_future("mdebug")
   stopifnot(is.finite(timeout), timeout >= 0)
-
+  stopifnot(is.finite(alpha), alpha > 0)
+  
   debug <- getOption("future.debug", FALSE)
 
   expr <- future$expr
@@ -456,7 +468,10 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
   oopts <- options(batchtools.verbose = debug)
   on.exit(options(oopts))
 
-  res <- waitForJobs(ids = jobid, timeout = timeout, sleep = delta,
+  ## Sleep function - increases geometrically as a function of iterations
+  sleep_fcn <- function(i) delta * alpha ^ (i - 1)
+ 
+  res <- waitForJobs(ids = jobid, timeout = timeout, sleep = sleep_fcn,
                      stop.on.error = FALSE, reg = reg)
   mdebug("- batchtools::waitForJobs(): %s", res)
   stat <- status(future)
@@ -480,10 +495,19 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
                                  output = loggedOutput(future)))
     } else if ("expired" %in% stat) {
       cleanup <- FALSE
-      msg <- sprintf("BatchtoolsExpiration: Future ('%s') expired: %s",
-                     label, reg$file.dir)
-      stop(BatchtoolsFutureError(msg, future = future,
-                                 output = loggedOutput(future)))
+      msg <- sprintf("BatchtoolsExpiration: Future ('%s') expired (registry path %s).", label, reg$file.dir)
+      output <- loggedOutput(future)
+      hint <- unlist(strsplit(output, split = "\n", fixed = TRUE))
+      hint <- hint[nzchar(hint)]
+      hint <- tail(hint, n = 6L)
+      if (length(hint) > 0) {
+        hint <- paste(hint, collapse = "\n")
+        msg <- sprintf("%s. The last few lines of the logged output:\n%s",
+                       msg, hint)
+      } else {
+        msg <- sprintf("%s. No logged output exist.", msg)
+      }
+      stop(BatchtoolsFutureError(msg, future = future, output = output))
     } else if (is_na(stat)) {
       msg <- sprintf("BatchtoolsDeleted: Cannot retrieve value. Future ('%s') deleted: %s", label, reg$file.dir) #nolint
       stop(BatchtoolsFutureError(msg, future = future))

@@ -16,7 +16,7 @@
 #' @export
 #' @importFrom utils file_test
 batchtools_custom <- function(expr, envir = parent.frame(), substitute = TRUE,
-                              globals = TRUE, label = "batchtools",
+                              globals = TRUE, label = NULL,
                               cluster.functions,
                               resources = list(), workers = NULL, ...) {
   if (substitute) expr <- substitute(expr)

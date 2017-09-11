@@ -4,10 +4,15 @@
 ^.svn
 ^.git
 ^.make
-INSTALL[.]md
-OVERVIEW[.]md
-README[.]md
-CONDUCT[.]md
+^INSTALL[.]md$
+^OVERVIEW[.]md$
+^README[.]md$
+^CONDUCT[.]md$
+
+#----------------------------
+# devtools
+#----------------------------
+^revdep
 
 #----------------------------
 # Travis-CI et al.
@@ -42,6 +47,12 @@ Rplots.pdf$
 #----------------------------
 # Package specific
 #----------------------------
-^[.]batchtools[.]R$
+^[.]BatchJobs[.]R$
 [.]future
+
+#----------------------------
+# Miscellaneous
+#----------------------------
+^.ghi
+^.issues
 

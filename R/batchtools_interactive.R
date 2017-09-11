@@ -4,7 +4,7 @@
 #' @export
 batchtools_interactive <- function(expr, envir = parent.frame(),
                                    substitute = TRUE, globals = TRUE,
-                                   label = "batchtools", workers = 1L, ...) {
+                                   label = NULL, workers = 1L, ...) {
   if (substitute) expr <- substitute(expr)
 
   cf <- makeClusterFunctionsInteractive(external = FALSE)

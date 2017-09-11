@@ -55,6 +55,24 @@ for (cleanup in c(FALSE, TRUE)) {
 } ## for (cleanup ...)
 
 
+message("*** BatchtoolsFuture - expired ...")
+plan(batchtools_local)
+msg <- "Abruptly terminating the future!"
+f <- future({
+  message(msg)
+  quit(save = "no")
+})
+res <- tryCatch({
+  v <- value(f)
+}, error = identity)
+stopifnot(inherits(res, "error"),
+          inherits(res, "FutureError"))
+err_msg <- unlist(strsplit(conditionMessage(res), split = "\n", fixed = TRUE))
+stopifnot(any(grepl(msg, err_msg, fixed = TRUE)))
+
+message("*** BatchtoolsFuture - expired ... done")
+
+
 if (fullTest) {
   message("*** BatchtoolsFuture - deleting running ...")
 
