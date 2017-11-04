@@ -56,8 +56,11 @@ job name for most job schedulers).}
 \item{resources}{A named list passed to the batchtools template (available
 as variable \code{resources}).}
 
-\item{workers}{(optional) Additional specification for the batchtools
-backend.}
+\item{workers}{(optional) The maximum number of workers the batchtools
+backend may use at any time.   Interactive and "local" backends can only
+process one future at the time, whereas HPC backends where futures are
+resolved via separate jobs on a scheduler, the default is to assume an
+infinite number of workers.}
 
 \item{\ldots}{Additional arguments passed to
 \code{\link{BatchtoolsFuture}()}.}

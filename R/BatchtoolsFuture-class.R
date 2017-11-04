@@ -27,8 +27,11 @@
 #' @param resources A named list passed to the batchtools template (available
 #' as variable \code{resources}).
 #'
-#' @param workers (optional) Additional specification for the batchtools
-#' backend.
+#' @param workers (optional) The maximum number of workers the batchtools
+#' backend may use at any time.   Interactive and "local" backends can only
+#' process one future at the time, whereas HPC backends where futures are
+#' resolved via separate jobs on a scheduler, the default is to assume an
+#' infinite number of workers.
 #'
 #' @param finalize If TRUE, any underlying registries are
 #' deleted when this object is garbage collected, otherwise not.
