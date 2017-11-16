@@ -4,7 +4,7 @@ Depends:
     R (>= 3.2.0),
     future (>= 1.6.1)
 Imports:
-    batchtools (>= 0.9.6)
+    batchtools (>= 0.9.7)
 Suggests:
     listenv,
     markdown,
