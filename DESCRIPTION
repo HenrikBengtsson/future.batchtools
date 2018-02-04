@@ -2,10 +2,11 @@ Package: future.batchtools
 Version: 0.6.0-9000
 Depends:
     R (>= 3.2.0),
-    future (>= 1.6.1)
+    future (>= 1.6.2)
 Imports:
-    batchtools (>= 0.9.7)
+    batchtools (>= 0.9.8)
 Suggests:
+    future.apply,
     listenv,
     markdown,
     R.rsp
