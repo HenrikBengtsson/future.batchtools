@@ -1,5 +1,6 @@
 source("incl/start.R")
 library("listenv")
+future_lapply <- future.apply::future_lapply
 
 cf <- batchtools::makeClusterFunctionsInteractive(external = TRUE)
 batchtools_custom_local <- function(expr, substitute = TRUE,
