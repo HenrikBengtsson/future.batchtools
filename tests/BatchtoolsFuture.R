@@ -8,6 +8,7 @@ f <- batchtools_local({ 1L })
 print(f)
 res <- await(f, cleanup = TRUE)
 print(res)
+if (inherits(res, "FutureResult")) res <- res$value
 stopifnot(res == 1L)
 
 message("*** BatchtoolsFuture() - cleanup ... DONE")
