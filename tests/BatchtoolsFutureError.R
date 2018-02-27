@@ -33,7 +33,7 @@ for (cleanup in c(FALSE, TRUE)) {
   rm(list = "f")
   gc()
   message(" - Future removed and garbage collected.")
-  mprintf(" - batchtools Registry path (%s) exists: %s",
+  mprintf(" - batchtools Registry path (%s) exists: %s\n",
           sQuote(reg$file.dir), file_test("-d", reg$file.dir))
 
   ## Assert removal of files only happens if there was not
