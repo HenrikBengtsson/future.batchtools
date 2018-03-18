@@ -1,9 +1,12 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.6.0-9000 [2017-09-11]
+Version: 0.6.0-9000 [2018-03-17]
 
- o ...
+CODE REFACTORING:
+
+ o Preparing for futures to gather a richer set of results from batchtools
+   backends.
 
 
 Version: 0.6.0 [2017-09-10]
