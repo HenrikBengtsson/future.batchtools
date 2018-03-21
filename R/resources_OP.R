@@ -1,3 +1,4 @@
+
 #' Temporarily tweaks the resources for the current batchtools strategy
 #'
 #' @usage fassignment \%resources\% tweaks
@@ -27,5 +28,5 @@
   strategy <- do.call(tweak, args = args)
   plan(strategy, substitute = FALSE, .call = NULL)
 
-  eval(fassignment, envir = envir)
+  eval(fassignment, envir = envir, enclos = baseenv())
 }

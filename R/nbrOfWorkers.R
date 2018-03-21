@@ -16,7 +16,7 @@
 nbrOfWorkers.batchtools <- function(evaluator) {
   ## 1. Infer from 'workers' argument
   expr <- formals(evaluator)$workers
-  workers <- eval(expr)
+  workers <- eval(expr, enclos = baseenv())
   if (!is.null(workers)) {
     stopifnot(length(workers) >= 1)
     if (is.numeric(workers)) return(prod(workers))
@@ -26,7 +26,7 @@ nbrOfWorkers.batchtools <- function(evaluator) {
 
   ## 2. Infer from 'cluster.functions' argument
   expr <- formals(evaluator)$cluster.functions
-  cf <- eval(expr)
+  cf <- eval(expr, enclos = baseenv())
   if (!is.null(cf)) {
     stopifnot(inherits(cf, "ClusterFunctions"))
 
