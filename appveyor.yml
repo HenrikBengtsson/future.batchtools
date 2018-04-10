@@ -32,7 +32,7 @@ cache:
 build_script:
   - echo Current directory=%CD%
   - travis-tool.sh install_r batchtools future
-  - travis-tool.sh install_r listenv markdown R.rsp
+  - travis-tool.sh install_r future.apply listenv markdown R.rsp
 
 test_script:
   - travis-tool.sh run_tests
