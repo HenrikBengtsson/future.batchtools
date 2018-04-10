@@ -27,6 +27,8 @@ matrix:
       - _R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_=true
     - os: linux
       r: devel
+      r_github_packages:
+      - mllg/batchtools
       env:
         - NB='w/ batchtools devel'  ## Just a label
     - os: osx

@@ -299,22 +299,11 @@ value.BatchtoolsFuture <- function(future, signal = TRUE,
     stop(sprintf("The value no longer exists (or never existed) for Future ('%s') of class %s", label, paste(sQuote(class(future)), collapse = ", "))) #nolint
   }
 
-  if (future$version == "1.8") {
-    result <- await(future, cleanup = FALSE)
-    stopifnot(inherits(result, "FutureResult"))
-    future$result <- result
-    future$state <- "finished"
-    if (cleanup) delete(future, ...)
-  } else {
-    tryCatch({
-      future$value <- await(future, cleanup = FALSE)
-      future$state <- "finished"
-      if (cleanup) delete(future, ...)
-    }, simpleError = function(ex) {
-      future$state <- "failed"
-      future$value <- ex
-    })
-  }
+  result <- await(future, cleanup = FALSE)
+  stopifnot(inherits(result, "FutureResult"))
+  future$result <- result
+  future$state <- "finished"
+  if (cleanup) delete(future, ...)
 
   NextMethod("value")
 } # value()
@@ -625,14 +614,12 @@ delete.BatchtoolsFuture <- function(future,
 
   ## FIXME: Make sure to collect the results before deleting
   ## the internal batchtools registry
-  if (future$version == "1.8") {
+  result <- future$result
+  if (is.null(result)) {
+    value(future, signal = FALSE)
     result <- future$result
-    if (is.null(result)) {
-      value(future, signal = FALSE)
-      result <- future$result
-    }
-    stopifnot(inherits(result, "FutureResult"))
   }
+  stopifnot(inherits(result, "FutureResult"))
 
   ## To simplify post mortem troubleshooting in non-interactive sessions,
   ## should the batchtools registry files be removed or not?
