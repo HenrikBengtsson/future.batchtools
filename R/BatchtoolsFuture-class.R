@@ -76,8 +76,14 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
   gp <- getGlobalsAndPackages(expr, envir = envir, globals = globals)
 
   ## Create BatchtoolsFuture object
+  if (exists("result", mode = "function", envir = getNamespace("future"),
+             inherits = FALSE)) {
+    version <- "1.8"
+  } else {
+    version <- "1.7"
+  }
   future <- Future(expr = gp$expr, envir = envir, substitute = FALSE,
-                   workers = workers, label = label, ...)
+                   workers = workers, label = label, version = version, ...)
 
   future$globals <- gp$globals
   future$packages <- unique(c(packages, gp$packages))
@@ -133,6 +139,8 @@ print.BatchtoolsFuture <- function(x, ...) {
   } else {
     printf("batchtools Registry:\n  ")
     print(reg)
+    printf("  File dir exists: %s\n", file_test("-d", reg$file.dir))
+    printf("  Work dir exists: %s\n", file_test("-d", reg$work.dir))
   }
 
   invisible(x)
@@ -191,6 +199,13 @@ status.BatchtoolsFuture <- function(future, ...) {
   status <- status[status]
   status <- sort(names(status))
   status <- setdiff(status, c("n"))
+  
+  result <- future$result
+  if (inherits(result, "FutureResult")) {
+    condition <- result$condition
+    if (inherits(condition, "error")) status <- c("error", status)
+  }
+  
   status
 }
 
@@ -274,7 +289,7 @@ value.BatchtoolsFuture <- function(future, signal = TRUE,
                                    onMissing = c("default", "error"),
                                    default = NULL, cleanup = TRUE, ...) {
   ## Has the value already been collected?
-  if (future$state %in% c("finished", "failed", "interrupted")) {
+  if (future$state %in% c("done", "failed", "interrupted")) {
     return(NextMethod("value"))
   }
 
@@ -291,14 +306,22 @@ value.BatchtoolsFuture <- function(future, signal = TRUE,
     stop(sprintf("The value no longer exists (or never existed) for Future ('%s') of class %s", label, paste(sQuote(class(future)), collapse = ", "))) #nolint
   }
 
-  tryCatch({
-    future$value <- await(future, cleanup = FALSE)
+  if (future$version == "1.8") {
+    result <- await(future, cleanup = FALSE)
+    stopifnot(inherits(result, "FutureResult"))
+    future$result <- result
     future$state <- "finished"
     if (cleanup) delete(future, ...)
-  }, simpleError = function(ex) {
-    future$state <- "failed"
-    future$value <- ex
-  })
+  } else {
+    tryCatch({
+      future$value <- await(future, cleanup = FALSE)
+      future$state <- "finished"
+      if (cleanup) delete(future, ...)
+    }, simpleError = function(ex) {
+      future$state <- "failed"
+      future$value <- ex
+    })
+  }
 
   NextMethod("value")
 } # value()
@@ -489,6 +512,11 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
     if (is.null(label)) label <- "<none>"
     if ("done" %in% stat) {
       res <- loadResult(reg = reg, id = jobid)
+      if (inherits(res, "FutureResult")) {
+        if (inherits(res$condition, "error")) {
+          cleanup <- FALSE
+        }
+      }
     } else if ("error" %in% stat) {
       cleanup <- FALSE
       msg <- sprintf("BatchtoolsError in %s ('%s'): %s",
@@ -602,6 +630,16 @@ delete.BatchtoolsFuture <- function(future,
     }
   }
 
+  ## FIXME: Make sure to collect the results before deleting
+  ## the internal batchtools registry
+  if (future$version == "1.8") {
+    result <- future$result
+    if (is.null(result)) {
+      value(future, signal = FALSE)
+      result <- future$result
+    }
+    stopifnot(inherits(result, "FutureResult"))
+  }
 
   ## To simplify post mortem troubleshooting in non-interactive sessions,
   ## should the batchtools registry files be removed or not?
@@ -609,6 +647,12 @@ delete.BatchtoolsFuture <- function(future,
          sQuote(getOption("future.delete", "<NULL>")))
   if (!getOption("future.delete", interactive())) {
     status <- status(future)
+    res <- future$result
+    if (inherits(res, "FutureResult")) {
+      if (inherits(res$condition, "error")) status <- "error"
+    }
+    mdebug("delete(): status(<future>) = %s",
+           paste(sQuote(status), collapse = ", "))
     if (any(c("error", "expired") %in% status)) {
       msg <- sprintf("Will not remove batchtools registry, because the status of the batchtools was %s and option 'future.delete' is FALSE or running in an interactive session: %s", paste(sQuote(status), collapse = ", "), sQuote(path)) #nolint
       mdebug("delete(): %s", msg)
