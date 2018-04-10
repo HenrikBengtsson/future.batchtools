@@ -25,6 +25,7 @@ init:
 install:
   ps: |
         Bootstrap
+        InstallRtools
 
 cache:
   - C:\RLibrary -> appveyor.yml
