@@ -152,7 +152,7 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
     template <- formals(make_cfs)$template
   }
 
-  stopifnot(is.character(template), length(template) == 1, nzchar(template))
+  stop_if_not(is.character(template), length(template) == 1, nzchar(template))
 
   ## Tweaked search for template file
   findTemplateFile <- import_batchtools("findTemplateFile", default = NA)

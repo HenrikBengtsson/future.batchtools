@@ -18,7 +18,7 @@ nbrOfWorkers.batchtools <- function(evaluator) {
   expr <- formals(evaluator)$workers
   workers <- eval(expr, enclos = baseenv())
   if (!is.null(workers)) {
-    stopifnot(length(workers) >= 1)
+    stop_if_not(length(workers) >= 1)
     if (is.numeric(workers)) return(prod(workers))
     if (is.character(workers)) return(length(workers))
     stop("Invalid data type of 'workers': ", mode(workers))
@@ -28,7 +28,7 @@ nbrOfWorkers.batchtools <- function(evaluator) {
   expr <- formals(evaluator)$cluster.functions
   cf <- eval(expr, enclos = baseenv())
   if (!is.null(cf)) {
-    stopifnot(inherits(cf, "ClusterFunctions"))
+    stop_if_not(inherits(cf, "ClusterFunctions"))
 
     name <- cf$name
     if (is.null(name)) name <- cf$Name

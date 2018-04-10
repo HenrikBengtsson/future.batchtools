@@ -33,7 +33,7 @@ batchtools_multicore <- function(expr, envir = parent.frame(),
   if (substitute) expr <- substitute(expr)
 
   if (is.null(workers)) workers <- availableCores(constraints = "multicore")
-  stopifnot(length(workers) == 1L, is.numeric(workers),
+  stop_if_not(length(workers) == 1L, is.numeric(workers),
             is.finite(workers), workers >= 1L)
 
   ## Fall back to batchtools_local if multicore processing is not supported

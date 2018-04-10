@@ -56,21 +56,21 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
   if (!is.null(label)) label <- as.character(label)
 
   if (!is.null(cluster.functions)) {
-    stopifnot(is.list(cluster.functions))
+    stop_if_not(is.list(cluster.functions))
   }
 
   if (!is.null(workers)) {
-    stopifnot(length(workers) >= 1)
+    stop_if_not(length(workers) >= 1)
     if (is.numeric(workers)) {
-      stopifnot(!anyNA(workers), all(workers >= 1))
+      stop_if_not(!anyNA(workers), all(workers >= 1))
     } else if (is.character(workers)) {
     } else {
-      stopifnot("Argument 'workers' should be either numeric or character: ",
+      stop_if_not("Argument 'workers' should be either numeric or character: ",
                 mode(workers))
     }
   }
 
-  stopifnot(is.list(resources))
+  stop_if_not(is.list(resources))
 
   ## Record globals
   gp <- getGlobalsAndPackages(expr, envir = envir, globals = globals)
@@ -300,7 +300,7 @@ value.BatchtoolsFuture <- function(future, signal = TRUE,
   }
 
   result <- await(future, cleanup = FALSE)
-  stopifnot(inherits(result, "FutureResult"))
+  stop_if_not(inherits(result, "FutureResult"))
   future$result <- result
   future$state <- "finished"
   if (cleanup) delete(future, ...)
@@ -345,7 +345,7 @@ run.BatchtoolsFuture <- function(future, ...) {
   expr <- substitute(local(expr), list(expr = expr))
 
   reg <- future$config$reg
-  stopifnot(inherits(reg, "Registry"))
+  stop_if_not(inherits(reg, "Registry"))
 
   ## (ii) Attach packages that needs to be attached
   packages <- future$packages
@@ -459,8 +459,8 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
                                    alpha = getOption("future.wait.alpha", 1.01),
                                    ...) {
   mdebug <- import_future("mdebug")
-  stopifnot(is.finite(timeout), timeout >= 0)
-  stopifnot(is.finite(alpha), alpha > 0)
+  stop_if_not(is.finite(timeout), timeout >= 0)
+  stop_if_not(is.finite(alpha), alpha > 0)
   
   debug <- getOption("future.debug", FALSE)
 
@@ -619,7 +619,7 @@ delete.BatchtoolsFuture <- function(future,
     value(future, signal = FALSE)
     result <- future$result
   }
-  stopifnot(inherits(result, "FutureResult"))
+  stop_if_not(inherits(result, "FutureResult"))
 
   ## To simplify post mortem troubleshooting in non-interactive sessions,
   ## should the batchtools registry files be removed or not?

@@ -20,7 +20,7 @@ batchtools_custom <- function(expr, envir = parent.frame(), substitute = TRUE,
                               cluster.functions,
                               resources = list(), workers = NULL, ...) {
   if (substitute) expr <- substitute(expr)
-  stopifnot(inherits(cluster.functions, "ClusterFunctions"))
+  stop_if_not(inherits(cluster.functions, "ClusterFunctions"))
 
   future <- BatchtoolsFuture(expr = expr, envir = envir, substitute = FALSE,
                             globals = globals,
