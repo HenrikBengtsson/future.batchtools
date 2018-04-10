@@ -1,11 +1,6 @@
 #----------------------------------------------------------------
-# Travis-CI configuration for R packages
-#
-# REFERENCES:
-# * Travis CI: https://docs.travis-ci.com/user/languages/r
-# * covr: https://github.com/jimhester/covr
-#
-# Validate your .travis.yml file at https://lint.travis-ci.org/
+# Travis-CI Configuration for R Packages
+# https://docs.travis-ci.com/user/languages/r
 #----------------------------------------------------------------
 language: r
 sudo: false
@@ -26,26 +21,36 @@ matrix:
       r: release
     - os: linux
       r: devel
+      env:
+      - R_KEEP_PKG_SOURCE=yes
+      - _R_S3_METHOD_LOOKUP_BASEENV_AFTER_GLOBALENV_=true
+      - _R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_=true
     - os: linux
       r: devel
       env:
         - NB='w/ batchtools devel'  ## Just a label
     - os: osx
       r: oldrel
+      before_install:
+        - Rscript -e 'c(physical = parallel::detectCores(logical = FALSE), logical = parallel::detectCores())'
+        - Rscript -e 'install.packages("future", type = "source")'
     - os: osx
       r: release
+      before_install:
+        - Rscript -e 'c(physical = parallel::detectCores(logical = FALSE), logical = parallel::detectCores())'
+        - Rscript -e 'install.packages("future", type = "source")'
     - os: linux
       r: release
-      r_github_packages:
-        - jimhester/covr
+      r_packages:
+        - covr
       r_check_args: --no-codoc --no-examples --no-tests --ignore-vignettes
       after_success:
         - Rscript -e 'covr::codecov(quiet=FALSE)'
       env: NB='w/ covr' ## Just a label
     - os: linux
       r: release
-      r_github_packages:
-        - jimhester/lintr
+      r_packages:
+        - lintr
       r_check_args: --no-codoc --no-examples --no-tests --ignore-vignettes
       after_success:
         - Rscript -e 'library(lintr); lint_package(linters = with_defaults(commented_code_linter = NULL, closed_curly_linter = closed_curly_linter(allow_single_line = TRUE), open_curly_linter = open_curly_linter(allow_single_line = TRUE)))'

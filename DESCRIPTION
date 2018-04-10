@@ -2,7 +2,7 @@ Package: future.batchtools
 Version: 0.6.0-9000
 Depends:
     R (>= 3.2.0),
-    future (>= 1.7.0)
+    future (>= 1.8.0)
 Imports:
     batchtools (>= 0.9.8)
 Suggests:

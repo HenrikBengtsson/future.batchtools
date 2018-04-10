@@ -75,15 +75,8 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
   ## Record globals
   gp <- getGlobalsAndPackages(expr, envir = envir, globals = globals)
 
-  ## Create BatchtoolsFuture object
-  if (exists("result", mode = "function", envir = getNamespace("future"),
-             inherits = FALSE)) {
-    version <- "1.8"
-  } else {
-    version <- "1.7"
-  }
   future <- Future(expr = gp$expr, envir = envir, substitute = FALSE,
-                   workers = workers, label = label, version = version, ...)
+                   workers = workers, label = label, version = "1.8", ...)
 
   future$globals <- gp$globals
   future$packages <- unique(c(packages, gp$packages))

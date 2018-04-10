@@ -12,8 +12,7 @@ batchtools_custom_local <- function(expr, substitute = TRUE,
 class(batchtools_custom_local) <- c("batchtools_custom_local",
                                     class(batchtools_custom))
 
-strategies <- c("sequential", "multisession",
-                "batchtools_interactive", "batchtools_local",
+strategies <- c("batchtools_interactive", "batchtools_local",
                 "batchtools_custom_local")
 
 message("*** future_lapply() ...")

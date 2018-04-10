@@ -1,7 +1,16 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.6.0-9000 [2018-03-17]
+Version: 0.6.0-9000 [2018-04-08]
+
+NEW FEATURES:
+
+ o Argument 'workers' of future strategies may now also be a function, which
+   is called without argument when the future strategy is set up and used as
+   is.  For instance, plan(callr, workers = halfCores) where
+   halfCores <- function() { max(1, round(availableCores() / 2)) } will use
+   half of the number of available cores.  This is useful when using nested
+   future strategies with remote machines.
 
 CODE REFACTORING:
 
