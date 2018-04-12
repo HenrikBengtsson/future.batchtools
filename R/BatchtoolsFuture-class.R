@@ -487,15 +487,20 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
 
   finished <- is_na(stat) || any(c("done", "error", "expired") %in% stat)
 
-  res <- NULL
+  ## PROTOTYPE RESULTS BELOW:
+  prototype_fields <- NULL
+  
+  result <- NULL
   if (finished) {
     mdebug("Results:")
     label <- future$label
     if (is.null(label)) label <- "<none>"
     if ("done" %in% stat) {
-      res <- loadResult(reg = reg, id = jobid)
-      if (inherits(res, "FutureResult")) {
-        if (inherits(res$condition, "error")) {
+      result <- loadResult(reg = reg, id = jobid)
+      if (inherits(result, "FutureResult")) {
+        prototype_fields <- c(prototype_fields, "stdout")
+        result$stdout <- getLog(id = jobid, reg = reg)
+        if (inherits(result$condition, "error")) {
           cleanup <- FALSE
         }
       }
@@ -524,19 +529,23 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
       msg <- sprintf("BatchtoolsDeleted: Cannot retrieve value. Future ('%s') deleted: %s", label, reg$file.dir) #nolint
       stop(BatchtoolsFutureError(msg, future = future))
     }
-    if (debug) { mstr(res) }
+    if (debug) { mstr(result) }
   } else {
     cleanup <- FALSE
     msg <- sprintf("AsyncNotReadyError: Polled for results for %s seconds every %g seconds, but asynchronous evaluation for future ('%s') is still running: %s", timeout, delta, label, reg$file.dir) #nolint
     stop(BatchtoolsFutureError(msg, future = future))
   }
 
+  if (length(prototype_fields) > 0) {
+    result$PROTOTYPE_WARNING <- sprintf("WARNING: The fields %s should be considered internal and experimental for now, that is, until the Future API for these additional features has been settled. For more information, please see https://github.com/HenrikBengtsson/future/issues/172", hpaste(sQuote(prototype_fields), max_head = Inf, collapse = ", ", last_collapse  = " and "))
+  }
+  
   ## Cleanup?
   if (cleanup) {
     delete(future, delta = 0.5 * delta, ...)
   }
 
-  res
+  result
 } # await()
 
 
