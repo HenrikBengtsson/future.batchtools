@@ -12,7 +12,7 @@
 #' @param \ldots Additional arguments passed to
 #' \code{\link{BatchtoolsFuture}()}.
 #'
-#' @return An object of class \code{BatchtoolsFuture}.
+#' @return An object of class `BatchtoolsFuture`.
 #'
 #' @details
 #' batchtools local futures rely on the batchtools backend set up by
@@ -24,7 +24,7 @@
 #' An alternative to batchtools local futures is to use
 #' [cluster][future::cluster] futures of the \pkg{future}
 #' package with a single local background session, i.e.
-#' \code{plan(cluster, workers = "localhost")}.
+#' `plan(cluster, workers = "localhost")`.
 #'
 #' An alternative to batchtools interactive futures is to use
 #' [transparent][future::transparent] futures of the

@@ -11,12 +11,12 @@
 #' \pkg{batchtools} package to locate such file using its search rules.
 #'
 #' @param resources A named list passed to the batchtools template (available
-#' as variable \code{resources}).
+#' as variable `resources`).
 #'
 #' @param \ldots Additional arguments passed to
 #' \code{\link{BatchtoolsFuture}()}.
 #'
-#' @return An object of class \code{BatchtoolsFuture}.
+#' @return An object of class `BatchtoolsFuture`.
 #'
 #' @details
 #' These type of batchtools futures rely on batchtools backends set
@@ -25,7 +25,7 @@
 #'  \item \code{\link[batchtools]{makeClusterFunctionsLSF}()} for
 #'    \href{https://en.wikipedia.org/wiki/Platform_LSF}{Load Sharing
 #'          Facility (LSF)}
-#'  \item \code{makeClusterFunctionsOpenLava()} for
+#'  \item `makeClusterFunctionsOpenLava()` for
 #'    \href{https://en.wikipedia.org/wiki/OpenLava}{OpenLava}
 #'  \item \code{\link[batchtools]{makeClusterFunctionsSGE}()} for
 #'    \href{https://en.wikipedia.org/wiki/Oracle_Grid_Engine}{Sun/Oracle
