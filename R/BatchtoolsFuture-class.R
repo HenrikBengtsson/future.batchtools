@@ -9,7 +9,7 @@
 #' \code{substitute()}:d or not.
 #'
 #' @param globals (optional) a logical, a character vector, a named list, or
-#' a \link[globals]{Globals} object.  If TRUE, globals are identified by code
+#' a [Globals][globals::Globals] object.  If TRUE, globals are identified by code
 #' inspection based on \code{expr} and \code{tweak} searching from environment
 #' \code{envir}.  If FALSE, no globals are used.  If a character vector, then
 #' globals are identified by lookup based their names \code{globals} searching
@@ -21,7 +21,7 @@
 #'
 #' @param conf A batchtools configuration environment.
 #'
-#' @param cluster.functions A batchtools \link[batchtools]{ClusterFunctions}
+#' @param cluster.functions A batchtools [ClusterFunctions][batchtools::ClusterFunctions]
 #' object.
 #'
 #' @param resources A named list passed to the batchtools template (available

@@ -39,7 +39,7 @@ should be located.}
 \code{substitute()}:d or not.}
 
 \item{globals}{(optional) a logical, a character vector, a named list, or
-a \link[globals]{Globals} object.  If TRUE, globals are identified by code
+a \link[globals:Globals]{Globals} object.  If TRUE, globals are identified by code
 inspection based on \code{expr} and \code{tweak} searching from environment
 \code{envir}.  If FALSE, no globals are used.  If a character vector, then
 globals are identified by lookup based their names \code{globals} searching
@@ -77,17 +77,17 @@ cluster via a job scheduler.
 These type of batchtools futures rely on batchtools backends set
 up using the following \pkg{batchtools} functions:
 \itemize{
- \item \code{\link[batchtools]{makeClusterFunctionsLSF}()} for
-   \href{https://en.wikipedia.org/wiki/Platform_LSF}{Load Sharing
-         Facility (LSF)}
- \item \code{makeClusterFunctionsOpenLava()} for
-   \href{https://en.wikipedia.org/wiki/OpenLava}{OpenLava}
- \item \code{\link[batchtools]{makeClusterFunctionsSGE}()} for
-   \href{https://en.wikipedia.org/wiki/Oracle_Grid_Engine}{Sun/Oracle
-         Grid Engine (SGE)}
- \item \code{\link[batchtools]{makeClusterFunctionsSlurm}()} for
-   \href{https://en.wikipedia.org/wiki/Slurm_Workload_Manager}{Slurm}
- \item \code{\link[batchtools]{makeClusterFunctionsTORQUE}()} for
-   \href{https://en.wikipedia.org/wiki/TORQUE}{TORQUE} / PBS
+\item \code{\link[batchtools]{makeClusterFunctionsLSF}()} for
+\href{https://en.wikipedia.org/wiki/Platform_LSF}{Load Sharing
+Facility (LSF)}
+\item \code{makeClusterFunctionsOpenLava()} for
+\href{https://en.wikipedia.org/wiki/OpenLava}{OpenLava}
+\item \code{\link[batchtools]{makeClusterFunctionsSGE}()} for
+\href{https://en.wikipedia.org/wiki/Oracle_Grid_Engine}{Sun/Oracle
+Grid Engine (SGE)}
+\item \code{\link[batchtools]{makeClusterFunctionsSlurm}()} for
+\href{https://en.wikipedia.org/wiki/Slurm_Workload_Manager}{Slurm}
+\item \code{\link[batchtools]{makeClusterFunctionsTORQUE}()} for
+\href{https://en.wikipedia.org/wiki/TORQUE}{TORQUE} / PBS
 }
 }

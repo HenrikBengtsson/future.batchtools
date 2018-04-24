@@ -19,7 +19,7 @@ should be located.}
 \code{substitute()}:d or not.}
 
 \item{globals}{(optional) a logical, a character vector, a named list, or
-a \link[globals]{Globals} object.  If TRUE, globals are identified by code
+a \link[globals:Globals]{Globals} object.  If TRUE, globals are identified by code
 inspection based on \code{expr} and \code{tweak} searching from environment
 \code{envir}.  If FALSE, no globals are used.  If a character vector, then
 globals are identified by lookup based their names \code{globals} searching
@@ -29,7 +29,7 @@ globals are used as is.}
 \item{label}{(optional) Label of the future (where applicable, becomes the
 job name for most job schedulers).}
 
-\item{cluster.functions}{A batchtools \link[batchtools]{ClusterFunctions}
+\item{cluster.functions}{A batchtools \link[batchtools:ClusterFunctions]{ClusterFunctions}
 object.}
 
 \item{resources}{A named list passed to the batchtools template (available

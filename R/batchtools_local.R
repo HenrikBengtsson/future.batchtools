@@ -22,12 +22,12 @@
 #' These are supported by all operating systems.
 #'
 #' An alternative to batchtools local futures is to use
-#' \link[future:cluster]{cluster} futures of the \pkg{future}
+#' [cluster][future::cluster] futures of the \pkg{future}
 #' package with a single local background session, i.e.
 #' \code{plan(cluster, workers = "localhost")}.
 #'
 #' An alternative to batchtools interactive futures is to use
-#' \link[future:transparent]{transparent} futures of the
+#' [transparent][future::transparent] futures of the
 #' \pkg{future} package.
 #'
 #' @example incl/batchtools_local.R
