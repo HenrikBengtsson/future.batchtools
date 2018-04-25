@@ -15,7 +15,7 @@ The Future API is defined by the \pkg{future} package.
 \details{
 To use batchtools futures, load \pkg{future.batchtools}, and
 select the type of future you wish to use via
-\code{\link[future:plan]{plan}()}.
+\code{\link[future:plan]{future::plan()}}.
 }
 \examples{
 \donttest{

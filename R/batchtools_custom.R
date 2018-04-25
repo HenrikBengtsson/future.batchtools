@@ -3,15 +3,14 @@
 #' @inheritParams BatchtoolsFuture
 #'
 #' @param cluster.functions A
-#' \link[batchtools:ClusterFunctions]{ClusterFunctions} object.
+#' [ClusterFunctions][batchtools::ClusterFunctions] object.
 #'
 #' @param resources A named list passed to the batchtools template
-#' (available as variable \code{resources}).
+#' (available as variable `resources`).
 #'
-#' @param \ldots Additional arguments passed to
-#' \code{\link{BatchtoolsFuture}()}.
+#' @param \ldots Additional arguments passed to [BatchtoolsFuture()].
 #'
-#' @return An object of class \code{BatchtoolsFuture}.
+#' @return An object of class `BatchtoolsFuture`.
 #'
 #' @export
 #' @importFrom utils file_test

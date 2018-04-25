@@ -56,3 +56,5 @@ Rplots.pdf$
 ^.ghi
 ^.issues
 
+^.*\.Rproj$
+^\.Rproj\.user$

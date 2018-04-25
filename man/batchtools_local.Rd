@@ -18,7 +18,7 @@ should be located.}
 \code{substitute()}:d or not.}
 
 \item{globals}{(optional) a logical, a character vector, a named list, or
-a \link[globals]{Globals} object.  If TRUE, globals are identified by code
+a \link[globals:Globals]{Globals} object.  If TRUE, globals are identified by code
 inspection based on \code{expr} and \code{tweak} searching from environment
 \code{envir}.  If FALSE, no globals are used.  If a character vector, then
 globals are identified by lookup based their names \code{globals} searching
@@ -35,7 +35,7 @@ resolved via separate jobs on a scheduler, the default is to assume an
 infinite number of workers.}
 
 \item{\ldots}{Additional arguments passed to
-\code{\link{BatchtoolsFuture}()}.}
+\code{\link[=BatchtoolsFuture]{BatchtoolsFuture()}}.}
 }
 \value{
 An object of class \code{BatchtoolsFuture}.
@@ -50,9 +50,9 @@ Both types of futures will block until the futures are resolved.
 }
 \details{
 batchtools local futures rely on the batchtools backend set up by
-\code{\link[batchtools]{makeClusterFunctionsInteractive}(external = TRUE)}
+\link[batchtools:makeClusterFunctionsInteractive(external = TRUE)]{batchtools::makeClusterFunctionsInteractive(external = TRUE)}
 and batchtools interactive futures on the one set up by
-\code{\link[batchtools]{makeClusterFunctionsInteractive}()}.
+\code{\link[batchtools:makeClusterFunctionsInteractive]{batchtools::makeClusterFunctionsInteractive()}}.
 These are supported by all operating systems.
 
 An alternative to batchtools local futures is to use

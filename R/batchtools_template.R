@@ -11,29 +11,27 @@
 #' \pkg{batchtools} package to locate such file using its search rules.
 #'
 #' @param resources A named list passed to the batchtools template (available
-#' as variable \code{resources}).
+#' as variable `resources`).
 #'
 #' @param \ldots Additional arguments passed to
-#' \code{\link{BatchtoolsFuture}()}.
+#' [BatchtoolsFuture()].
 #'
-#' @return An object of class \code{BatchtoolsFuture}.
+#' @return An object of class `BatchtoolsFuture`.
 #'
 #' @details
 #' These type of batchtools futures rely on batchtools backends set
 #' up using the following \pkg{batchtools} functions:
 #' \itemize{
-#'  \item \code{\link[batchtools]{makeClusterFunctionsLSF}()} for
-#'    \href{https://en.wikipedia.org/wiki/Platform_LSF}{Load Sharing
-#'          Facility (LSF)}
-#'  \item \code{makeClusterFunctionsOpenLava()} for
-#'    \href{https://en.wikipedia.org/wiki/OpenLava}{OpenLava}
-#'  \item \code{\link[batchtools]{makeClusterFunctionsSGE}()} for
-#'    \href{https://en.wikipedia.org/wiki/Oracle_Grid_Engine}{Sun/Oracle
-#'          Grid Engine (SGE)}
-#'  \item \code{\link[batchtools]{makeClusterFunctionsSlurm}()} for
-#'    \href{https://en.wikipedia.org/wiki/Slurm_Workload_Manager}{Slurm}
-#'  \item \code{\link[batchtools]{makeClusterFunctionsTORQUE}()} for
-#'    \href{https://en.wikipedia.org/wiki/TORQUE}{TORQUE} / PBS
+#'  \item [batchtools::makeClusterFunctionsLSF()] for
+#'    [Load Sharing Facility (LSF)](https://en.wikipedia.org/wiki/Platform_LSF)
+#'  \item `makeClusterFunctionsOpenLava()` for
+#'    [OpenLava](https://en.wikipedia.org/wiki/OpenLava)
+#'  \item [batchtools::makeClusterFunctionsSGE()] for
+#'    [Sun/Oracle Grid Engine (SGE)](https://en.wikipedia.org/wiki/Oracle_Grid_Engine)
+#'  \item [batchtools::makeClusterFunctionsSlurm()] for
+#'    [Slurm](https://en.wikipedia.org/wiki/Slurm_Workload_Manager)
+#'  \item [batchtools::makeClusterFunctionsTORQUE()] for
+#'    [TORQUE](https://en.wikipedia.org/wiki/TORQUE) / PBS
 #' }
 #'
 #' @export

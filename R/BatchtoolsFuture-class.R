@@ -5,15 +5,15 @@
 #' @param envir The environment in which global environment
 #' should be located.
 #'
-#' @param substitute Controls whether \code{expr} should be
-#' \code{substitute()}:d or not.
+#' @param substitute Controls whether `expr` should be
+#' `substitute()`:d or not.
 #'
 #' @param globals (optional) a logical, a character vector, a named list, or
-#' a \link[globals]{Globals} object.  If TRUE, globals are identified by code
-#' inspection based on \code{expr} and \code{tweak} searching from environment
-#' \code{envir}.  If FALSE, no globals are used.  If a character vector, then
-#' globals are identified by lookup based their names \code{globals} searching
-#' from environment \code{envir}.  If a named list or a Globals object, the
+#' a [Globals][globals::Globals] object.  If TRUE, globals are identified by code
+#' inspection based on `expr` and `tweak` searching from environment
+#' `envir`.  If FALSE, no globals are used.  If a character vector, then
+#' globals are identified by lookup based their names `globals` searching
+#' from environment `envir`.  If a named list or a Globals object, the
 #' globals are used as is.
 #'
 #' @param label (optional) Label of the future (where applicable, becomes the
@@ -21,11 +21,11 @@
 #'
 #' @param conf A batchtools configuration environment.
 #'
-#' @param cluster.functions A batchtools \link[batchtools]{ClusterFunctions}
+#' @param cluster.functions A batchtools [ClusterFunctions][batchtools::ClusterFunctions]
 #' object.
 #'
 #' @param resources A named list passed to the batchtools template (available
-#' as variable \code{resources}).
+#' as variable `resources`).
 #'
 #' @param workers (optional) The maximum number of workers the batchtools
 #' backend may use at any time.   Interactive and "local" backends can only
@@ -36,7 +36,7 @@
 #' @param finalize If TRUE, any underlying registries are
 #' deleted when this object is garbage collected, otherwise not.
 #'
-#' @param \ldots Additional arguments passed to \code{\link[future]{Future}()}.
+#' @param \ldots Additional arguments passed to [future::Future()].
 #'
 #' @return A BatchtoolsFuture object
 #'
@@ -435,14 +435,14 @@ await <- function(...) UseMethod("await")
 #' @param timeout Total time (in seconds) waiting before generating an error.
 #' @param delta The number of seconds to wait between each poll.
 #' @param alpha A factor to scale up the waiting time in each iteration such
-#' that the waiting time in the k:th iteration is \code{alpha ^ k * delta}.
+#' that the waiting time in the k:th iteration is `alpha ^ k * delta`.
 #' @param \ldots Not used.
 #'
 #' @return The value of the evaluated expression.
 #' If an error occurs, an informative Exception is thrown.
 #'
 #' @details
-#' Note that \code{await()} should only be called once, because
+#' Note that `await()` should only be called once, because
 #' after being called the actual asynchronous future may be removed
 #' and will no longer available in subsequent calls.  If called
 #' again, an error may be thrown.

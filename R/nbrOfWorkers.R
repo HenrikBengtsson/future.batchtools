@@ -6,9 +6,9 @@
 #'
 #' @param evaluator A future evaluator function.
 #' If NULL (default), the current evaluator as returned
-#' by \code{\link{plan}()} is used.
+#' by [plan()] is used.
 #'
-#' @return A number in [1, Inf].
+#' @return A number in \eqn{[1, Inf]}.
 #'
 #' @importFrom future nbrOfWorkers
 #' @export

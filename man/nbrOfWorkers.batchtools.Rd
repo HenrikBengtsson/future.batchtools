@@ -9,10 +9,10 @@
 \arguments{
 \item{evaluator}{A future evaluator function.
 If NULL (default), the current evaluator as returned
-by \code{\link{plan}()} is used.}
+by \code{\link[=plan]{plan()}} is used.}
 }
 \value{
-A number in [1, Inf].
+A number in \eqn{[1, Inf]}.
 }
 \description{
 Tries to infer the total number of batchtools workers.  This is
