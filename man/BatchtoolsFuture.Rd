@@ -46,7 +46,7 @@ deleted when this object is garbage collected, otherwise not.}
 
 \item{conf}{A batchtools configuration environment.}
 
-\item{\ldots}{Additional arguments passed to \code{\link[future]{Future}()}.}
+\item{\ldots}{Additional arguments passed to \code{\link[future:Future]{future::Future()}}.}
 }
 \value{
 A BatchtoolsFuture object

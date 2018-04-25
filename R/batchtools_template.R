@@ -14,7 +14,7 @@
 #' as variable `resources`).
 #'
 #' @param \ldots Additional arguments passed to
-#' \code{\link{BatchtoolsFuture}()}.
+#' [BatchtoolsFuture()].
 #'
 #' @return An object of class `BatchtoolsFuture`.
 #'
@@ -22,17 +22,17 @@
 #' These type of batchtools futures rely on batchtools backends set
 #' up using the following \pkg{batchtools} functions:
 #' \itemize{
-#'  \item \code{\link[batchtools]{makeClusterFunctionsLSF}()} for
+#'  \item [batchtools::makeClusterFunctionsLSF()] for
 #'    \href{https://en.wikipedia.org/wiki/Platform_LSF}{Load Sharing
 #'          Facility (LSF)}
 #'  \item `makeClusterFunctionsOpenLava()` for
 #'    \href{https://en.wikipedia.org/wiki/OpenLava}{OpenLava}
-#'  \item \code{\link[batchtools]{makeClusterFunctionsSGE}()} for
+#'  \item [batchtools::makeClusterFunctionsSGE()] for
 #'    \href{https://en.wikipedia.org/wiki/Oracle_Grid_Engine}{Sun/Oracle
 #'          Grid Engine (SGE)}
-#'  \item \code{\link[batchtools]{makeClusterFunctionsSlurm}()} for
+#'  \item [batchtools::makeClusterFunctionsSlurm()] for
 #'    \href{https://en.wikipedia.org/wiki/Slurm_Workload_Manager}{Slurm}
-#'  \item \code{\link[batchtools]{makeClusterFunctionsTORQUE}()} for
+#'  \item [batchtools::makeClusterFunctionsTORQUE()] for
 #'    \href{https://en.wikipedia.org/wiki/TORQUE}{TORQUE} / PBS
 #' }
 #'

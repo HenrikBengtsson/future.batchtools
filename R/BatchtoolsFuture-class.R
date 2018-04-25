@@ -36,7 +36,7 @@
 #' @param finalize If TRUE, any underlying registries are
 #' deleted when this object is garbage collected, otherwise not.
 #'
-#' @param \ldots Additional arguments passed to \code{\link[future]{Future}()}.
+#' @param \ldots Additional arguments passed to [future::Future()].
 #'
 #' @return A BatchtoolsFuture object
 #'

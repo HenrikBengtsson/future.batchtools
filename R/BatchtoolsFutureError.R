@@ -1,6 +1,6 @@
 #' FutureError class for errors related to BatchtoolsFuture:s
 #'
-#' @param \ldots Arguments passed to \code{\link[future]{FutureError}}
+#' @param \ldots Arguments passed to [FutureError][future::FutureError].
 #'
 #' @export
 #' @importFrom future FutureError

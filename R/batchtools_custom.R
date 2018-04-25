@@ -8,8 +8,7 @@
 #' @param resources A named list passed to the batchtools template
 #' (available as variable `resources`).
 #'
-#' @param \ldots Additional arguments passed to
-#' \code{\link{BatchtoolsFuture}()}.
+#' @param \ldots Additional arguments passed to [BatchtoolsFuture()].
 #'
 #' @return An object of class `BatchtoolsFuture`.
 #'

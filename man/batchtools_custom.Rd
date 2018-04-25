@@ -40,8 +40,7 @@ process one future at the time, whereas HPC backends where futures are
 resolved via separate jobs on a scheduler, the default is to assume an
 infinite number of workers.}
 
-\item{\ldots}{Additional arguments passed to
-\code{\link{BatchtoolsFuture}()}.}
+\item{\ldots}{Additional arguments passed to \code{\link[=BatchtoolsFuture]{BatchtoolsFuture()}}.}
 }
 \value{
 An object of class \code{BatchtoolsFuture}.

@@ -10,15 +10,15 @@
 #' @inheritParams BatchtoolsFuture
 #' 
 #' @param \ldots Additional arguments passed to
-#' \code{\link{BatchtoolsFuture}()}.
+#' [BatchtoolsFuture()].
 #'
 #' @return An object of class `BatchtoolsFuture`.
 #'
 #' @details
 #' batchtools local futures rely on the batchtools backend set up by
-#' \code{\link[batchtools]{makeClusterFunctionsInteractive}(external = TRUE)}
+#' [batchtools::makeClusterFunctionsInteractive(external = TRUE)]
 #' and batchtools interactive futures on the one set up by
-#' \code{\link[batchtools]{makeClusterFunctionsInteractive}()}.
+#' [batchtools::makeClusterFunctionsInteractive()].
 #' These are supported by all operating systems.
 #'
 #' An alternative to batchtools local futures is to use

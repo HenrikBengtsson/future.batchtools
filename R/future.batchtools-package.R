@@ -8,7 +8,7 @@
 #'
 #' To use batchtools futures, load \pkg{future.batchtools}, and
 #' select the type of future you wish to use via
-#' \code{\link[future:plan]{plan}()}.
+#' [future::plan()].
 #'
 #' @example incl/future.batchtools.R
 #'
