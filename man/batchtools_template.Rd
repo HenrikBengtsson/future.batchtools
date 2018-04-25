@@ -78,13 +78,11 @@ These type of batchtools futures rely on batchtools backends set
 up using the following \pkg{batchtools} functions:
 \itemize{
 \item \code{\link[batchtools:makeClusterFunctionsLSF]{batchtools::makeClusterFunctionsLSF()}} for
-\href{https://en.wikipedia.org/wiki/Platform_LSF}{Load Sharing
-Facility (LSF)}
+\href{https://en.wikipedia.org/wiki/Platform_LSF}{Load Sharing Facility (LSF)}
 \item \code{makeClusterFunctionsOpenLava()} for
 \href{https://en.wikipedia.org/wiki/OpenLava}{OpenLava}
 \item \code{\link[batchtools:makeClusterFunctionsSGE]{batchtools::makeClusterFunctionsSGE()}} for
-\href{https://en.wikipedia.org/wiki/Oracle_Grid_Engine}{Sun/Oracle
-Grid Engine (SGE)}
+\href{https://en.wikipedia.org/wiki/Oracle_Grid_Engine}{Sun/Oracle Grid Engine (SGE)}
 \item \code{\link[batchtools:makeClusterFunctionsSlurm]{batchtools::makeClusterFunctionsSlurm()}} for
 \href{https://en.wikipedia.org/wiki/Slurm_Workload_Manager}{Slurm}
 \item \code{\link[batchtools:makeClusterFunctionsTORQUE]{batchtools::makeClusterFunctionsTORQUE()}} for

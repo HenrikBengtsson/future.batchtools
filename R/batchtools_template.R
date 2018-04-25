@@ -23,17 +23,15 @@
 #' up using the following \pkg{batchtools} functions:
 #' \itemize{
 #'  \item [batchtools::makeClusterFunctionsLSF()] for
-#'    \href{https://en.wikipedia.org/wiki/Platform_LSF}{Load Sharing
-#'          Facility (LSF)}
+#'    [Load Sharing Facility (LSF)](https://en.wikipedia.org/wiki/Platform_LSF)
 #'  \item `makeClusterFunctionsOpenLava()` for
-#'    \href{https://en.wikipedia.org/wiki/OpenLava}{OpenLava}
+#'    [OpenLava](https://en.wikipedia.org/wiki/OpenLava)
 #'  \item [batchtools::makeClusterFunctionsSGE()] for
-#'    \href{https://en.wikipedia.org/wiki/Oracle_Grid_Engine}{Sun/Oracle
-#'          Grid Engine (SGE)}
+#'    [Sun/Oracle Grid Engine (SGE)](https://en.wikipedia.org/wiki/Oracle_Grid_Engine)
 #'  \item [batchtools::makeClusterFunctionsSlurm()] for
-#'    \href{https://en.wikipedia.org/wiki/Slurm_Workload_Manager}{Slurm}
+#'    [Slurm](https://en.wikipedia.org/wiki/Slurm_Workload_Manager)
 #'  \item [batchtools::makeClusterFunctionsTORQUE()] for
-#'    \href{https://en.wikipedia.org/wiki/TORQUE}{TORQUE} / PBS
+#'    [TORQUE](https://en.wikipedia.org/wiki/TORQUE) / PBS
 #' }
 #'
 #' @export
