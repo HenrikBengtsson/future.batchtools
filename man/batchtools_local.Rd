@@ -50,7 +50,7 @@ Both types of futures will block until the futures are resolved.
 }
 \details{
 batchtools local futures rely on the batchtools backend set up by
-\link[batchtools:makeClusterFunctionsInteractive(external = TRUE)]{batchtools::makeClusterFunctionsInteractive(external = TRUE)}
+\code{\link[batchtools:makeClusterFunctionsInteractive]{batchtools::makeClusterFunctionsInteractive(external = TRUE)}}
 and batchtools interactive futures on the one set up by
 \code{\link[batchtools:makeClusterFunctionsInteractive]{batchtools::makeClusterFunctionsInteractive()}}.
 These are supported by all operating systems.
