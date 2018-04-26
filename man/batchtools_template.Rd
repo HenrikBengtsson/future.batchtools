@@ -62,8 +62,7 @@ process one future at the time, whereas HPC backends where futures are
 resolved via separate jobs on a scheduler, the default is to assume an
 infinite number of workers.}
 
-\item{\ldots}{Additional arguments passed to
-\code{\link[=BatchtoolsFuture]{BatchtoolsFuture()}}.}
+\item{\ldots}{Additional arguments passed to \code{\link[=BatchtoolsFuture]{BatchtoolsFuture()}}.}
 }
 \value{
 An object of class \code{BatchtoolsFuture}.
@@ -79,7 +78,7 @@ up using the following \pkg{batchtools} functions:
 \itemize{
 \item \code{\link[batchtools:makeClusterFunctionsLSF]{batchtools::makeClusterFunctionsLSF()}} for
 \href{https://en.wikipedia.org/wiki/Platform_LSF}{Load Sharing Facility (LSF)}
-\item \code{makeClusterFunctionsOpenLava()} for
+\item \code{\link[batchtools:makeClusterFunctionsOpenLava]{batchtools::makeClusterFunctionsOpenLava()}} for
 \href{https://en.wikipedia.org/wiki/OpenLava}{OpenLava}
 \item \code{\link[batchtools:makeClusterFunctionsSGE]{batchtools::makeClusterFunctionsSGE()}} for
 \href{https://en.wikipedia.org/wiki/Oracle_Grid_Engine}{Sun/Oracle Grid Engine (SGE)}
