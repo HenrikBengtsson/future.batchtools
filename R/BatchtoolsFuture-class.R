@@ -390,9 +390,9 @@ run.BatchtoolsFuture <- function(future, ...) {
   future$config$jobid <- jobid
   mdebug("Created %s future #%d", class(future)[1], jobid$job.id)
 
-  ## WORKAROUND: (For multicore and OS X only)
+  ## WORKAROUND: (For multicore and macOS only)
   if (reg$cluster.functions$name == "Multicore") {
-    ## On some OS X systems, a system call to 'ps' may output an error message
+    ## On some macOS systems, a system call to 'ps' may output an error message
     ## "dyld: DYLD_ environment variables being ignored because main executable
     ##  (/bin/ps) is setuid or setgid" to standard error that is picked up by
     ## batchtools which incorrectly tries to parse it.  By unsetting all DYLD_*

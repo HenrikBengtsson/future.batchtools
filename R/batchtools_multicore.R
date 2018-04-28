@@ -19,7 +19,7 @@
 #' batchtools multicore futures rely on the batchtools backend set
 #' up by [batchtools::makeClusterFunctionsMulticore()].
 #' The batchtools multicore backend only works on operating systems
-#' supporting the `ps` command-line tool, e.g. Linux and OS X.
+#' supporting the `ps` command-line tool, e.g. Linux and macOS.
 #'
 #' @importFrom batchtools makeClusterFunctionsMulticore
 #' @importFrom future availableCores

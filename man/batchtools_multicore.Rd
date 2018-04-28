@@ -49,6 +49,6 @@ multicore batchtools futures.}
 batchtools multicore futures rely on the batchtools backend set
 up by \code{\link[batchtools:makeClusterFunctionsMulticore]{batchtools::makeClusterFunctionsMulticore()}}.
 The batchtools multicore backend only works on operating systems
-supporting the \code{ps} command-line tool, e.g. Linux and OS X.
+supporting the \code{ps} command-line tool, e.g. Linux and macOS.
 }
 \keyword{internal}
