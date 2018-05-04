@@ -6,9 +6,9 @@
 #'
 #' @param evaluator A future evaluator function.
 #' If NULL (default), the current evaluator as returned
-#' by \code{\link{plan}()} is used.
+#' by [plan()] is used.
 #'
-#' @return A number in [1, Inf].
+#' @return A number in \eqn{[1, Inf]}.
 #'
 #' @importFrom future nbrOfWorkers
 #' @export
@@ -16,9 +16,9 @@
 nbrOfWorkers.batchtools <- function(evaluator) {
   ## 1. Infer from 'workers' argument
   expr <- formals(evaluator)$workers
-  workers <- eval(expr)
+  workers <- eval(expr, enclos = baseenv())
   if (!is.null(workers)) {
-    stopifnot(length(workers) >= 1)
+    stop_if_not(length(workers) >= 1)
     if (is.numeric(workers)) return(prod(workers))
     if (is.character(workers)) return(length(workers))
     stop("Invalid data type of 'workers': ", mode(workers))
@@ -26,9 +26,9 @@ nbrOfWorkers.batchtools <- function(evaluator) {
 
   ## 2. Infer from 'cluster.functions' argument
   expr <- formals(evaluator)$cluster.functions
-  cf <- eval(expr)
+  cf <- eval(expr, enclos = baseenv())
   if (!is.null(cf)) {
-    stopifnot(inherits(cf, "ClusterFunctions"))
+    stop_if_not(inherits(cf, "ClusterFunctions"))
 
     name <- cf$name
     if (is.null(name)) name <- cf$Name

@@ -18,7 +18,7 @@ should be located.}
 \code{substitute()}:d or not.}
 
 \item{globals}{(optional) a logical, a character vector, a named list, or
-a \link[globals]{Globals} object.  If TRUE, globals are identified by code
+a \link[globals:Globals]{Globals} object.  If TRUE, globals are identified by code
 inspection based on \code{expr} and \code{tweak} searching from environment
 \code{envir}.  If FALSE, no globals are used.  If a character vector, then
 globals are identified by lookup based their names \code{globals} searching
@@ -32,7 +32,7 @@ job name for most job schedulers).}
 available for concurrent batchtools multicore futures.}
 
 \item{\ldots}{Additional arguments passed
-to \code{\link{BatchtoolsFuture}()}.}
+to \code{\link[=BatchtoolsFuture]{BatchtoolsFuture()}}.}
 }
 \value{
 An object of class \code{BatchtoolsFuture}.
@@ -41,14 +41,14 @@ An object of class \code{BatchtoolsFuture}.
 A batchtools multicore future is an asynchronous multiprocess
 future that will be evaluated in a background R session.\cr
 \cr
-\emph{We highly recommend using \code{\link[future]{multisession}}
+\emph{We highly recommend using \link[future:multisession]{future::multisession}
 (sic!) futures of the \pkg{future} package instead of
 multicore batchtools futures.}
 }
 \details{
 batchtools multicore futures rely on the batchtools backend set
-up by \code{\link[batchtools]{makeClusterFunctionsMulticore}()}.
+up by \code{\link[batchtools:makeClusterFunctionsMulticore]{batchtools::makeClusterFunctionsMulticore()}}.
 The batchtools multicore backend only works on operating systems
-supporting the \code{ps} command-line tool, e.g. Linux and OS X.
+supporting the \code{ps} command-line tool, e.g. Linux and macOS.
 }
 \keyword{internal}

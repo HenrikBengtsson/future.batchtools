@@ -3,23 +3,23 @@
 #' A batchtools multicore future is an asynchronous multiprocess
 #' future that will be evaluated in a background R session.\cr
 #' \cr
-#' \emph{We highly recommend using \code{\link[future]{multisession}}
+#' _We highly recommend using [future::multisession]
 #' (sic!) futures of the \pkg{future} package instead of
-#' multicore batchtools futures.}
+#' multicore batchtools futures._
 #'
 #' @inheritParams BatchtoolsFuture
 #' @param workers The number of multicore processes to be
 #' available for concurrent batchtools multicore futures.
 #' @param \ldots Additional arguments passed
-#' to \code{\link{BatchtoolsFuture}()}.
+#' to [BatchtoolsFuture()].
 #'
-#' @return An object of class \code{BatchtoolsFuture}.
+#' @return An object of class `BatchtoolsFuture`.
 #'
 #' @details
 #' batchtools multicore futures rely on the batchtools backend set
-#' up by \code{\link[batchtools]{makeClusterFunctionsMulticore}()}.
+#' up by [batchtools::makeClusterFunctionsMulticore()].
 #' The batchtools multicore backend only works on operating systems
-#' supporting the \code{ps} command-line tool, e.g. Linux and OS X.
+#' supporting the `ps` command-line tool, e.g. Linux and macOS.
 #'
 #' @importFrom batchtools makeClusterFunctionsMulticore
 #' @importFrom future availableCores
@@ -33,7 +33,7 @@ batchtools_multicore <- function(expr, envir = parent.frame(),
   if (substitute) expr <- substitute(expr)
 
   if (is.null(workers)) workers <- availableCores(constraints = "multicore")
-  stopifnot(length(workers) == 1L, is.numeric(workers),
+  stop_if_not(length(workers) == 1L, is.numeric(workers),
             is.finite(workers), workers >= 1L)
 
   ## Fall back to batchtools_local if multicore processing is not supported

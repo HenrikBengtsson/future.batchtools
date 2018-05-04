@@ -18,7 +18,7 @@ should be located.}
 \code{substitute()}:d or not.}
 
 \item{globals}{(optional) a logical, a character vector, a named list, or
-a \link[globals]{Globals} object.  If TRUE, globals are identified by code
+a \link[globals:Globals]{Globals} object.  If TRUE, globals are identified by code
 inspection based on \code{expr} and \code{tweak} searching from environment
 \code{envir}.  If FALSE, no globals are used.  If a character vector, then
 globals are identified by lookup based their names \code{globals} searching
@@ -34,11 +34,13 @@ job name for most job schedulers).}
 \item{resources}{A named list passed to the batchtools template
 (available as variable \code{resources}).}
 
-\item{workers}{(optional) Additional specification for the batchtools
-backend.}
+\item{workers}{(optional) The maximum number of workers the batchtools
+backend may use at any time.   Interactive and "local" backends can only
+process one future at the time, whereas HPC backends where futures are
+resolved via separate jobs on a scheduler, the default is to assume an
+infinite number of workers.}
 
-\item{\ldots}{Additional arguments passed to
-\code{\link{BatchtoolsFuture}()}.}
+\item{\ldots}{Additional arguments passed to \code{\link[=BatchtoolsFuture]{BatchtoolsFuture()}}.}
 }
 \value{
 An object of class \code{BatchtoolsFuture}.

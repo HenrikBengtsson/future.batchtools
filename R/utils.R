@@ -10,6 +10,22 @@ is_false <- function(x) {
   identical(FALSE, x)
 }
 
+stop_if_not <- function(...) {
+  res <- list(...)
+  for (ii in 1L:length(res)) {
+    res_ii <- .subset2(res, ii)
+    if (length(res_ii) != 1L || is.na(res_ii) || !res_ii) {
+        mc <- match.call()
+        call <- deparse(mc[[ii + 1]], width.cutoff = 60L)
+        if (length(call) > 1L) call <- paste(call[1L], "....")
+        stop(sprintf("%s is not TRUE", sQuote(call)),
+             call. = FALSE, domain = NA)
+    }
+  }
+  
+  NULL
+}
+
 attached_packages <- function() {
   pkgs <- search()
   pkgs <- grep("^package:", pkgs, value = TRUE)
@@ -25,7 +41,7 @@ capture_output <- function(expr, envir = parent.frame(), ...) {
     on.exit(close(file))
     capture.output(expr, file = file)
     rawToChar(rawConnectionValue(file))
-  }, envir = envir, enclos = envir)
+  }, envir = envir, enclos = baseenv())
   unlist(strsplit(res, split = "\n", fixed = TRUE), use.names = FALSE)
 }
 
@@ -115,9 +131,9 @@ import_batchtools <- function(name, default = NULL) {
 ## as small as possible, which is why we use local().  Without,
 ## the environment would be that of the package itself and all of
 ## the package would be exported.
-geval <- local(function(expr, substitute = FALSE, envir = .GlobalEnv, ...) {
+geval <- local(function(expr, substitute = FALSE, envir = .GlobalEnv, enclos = baseenv(), ...) {
   if (substitute) expr <- substitute(expr)
-  eval(expr, envir = envir)
+  eval(expr, envir = envir, enclos = enclos)
 })
 
 

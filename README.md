@@ -179,7 +179,7 @@ demo("mandelbrot", package = "future", ask = FALSE)
 [batchtools]: https://cran.r-project.org/package=batchtools
 [brew]: https://cran.r-project.org/package=brew
 [future]: https://cran.r-project.org/package=future
-[future.batchtools]: https://github.com/HenrikBengtsson/future.batchtools
+[future.batchtools]: https://cran.r-project.org/package=future.batchtools
 [batchtools configuration]: https://mllg.github.io/batchtools/articles/index.html
 [TORQUE]: https://en.wikipedia.org/wiki/TORQUE
 [Slurm]: https://en.wikipedia.org/wiki/Slurm_Workload_Manager
