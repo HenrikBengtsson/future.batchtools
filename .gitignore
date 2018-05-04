@@ -14,4 +14,9 @@
 *.swp
 .covr.rds
 .future
-.Rproj.user
+.ghi
+.issues
+.make
+revdep/data.sqlite
+revdep/checks/*
+revdep/library/*
