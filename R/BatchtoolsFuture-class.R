@@ -282,7 +282,7 @@ value.BatchtoolsFuture <- function(future, signal = TRUE,
                                    onMissing = c("default", "error"),
                                    default = NULL, cleanup = TRUE, ...) {
   ## Has the value already been collected?
-  if (future$state %in% c("done", "failed", "interrupted")) {
+  if (future$state %in% c("done", "finished", "failed", "interrupted")) {
     return(NextMethod("value"))
   }
 

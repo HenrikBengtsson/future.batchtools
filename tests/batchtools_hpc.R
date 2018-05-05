@@ -12,10 +12,16 @@ for (strategy in strategies) {
 
   plan(strategy)
   print(plan())
-  
+
+  f <- future(42L)
+  print(f)
+  v <- value(f)
+  print(v)
+  stopifnot(v == 42L)
+
   x %<-% Sys.info()
   print(x)
-  
+
   message(sprintf("*** %s() ... DONE", strategy))
 }
 

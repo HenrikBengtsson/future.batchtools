@@ -1,9 +1,18 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.7.0-9000 [2018-05-03]
+Version: 0.7.0-9000 [2018-05-05]
 
  o ...
+ 
+BUG FIXES:
+
+ o A bug was introduced in future 1.8.0 that could result in "Error in 
+   readLog(id, reg = reg) : Log file for job with id 1 not available" when
+   using one of the batchtools backends.  It occurred when the value was
+   queried.  It was observered using 'batchtools_torque' but not when using
+   'batchools_local'.  This bug was missed because the 1.8.0 release was not
+   tested on an HPC scheduled as it should have.
  
 
 Version: 0.7.0 [2018-05-03]
