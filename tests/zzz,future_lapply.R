@@ -12,8 +12,20 @@ batchtools_custom_local <- function(expr, substitute = TRUE,
 class(batchtools_custom_local) <- c("batchtools_custom_local",
                                     class(batchtools_custom))
 
+message("All HPC strategies:")
+strategies <- c("batchtools_lsf", "batchtools_openlava", "batchtools_sge",
+                "batchtools_slurm", "batchtools_torque")
+mprint(strategies)
+
+message("Supported HPC strategies:")
+strategies <- strategies[sapply(strategies, FUN = test_strategy)]
+mprint(strategies)
+
+message("Strategies to test with:")
 strategies <- c("batchtools_interactive", "batchtools_local",
-                "batchtools_custom_local")
+                "batchtools_custom_local", strategies)
+mprint(strategies)
+
 
 message("*** future_lapply() ...")
 
@@ -29,6 +41,7 @@ for (scheduling in list(FALSE, TRUE)) {
   for (strategy in strategies) {
     mprintf("- plan('%s') ...", strategy)
     plan(strategy)
+    if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 3L)
     stopifnot(nbrOfWorkers() < Inf)
 
     y <- future_lapply(x, FUN = vector, length = 2L,
@@ -51,6 +64,7 @@ for (scheduling in list(FALSE, TRUE)) {
   for (strategy in strategies) {
     mprintf("- plan('%s') ...", strategy)
     plan(strategy)
+    if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 3L)
     stopifnot(nbrOfWorkers() < Inf)
 
     y <- future_lapply(x, FUN = base::vector, length = 2L,
@@ -72,6 +86,7 @@ for (scheduling in list(FALSE, TRUE)) {
   for (strategy in strategies) {
     mprintf("- plan('%s') ...", strategy)
     plan(strategy)
+    if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 3L)
     stopifnot(nbrOfWorkers() < Inf)
 
     y <- future_lapply(x, FUN = future:::hpaste, collapse = "; ",
@@ -104,6 +119,7 @@ for (scheduling in list(FALSE, TRUE)) {
   for (strategy in strategies) {
     mprintf("- plan('%s') ...", strategy)
     plan(strategy)
+    if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 3L)
     stopifnot(nbrOfWorkers() < Inf)
 
     y <- future_lapply(x, FUN = listenv::map, future.scheduling = scheduling)
@@ -130,6 +146,8 @@ y_truth <- lapply("abc.txt", FUN = my_ext)
 
 for (strategy in strategies) {
   plan(strategy)
+  if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 3L)
+  stopifnot(nbrOfWorkers() < Inf)
   y <- future_lapply("abc.txt", FUN = my_ext)
   stopifnot(identical(y, y_truth))
 }
