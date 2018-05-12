@@ -499,7 +499,7 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
       result <- loadResult(reg = reg, id = jobid)
       if (inherits(result, "FutureResult")) {
         prototype_fields <- c(prototype_fields, "stdout")
-        result$stdout <- getLog(id = jobid, reg = reg)
+        result$stdout <- try(getLog(id = jobid, reg = reg), silent = TRUE)
         if (inherits(result$condition, "error")) {
           cleanup <- FALSE
         }
