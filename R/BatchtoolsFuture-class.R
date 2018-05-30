@@ -112,7 +112,7 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
 #' @export
 #' @keywords internal
 print.BatchtoolsFuture <- function(x, ...) {
-  NextMethod("print")
+  NextMethod()
 
   ## batchtools specific
   reg <- x$config$reg
@@ -265,7 +265,7 @@ loggedOutput.BatchtoolsFuture <- function(future, ...) {
 #' @keywords internal
 resolved.BatchtoolsFuture <- function(x, ...) {
   ## Has internal future state already been switched to be resolved
-  resolved <- NextMethod("resolved")
+  resolved <- NextMethod()
   if (resolved) return(TRUE)
 
   ## If not, checks the batchtools registry status
@@ -283,7 +283,7 @@ value.BatchtoolsFuture <- function(future, signal = TRUE,
                                    default = NULL, cleanup = TRUE, ...) {
   ## Has the value already been collected?
   if (future$state %in% c("done", "finished", "failed", "interrupted")) {
-    return(NextMethod("value"))
+    return(NextMethod())
   }
 
   if (future$state == "created") {
@@ -305,7 +305,7 @@ value.BatchtoolsFuture <- function(future, signal = TRUE,
   future$state <- "finished"
   if (cleanup) delete(future, ...)
 
-  NextMethod("value")
+  NextMethod()
 } # value()
 
 
