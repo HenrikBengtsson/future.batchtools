@@ -512,8 +512,7 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
       cleanup <- FALSE
       msg <- sprintf("BatchtoolsError in %s ('%s'): %s",
                      class(future)[1], label, loggedError(future))
-      stop(BatchtoolsFutureError(msg, future = future,
-                                 output = loggedOutput(future)))
+      stop(BatchtoolsFutureError(msg, future = future))
     } else if ("expired" %in% stat) {
       cleanup <- FALSE
       msg <- sprintf("BatchtoolsExpiration: Future ('%s') expired (registry path %s).", label, reg$file.dir)
@@ -528,7 +527,7 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
       } else {
         msg <- sprintf("%s. No logged output exist.", msg)
       }
-      stop(BatchtoolsFutureError(msg, future = future, output = output))
+      stop(BatchtoolsFutureError(msg, future = future))
     } else if (is_na(stat)) {
       msg <- sprintf("BatchtoolsDeleted: Cannot retrieve value. Future ('%s') deleted: %s", label, reg$file.dir) #nolint
       stop(BatchtoolsFutureError(msg, future = future))
