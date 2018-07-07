@@ -14,6 +14,10 @@ BUG FIXES:
    'batchools_local'.  This bug was missed because the 0.7.0 release was not
    tested on an TORQUE/PBS HPC scheduler as it should have.
 
+CODE REFACTORING:
+
+ o Preparing for standard output captured during evaluation of futures.
+ 
 
 Version: 0.7.0 [2018-05-03]
 
