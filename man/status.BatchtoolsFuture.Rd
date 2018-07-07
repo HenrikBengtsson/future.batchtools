@@ -4,7 +4,7 @@
 \alias{status.BatchtoolsFuture}
 \alias{status}
 \alias{finished}
-\alias{value}
+\alias{result}
 \alias{loggedError}
 \alias{loggedOutput}
 \title{Status of batchtools future}

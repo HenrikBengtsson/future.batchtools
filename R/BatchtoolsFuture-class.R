@@ -76,7 +76,9 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
   gp <- getGlobalsAndPackages(expr, envir = envir, globals = globals)
 
   future <- Future(expr = gp$expr, envir = envir, substitute = FALSE,
-                   workers = workers, label = label, version = "1.8", ...)
+                   workers = workers, label = label,
+                   version = "1.8", .callResult = TRUE,
+                   ...)
 
   future$globals <- gp$globals
   future$packages <- unique(c(packages, gp$packages))
@@ -152,14 +154,13 @@ loggedOutput <- function(...) UseMethod("loggedOutput")
 #'
 #' @return A character vector or a logical scalar.
 #'
-#' @aliases status finished value
+#' @aliases status finished result
 #'          loggedError loggedOutput
 #' @keywords internal
 #'
 #' @export
 #' @export status
 #' @export finished
-#' @export value
 #' @export loggedError
 #' @export loggedOutput
 #' @importFrom batchtools getStatus
@@ -192,13 +193,15 @@ status.BatchtoolsFuture <- function(future, ...) {
   status <- status[status]
   status <- sort(names(status))
   status <- setdiff(status, c("n"))
+
+##  status[status == "done"] <- "finished"
   
   result <- future$result
   if (inherits(result, "FutureResult")) {
     condition <- result$condition
     if (inherits(condition, "error")) status <- c("error", status)
   }
-  
+
   status
 }
 
@@ -208,7 +211,7 @@ status.BatchtoolsFuture <- function(future, ...) {
 finished.BatchtoolsFuture <- function(future, ...) {
   status <- status(future)
   if (is_na(status)) return(NA)
-  any(c("done", "error", "expired") %in% status)
+  any(c("done", "finished", "error", "expired") %in% status)
 }
 
 #' @export
@@ -275,13 +278,15 @@ resolved.BatchtoolsFuture <- function(x, ...) {
   resolved
 }
 
-#' @importFrom future value
+#' @importFrom future result
 #' @export
 #' @keywords internal
-value.BatchtoolsFuture <- function(future, signal = TRUE,
-                                   onMissing = c("default", "error"),
-                                   default = NULL, cleanup = TRUE, ...) {
+result.BatchtoolsFuture <- function(future, ...) {
   ## Has the value already been collected?
+  result <- future$result
+  if (inherits(result, "FutureResult")) return(result)
+
+  ## Has the value already been collected? - take two
   if (future$state %in% c("done", "finished", "failed", "interrupted")) {
     return(NextMethod())
   }
@@ -292,22 +297,19 @@ value.BatchtoolsFuture <- function(future, signal = TRUE,
 
   stat <- status(future)
   if (is_na(stat)) {
-    onMissing <- match.arg(onMissing)
-    if (onMissing == "default") return(default)
     label <- future$label
     if (is.null(label)) label <- "<none>"
-    stop(sprintf("The value no longer exists (or never existed) for Future ('%s') of class %s", label, paste(sQuote(class(future)), collapse = ", "))) #nolint
+    stop(sprintf("The result no longer exists (or never existed) for Future ('%s') of class %s", label, paste(sQuote(class(future)), collapse = ", "))) #nolint
   }
 
   result <- await(future, cleanup = FALSE)
   stop_if_not(inherits(result, "FutureResult"))
   future$result <- result
   future$state <- "finished"
-  if (cleanup) delete(future, ...)
+  delete(future)
 
   NextMethod()
-} # value()
-
+}
 
 
 run <- function(...) UseMethod("run")
@@ -485,7 +487,7 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
   mdebug("- status(): %s", paste(sQuote(stat), collapse = ", "))
   mdebug("batchtools::waitForJobs() ... done")
 
-  finished <- is_na(stat) || any(c("done", "error", "expired") %in% stat)
+  finished <- is_na(stat) || any(c("done", "finished", "error", "expired") %in% stat)
 
   ## PROTOTYPE RESULTS BELOW:
   prototype_fields <- NULL
@@ -621,13 +623,9 @@ delete.BatchtoolsFuture <- function(future,
     }
   }
 
-  ## FIXME: Make sure to collect the results before deleting
+  ## Make sure to collect the results before deleting
   ## the internal batchtools registry
-  result <- future$result
-  if (is.null(result)) {
-    value(future, signal = FALSE)
-    result <- future$result
-  }
+  result <- result(future)
   stop_if_not(inherits(result, "FutureResult"))
 
   ## To simplify post mortem troubleshooting in non-interactive sessions,

@@ -51,12 +51,8 @@ f$state <- "running"
 path <- f$config$reg$file.dir
 unlink(path, recursive = TRUE)
 
-res <- value(f, onMissing = "default")
-print(res)
-stopifnot(is.null(res))
-
 res <- tryCatch({
-  value(f, onMissing = "error")
+  value(f)
 }, error = function(ex) ex)
 print(res)
 stopifnot(inherits(res, "error"))
