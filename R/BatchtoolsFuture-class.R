@@ -194,7 +194,7 @@ status.BatchtoolsFuture <- function(future, ...) {
   status <- sort(names(status))
   status <- setdiff(status, c("n"))
 
-##  status[status == "done"] <- "finished"
+  status[status == "done"] <- "finished"
   
   result <- future$result
   if (inherits(result, "FutureResult")) {
@@ -211,7 +211,7 @@ status.BatchtoolsFuture <- function(future, ...) {
 finished.BatchtoolsFuture <- function(future, ...) {
   status <- status(future)
   if (is_na(status)) return(NA)
-  any(c("done", "finished", "error", "expired") %in% status)
+  any(c("finished", "error", "expired") %in% status)
 }
 
 #' @export
@@ -274,7 +274,7 @@ resolved.BatchtoolsFuture <- function(x, ...) {
   ## If not, checks the batchtools registry status
   resolved <- finished(x)
   if (is.na(resolved)) return(FALSE)
-
+ 
   resolved
 }
 
@@ -287,7 +287,7 @@ result.BatchtoolsFuture <- function(future, ...) {
   if (inherits(result, "FutureResult")) return(result)
 
   ## Has the value already been collected? - take two
-  if (future$state %in% c("done", "finished", "failed", "interrupted")) {
+  if (future$state %in% c("finished", "failed", "interrupted")) {
     return(NextMethod())
   }
 
@@ -487,7 +487,7 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
   mdebug("- status(): %s", paste(sQuote(stat), collapse = ", "))
   mdebug("batchtools::waitForJobs() ... done")
 
-  finished <- is_na(stat) || any(c("done", "finished", "error", "expired") %in% stat)
+  finished <- is_na(stat) || any(c("finished", "error", "expired") %in% stat)
 
   ## PROTOTYPE RESULTS BELOW:
   prototype_fields <- NULL
@@ -497,7 +497,7 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
     mdebug("Results:")
     label <- future$label
     if (is.null(label)) label <- "<none>"
-    if ("done" %in% stat) {
+    if ("finished" %in% stat) {
       result <- loadResult(reg = reg, id = jobid)
       if (inherits(result, "FutureResult")) {
         prototype_fields <- c(prototype_fields, "stdout")
