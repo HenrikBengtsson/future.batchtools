@@ -500,10 +500,10 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
     if ("finished" %in% stat) {
       result <- loadResult(reg = reg, id = jobid)
       if (inherits(result, "FutureResult")) {
-        if (is.null(result$stdout)) {
-          prototype_fields <- c(prototype_fields, "stdout")
-          result$stdout <- try(getLog(id = jobid, reg = reg), silent = TRUE)
-        }
+        prototype_fields <- c(prototype_fields, "batchtools_log")
+        result[["batchtools_log"]] <- try({
+          getLog(id = jobid, reg = reg)
+        }, silent = TRUE)
         if (inherits(result$condition, "error")) {
           cleanup <- FALSE
         }
