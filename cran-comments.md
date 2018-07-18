@@ -2,7 +2,13 @@
 
 on 2018-07-18
 
+## Submission 1
+
 Thanks in advance
+
+## Submission 2
+
+Resubmission of future.batchtools 0.7.1 where the overall R CMD check time has been decreased significantly.
 
 
 ### R CMD check --as-cran validation
