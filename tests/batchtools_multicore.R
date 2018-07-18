@@ -1,7 +1,6 @@
 source("incl/start.R")
 library("listenv")
 
-
 message("*** batchtools_multicore() ...")
 
 for (cores in 1:min(2L, availableCores("multicore"))) {
@@ -12,7 +11,7 @@ for (cores in 1:min(2L, availableCores("multicore"))) {
   options(mc.cores = cores - 1L)
 
   if (!supportsMulticore()) {
-    mprintf("batchtools multicore futures are not supporting on '%s'. Falling back to use synchroneous batchtools local futures", .Platform$OS.type) #nolint
+    mprintf("batchtools multicore futures are not supporting on '%s'. Falling back to use synchroneous batchtools local futures\n", .Platform$OS.type) #nolint
   }
 
   for (globals in c(FALSE, TRUE)) {
@@ -97,20 +96,22 @@ for (cores in 1:min(2L, availableCores("multicore"))) {
   } # for (globals ...)
 
 
-  message("*** batchtools_multicore(..., workers = 1L) ...")
-
-  a <- 2
-  b <- 3
-  y_truth <- a * b
-
-  f <- batchtools_multicore({ a * b }, workers = 1L)
-  rm(list = c("a", "b"))
-
-  v <- value(f)
-  print(v)
-  stopifnot(v == y_truth)
-
-  message("*** batchtools_multicore(..., workers = 1L) ... DONE")
+  if (cores > 1) {
+    message("*** batchtools_multicore(..., workers = 1L) ...")
+  
+    a <- 2
+    b <- 3
+    y_truth <- a * b
+  
+    f <- batchtools_multicore({ a * b }, workers = 1L)
+    rm(list = c("a", "b"))
+  
+    v <- value(f)
+    print(v)
+    stopifnot(v == y_truth)
+  
+    message("*** batchtools_multicore(..., workers = 1L) ... DONE")
+  }
 
   mprintf("Testing with %d cores ... DONE", cores)
 } ## for (cores ...)
