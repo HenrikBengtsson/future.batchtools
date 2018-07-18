@@ -2,6 +2,10 @@ source("incl/start.R")
 
 plan(batchtools_local)
 
+## CRAN processing times:
+## On Windows 32-bit, don't run these tests on batchtools
+if (!fullTest && isWin32) plan(sequential)
+
 oopts <- c(oopts, options(
   future.globals.resolve = TRUE,
   future.globals.onMissing = "error"

@@ -5,6 +5,7 @@
 #----------------------------------------------------------------
 environment:
   _R_CHECK_FORCE_SUGGESTS_: false
+  _R_CHECK_FULL_: true
 
   matrix:
   - R_VERSION: devel

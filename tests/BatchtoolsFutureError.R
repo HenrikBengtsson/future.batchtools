@@ -5,7 +5,7 @@ message("*** BatchtoolsFutureError() ...")
 plan(batchtools_local)
 
 for (cleanup in c(FALSE, TRUE)) {
-  mprintf("*** batchtools future error w/ future.delete = %s ...", cleanup)
+  mprintf("*** batchtools future error w/ future.delete = %s ...\n", cleanup)
 
   options(future.delete = cleanup)
 
@@ -14,7 +14,6 @@ for (cleanup in c(FALSE, TRUE)) {
     print(x)
     stop("Woops!")
   })
-  print(f)
 
   resolve(f)
   
@@ -45,14 +44,12 @@ for (cleanup in c(FALSE, TRUE)) {
     print(log)
 
     ## Now manually delete batchtools Registry
-    batchtools::removeRegistry(reg = reg)
+    batchtools::removeRegistry(wait = 0.0, reg = reg)
   }
 
   stopifnot(!file_test("-d", reg$file.dir))
-  fail <- try(checkIds(reg, ids = 1L), silent = TRUE)
-  stopifnot(inherits(fail, "try-error"))
 
-  mprintf("*** batchtools future error w/ future.delete = %s ... DONE", cleanup)
+  mprintf("*** batchtools future error w/ future.delete = %s ... DONE\n", cleanup)
 } ## for (cleanup ...)
 
 
@@ -80,7 +77,7 @@ if (fullTest) {
   plan(batchtools_multicore)
 
   f <- future({
-    Sys.sleep(5)
+    Sys.sleep(2)
     42L
   })
 

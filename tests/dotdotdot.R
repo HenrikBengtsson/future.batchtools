@@ -1,6 +1,13 @@
 source("incl/start.R")
 library("listenv")
 
+strategies <- c("batchtools_interactive", "batchtools_local")
+
+## CRAN processing times:
+## On Windows 32-bit, don't run these tests
+if (!fullTest && isWin32) strategies <- character(0L)
+
+
 message("*** Global argument '...' in futures ...")
 
 sum_fcns <- list()
@@ -34,12 +41,11 @@ sum_fcns$D <- function(x, y) {
 }
 
 
-for (strategy in c("sequential", "multiprocess",
-                   "batchtools_interactive", "batchtools_local")) {
+for (strategy in strategies) {
   plan(strategy, substitute = FALSE)
 
   for (name in names(sum_fcns)) {
-    mprintf("** Sum function '%s' with plan('%s') ...", name, strategy)
+    mprintf("** Sum function '%s' with plan('%s') ...\n", name, strategy)
     sum_fcn <- sum_fcns[[name]]
     print(sum_fcn)
     y <- try(sum_fcn(1:2, 3))

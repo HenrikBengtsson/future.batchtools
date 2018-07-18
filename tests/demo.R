@@ -1,12 +1,19 @@
 source("incl/start.R")
 
-options("R_FUTURE_DEMO_MANDELBROT_PLANES" = 4L)
+plan(batchtools_local)
+
+## CRAN processing times:
+## On Windows 32-bit, don't run these tests via batchtools
+if (!fullTest && isWin32) plan(sequential)
+
+options(future.demo.mandelbrot.nrow = 2L)
+options(future.demo.mandelbrot.resolution = 50L)
+options(future.demo.mandelbrot.delay = FALSE)
 
 message("*** Demos ...")
 
 message("*** Mandelbrot demo of the 'future' package ...")
 
-plan(batchtools_local)
 demo("mandelbrot", package = "future", ask = FALSE)
 
 message("*** Demos ... DONE")

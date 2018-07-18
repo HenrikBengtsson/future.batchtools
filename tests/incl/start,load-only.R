@@ -1,13 +1,20 @@
 ## Record original state
 ovars <- ls()
-oopts <- options(warn = 1L, mc.cores = 2L, future.debug = TRUE)
+oopts <- options(
+  warn = 1L,
+  mc.cores = 2L,
+  future.debug = FALSE,
+  future.wait.interval = 0.1  ## Speed up await() and delete()
+)
 oopts$future.delete <- getOption("future.delete")
 oplan <- future::plan()
 
 ## Use local batchtools futures by default
-future::plan(future.batchtools:::batchtools_local)
+future::plan(future.batchtools::batchtools_local)
 
 fullTest <- (Sys.getenv("_R_CHECK_FULL_") != "")
+
+isWin32 <- (.Platform$OS.type == "windows" && .Platform$r_arch == "i386")
 
 all_strategies <- function() {
   strategies <- Sys.getenv("R_FUTURE_TESTS_STRATEGIES")

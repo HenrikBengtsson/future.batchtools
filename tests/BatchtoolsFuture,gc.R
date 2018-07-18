@@ -6,7 +6,6 @@ plan(batchtools_local)
 
 for (how in c("resolve", "value")) {
   f <- future({ 1 })
-  print(f)
 
   if (how == "value") {
     v <- value(f)

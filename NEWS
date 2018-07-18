@@ -1,6 +1,23 @@
 Package: future.batchtools
 ==========================
 
+Version: 0.7.1 [2018-07-18]
+
+NEW FEATURES:
+
+ o The batchtools_* backends support the handling of the standard output as
+   implemented in future (>= 1.9.0).
+ 
+BUG FIXES:
+
+ o A bug was introduced in future.batchtools 0.7.0 that could result in "Error 
+   in readLog(id, reg = reg) : Log file for job with id 1 not available" when
+   using one of the batchtools backends.  It occurred when the value was
+   queried.  It was observered using 'batchtools_torque' but not when using
+   'batchools_local'.  This bug was missed because the 0.7.0 release was not
+   tested on an TORQUE/PBS HPC scheduler as it should have.
+
+
 Version: 0.7.0 [2018-05-03]
 
 NEW FEATURES:
@@ -36,7 +53,7 @@ NEW FEATURES:
 
  o The error message for expired batchtools futures now include the last few
    lines of the logged output, which sometimes includes clues on why the future
-   expired.  For instance, if a TORQUE / PBS job use more than the allocated
+   expired.  For instance, if a TORQUE/PBS job use more than the allocated
    amount of memory it might be terminated by the scheduler leaving the message
    "PBS: job killed: vmem 1234000 exceeded limit 1048576" in the output.
    
