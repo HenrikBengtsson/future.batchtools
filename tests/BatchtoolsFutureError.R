@@ -49,8 +49,6 @@ for (cleanup in c(FALSE, TRUE)) {
   }
 
   stopifnot(!file_test("-d", reg$file.dir))
-  fail <- try(checkIds(reg, ids = 1L), silent = TRUE)
-  stopifnot(inherits(fail, "try-error"))
 
   mprintf("*** batchtools future error w/ future.delete = %s ... DONE", cleanup)
 } ## for (cleanup ...)
