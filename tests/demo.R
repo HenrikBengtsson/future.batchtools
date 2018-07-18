@@ -1,6 +1,8 @@
 source("incl/start.R")
 
-options("R_FUTURE_DEMO_MANDELBROT_PLANES" = 4L)
+options(future.demo.mandelbrot.nrow = 2L)
+options(future.demo.mandelbrot.resolution = 50L)
+options(future.demo.mandelbrot.delay = FALSE)
 
 message("*** Demos ...")
 
