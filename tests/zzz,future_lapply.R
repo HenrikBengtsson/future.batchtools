@@ -31,7 +31,7 @@ message("*** future_lapply() ...")
 
 message("- future_lapply(x, FUN = vector, ...) ...")
 
-x <- list(a = "integer", b = "numeric", c = "character", c = "list")
+x <- list(a = "integer", c = "character", c = "list")
 str(list(x = x))
 
 y0 <- lapply(x, FUN = vector, length = 2L)
@@ -54,7 +54,7 @@ for (strategy in strategies) {
 
 message("- future_lapply(x, FUN = base::vector, ...) ...")
 
-x <- list(a = "integer", b = "numeric", c = "character", c = "list")
+x <- list(a = "integer", c = "character", c = "list")
 str(list(x = x))
 
 y0 <- lapply(x, FUN = base::vector, length = 2L)

@@ -51,7 +51,7 @@ flapply <- function(x, FUN, ...) {
   as.list(res)
 }
 
-x <- list(a = "integer", b = "numeric", c = "character", c = "list")
+x <- list(a = "integer", c = "character", c = "list")
 str(list(x = x))
 
 y0 <- lapply(x, FUN = base::vector, length = 2L)
