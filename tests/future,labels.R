@@ -12,20 +12,18 @@ for (strategy in strategies) {
     fcn <- get(strategy, mode = "function")
     stopifnot(inherits(fcn, strategy))
     f <- fcn(42, label = label)
-    print(f)
     stopifnot(identical(f$label, label))
     v <- value(f)
     stopifnot(v == 42)
+    print(f)
 
     f <- future(42, label = label)
-    print(f)
     stopifnot(identical(f$label, label))
     v <- value(f)
     stopifnot(v == 42)
 
     v %<-% { 42 } %label% label
     f <- futureOf(v)
-    print(f)
     stopifnot(identical(f$label, label))
     stopifnot(v == 42)
 

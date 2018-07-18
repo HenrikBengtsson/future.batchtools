@@ -28,7 +28,6 @@ f <- batchtools_local({
   c <- 2
   a * b * c
 })
-print(f)
 
 ## Although 'f' is a batchtools_local future and therefore
 ## resolved/evaluates the future expression only
@@ -55,7 +54,6 @@ f <- batchtools_local({
   stop("Whoops!")
   1
 })
-print(f)
 v <- value(f, signal = FALSE)
 print(v)
 stopifnot(inherits(v, "simpleError"))

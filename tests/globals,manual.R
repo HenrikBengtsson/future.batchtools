@@ -29,7 +29,6 @@ f <- future({
   x <- 1:10
   sumtwo(a + b * x)
 }, globals = TRUE)
-print(f)
 rm(list = names(globals))
 y <- value(f)
 print(y)
@@ -55,7 +54,6 @@ f <- future({
   x <- 1:10
   sumtwo(a + b * x)
 }, globals = FALSE)
-print(f)
 rm(list = names(globals))
 y <- tryCatch(value(f), error = identity)
 if (!inherits(f, c("EagerFuture", "MulticoreFuture"))) {
@@ -74,7 +72,6 @@ f <- future({
   x <- 1:10
   sumtwo(a + b * x)
 }, globals = globals)
-print(f)
 v <- value(f)
 print(v)
 stopifnot(all.equal(v, v0))
@@ -96,7 +93,6 @@ f <- future({
   x <- 1:10
   sumtwo(a + b * x)
 }, globals = c("a", "b", "sumtwo"))
-print(f)
 rm(list = names(globals))
 v <- value(f)
 print(v)

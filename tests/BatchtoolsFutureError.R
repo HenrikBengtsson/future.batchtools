@@ -14,7 +14,6 @@ for (cleanup in c(FALSE, TRUE)) {
     print(x)
     stop("Woops!")
   })
-  print(f)
 
   resolve(f)
   

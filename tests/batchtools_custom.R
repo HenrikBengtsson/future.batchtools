@@ -64,7 +64,6 @@ f <- batchtools_custom({
   stop("Whoops!")
   1
 }, cluster.functions = cf)
-print(f)
 v <- value(f, signal = FALSE)
 print(v)
 stopifnot(inherits(v, "simpleError"))

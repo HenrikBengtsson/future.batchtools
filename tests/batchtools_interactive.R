@@ -28,7 +28,6 @@ f <- batchtools_interactive({
   c <- 2
   a * b * c
 })
-print(f)
 
 ## Although 'f' is a batchtools_interactive future and therefore
 ## resolved/evaluates the future expression only
@@ -55,7 +54,6 @@ f <- batchtools_interactive({
   stop("Whoops!")
   1
 })
-print(f)
 v <- value(f, signal = FALSE)
 print(v)
 stopifnot(inherits(v, "simpleError"))
