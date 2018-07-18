@@ -4,7 +4,7 @@ library("listenv")
 
 message("*** batchtools_multicore() ...")
 
-for (cores in 1:min(3L, availableCores("multicore"))) {
+for (cores in 1:min(2L, availableCores("multicore"))) {
   ## FIXME:
   if (!fullTest && cores > 1) next
 
@@ -62,14 +62,14 @@ for (cores in 1:min(3L, availableCores("multicore"))) {
 
     mprintf("*** batchtools_multicore(..., globals = %s) with globals and blocking", globals) #nolint
     x <- listenv()
-    for (ii in 1:4) {
+    for (ii in 1:2) {
       mprintf(" - Creating batchtools_multicore future #%d ...", ii)
       x[[ii]] <- batchtools_multicore({ ii }, globals = globals)
     }
     mprintf(" - Resolving %d batchtools_multicore futures", length(x))
     if (globals || f$config$reg$cluster.functions$name == "Multicore") {
       v <- sapply(x, FUN = value)
-      stopifnot(all(v == 1:4))
+      stopifnot(all(v == 1:2))
     } else {
       v <- lapply(x, FUN = function(f) tryCatch(value(f), error = identity))
       stopifnot(all(sapply(v, FUN = inherits, "simpleError")))

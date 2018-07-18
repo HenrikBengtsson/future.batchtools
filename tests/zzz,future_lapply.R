@@ -37,13 +37,13 @@ str(list(x = x))
 y0 <- lapply(x, FUN = vector, length = 2L)
 str(list(y0 = y0))
 
-for (scheduling in list(FALSE, TRUE)) {
-  for (strategy in strategies) {
-    mprintf("- plan('%s') ...", strategy)
-    plan(strategy)
-    if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 3L)
-    stopifnot(nbrOfWorkers() < Inf)
+for (strategy in strategies) {
+  mprintf("- plan('%s') ...", strategy)
+  plan(strategy)
+  if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
+  stopifnot(nbrOfWorkers() < Inf)
 
+  for (scheduling in list(FALSE, TRUE)) {
     y <- future_lapply(x, FUN = vector, length = 2L,
                        future.scheduling = scheduling)
     str(list(y = y))
@@ -60,13 +60,13 @@ str(list(x = x))
 y0 <- lapply(x, FUN = base::vector, length = 2L)
 str(list(y0 = y0))
 
-for (scheduling in list(FALSE, TRUE)) {
-  for (strategy in strategies) {
-    mprintf("- plan('%s') ...", strategy)
-    plan(strategy)
-    if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 3L)
-    stopifnot(nbrOfWorkers() < Inf)
+for (strategy in strategies) {
+  mprintf("- plan('%s') ...", strategy)
+  plan(strategy)
+  if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
+  stopifnot(nbrOfWorkers() < Inf)
 
+  for (scheduling in list(FALSE, TRUE)) {
     y <- future_lapply(x, FUN = base::vector, length = 2L,
                        future.scheduling = scheduling)
     str(list(y = y))
@@ -82,13 +82,13 @@ str(list(x = x))
 y0 <- lapply(x, FUN = future:::hpaste, collapse = "; ", maxHead = 3L)
 str(list(y0 = y0))
 
-for (scheduling in list(FALSE, TRUE)) {
-  for (strategy in strategies) {
-    mprintf("- plan('%s') ...", strategy)
-    plan(strategy)
-    if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 3L)
-    stopifnot(nbrOfWorkers() < Inf)
+for (strategy in strategies) {
+  mprintf("- plan('%s') ...", strategy)
+  plan(strategy)
+  if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
+  stopifnot(nbrOfWorkers() < Inf)
 
+  for (scheduling in list(FALSE, TRUE)) {
     y <- future_lapply(x, FUN = future:::hpaste, collapse = "; ",
                        maxHead = 3L, future.scheduling = scheduling)
     str(list(y = y))
@@ -115,13 +115,13 @@ print(x)
 y0 <- lapply(x, FUN = listenv::map)
 str(list(y0 = y0))
 
-for (scheduling in list(FALSE, TRUE)) {
-  for (strategy in strategies) {
-    mprintf("- plan('%s') ...", strategy)
-    plan(strategy)
-    if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 3L)
-    stopifnot(nbrOfWorkers() < Inf)
-
+for (strategy in strategies) {
+  mprintf("- plan('%s') ...", strategy)
+  plan(strategy)
+  if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
+  stopifnot(nbrOfWorkers() < Inf)
+  
+  for (scheduling in list(FALSE, TRUE)) {
     y <- future_lapply(x, FUN = listenv::map, future.scheduling = scheduling)
     str(list(y = y))
     stopifnot(identical(y, y0))
@@ -146,7 +146,7 @@ y_truth <- lapply("abc.txt", FUN = my_ext)
 
 for (strategy in strategies) {
   plan(strategy)
-  if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 3L)
+  if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
   stopifnot(nbrOfWorkers() < Inf)
   y <- future_lapply("abc.txt", FUN = my_ext)
   stopifnot(identical(y, y_truth))

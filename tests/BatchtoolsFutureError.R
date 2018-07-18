@@ -80,7 +80,7 @@ if (fullTest) {
   plan(batchtools_multicore)
 
   f <- future({
-    Sys.sleep(5)
+    Sys.sleep(2)
     42L
   })
 

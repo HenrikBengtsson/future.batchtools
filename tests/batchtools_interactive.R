@@ -45,9 +45,9 @@ stopifnot(v == 0)
 
 message("*** batchtools_interactive() with globals (tricky)")
 x <- listenv()
-for (ii in 1:5) x[[ii]] <- batchtools_interactive({ ii }, globals = TRUE)
+for (ii in 1:2) x[[ii]] <- batchtools_interactive({ ii }, globals = TRUE)
 v <- sapply(x, FUN = value)
-stopifnot(all(v == 1:5))  ## Make sure globals are frozen
+stopifnot(all(v == 1:2))  ## Make sure globals are frozen
 
 
 message("*** batchtools_interactive() and errors")

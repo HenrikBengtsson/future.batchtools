@@ -52,11 +52,11 @@ stopifnot(v == 0)
 
 message("*** batchtools_custom() with globals (tricky)")
 x <- listenv()
-for (ii in 1:5) {
+for (ii in 1:2) {
   x[[ii]] <- batchtools_custom({ ii }, globals = TRUE, cluster.functions = cf)
 }
 v <- sapply(x, FUN = value)
-stopifnot(all(v == 1:5))  ## Make sure globals are frozen
+stopifnot(all(v == 1:2))  ## Make sure globals are frozen
 
 
 message("*** batchtools_custom() and errors")

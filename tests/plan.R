@@ -10,7 +10,6 @@ print(future::plan())
 
 
 library("future.batchtools")
-plan(batchtools_local)
 
 for (type in c("batchtools_interactive", "batchtools_local")) {
   mprintf("*** plan('%s') ...", type)
