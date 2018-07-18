@@ -1,6 +1,11 @@
 ## Record original state
 ovars <- ls()
-oopts <- options(warn = 1L, mc.cores = 2L, future.debug = TRUE)
+oopts <- options(
+  warn = 1L,
+  mc.cores = 2L,
+  future.debug = TRUE,
+  future.wait.interval = 0.1  ## Speed up await() and delete()
+)
 oopts$future.delete <- getOption("future.delete")
 oplan <- future::plan()
 
