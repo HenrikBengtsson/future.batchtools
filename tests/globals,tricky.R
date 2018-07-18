@@ -8,12 +8,10 @@ message("*** Tricky use cases related to globals ...")
 message("- Globals with the same name as 'base' objects ...")
 
 ## 'col' is masked by 'base::col' (Issue #55)
-
 col <- 3
 x %<-% { stopifnot(is.numeric(col)); col }
 print(x)
 stopifnot(x == col)
-
 
 ## https://github.com/mllg/batchtools/issues/88
 message("- Globals that don't necessarily map to filenames ...")
@@ -26,13 +24,6 @@ stopifnot(x == .a)
 x %<-% { `$foo` }
 print(x)
 stopifnot(x == `$foo`)
-
-
-## 'col' is masked by 'base::col' (Issue #55)
-
-col <- 3
-x %<-% { stopifnot(is.numeric(col)); col }
-stopifnot(x == col)
 
 
 message("- flapply(x, FUN = base::vector, ...) ...")
