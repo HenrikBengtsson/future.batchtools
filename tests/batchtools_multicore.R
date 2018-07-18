@@ -34,6 +34,8 @@ for (cores in 1:min(2L, availableCores("multicore"))) {
     y <- value(f)
     print(y)
     stopifnot(y == 42L)
+    
+    if (!supportsMulticore()) next
 
     mprintf("*** batchtools_multicore(..., globals = %s) with globals\n",
           globals)

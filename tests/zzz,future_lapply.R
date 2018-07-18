@@ -3,17 +3,7 @@ library("listenv")
 
 if (requireNamespace("future.apply", quietly = TRUE)) {
   future_lapply <- future.apply::future_lapply
-  
-  cf <- batchtools::makeClusterFunctionsInteractive(external = TRUE)
-  batchtools_custom_local <- function(expr, substitute = TRUE,
-                                      cluster.functions = cf, ...) {
-    if (substitute) expr <- substitute(expr)
-    batchtools_custom(expr, substitute = FALSE, ...,
-                      cluster.functions = cluster.functions)
-  }
-  class(batchtools_custom_local) <- c("batchtools_custom_local",
-                                      class(batchtools_custom))
-  
+    
   message("All HPC strategies:")
   strategies <- c("batchtools_lsf", "batchtools_openlava", "batchtools_sge",
                   "batchtools_slurm", "batchtools_torque")
@@ -22,10 +12,25 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   message("Supported HPC strategies:")
   strategies <- strategies[sapply(strategies, FUN = test_strategy)]
   mprint(strategies)
+
+  strategies <- c("batchtools_local", strategies)
+  
+  if (fullTest) {
+    strategies <- c("batchtools_interactive", strategies)
+    
+    cf <- batchtools::makeClusterFunctionsInteractive(external = TRUE)
+    batchtools_custom_local <- function(expr, substitute = TRUE,
+                                        cluster.functions = cf, ...) {
+      if (substitute) expr <- substitute(expr)
+      batchtools_custom(expr, substitute = FALSE, ...,
+                        cluster.functions = cluster.functions)
+    }
+    class(batchtools_custom_local) <- c("batchtools_custom_local",
+                                        class(batchtools_custom))
+    strategies <- c("batchtools_custom_local", strategies)
+  }
   
   message("Strategies to test with:")
-  strategies <- c("batchtools_interactive", "batchtools_local",
-                  "batchtools_custom_local", strategies)
   mprint(strategies)
   
   
