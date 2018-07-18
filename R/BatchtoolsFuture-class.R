@@ -281,7 +281,7 @@ resolved.BatchtoolsFuture <- function(x, ...) {
 #' @importFrom future result
 #' @export
 #' @keywords internal
-result.BatchtoolsFuture <- function(future, ...) {
+result.BatchtoolsFuture <- function(future, cleanup = TRUE, ...) {
   ## Has the value already been collected?
   result <- future$result
   if (inherits(result, "FutureResult")) return(result)
@@ -306,7 +306,7 @@ result.BatchtoolsFuture <- function(future, ...) {
   stop_if_not(inherits(result, "FutureResult"))
   future$result <- result
   future$state <- "finished"
-  delete(future)
+  if (cleanup) delete(future)
 
   NextMethod()
 }
@@ -626,7 +626,7 @@ delete.BatchtoolsFuture <- function(future,
 
   ## Make sure to collect the results before deleting
   ## the internal batchtools registry
-  result <- result(future)
+  result <- result(future, cleanup = FALSE)
   stop_if_not(inherits(result, "FutureResult"))
 
   ## To simplify post mortem troubleshooting in non-interactive sessions,
