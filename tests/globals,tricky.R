@@ -3,6 +3,10 @@ library("listenv")
 
 plan(batchtools_local)
 
+## CRAN processing times:
+## On Windows 32-bit, don't run these tests on batchtools
+if (!fullTest && isWin32) plan(sequential)
+
 message("*** Tricky use cases related to globals ...")
 
 message("- Globals with the same name as 'base' objects ...")

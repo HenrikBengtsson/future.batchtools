@@ -29,6 +29,9 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
                                         class(batchtools_custom))
     strategies <- c("batchtools_custom_local", strategies)
   }
+
+  ## CRAN processing times: Don't run these tests on Windows 32-bit
+  if (!fullTest && isWin32) strategies <- character(0L)
   
   message("Strategies to test with:")
   mprint(strategies)

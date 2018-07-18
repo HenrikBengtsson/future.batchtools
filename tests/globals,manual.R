@@ -2,6 +2,10 @@ source("incl/start.R")
 
 plan(batchtools_local)
 
+## CRAN processing times:
+## On Windows 32-bit, don't run these tests on batchtools
+if (!fullTest && isWin32) plan(sequential)
+
 message("*** Globals - manually ...")
 
 message("*** Globals manually specified as named list ...")

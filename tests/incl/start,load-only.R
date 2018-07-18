@@ -14,6 +14,8 @@ future::plan(future.batchtools::batchtools_local)
 
 fullTest <- (Sys.getenv("_R_CHECK_FULL_") != "")
 
+isWin32 <- (.Platform$OS.type == "windows" && .Platform$r_arch == "i386")
+
 all_strategies <- function() {
   strategies <- Sys.getenv("R_FUTURE_TESTS_STRATEGIES")
   strategies <- unlist(strsplit(strategies, split = ","))

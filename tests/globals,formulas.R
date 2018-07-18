@@ -5,6 +5,10 @@ library("stats")    ## lm(), poly(), xtabs()
 
 plan(batchtools_local)
 
+## CRAN processing times:
+## On Windows 32-bit, don't run these tests on batchtools
+if (!fullTest && isWin32) plan(sequential)
+
 message("*** Globals - formulas ...")
 
 message("*** Globals - lm(<formula>) ...")

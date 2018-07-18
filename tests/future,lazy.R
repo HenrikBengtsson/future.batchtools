@@ -4,6 +4,10 @@ message("*** Futures - lazy ...")
 
 strategies <- c("batchtools_local")
 
+## CRAN processing times:
+## On Windows 32-bit, don't run these tests
+if (!fullTest && isWin32) strategies <- character(0L)
+
 for (strategy in strategies) {
   mprintf("- plan('%s') ...\n", strategy)
   plan(strategy)

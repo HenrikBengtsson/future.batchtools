@@ -7,6 +7,10 @@ for (cores in 1:min(2L, availableCores("multicore"))) {
   ## FIXME:
   if (!fullTest && cores > 1) next
 
+  ## CRAN processing times:
+  ## On Windows 32-bit, don't run these tests
+  if (!fullTest && isWin32) next
+
   mprintf("Testing with %d cores ...\n", cores)
   options(mc.cores = cores - 1L)
 
@@ -15,10 +19,6 @@ for (cores in 1:min(2L, availableCores("multicore"))) {
   }
 
   for (globals in c(FALSE, TRUE)) {
-    ## SPEEDUP: Skip part of the tests on Windows to decrease
-    ## the overall testing time on CRAN. /HB 2018-07-18
-    if (!supportsMulticore() && !globals) next
-    
     mprintf("*** batchtools_multicore(..., globals = %s) without globals\n",
             globals)
 
@@ -35,8 +35,6 @@ for (cores in 1:min(2L, availableCores("multicore"))) {
     print(y)
     stopifnot(y == 42L)
     
-    if (!supportsMulticore()) next
-
     mprintf("*** batchtools_multicore(..., globals = %s) with globals\n",
           globals)
     ## A global variable
@@ -79,26 +77,6 @@ for (cores in 1:min(2L, availableCores("multicore"))) {
     }
   } # for (globals ...)
 
-
-  mprintf("*** batchtools_multicore() and errors\n", globals)
-  f <- batchtools_multicore({
-    stop("Whoops!")
-    1
-  })
-  v <- value(f, signal = FALSE)
-  print(v)
-  stopifnot(inherits(v, "simpleError"))
-
-  res <- try(value(f), silent = TRUE)
-  print(res)
-  stopifnot(inherits(res, "try-error"))
-
-  ## Error is repeated
-  res <- try(value(f), silent = TRUE)
-  print(res)
-  stopifnot(inherits(res, "try-error"))
-
-  
   if (cores > 1) {
     message("*** batchtools_multicore(..., workers = 1L) ...")
   
@@ -118,6 +96,29 @@ for (cores in 1:min(2L, availableCores("multicore"))) {
 
   mprintf("Testing with %d cores ... DONE\n", cores)
 } ## for (cores ...)
+
+
+## CRAN processing times:
+## On Windows 32-bit, don't run these tests
+if (fullTest || !isWin32) {
+  mprintf("*** batchtools_multicore() and errors\n", globals)
+  f <- batchtools_multicore({
+    stop("Whoops!")
+    1
+  })
+  v <- value(f, signal = FALSE)
+  print(v)
+  stopifnot(inherits(v, "simpleError"))
+  
+  res <- try(value(f), silent = TRUE)
+  print(res)
+  stopifnot(inherits(res, "try-error"))
+  
+  ## Error is repeated
+  res <- try(value(f), silent = TRUE)
+  print(res)
+  stopifnot(inherits(res, "try-error"))
+}
 
 message("*** batchtools_multicore() ... DONE")
 
