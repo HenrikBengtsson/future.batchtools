@@ -45,7 +45,7 @@ for (cleanup in c(FALSE, TRUE)) {
     print(log)
 
     ## Now manually delete batchtools Registry
-    batchtools::removeRegistry(reg = reg)
+    batchtools::removeRegistry(wait = 0.0, reg = reg)
   }
 
   stopifnot(!file_test("-d", reg$file.dir))
