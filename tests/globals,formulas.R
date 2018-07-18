@@ -73,7 +73,7 @@ exprs <- list(
 for (kk in seq_along(exprs)) {
   expr <- exprs[[kk]]
   name <- names(exprs)[kk]
-  mprintf("- Globals - lm(<formula #%d (%s)>, data = cars) ...",
+  mprintf("- Globals - lm(<formula #%d (%s)>, data = cars) ...\n",
           kk, sQuote(name))
 
   fit0 <- eval(expr)

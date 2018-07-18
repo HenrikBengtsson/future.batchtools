@@ -38,7 +38,7 @@ for (strategy in c("batchtools_interactive", "batchtools_local")) {
   plan(strategy, substitute = FALSE)
 
   for (name in names(sum_fcns)) {
-    mprintf("** Sum function '%s' with plan('%s') ...", name, strategy)
+    mprintf("** Sum function '%s' with plan('%s') ...\n", name, strategy)
     sum_fcn <- sum_fcns[[name]]
     print(sum_fcn)
     y <- try(sum_fcn(1:2, 3))

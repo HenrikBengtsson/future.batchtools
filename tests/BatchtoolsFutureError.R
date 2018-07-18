@@ -5,7 +5,7 @@ message("*** BatchtoolsFutureError() ...")
 plan(batchtools_local)
 
 for (cleanup in c(FALSE, TRUE)) {
-  mprintf("*** batchtools future error w/ future.delete = %s ...", cleanup)
+  mprintf("*** batchtools future error w/ future.delete = %s ...\n", cleanup)
 
   options(future.delete = cleanup)
 
@@ -50,7 +50,7 @@ for (cleanup in c(FALSE, TRUE)) {
 
   stopifnot(!file_test("-d", reg$file.dir))
 
-  mprintf("*** batchtools future error w/ future.delete = %s ... DONE", cleanup)
+  mprintf("*** batchtools future error w/ future.delete = %s ... DONE\n", cleanup)
 } ## for (cleanup ...)
 
 

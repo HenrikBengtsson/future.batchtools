@@ -5,7 +5,7 @@ message("*** Futures - labels ...")
 strategies <- c("batchtools_local")
 
 for (strategy in strategies) {
-  mprintf("- plan('%s') ...", strategy)
+  mprintf("- plan('%s') ...\n", strategy)
   plan(strategy)
 
   for (label in list(NULL, sprintf("strategy_%s", strategy))) {
@@ -31,7 +31,7 @@ for (strategy in strategies) {
 
   } ## for (label ...)
 
-  mprintf("- plan('%s') ... DONE", strategy)
+  mprintf("- plan('%s') ... DONE\n", strategy)
 } ## for (strategy ...)
 
 message("*** Futures - labels ... DONE")

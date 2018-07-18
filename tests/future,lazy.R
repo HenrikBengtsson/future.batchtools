@@ -5,7 +5,7 @@ message("*** Futures - lazy ...")
 strategies <- c("batchtools_local")
 
 for (strategy in strategies) {
-  mprintf("- plan('%s') ...", strategy)
+  mprintf("- plan('%s') ...\n", strategy)
   plan(strategy)
 
   a <- 42
@@ -19,7 +19,7 @@ for (strategy in strategies) {
   a <- 21
   stopifnot(v == 84)
 
-  mprintf("- plan('%s') ... DONE", strategy)
+  mprintf("- plan('%s') ... DONE\n", strategy)
 } ## for (strategy ...)
 
 message("*** Futures - lazy ... DONE")

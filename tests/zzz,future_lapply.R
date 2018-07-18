@@ -40,7 +40,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   str(list(y0 = y0))
   
   for (strategy in strategies) {
-    mprintf("- plan('%s') ...", strategy)
+    mprintf("- plan('%s') ...\n", strategy)
     plan(strategy)
     if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
     stopifnot(nbrOfWorkers() < Inf)
@@ -63,7 +63,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   str(list(y0 = y0))
   
   for (strategy in strategies) {
-    mprintf("- plan('%s') ...", strategy)
+    mprintf("- plan('%s') ...\n", strategy)
     plan(strategy)
     if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
     stopifnot(nbrOfWorkers() < Inf)
@@ -85,7 +85,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   str(list(y0 = y0))
   
   for (strategy in strategies) {
-    mprintf("- plan('%s') ...", strategy)
+    mprintf("- plan('%s') ...\n", strategy)
     plan(strategy)
     if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
     stopifnot(nbrOfWorkers() < Inf)
@@ -118,7 +118,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   str(list(y0 = y0))
   
   for (strategy in strategies) {
-    mprintf("- plan('%s') ...", strategy)
+    mprintf("- plan('%s') ...\n", strategy)
     plan(strategy)
     if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
     stopifnot(nbrOfWorkers() < Inf)
@@ -133,7 +133,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   
   message("- future_lapply(x, FUN, ...) for large length(x) ...")
   a <- 3.14
-  x <- 1:1e6
+  x <- 1:1e5
   
   y <- future_lapply(x, FUN = function(z) sqrt(z + a))
   y <- unlist(y, use.names = FALSE)
