@@ -27,7 +27,7 @@ for (cores in 1:min(2L, availableCores("multicore"))) {
     }, globals = globals)
     stopifnot(
       inherits(f, "BatchtoolsFuture") ||
-      ((cores == 1 || !supportsMulticore()) && inherits(f, "EagerFuture"))
+      ((cores == 1 || !supportsMulticore()) && inherits(f, "SequentialFuture"))
     )
 
     print(resolved(f))

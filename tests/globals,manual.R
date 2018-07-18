@@ -60,7 +60,7 @@ f <- future({
 }, globals = FALSE)
 rm(list = names(globals))
 y <- tryCatch(value(f), error = identity)
-if (!inherits(f, c("EagerFuture", "MulticoreFuture"))) {
+if (!inherits(f, c("SequentialFuture", "MulticoreFuture"))) {
   stopifnot(inherits(y, "simpleError"))
 }
 
