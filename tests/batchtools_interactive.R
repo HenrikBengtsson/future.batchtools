@@ -12,8 +12,8 @@ stopifnot(inherits(f, "BatchtoolsFuture"))
 
 ## Check whether a batchtools_interactive future is resolved
 ## or not will force evaluation
-print(resolved(f))
-stopifnot(resolved(f))
+print(is_resolved <- resolved(f))
+stopifnot(is_resolved)
 
 y <- value(f)
 print(y)
@@ -28,7 +28,6 @@ f <- batchtools_interactive({
   c <- 2
   a * b * c
 })
-print(f)
 
 ## Although 'f' is a batchtools_interactive future and therefore
 ## resolved/evaluates the future expression only
@@ -45,9 +44,9 @@ stopifnot(v == 0)
 
 message("*** batchtools_interactive() with globals (tricky)")
 x <- listenv()
-for (ii in 1:5) x[[ii]] <- batchtools_interactive({ ii }, globals = TRUE)
-v <- sapply(x, FUN = value)
-stopifnot(all(v == 1:5))  ## Make sure globals are frozen
+for (ii in 1:2) x[[ii]] <- batchtools_interactive({ ii }, globals = TRUE)
+v <- unlist(values(x))
+stopifnot(all(v == 1:2))  ## Make sure globals are frozen
 
 
 message("*** batchtools_interactive() and errors")
@@ -55,7 +54,6 @@ f <- batchtools_interactive({
   stop("Whoops!")
   1
 })
-print(f)
 v <- value(f, signal = FALSE)
 print(v)
 stopifnot(inherits(v, "simpleError"))

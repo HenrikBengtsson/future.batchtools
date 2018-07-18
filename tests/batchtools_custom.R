@@ -19,8 +19,8 @@ stopifnot(inherits(f, "BatchtoolsFuture"))
 
 ## Check whether a batchtools_custom future is resolved
 ## or not will force evaluation
-print(resolved(f))
-stopifnot(resolved(f))
+print(is_resolved <- resolved(f))
+stopifnot(is_resolved)
 
 y <- value(f)
 print(y)
@@ -52,11 +52,11 @@ stopifnot(v == 0)
 
 message("*** batchtools_custom() with globals (tricky)")
 x <- listenv()
-for (ii in 1:5) {
+for (ii in 1:2) {
   x[[ii]] <- batchtools_custom({ ii }, globals = TRUE, cluster.functions = cf)
 }
-v <- sapply(x, FUN = value)
-stopifnot(all(v == 1:5))  ## Make sure globals are frozen
+v <- unlist(values(x))
+stopifnot(all(v == 1:2))  ## Make sure globals are frozen
 
 
 message("*** batchtools_custom() and errors")
@@ -64,7 +64,6 @@ f <- batchtools_custom({
   stop("Whoops!")
   1
 }, cluster.functions = cf)
-print(f)
 v <- value(f, signal = FALSE)
 print(v)
 stopifnot(inherits(v, "simpleError"))

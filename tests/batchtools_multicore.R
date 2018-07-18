@@ -1,22 +1,25 @@
 source("incl/start.R")
 library("listenv")
 
-
 message("*** batchtools_multicore() ...")
 
-for (cores in 1:min(3L, availableCores("multicore"))) {
+for (cores in 1:min(2L, availableCores("multicore"))) {
   ## FIXME:
   if (!fullTest && cores > 1) next
 
-  mprintf("Testing with %d cores ...", cores)
+  ## CRAN processing times:
+  ## On Windows 32-bit, don't run these tests
+  if (!fullTest && isWin32) next
+
+  mprintf("Testing with %d cores ...\n", cores)
   options(mc.cores = cores - 1L)
 
   if (!supportsMulticore()) {
-    mprintf("batchtools multicore futures are not supporting on '%s'. Falling back to use synchroneous batchtools local futures", .Platform$OS.type) #nolint
+    mprintf("batchtools multicore futures are not supporting on '%s'. Falling back to use synchroneous batchtools local futures\n", .Platform$OS.type) #nolint
   }
 
   for (globals in c(FALSE, TRUE)) {
-    mprintf("*** batchtools_multicore(..., globals = %s) without globals",
+    mprintf("*** batchtools_multicore(..., globals = %s) without globals\n",
             globals)
 
     f <- batchtools_multicore({
@@ -24,15 +27,15 @@ for (cores in 1:min(3L, availableCores("multicore"))) {
     }, globals = globals)
     stopifnot(
       inherits(f, "BatchtoolsFuture") ||
-      ((cores == 1 || !supportsMulticore()) && inherits(f, "EagerFuture"))
+      ((cores == 1 || !supportsMulticore()) && inherits(f, "SequentialFuture"))
     )
 
     print(resolved(f))
     y <- value(f)
     print(y)
     stopifnot(y == 42L)
-
-    mprintf("*** batchtools_multicore(..., globals = %s) with globals",
+    
+    mprintf("*** batchtools_multicore(..., globals = %s) with globals\n",
           globals)
     ## A global variable
     a <- 0
@@ -41,8 +44,6 @@ for (cores in 1:min(3L, availableCores("multicore"))) {
       c <- 2
       a * b * c
     }, globals = globals)
-    print(f)
-
 
     ## A multicore future is evaluated in a separated
     ## forked process.  Changing the value of a global
@@ -60,60 +61,64 @@ for (cores in 1:min(3L, availableCores("multicore"))) {
     }
 
 
-    mprintf("*** batchtools_multicore(..., globals = %s) with globals and blocking", globals) #nolint
+    mprintf("*** batchtools_multicore(..., globals = %s) with globals and blocking\n", globals) #nolint
     x <- listenv()
-    for (ii in 1:4) {
-      mprintf(" - Creating batchtools_multicore future #%d ...", ii)
+    for (ii in 1:2) {
+      mprintf(" - Creating batchtools_multicore future #%d ...\n", ii)
       x[[ii]] <- batchtools_multicore({ ii }, globals = globals)
     }
-    mprintf(" - Resolving %d batchtools_multicore futures", length(x))
+    mprintf(" - Resolving %d batchtools_multicore futures\n", length(x))
     if (globals || f$config$reg$cluster.functions$name == "Multicore") {
-      v <- sapply(x, FUN = value)
-      stopifnot(all(v == 1:4))
+      v <- unlist(values(x))
+      stopifnot(all(v == 1:2))
     } else {
       v <- lapply(x, FUN = function(f) tryCatch(value(f), error = identity))
       stopifnot(all(sapply(v, FUN = inherits, "simpleError")))
     }
-
-    mprintf("*** batchtools_multicore(..., globals = %s) and errors", globals)
-    f <- batchtools_multicore({
-      stop("Whoops!")
-      1
-    }, globals = globals)
-    print(f)
-    v <- value(f, signal = FALSE)
-    print(v)
-    stopifnot(inherits(v, "simpleError"))
-
-    res <- try(value(f), silent = TRUE)
-    print(res)
-    stopifnot(inherits(res, "try-error"))
-
-    ## Error is repeated
-    res <- try(value(f), silent = TRUE)
-    print(res)
-    stopifnot(inherits(res, "try-error"))
-
   } # for (globals ...)
 
+  if (cores > 1) {
+    message("*** batchtools_multicore(..., workers = 1L) ...")
+  
+    a <- 2
+    b <- 3
+    y_truth <- a * b
+  
+    f <- batchtools_multicore({ a * b }, workers = 1L)
+    rm(list = c("a", "b"))
+  
+    v <- value(f)
+    print(v)
+    stopifnot(v == y_truth)
+  
+    message("*** batchtools_multicore(..., workers = 1L) ... DONE")
+  }
 
-  message("*** batchtools_multicore(..., workers = 1L) ...")
-
-  a <- 2
-  b <- 3
-  y_truth <- a * b
-
-  f <- batchtools_multicore({ a * b }, workers = 1L)
-  rm(list = c("a", "b"))
-
-  v <- value(f)
-  print(v)
-  stopifnot(v == y_truth)
-
-  message("*** batchtools_multicore(..., workers = 1L) ... DONE")
-
-  mprintf("Testing with %d cores ... DONE", cores)
+  mprintf("Testing with %d cores ... DONE\n", cores)
 } ## for (cores ...)
+
+
+## CRAN processing times:
+## On Windows 32-bit, don't run these tests
+if (fullTest || !isWin32) {
+  mprintf("*** batchtools_multicore() and errors\n", globals)
+  f <- batchtools_multicore({
+    stop("Whoops!")
+    1
+  })
+  v <- value(f, signal = FALSE)
+  print(v)
+  stopifnot(inherits(v, "simpleError"))
+  
+  res <- try(value(f), silent = TRUE)
+  print(res)
+  stopifnot(inherits(res, "try-error"))
+  
+  ## Error is repeated
+  res <- try(value(f), silent = TRUE)
+  print(res)
+  stopifnot(inherits(res, "try-error"))
+}
 
 message("*** batchtools_multicore() ... DONE")
 

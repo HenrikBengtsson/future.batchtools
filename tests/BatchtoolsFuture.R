@@ -5,7 +5,6 @@ message("*** BatchtoolsFuture() ...")
 message("*** BatchtoolsFuture() - cleanup ...")
 
 f <- batchtools_local({ 1L })
-print(f)
 res <- await(f, cleanup = TRUE)
 print(res)
 # future (>= 1.7.0-9000)
@@ -19,7 +18,6 @@ message("*** BatchtoolsFuture() - deleting exceptions ...")
 
 ## Deleting a non-resolved future
 f <- BatchtoolsFuture({ x <- 1 })
-print(f)
 res <- tryCatch({
   delete(f)
 }, warning = function(w) w)
@@ -44,7 +42,6 @@ message("*** BatchtoolsFuture() - registry exceptions ...")
 
 ## Non-existing batchtools registry
 f <- BatchtoolsFuture({ x <- 1 })
-print(f)
 
 ## Hack to emulate where batchtools registry is deleted or fails
 f$state <- "running"
@@ -69,7 +66,6 @@ message("*** BatchtoolsFuture() - registry exceptions ... DONE")
 message("*** BatchtoolsFuture() - exceptions ...")
 
 f <- BatchtoolsFuture({ 42L })
-print(f)
 res <- tryCatch({
   loggedError(f)
 }, error = function(ex) ex)
@@ -77,7 +73,6 @@ print(res)
 stopifnot(inherits(res, "error"))
 
 f <- BatchtoolsFuture({ 42L })
-print(f)
 res <- tryCatch({
   loggedOutput(f)
 }, error = function(ex) ex)
@@ -110,7 +105,6 @@ if (fullTest && availableCores(constraints = "multicore") > 1) {
     Sys.sleep(5)
     x <- 1
   })
-  print(f)
 
   res <- tryCatch({
     value(f)

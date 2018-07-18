@@ -191,14 +191,14 @@ demo("mandelbrot", package = "future", ask = FALSE)
 ## Installation
 R package future.batchtools is available on [CRAN](https://cran.r-project.org/package=future.batchtools) and can be installed in R as:
 ```r
-install.packages('future.batchtools')
+install.packages("future.batchtools")
 ```
 
 ### Pre-release version
 
 To install the pre-release version that is available in Git branch `develop` on GitHub, use:
 ```r
-source('http://callr.org/install#HenrikBengtsson/future.batchtools@develop')
+remotes::install_github("HenrikBengtsson/future.batchtools@develop")
 ```
 This will install the package from source.  
 

@@ -5,6 +5,10 @@ library("stats")    ## lm(), poly(), xtabs()
 
 plan(batchtools_local)
 
+## CRAN processing times:
+## On Windows 32-bit, don't run these tests on batchtools
+if (!fullTest && isWin32) plan(sequential)
+
 message("*** Globals - formulas ...")
 
 message("*** Globals - lm(<formula>) ...")
@@ -73,7 +77,7 @@ exprs <- list(
 for (kk in seq_along(exprs)) {
   expr <- exprs[[kk]]
   name <- names(exprs)[kk]
-  mprintf("- Globals - lm(<formula #%d (%s)>, data = cars) ...",
+  mprintf("- Globals - lm(<formula #%d (%s)>, data = cars) ...\n",
           kk, sQuote(name))
 
   fit0 <- eval(expr)

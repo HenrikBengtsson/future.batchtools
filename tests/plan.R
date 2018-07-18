@@ -10,10 +10,9 @@ print(future::plan())
 
 
 library("future.batchtools")
-plan(batchtools_local)
 
 for (type in c("batchtools_interactive", "batchtools_local")) {
-  mprintf("*** plan('%s') ...", type)
+  mprintf("*** plan('%s') ...\n", type)
 
   plan(type)
   stopifnot(inherits(plan(), "batchtools"))
@@ -29,7 +28,7 @@ for (type in c("batchtools_interactive", "batchtools_local")) {
   print(v)
   stopifnot(v == 0)
 
-  mprintf("*** plan('%s') ... DONE", type)
+  mprintf("*** plan('%s') ... DONE\n", type)
 } # for (type ...)
 
 

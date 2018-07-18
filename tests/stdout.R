@@ -7,8 +7,8 @@ if (!test_stdout) `%stdout%` <- function(x, ...) x
 message("*** Standard output ...")
 
 truth_rows <- utils::capture.output({
-  print(1:50)
-  str(1:50)
+  print(1:20)
+  str(1:20)
   cat(letters, sep = "-")
   cat(1:6, collapse = "\n")
   write.table(datasets::iris[1:10,], sep = "\t")
@@ -23,8 +23,8 @@ for (stdout in c(TRUE, FALSE, NA)) {
   message(sprintf("- stdout = %s", stdout))
   
   f <- future({
-    print(1:50)
-    str(1:50)
+    print(1:20)
+    str(1:20)
     cat(letters, sep = "-")
     cat(1:6, collapse = "\n")
     write.table(datasets::iris[1:10,], sep = "\t")
@@ -47,8 +47,8 @@ for (stdout in c(TRUE, FALSE, NA)) {
   }
 
   v %<-% {
-    print(1:50)
-    str(1:50)
+    print(1:20)
+    str(1:20)
     cat(letters, sep = "-")
     cat(1:6, collapse = "\n")
     write.table(datasets::iris[1:10,], sep = "\t")
