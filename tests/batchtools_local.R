@@ -46,7 +46,7 @@ stopifnot(v == 0)
 message("*** batchtools_local() with globals (tricky)")
 x <- listenv()
 for (ii in 1:2) x[[ii]] <- batchtools_local({ ii }, globals = TRUE)
-v <- sapply(x, FUN = value)
+v <- values(x)
 stopifnot(all(v == 1:2))  ## Make sure globals are frozen
 
 

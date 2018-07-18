@@ -5,7 +5,7 @@ oopts$future.delete <- getOption("future.delete")
 oplan <- future::plan()
 
 ## Use local batchtools futures by default
-future::plan(future.batchtools:::batchtools_local)
+future::plan(future.batchtools::batchtools_local)
 
 fullTest <- (Sys.getenv("_R_CHECK_FULL_") != "")
 
