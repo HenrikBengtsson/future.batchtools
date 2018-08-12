@@ -1,10 +1,12 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.7.1-9000 [2018-07-18]
+Version: 0.7.1-9000 [2018-08-12]
 
- o ...
- 
+DOCUMENTATION:
+
+ o Add a simple example(future_custom).
+
 
 Version: 0.7.1 [2018-07-18]
 
