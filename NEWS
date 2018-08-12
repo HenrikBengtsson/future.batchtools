@@ -5,19 +5,19 @@ Version: 0.7.1-9000 [2018-08-12]
 
 DOCUMENTATION:
 
- o Add a simple example(future_custom).
+ * Add a simple example(future_custom).
 
 
 Version: 0.7.1 [2018-07-18]
 
 NEW FEATURES:
 
- o The batchtools_* backends support the handling of the standard output as
+ * The batchtools_* backends support the handling of the standard output as
    implemented in future (>= 1.9.0).
  
 BUG FIXES:
 
- o A bug was introduced in future.batchtools 0.7.0 that could result in "Error 
+ * A bug was introduced in future.batchtools 0.7.0 that could result in "Error 
    in readLog(id, reg = reg) : Log file for job with id 1 not available" when
    using one of the batchtools backends.  It occurred when the value was
    queried.  It was observered using 'batchtools_torque' but not when using
@@ -29,7 +29,7 @@ Version: 0.7.0 [2018-05-03]
 
 NEW FEATURES:
 
- o Argument 'workers' of future strategies may now also be a function, which
+ * Argument 'workers' of future strategies may now also be a function, which
    is called without argument when the future strategy is set up and used as
    is.  For instance, plan(callr, workers = halfCores) where
    halfCores <- function() { max(1, round(availableCores() / 2)) } will use
@@ -38,7 +38,7 @@ NEW FEATURES:
 
 CODE REFACTORING:
 
- o Preparing for futures to gather a richer set of results from batchtools
+ * Preparing for futures to gather a richer set of results from batchtools
    backends.
 
 
@@ -46,83 +46,83 @@ Version: 0.6.0 [2017-09-10]
 
 NEW FEATURES:
 
- o If the built-in attempts of batchtools for finding a default template file
+ * If the built-in attempts of batchtools for finding a default template file
    fails, then system("templates", package = "future.batchtools") is searched
    for template files as well.  Currently, there exists a `torque.tmpl` file.
 
- o A job's name in the scheduler is now set as the future's label (requires
+ * A job's name in the scheduler is now set as the future's label (requires
    batchtools 0.9.4 or newer).  If no label is specified, the default job name
    is controlled by batchtools.
 
- o The period between each poll of the scheduler to check whether a future
+ * The period between each poll of the scheduler to check whether a future
    (job) is finished or not now increases geometrically as a function of number
    of polls.  This lowers the load on the scheduler for long running jobs.
 
- o The error message for expired batchtools futures now include the last few
+ * The error message for expired batchtools futures now include the last few
    lines of the logged output, which sometimes includes clues on why the future
    expired.  For instance, if a TORQUE/PBS job use more than the allocated
    amount of memory it might be terminated by the scheduler leaving the message
    "PBS: job killed: vmem 1234000 exceeded limit 1048576" in the output.
    
- o print() for BatchtoolsFuture returns the object invisibly.
+ * print() for BatchtoolsFuture returns the object invisibly.
 
 BUG FIXES:
 
- o Calling future_lapply() with functions containing globals part of non-default
+ * Calling future_lapply() with functions containing globals part of non-default
    packages would when using batchtools futures give an error complaining that
    the global is missing. This was due to updates in future (>= 1.4.0) that
    broke this package.
  
- o loggedOutput() for BatchtoolsFuture would always return NULL unless an error
+ * loggedOutput() for BatchtoolsFuture would always return NULL unless an error
    had occurred.
 
 
 Version: 0.5.0 [2017-06-02]
 
- o First version submitted to CRAN.
+ * First version submitted to CRAN.
  
 SOFTWARE QUALITY:
 
- o Added more tests; test coverage now at 93%.
+ * Added more tests; test coverage now at 93%.
  
 
 Version: 0.4.0 [2017-05-16]
 
 NEW FEATURES:
 
- o Added batchtools_custom() for specifying batchtools futures using any type
+ * Added batchtools_custom() for specifying batchtools futures using any type
    of batchtools cluster functions.
    
- o batchtools_template(pathname = NULL, type = <type>) now relies on the
+ * batchtools_template(pathname = NULL, type = <type>) now relies on the
    batchtools package for locating the <type> template file.
    
- o nbrOfWorkers() for batchtools futures now defaults to +Inf unless the
+ * nbrOfWorkers() for batchtools futures now defaults to +Inf unless the
    evaluator's 'workers' or 'cluster.functions' specify something else.
 
- o Renamed argument 'pathname' to 'template' for batchtools_<tmpl>() functions.
+ * Renamed argument 'pathname' to 'template' for batchtools_<tmpl>() functions.
 
 BUG FIXES:
    
- o Under plan(batchjobs_*), when being created futures would produce an error
+ * Under plan(batchjobs_*), when being created futures would produce an error
    on "all(is.finite(workers)) is not TRUE" due to an outdated sanity check.
 
 SOFTWARE QUALITY:
 
- o TESTS: Added test of future_lapply() for batchtools backends.
+ * TESTS: Added test of future_lapply() for batchtools backends.
 
- o TESTS: Added optional tests for batchjobs_* HPC schedulers listed in
+ * TESTS: Added optional tests for batchjobs_* HPC schedulers listed in
    environment variable 'R_FUTURE_TESTS_STRATEGIES'.
 
 CODE REFACTORING:
 
- o CLEANUP: Package no longer depends on R.utils.
+ * CLEANUP: Package no longer depends on R.utils.
 
  
 Version: 0.3.0 [2017-03-19]
 
 NEW FEATURES:
 
- o The number of jobs one can add to the queues of HPC schedulers is in
+ * The number of jobs one can add to the queues of HPC schedulers is in
    principle unlimited, which is why the number of available workers for such
    batchtools_* backends is reported as +Inf.  However, as the number of
    workers is used by future_lapply() to decide how many futures should be used
@@ -135,7 +135,7 @@ Version: 0.2.0 [2017-02-23]
 
 GLOBALS:
 
- o batchtools (>= 0.9.2) now supports exporting objects with any type of names
+ * batchtools (>= 0.9.2) now supports exporting objects with any type of names
    (previously only possible if they mapped to to strictly valid filenames).
    This allowed me to avoid lots of internal workaround code encoding and
    decoding globals.
@@ -143,6 +143,6 @@ GLOBALS:
 
 Version: 0.1.0 [2017-02-11]
 
- o Package created by porting the code of future.BatchJobs. This version passes
+ * Package created by porting the code of future.BatchJobs. This version passes
    'R CMD check --as-cran' with all OK after a minimal amount of adjustments
    to the ported code.

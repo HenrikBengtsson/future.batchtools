@@ -5,8 +5,8 @@
 \title{batchtools multicore futures}
 \usage{
 batchtools_multicore(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = NULL, workers = availableCores(constraints =
-  "multicore"), ...)
+  globals = TRUE, label = NULL, workers = availableCores(constraints
+  = "multicore"), ...)
 }
 \arguments{
 \item{expr}{The R expression to be evaluated}

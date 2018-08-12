@@ -4,8 +4,8 @@
 \alias{BatchtoolsFuture}
 \title{A batchtools future is a future whose value will be resolved via batchtools}
 \usage{
-BatchtoolsFuture(expr = NULL, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, packages = NULL, label = NULL,
+BatchtoolsFuture(expr = NULL, envir = parent.frame(),
+  substitute = TRUE, globals = TRUE, packages = NULL, label = NULL,
   cluster.functions = NULL, resources = list(), workers = NULL,
   finalize = getOption("future.finalize", TRUE), ...)
 }
