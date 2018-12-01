@@ -1,12 +1,16 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.7.1-9000 [2018-08-12]
+Version: 0.7.1-9000 [2018-12-01]
 
 DOCUMENTATION:
 
  * Add a simple example(future_custom).
 
+BUG FIXES:
+
+ * resolve() on a lazy batchtools future would stall and never return.
+ 
 
 Version: 0.7.1 [2018-07-18]
 

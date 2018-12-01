@@ -312,10 +312,9 @@ result.BatchtoolsFuture <- function(future, cleanup = TRUE, ...) {
 }
 
 
-run <- function(...) UseMethod("run")
-
-#' @importFrom future getExpression
+#' @importFrom future run getExpression
 #' @importFrom batchtools batchExport batchMap saveRegistry setJobNames
+#' @export
 run.BatchtoolsFuture <- function(future, ...) {
   if (future$state != "created") {
     label <- future$label
