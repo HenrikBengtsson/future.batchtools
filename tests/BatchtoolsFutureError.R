@@ -57,7 +57,7 @@ message("*** BatchtoolsFuture - expired ...")
 plan(batchtools_local)
 msg <- "Abruptly terminating the future!"
 f <- future({
-  message(msg)
+  cat(file = stderr(), msg)
   quit(save = "no")
 })
 res <- tryCatch({
