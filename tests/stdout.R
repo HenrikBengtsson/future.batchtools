@@ -1,9 +1,5 @@
 source("incl/start.R")
 
-## Only validate 'stdout' output if future (>= 1.9.0)
-test_stdout <- ("stdout" %in% names(formals(future::Future)))
-if (!test_stdout) `%stdout%` <- function(x, ...) x
-
 message("*** Standard output ...")
 
 truth_rows <- utils::capture.output({
@@ -34,16 +30,13 @@ for (stdout in c(TRUE, FALSE, NA)) {
   str(r)
   stopifnot(value(f) == 42L)
 
-
-  if (test_stdout) {
-    if (is.na(stdout)) {
-      stopifnot(!"stdout" %in% names(r))
-    } else if (stdout) {
-      print(r)
-      stopifnot(identical(r$stdout, truth))
-    } else {
-      stopifnot(is.null(r$stdout))
-    }
+  if (is.na(stdout)) {
+    stopifnot(!"stdout" %in% names(r))
+  } else if (stdout) {
+    print(r)
+    stopifnot(identical(r$stdout, truth))
+  } else {
+    stopifnot(is.null(r$stdout))
   }
 
   v %<-% {
@@ -57,13 +50,11 @@ for (stdout in c(TRUE, FALSE, NA)) {
   out <- utils::capture.output(y <- v)
   stopifnot(y == 42L)
 
-  if (test_stdout) {
-    if (is.na(stdout) || !stdout) {
-      stopifnot(out == "")
-    } else {
-      print(out)
-      stopifnot(identical(out, truth_rows))
-    }
+  if (is.na(stdout) || !stdout) {
+    stopifnot(out == "")
+  } else {
+    print(out)
+    stopifnot(identical(out, truth_rows))
   }
 } ## for (stdout ...)
 
