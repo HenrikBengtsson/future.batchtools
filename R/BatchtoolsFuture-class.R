@@ -198,8 +198,7 @@ status.BatchtoolsFuture <- function(future, ...) {
   
   result <- future$result
   if (inherits(result, "FutureResult")) {
-    condition <- result$condition
-    if (inherits(condition, "error")) status <- c("error", status)
+    if (result_has_errors(result)) status <- unique(c("error", status))
   }
 
   status
@@ -503,9 +502,7 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
         result[["batchtools_log"]] <- try({
           getLog(id = jobid, reg = reg)
         }, silent = TRUE)
-        if (inherits(result$condition, "error")) {
-          cleanup <- FALSE
-        }
+        if (result_has_errors(result)) cleanup <- FALSE
       }
     } else if ("error" %in% stat) {
       cleanup <- FALSE
@@ -636,7 +633,7 @@ delete.BatchtoolsFuture <- function(future,
     status <- status(future)
     res <- future$result
     if (inherits(res, "FutureResult")) {
-      if (inherits(res$condition, "error")) status <- "error"
+      if (result_has_errors(res)) status <- unique(c("error", status))
     }
     mdebug("delete(): status(<future>) = %s",
            paste(sQuote(status), collapse = ", "))

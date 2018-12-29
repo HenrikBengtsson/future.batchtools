@@ -170,3 +170,19 @@ tempvar <- function(prefix = "var", value = NA, envir = parent.frame()) {
   # Failed to find a unique temporary variable name
   stop(sprintf("Failed to generate a unique non-existing temporary variable with prefix '%s'", prefix)) #nolint
 }
+
+
+
+result_has_errors <- function(result) {
+  stop_if_not(inherits(result, "FutureResult"))
+  conditions <- result$conditions
+  ## BACKWARD COMPATIBILITY: future (< 1.11.0)
+  if (!is.list(conditions) && !is.null(result$condition)) {
+    conditions <- list(result$condition)
+  }
+  ## Any error:s?
+  for (condition in conditions) {
+    if (inherits(condition, "error")) return(TRUE)
+  } 
+  FALSE
+}
