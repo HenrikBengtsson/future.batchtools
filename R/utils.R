@@ -175,14 +175,13 @@ tempvar <- function(prefix = "var", value = NA, envir = parent.frame()) {
 
 result_has_errors <- function(result) {
   stop_if_not(inherits(result, "FutureResult"))
-  conditions <- result$conditions
+
   ## BACKWARD COMPATIBILITY: future (< 1.11.0)
-  if (!is.list(conditions) && !is.null(result$condition)) {
-    conditions <- list(result$condition)
+  if (inherits(result$condition, "error")) return(TRUE)
+  
+  for (c in result$conditions) {
+    if (inherits(c$condition, "error")) return(TRUE)
   }
-  ## Any error:s?
-  for (condition in conditions) {
-    if (inherits(condition, "error")) return(TRUE)
-  } 
+  
   FALSE
 }
