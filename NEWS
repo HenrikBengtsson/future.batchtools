@@ -1,12 +1,17 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.7.1-9000 [2018-12-01]
+Version: 0.7.1-9000 [2018-12-03]
 
 DOCUMENTATION:
 
  * Add a simple example(future_custom).
 
+FIXES:
+
+ o Made internal code agile to upcoming changes in the future package on
+   how a captured error is represented.
+   
 BUG FIXES:
 
  * resolve() on a lazy batchtools future would stall and never return.
