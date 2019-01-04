@@ -101,7 +101,7 @@ for (cores in 1:min(2L, availableCores("multicore"))) {
 ## CRAN processing times:
 ## On Windows 32-bit, don't run these tests
 if (fullTest || !isWin32) {
-  mprintf("*** batchtools_multicore() and errors\n", globals)
+  mprintf("*** batchtools_multicore() and errors\n")
   f <- batchtools_multicore({
     stop("Whoops!")
     1
