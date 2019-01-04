@@ -1,7 +1,7 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.7.1-9000 [2018-12-03]
+Version: 0.7.2 [2018-12-03]
 
 DOCUMENTATION:
 
@@ -9,9 +9,13 @@ DOCUMENTATION:
 
 FIXES:
 
- o Made internal code agile to upcoming changes in the future package on
+ * Made internal code agile to upcoming changes in the future package on
    how a captured error is represented.
-   
+
+SOFTWARE QUALITY:
+
+ * FYI: Every release is tested against one Torque/PBS and one SGE scheduler.
+ 
 BUG FIXES:
 
  * resolve() on a lazy batchtools future would stall and never return.
