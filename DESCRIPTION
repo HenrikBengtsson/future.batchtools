@@ -1,8 +1,8 @@
 Package: future.batchtools
-Version: 0.7.1
+Version: 0.7.2
 Depends:
     R (>= 3.2.0),
-    future (>= 1.8.1)
+    future (>= 1.10.0)
 Imports:
     batchtools (>= 0.9.8)
 Suggests:
@@ -25,5 +25,5 @@ License: LGPL (>= 2.1)
 LazyLoad: TRUE
 URL: https://github.com/HenrikBengtsson/future.batchtools
 BugReports: https://github.com/HenrikBengtsson/future.batchtools/issues
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)

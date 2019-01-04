@@ -15,12 +15,19 @@ for (strategy in strategies) {
   a <- 42
   f <- future(2 * a, lazy = TRUE)
   a <- 21
+  stopifnot(!resolved(f))
+  f <- resolve(f)
+  stopifnot(resolved(f))
   v <- value(f)
   stopifnot(v == 84)
 
   a <- 42
   v %<-% { 2 * a } %lazy% TRUE
   a <- 21
+  f <- futureOf(v)  
+  stopifnot(!resolved(f))
+  f <- resolve(f)
+  stopifnot(resolved(f))
   stopifnot(v == 84)
 
   mprintf("- plan('%s') ... DONE\n", strategy)

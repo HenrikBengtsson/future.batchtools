@@ -10,24 +10,24 @@
 \title{Batchtools futures for LSF, OpenLava, SGE, Slurm, TORQUE etc.}
 \usage{
 batchtools_lsf(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = NULL, template = NULL, resources = list(),
-  workers = Inf, ...)
+  globals = TRUE, label = NULL, template = NULL,
+  resources = list(), workers = Inf, ...)
 
 batchtools_openlava(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = NULL, template = NULL, resources = list(),
-  workers = Inf, ...)
+  globals = TRUE, label = NULL, template = NULL,
+  resources = list(), workers = Inf, ...)
 
 batchtools_sge(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = NULL, template = NULL, resources = list(),
-  workers = Inf, ...)
+  globals = TRUE, label = NULL, template = NULL,
+  resources = list(), workers = Inf, ...)
 
 batchtools_slurm(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = NULL, template = NULL, resources = list(),
-  workers = Inf, ...)
+  globals = TRUE, label = NULL, template = NULL,
+  resources = list(), workers = Inf, ...)
 
 batchtools_torque(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = NULL, template = NULL, resources = list(),
-  workers = Inf, ...)
+  globals = TRUE, label = NULL, template = NULL,
+  resources = list(), workers = Inf, ...)
 }
 \arguments{
 \item{expr}{The R expression to be evaluated}

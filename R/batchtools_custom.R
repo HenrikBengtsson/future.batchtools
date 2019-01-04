@@ -12,6 +12,8 @@
 #'
 #' @return An object of class `BatchtoolsFuture`.
 #'
+#' @example incl/batchtools_custom.R
+#'
 #' @export
 #' @importFrom utils file_test
 batchtools_custom <- function(expr, envir = parent.frame(), substitute = TRUE,
