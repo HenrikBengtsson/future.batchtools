@@ -1,9 +1,11 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.7.2-9000 [2018-12-04]
+Version: 0.7.2-9000 [2018-12-22]
 
- * ...
+BUG FIXES:
+
+ * Argument 'workers' could not be a function.
  
 
 Version: 0.7.2 [2018-12-03]

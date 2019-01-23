@@ -59,6 +59,7 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
     stop_if_not(is.list(cluster.functions))
   }
 
+  if (is.function(workers)) workers <- workers()
   if (!is.null(workers)) {
     stop_if_not(length(workers) >= 1)
     if (is.numeric(workers)) {
