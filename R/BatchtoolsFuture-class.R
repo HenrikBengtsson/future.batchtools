@@ -65,8 +65,8 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
       stop_if_not(!anyNA(workers), all(workers >= 1))
     } else if (is.character(workers)) {
     } else {
-      stop_if_not("Argument 'workers' should be either numeric or character: ",
-                mode(workers))
+      stop("Argument 'workers' should be either numeric or character: ",
+           mode(workers))
     }
   }
 
