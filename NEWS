@@ -1,7 +1,11 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.7.2-9000 [2019-01-22]
+Version: 0.7.2-9000 [2019-03-15]
+
+NEW FEATURES:
+
+ * Debug messages are now prepended with a timestamp.
 
 BUG FIXES:
 

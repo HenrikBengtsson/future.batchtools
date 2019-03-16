@@ -37,8 +37,8 @@ is_false <- future.batchtools:::is_false
 is_na <- future.batchtools:::is_na
 is_os <- future.batchtools:::is_os
 hpaste <- future.batchtools:::hpaste
-mcat <- future.batchtools:::mcat
-mprintf <- future.batchtools:::mprintf
+mcat <- function(...) message(..., appendLF = FALSE)
+mprintf <- function(...) message(sprintf(...), appendLF = FALSE)
 mprint <- future.batchtools:::mprint
 mstr <- future.batchtools:::mstr
 printf <- future.batchtools:::printf
