@@ -154,7 +154,7 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
   ## Tweaked search for template file
   findTemplateFile <- import_batchtools("findTemplateFile", default = NA)
   if (!identical(findTemplateFile, NA)) {
-    template <- tryCatch({
+    pathname <- tryCatch({
       findTemplateFile(template)
     }, error = function(ex) {
       ## Try to find it in this package?
@@ -165,6 +165,13 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
       }
       stop(ex)
     })
+
+    if (is.na(pathname)) {
+      stop(sprintf("Failed to locate a batchtools template file: *%s.tmpl",
+                   template))
+    }
+
+    template <- pathname
   }
 
   cluster.functions <- make_cfs(template)

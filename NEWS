@@ -1,11 +1,14 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.7.2-9000 [2019-03-15]
+Version: 0.7.2-9000 [2019-04-25]
 
 NEW FEATURES:
 
  * Debug messages are now prepended with a timestamp.
+
+ * Now a more informative error message is produced if a batchtools *.tmpl
+   template file was not found.
 
 BUG FIXES:
 
