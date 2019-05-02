@@ -134,10 +134,6 @@ import_future <- function(name, default = NULL) {
   import_from(name, default = default, package = "future")
 }
 
-import_batchtools <- function(name, default = NULL) {
-  import_from(name, default = default, package = "batchtools")
-}
-
 ## Evaluates an expression in global environment.
 ## Because geval() is exported, we want to keep its environment()
 ## as small as possible, which is why we use local().  Without,
