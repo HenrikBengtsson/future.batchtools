@@ -512,11 +512,11 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
       output <- loggedOutput(future)
       hint <- unlist(strsplit(output, split = "\n", fixed = TRUE))
       hint <- hint[nzchar(hint)]
-      hint <- tail(hint, n = 6L)
+      hint <- tail(hint, n = getOption("future.batchtools.expiration.tail", 48L))
       if (length(hint) > 0) {
         hint <- paste(hint, collapse = "\n")
-        msg <- sprintf("%s. The last few lines of the logged output:\n%s",
-                       msg, hint)
+        msg <- paste(msg, ". The last few lines of the logged output:\n",
+	             hint, sep="")
       } else {
         msg <- sprintf("%s. No logged output exist.", msg)
       }
