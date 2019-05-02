@@ -640,6 +640,13 @@ delete.BatchtoolsFuture <- function(future,
     }
   }
 
+  ## Have user disabled deletions?
+  if (!getOption("future.delete", TRUE)) {
+    msg <- sprintf("Option 'future.delete' is FALSE - will not delete batchtools registry: %s", sQuote(path))
+    mdebugf("delete(): %s", msg)
+    return(invisible(FALSE))
+  }
+
   ## Control batchtools info output
   oopts <- options(batchtools.verbose = debug)
   on.exit(options(oopts))

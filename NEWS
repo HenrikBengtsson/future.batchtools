@@ -1,7 +1,7 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.7.2-9000 [2019-04-25]
+Version: 0.7.2-9000 [2019-05-02]
 
 NEW FEATURES:
 
@@ -9,6 +9,9 @@ NEW FEATURES:
 
  * Now a more informative error message is produced if a batchtools *.tmpl
    template file was not found.
+
+ * Setting option 'future.delete' to FALSE will now prevent removal of the
+   batchtools registry folders.
 
 BUG FIXES:
 
