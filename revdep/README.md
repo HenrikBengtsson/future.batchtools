@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                  |
 |ctype    |en_US.UTF-8                  |
 |tz       |America/Los_Angeles          |
-|date     |2019-05-02                   |
+|date     |2019-05-04                   |
 
 # Dependencies
 
@@ -22,7 +22,7 @@
 |base64url         |1.4    |1.4        |   |
 |batchtools        |0.9.11 |0.9.11     |   |
 |brew              |1.0-6  |1.0-6      |   |
-|checkmate         |1.9.1  |1.9.1      |   |
+|checkmate         |1.9.3  |1.9.3      |   |
 |crayon            |1.3.4  |1.3.4      |   |
 |data.table        |1.12.2 |1.12.2     |   |
 |digest            |0.6.18 |0.6.18     |   |
