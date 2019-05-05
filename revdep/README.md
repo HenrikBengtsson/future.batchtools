@@ -48,7 +48,7 @@
 
 |package                              |version |error |warning |note |
 |:------------------------------------|:-------|:-----|:-------|:----|
-|[batchtools](problems.md#batchtools) |0.9.11  |      |        |2    |
+|[batchtools](problems.md#batchtools) |0.9.11  |      |        |1    |
 |[drtmle](problems.md#drtmle)         |1.0.4   |      |        |1    |
 |[FAMoS](problems.md#famos)           |0.1.0   |      |        |1    |
 

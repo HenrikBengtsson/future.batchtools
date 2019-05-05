@@ -15,11 +15,6 @@ Run `revdep_details(,"batchtools")` for more info
 
 ## In both
 
-*   checking package dependencies ... NOTE
-    ```
-    Package suggested but not available for checking: ‘doMPI’
-    ```
-
 *   checking whether package ‘batchtools’ can be installed ... NOTE
     ```
     Found the following notes/warnings:
