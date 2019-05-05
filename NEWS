@@ -5,11 +5,6 @@ Version: 0.7.2-9000 [2019-05-02]
 
 NEW FEATURES:
 
- * Debug messages are now prepended with a timestamp.
-
- * Now a more informative error message is produced if a batchtools *.tmpl
-   template file was not found.
-
  * Setting option 'future.delete' to FALSE will now prevent removal of the
    batchtools registry folders.
 
@@ -19,6 +14,11 @@ NEW FEATURES:
    output logged by batchtools.  The default number of lines displayed from
    the end is now increased to from six to 48 - a number which now can be set
    via option 'future.batchtools.expiration.tail'.
+   
+ * Now a more informative error message is produced if a batchtools *.tmpl
+   template file was not found.
+
+ * Debug messages are now prepended with a timestamp.
 
 BUG FIXES:
 
