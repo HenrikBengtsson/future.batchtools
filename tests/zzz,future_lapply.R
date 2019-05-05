@@ -18,9 +18,8 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   if (fullTest) {
     strategies <- c("batchtools_interactive", strategies)
     
-    cf <- batchtools::makeClusterFunctionsInteractive(external = TRUE)
     batchtools_custom_local <- function(expr, substitute = TRUE,
-                                        cluster.functions = cf, ...) {
+        cluster.functions = batchtools::makeClusterFunctionsInteractive(external = TRUE), ...) {
       if (substitute) expr <- substitute(expr)
       batchtools_custom(expr, substitute = FALSE, ...,
                         cluster.functions = cluster.functions)
@@ -43,10 +42,10 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   
   x <- list(a = "integer", c = "character", c = "list")
   str(list(x = x))
-  
+
   y0 <- lapply(x, FUN = vector, length = 2L)
   str(list(y0 = y0))
-  
+
   for (strategy in strategies) {
     mprintf("- plan('%s') ...\n", strategy)
     plan(strategy)

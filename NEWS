@@ -1,6 +1,33 @@
 Package: future.batchtools
 ==========================
 
+Version: 0.8.0 [2019-05-04]
+
+NEW FEATURES:
+
+ * Setting option 'future.delete' to FALSE will now prevent removal of the
+   batchtools registry folders.
+
+ * When a batchtools job expires, for instance when the scheduler terminates
+   it because the job was running out of its allocated resources, then a
+   BatchtoolsFutureError is produced which by default outputs the tail of the
+   output logged by batchtools.  The default number of lines displayed from
+   the end is now increased to from six to 48 - a number which now can be set
+   via option 'future.batchtools.expiration.tail'.
+   
+ * Now a more informative error message is produced if a batchtools *.tmpl
+   template file was not found.
+
+ * Debug messages are now prepended with a timestamp.
+
+BUG FIXES:
+
+ * Argument 'workers' could not be a function.
+
+ * Argument 'workers' of type character was silently accepted and effectively
+   interpreted as workers = length(workers).
+
+
 Version: 0.7.2 [2018-12-03]
 
 DOCUMENTATION:

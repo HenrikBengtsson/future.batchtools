@@ -59,14 +59,14 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
     stop_if_not(is.list(cluster.functions))
   }
 
+  if (is.function(workers)) workers <- workers()
   if (!is.null(workers)) {
     stop_if_not(length(workers) >= 1)
     if (is.numeric(workers)) {
       stop_if_not(!anyNA(workers), all(workers >= 1))
-    } else if (is.character(workers)) {
     } else {
-      stop_if_not("Argument 'workers' should be either numeric or character: ",
-                mode(workers))
+      stop("Argument 'workers' should be either a numeric or a function: ",
+           mode(workers))
     }
   }
 
@@ -321,8 +321,6 @@ run.BatchtoolsFuture <- function(future, ...) {
     stop(sprintf("A future ('%s') can only be launched once.", label))
   }
 
-  mdebug <- import_future("mdebug")
-
   ## Assert that the process that created the future is
   ## also the one that evaluates/resolves/queries it.
   assertOwner <- import_future("assertOwner")
@@ -350,7 +348,7 @@ run.BatchtoolsFuture <- function(future, ...) {
   ## (ii) Attach packages that needs to be attached
   packages <- future$packages
   if (length(packages) > 0) {
-    mdebug("Attaching %d packages (%s) ...",
+    mdebugf("Attaching %d packages (%s) ...",
                     length(packages), hpaste(sQuote(packages)))
 
     ## Record which packages in 'pkgs' that are loaded and
@@ -364,7 +362,7 @@ run.BatchtoolsFuture <- function(future, ...) {
     reg$packages <- packages
     saveRegistry(reg = reg)
 
-    mdebug("Attaching %d packages (%s) ... DONE",
+    mdebugf("Attaching %d packages (%s) ... DONE",
                     length(packages), hpaste(sQuote(packages)))
   }
   ## Not needed anymore
@@ -388,7 +386,7 @@ run.BatchtoolsFuture <- function(future, ...) {
   
   ## 2. Update
   future$config$jobid <- jobid
-  mdebug("Created %s future #%d", class(future)[1], jobid$job.id)
+  mdebugf("Created %s future #%d", class(future)[1], jobid$job.id)
 
   ## WORKAROUND: (For multicore and macOS only)
   if (reg$cluster.functions$name == "Multicore") {
@@ -419,7 +417,7 @@ run.BatchtoolsFuture <- function(future, ...) {
 
   batchtools::submitJobs(reg = reg, ids = jobid, resources = resources)
 
-  mdebug("Launched future #%d", jobid$job.id)
+  mdebugf("Launched future #%d", jobid$job.id)
 
   invisible(future)
 } ## run()
@@ -458,7 +456,6 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
                                                      1.0),
                                    alpha = getOption("future.wait.alpha", 1.01),
                                    ...) {
-  mdebug <- import_future("mdebug")
   stop_if_not(is.finite(timeout), timeout >= 0)
   stop_if_not(is.finite(alpha), alpha > 0)
   
@@ -480,9 +477,9 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
  
   res <- waitForJobs(ids = jobid, timeout = timeout, sleep = sleep_fcn,
                      stop.on.error = FALSE, reg = reg)
-  mdebug("- batchtools::waitForJobs(): %s", res)
+  mdebugf("- batchtools::waitForJobs(): %s", res)
   stat <- status(future)
-  mdebug("- status(): %s", paste(sQuote(stat), collapse = ", "))
+  mdebugf("- status(): %s", paste(sQuote(stat), collapse = ", "))
   mdebug("batchtools::waitForJobs() ... done")
 
   finished <- is_na(stat) || any(c("finished", "error", "expired") %in% stat)
@@ -515,11 +512,11 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
       output <- loggedOutput(future)
       hint <- unlist(strsplit(output, split = "\n", fixed = TRUE))
       hint <- hint[nzchar(hint)]
-      hint <- tail(hint, n = 6L)
+      hint <- tail(hint, n = getOption("future.batchtools.expiration.tail", 48L))
       if (length(hint) > 0) {
         hint <- paste(hint, collapse = "\n")
-        msg <- sprintf("%s. The last few lines of the logged output:\n%s",
-                       msg, hint)
+        msg <- paste(msg, ". The last few lines of the logged output:\n",
+	             hint, sep="")
       } else {
         msg <- sprintf("%s. No logged output exist.", msg)
       }
@@ -576,8 +573,6 @@ delete.BatchtoolsFuture <- function(future,
                                 delta = getOption("future.wait.interval", 1.0),
                                 alpha = getOption("future.wait.alpha", 1.01),
                                 ...) {
-  mdebug <- import_future("mdebug")
-
   onRunning <- match.arg(onRunning)
   onMissing <- match.arg(onMissing)
   onFailure <- match.arg(onFailure)
@@ -593,7 +588,7 @@ delete.BatchtoolsFuture <- function(future,
   if (is.null(path) || !file_test("-d", path)) {
     if (onMissing %in% c("warning", "error")) {
       msg <- sprintf("Cannot remove batchtools registry, because directory does not exist: %s", sQuote(path)) #nolint
-      mdebug("delete(): %s", msg)
+      mdebugf("delete(): %s", msg)
       if (onMissing == "warning") {
         warning(msg)
       } else if (onMissing == "error") {
@@ -611,7 +606,7 @@ delete.BatchtoolsFuture <- function(future,
     label <- future$label
     if (is.null(label)) label <- "<none>"
     msg <- sprintf("Will not remove batchtools registry, because is appears to hold a non-resolved future (%s; state = %s; batchtools status = %s): %s", sQuote(label), sQuote(future$state), paste(sQuote(status), collapse = ", "), sQuote(path)) #nolint
-    mdebug("delete(): %s", msg)
+    mdebugf("delete(): %s", msg)
     if (onRunning == "warning") {
       warning(msg)
       return(invisible(TRUE))
@@ -627,7 +622,7 @@ delete.BatchtoolsFuture <- function(future,
 
   ## To simplify post mortem troubleshooting in non-interactive sessions,
   ## should the batchtools registry files be removed or not?
-  mdebug("delete(): Option 'future.delete = %s",
+  mdebugf("delete(): Option 'future.delete = %s",
          sQuote(getOption("future.delete", "<NULL>")))
   if (!getOption("future.delete", interactive())) {
     status <- status(future)
@@ -635,14 +630,21 @@ delete.BatchtoolsFuture <- function(future,
     if (inherits(res, "FutureResult")) {
       if (result_has_errors(res)) status <- unique(c("error", status))
     }
-    mdebug("delete(): status(<future>) = %s",
+    mdebugf("delete(): status(<future>) = %s",
            paste(sQuote(status), collapse = ", "))
     if (any(c("error", "expired") %in% status)) {
       msg <- sprintf("Will not remove batchtools registry, because the status of the batchtools was %s and option 'future.delete' is FALSE or running in an interactive session: %s", paste(sQuote(status), collapse = ", "), sQuote(path)) #nolint
-      mdebug("delete(): %s", msg)
+      mdebugf("delete(): %s", msg)
       warning(msg)
       return(invisible(FALSE))
     }
+  }
+
+  ## Have user disabled deletions?
+  if (!getOption("future.delete", TRUE)) {
+    msg <- sprintf("Option 'future.delete' is FALSE - will not delete batchtools registry: %s", sQuote(path))
+    mdebugf("delete(): %s", msg)
+    return(invisible(FALSE))
   }
 
   ## Control batchtools info output
@@ -664,7 +666,7 @@ delete.BatchtoolsFuture <- function(future,
   if (file_test("-d", path)) {
     if (onFailure %in% c("warning", "error")) {
       msg <- sprintf("Failed to remove batchtools registry: %s", sQuote(path))
-      mdebug("delete(): %s", msg)
+      mdebugf("delete(): %s", msg)
       if (onMissing == "warning") {
         warning(msg)
       } else if (onMissing == "error") {
@@ -674,7 +676,7 @@ delete.BatchtoolsFuture <- function(future,
     return(invisible(FALSE))
   }
 
-  mdebug("delete(): batchtools registry deleted: %s", sQuote(path))
+  mdebugf("delete(): batchtools registry deleted: %s", sQuote(path))
 
   invisible(TRUE)
 } # delete()

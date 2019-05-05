@@ -118,7 +118,7 @@ class(batchtools_torque) <- c("batchtools_torque", "batchtools_template",
                               "batchtools", "multiprocess", "future",
                               "function")
 
-
+#' @importFrom batchtools findTemplateFile
 #' @importFrom batchtools makeClusterFunctionsLSF
 #' @importFrom batchtools makeClusterFunctionsOpenLava
 #' @importFrom batchtools makeClusterFunctionsSGE
@@ -148,23 +148,27 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
     template <- formals(make_cfs)$template
   }
 
-  stop_if_not(is.character(template), length(template) == 1, nzchar(template))
+  stop_if_not(is.character(template), length(template) == 1L,
+              !is.na(template), nzchar(template))
 
   ## Tweaked search for template file
-  findTemplateFile <- import_batchtools("findTemplateFile", default = NA)
-  if (!identical(findTemplateFile, NA)) {
-    template <- tryCatch({
-      findTemplateFile(template)
-    }, error = function(ex) {
-      ## Try to find it in this package?
-      if (grepl("Argument 'template'", conditionMessage(ex))) {
-        pathname <- system.file("templates", sprintf("%s.tmpl", template),
-                                package = "future.batchtools")
-        if (file_test("-f", pathname)) return(pathname)
-      }
-      stop(ex)
-    })
+  pathname <- tryCatch({
+    findTemplateFile(template)
+  }, error = function(ex) {
+    ## Try to find it in this package?
+    if (grepl("Argument 'template'", conditionMessage(ex))) {
+      pathname <- system.file("templates", sprintf("%s.tmpl", template),
+                              package = "future.batchtools")
+      if (file_test("-f", pathname)) return(pathname)
+    }
+    stop(ex)
+  })
+   if (is.na(pathname)) {
+     stop(sprintf("Failed to locate a batchtools template file: *%s.tmpl",
+                  template))
   }
+
+  template <- pathname
 
   cluster.functions <- make_cfs(template)
   attr(cluster.functions, "template") <- template

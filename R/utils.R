@@ -47,22 +47,34 @@ capture_output <- function(expr, envir = parent.frame(), ...) {
 
 printf <- function(...) cat(sprintf(...))
 
-mcat <- function(...) message(..., appendLF = FALSE)
-
-mprintf <- function(...) message(sprintf(...), appendLF = FALSE)
-
-mprint <- function(...) {
-  bfr <- capture_output(print(...))
-  bfr <- paste(c(bfr, ""), collapse = "\n")
-  message(bfr, appendLF = FALSE)
+now <- function(x = Sys.time(), format = "[%H:%M:%OS3] ") {
+  ## format(x, format = format) ## slower
+  format(as.POSIXlt(x, tz = ""), format = format)
 }
 
-#' @importFrom utils str
-mstr <- function(...) {
-  bfr <- capture_output(str(...))
-  bfr <- paste(c(bfr, ""), collapse = "\n")
-  message(bfr, appendLF = FALSE)
+mdebug <- function(..., debug = getOption("future.debug", FALSE)) {
+  if (!debug) return()
+  message(now(), ...)
 }
+
+mdebugf <- function(..., appendLF = TRUE,
+                    debug = getOption("future.debug", FALSE)) {
+  if (!debug) return()
+  message(now(), sprintf(...), appendLF = appendLF)
+}
+
+#' @importFrom utils capture.output
+mprint <- function(..., appendLF = TRUE, debug = getOption("future.debug", FALSE)) {
+  if (!debug) return()
+  message(paste(now(), capture.output(print(...)), sep = "", collapse = "\n"), appendLF = appendLF)
+}
+
+#' @importFrom utils capture.output str
+mstr <- function(..., appendLF = TRUE, debug = getOption("future.debug", FALSE)) {
+  if (!debug) return()
+  message(paste(now(), capture.output(str(...)), sep = "", collapse = "\n"), appendLF = appendLF)
+}
+
 
 ## From R.utils 2.0.2 (2015-05-23)
 hpaste <- function(..., sep="", collapse=", ", last_collapse=NULL,
@@ -122,10 +134,6 @@ import_future <- function(name, default = NULL) {
   import_from(name, default = default, package = "future")
 }
 
-import_batchtools <- function(name, default = NULL) {
-  import_from(name, default = default, package = "batchtools")
-}
-
 ## Evaluates an expression in global environment.
 ## Because geval() is exported, we want to keep its environment()
 ## as small as possible, which is why we use local().  Without,
@@ -176,9 +184,6 @@ tempvar <- function(prefix = "var", value = NA, envir = parent.frame()) {
 result_has_errors <- function(result) {
   stop_if_not(inherits(result, "FutureResult"))
 
-  ## BACKWARD COMPATIBILITY: future (< 1.11.0)
-  if (inherits(result$condition, "error")) return(TRUE)
-  
   for (c in result$conditions) {
     if (inherits(c$condition, "error")) return(TRUE)
   }
