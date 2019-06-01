@@ -116,6 +116,8 @@ To configure batchtools for job schedulers we need to setup a `*.tmpl` template
 file that is used to generate the script used by the scheduler.
 This is what a template file for TORQUE / PBS may look like:
 ```sh
+#!/bin/bash
+
 ## Job name:
 #PBS -N <%= if (exists("job.name", mode = "character")) job.name else job.hash %>
 
