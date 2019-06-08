@@ -1,3 +1,10 @@
+.onLoad <- function(libname, pkgname) {
+  inRCmdCheck <- import_future("inRCmdCheck")
+  if (inRCmdCheck()) {
+    Sys.setenv("R_FUTURE_CACHE_PATH" = file.path(tempdir(), ".future"))
+  }
+}
+
 #' @importFrom utils file_test
 .onUnload <- function(libpath) {
   ## (a) Force finalizer of Future objects to run such
