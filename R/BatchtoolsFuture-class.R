@@ -133,9 +133,9 @@ print.BatchtoolsFuture <- function(x, ...) {
            class(reg))
   } else {
     printf("batchtools Registry:\n  ")
-    print(reg)
     printf("  File dir exists: %s\n", file_test("-d", reg$file.dir))
     printf("  Work dir exists: %s\n", file_test("-d", reg$work.dir))
+    try(print(reg))
   }
 
   invisible(x)
@@ -305,6 +305,7 @@ result.BatchtoolsFuture <- function(future, cleanup = TRUE, ...) {
   stop_if_not(inherits(result, "FutureResult"))
   future$result <- result
   future$state <- "finished"
+
   if (cleanup) delete(future)
 
   NextMethod()
