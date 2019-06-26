@@ -24,7 +24,7 @@
   on.exit(plan(oplan, substitute = FALSE, .call = NULL))
 
   ## Tweak current strategy and apply
-  args <- list(plan(), resources = tweaks, penvir = envir)
+  args <- list(plan("next"), resources = tweaks, penvir = envir)
   strategy <- do.call(tweak, args = args)
   plan(strategy, substitute = FALSE, .call = NULL)
 
