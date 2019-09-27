@@ -15,7 +15,12 @@ for (strategy in strategies) {
   a <- 42
   f <- future(2 * a, lazy = TRUE)
   a <- 21
-  stopifnot(!resolved(f))
+  ## In future (> 1.14.0), resolved() will launch lazy future,
+  ## which means for some backends (e.g. sequential) this means
+  ## that resolved() might end up returning TRUE.
+  if (packageVersion("future") <= "1.14.0") {
+    stopifnot(!resolved(f))
+  }
   f <- resolve(f)
   stopifnot(resolved(f))
   v <- value(f)
@@ -25,7 +30,12 @@ for (strategy in strategies) {
   v %<-% { 2 * a } %lazy% TRUE
   a <- 21
   f <- futureOf(v)  
-  stopifnot(!resolved(f))
+  ## In future (> 1.14.0), resolved() will launch lazy future,
+  ## which means for some backends (e.g. sequential) this means
+  ## that resolved() might end up returning TRUE.
+  if (packageVersion("future") <= "1.14.0") {
+    stopifnot(!resolved(f))
+  }
   f <- resolve(f)
   stopifnot(resolved(f))
   stopifnot(v == 84)
