@@ -14,14 +14,6 @@ message("*** BatchtoolsFuture() - cleanup ... DONE")
 
 message("*** BatchtoolsFuture() - deleting exceptions ...")
 
-## Deleting a non-resolved future
-f <- BatchtoolsFuture({ x <- 1 })
-res <- tryCatch({
-  delete(f)
-}, warning = function(w) w)
-print(res)
-stopifnot(inherits(res, "warning"))
-
 ## Printing a deleted future
 f <- batchtools_local(42L)
 print(f)

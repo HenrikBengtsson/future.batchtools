@@ -1,6 +1,14 @@
 Package: future.batchtools
 ==========================
 
+Version: 0.8.1 [2019-09-30]
+
+BUG FIXES:
+
+ * print() for BatchtoolsFuture would produce an error if the underlying
+   batchtools Registry was incomplete.
+
+
 Version: 0.8.0 [2019-05-04]
 
 NEW FEATURES:
