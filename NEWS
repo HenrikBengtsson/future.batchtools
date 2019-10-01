@@ -1,6 +1,11 @@
 Package: future.batchtools
 ==========================
 
+Version: 0.8.1-9000 [2019-10-01]
+
+ * ...
+
+
 Version: 0.8.1 [2019-09-30]
 
 BUG FIXES:
@@ -20,7 +25,7 @@ NEW FEATURES:
    it because the job was running out of its allocated resources, then a
    BatchtoolsFutureError is produced which by default outputs the tail of the
    output logged by batchtools.  The default number of lines displayed from
-   the end is now increased to from six to 48 - a number which now can be set
+   the end is now increased from six to 48 - a number which now can be set
    via option 'future.batchtools.expiration.tail'.
    
  * Now a more informative error message is produced if a batchtools *.tmpl
@@ -184,7 +189,7 @@ Version: 0.2.0 [2017-02-23]
 GLOBALS:
 
  * batchtools (>= 0.9.2) now supports exporting objects with any type of names
-   (previously only possible if they mapped to to strictly valid filenames).
+   (previously only possible if they mapped to strictly valid filenames).
    This allowed me to avoid lots of internal workaround code encoding and
    decoding globals.
    
