@@ -15,7 +15,7 @@ for (type in c("batchtools_interactive", "batchtools_local")) {
   mprintf("*** plan('%s') ...\n", type)
 
   plan(type)
-  stopifnot(inherits(plan(), "batchtools"))
+  stopifnot(inherits(plan("next"), "batchtools"))
 
   a <- 0
   f <- future({
