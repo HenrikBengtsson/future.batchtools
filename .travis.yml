@@ -49,7 +49,7 @@ matrix:
       r_github_packages:
         - HenrikBengtsson/future.tests
       script:
-        - R CMD build --no-build-vignettes --no-manual
+        - R CMD build --no-build-vignettes --no-manual .
         - R CMD INSTALL *.tar.gz
         - Rscript -e future.tests::check --args --test-plan=future.batchtools::batchtools_local
       env: NB='w/ future.tests' ## Just a label
