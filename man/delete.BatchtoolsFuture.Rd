@@ -4,11 +4,16 @@
 \alias{delete.BatchtoolsFuture}
 \title{Removes a batchtools future}
 \usage{
-\method{delete}{BatchtoolsFuture}(future, onRunning = c("warning",
-  "error", "skip"), onFailure = c("error", "warning", "ignore"),
-  onMissing = c("ignore", "warning", "error"), times = 10L,
+\method{delete}{BatchtoolsFuture}(
+  future,
+  onRunning = c("warning", "error", "skip"),
+  onFailure = c("error", "warning", "ignore"),
+  onMissing = c("ignore", "warning", "error"),
+  times = 10L,
   delta = getOption("future.wait.interval", 1),
-  alpha = getOption("future.wait.alpha", 1.01), ...)
+  alpha = getOption("future.wait.alpha", 1.01),
+  ...
+)
 }
 \arguments{
 \item{future}{The future.}

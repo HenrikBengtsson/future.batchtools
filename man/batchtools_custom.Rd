@@ -4,9 +4,17 @@
 \alias{batchtools_custom}
 \title{Batchtools futures for custom batchtools configuration}
 \usage{
-batchtools_custom(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = NULL, cluster.functions,
-  resources = list(), workers = NULL, ...)
+batchtools_custom(
+  expr,
+  envir = parent.frame(),
+  substitute = TRUE,
+  globals = TRUE,
+  label = NULL,
+  cluster.functions,
+  resources = list(),
+  workers = NULL,
+  ...
+)
 }
 \arguments{
 \item{expr}{The R expression to be evaluated}
@@ -54,7 +62,7 @@ plan(batchtools_custom, cluster.functions = cf)
 
 ## Create explicit future
 f <- future({
-  cat("PID:", Sys.getpid(), "\\n")
+  cat("PID:", Sys.getpid(), "\n")
   42L
 })
 v <- value(f)

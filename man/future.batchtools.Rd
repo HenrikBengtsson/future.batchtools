@@ -18,11 +18,6 @@ select the type of future you wish to use via
 \code{\link[future:plan]{future::plan()}}.
 }
 \examples{
-\donttest{
-plan(batchtools_local)
-demo("mandelbrot", package = "future", ask = FALSE)
-}
-
 ## Use local batchtools futures
 plan(batchtools_local)
 
@@ -36,4 +31,9 @@ v \%<-\% {
 }
 
 print(v)
+\donttest{
+plan(batchtools_local)
+demo("mandelbrot", package = "future", ask = FALSE)
+}
+
 }
