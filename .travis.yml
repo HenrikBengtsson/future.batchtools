@@ -57,8 +57,9 @@ matrix:
       r: release
       r_packages:
         - covr
-      r_check_args: --no-codoc --no-examples --no-tests --ignore-vignettes
-      after_success:
+      script:
+        - R CMD build .
+        - R CMD INSTALL *.tar.gz
         - Rscript -e 'covr::codecov(quiet=FALSE)'
       env: NB='w/ covr' ## Just a label
 
