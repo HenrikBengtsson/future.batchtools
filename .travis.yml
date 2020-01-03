@@ -51,7 +51,6 @@ matrix:
       script:
         - R CMD build --no-build-vignettes --no-manual .
         - R CMD INSTALL *.tar.gz
-      after_success:
         - Rscript -e future.tests::check --args --test-plan=future.batchtools::batchtools_local
       env: NB='w/ future.tests' ## Just a label
     - os: linux
