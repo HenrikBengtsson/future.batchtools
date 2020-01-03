@@ -51,7 +51,7 @@ matrix:
       r_check_args: --no-codoc --no-examples --no-tests --ignore-vignettes
       after_success:
         - Rscript -e future.tests::check --args --test-plan=future.batchtools::batchtools_local
-      env: NB='w/ covr' ## Just a label
+      env: NB='w/ future.tests' ## Just a label
     - os: linux
       r: release
       r_packages:
