@@ -51,6 +51,7 @@ matrix:
       script:
         - R CMD build --no-build-vignettes --no-manual .
         - R CMD INSTALL *.tar.gz
+      after_success:
         - Rscript -e future.tests::check --args --test-plan=future.batchtools::batchtools_local
       env: NB='w/ future.tests' ## Just a label
     - os: linux
@@ -58,8 +59,8 @@ matrix:
       r_packages:
         - covr
       script:
-        - R CMD build .
-        - R CMD INSTALL *.tar.gz
+        - R CMD build --no-build-vignettes --no-manual .
+      after_success:
         - Rscript -e 'covr::codecov(quiet=FALSE)'
       env: NB='w/ covr' ## Just a label
 
