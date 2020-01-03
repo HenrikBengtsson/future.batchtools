@@ -21,6 +21,16 @@ env:
 matrix:
   include:
     - os: linux
+      r: release
+      r_github_packages:
+        - HenrikBengtsson/future.tests
+      r_check_args: --no-codoc --no-examples --no-tests --ignore-vignettes
+      after_success:
+	- R CMD build --no-build-vignettes --no-manual .
+	- R CMD INSTALL *.tar.gz
+        - Rscript -e future.tests::check --args --test-plan=future.batchtools::batchtools_local
+      env: NB='w/ future.tests' ## Just a label
+    - os: linux
       r: oldrel
     - os: linux
       r: release
@@ -44,14 +54,6 @@ matrix:
       r: oldrel
     - os: osx
       r: release
-    - os: linux
-      r: release
-      r_github_packages:
-        - HenrikBengtsson/future.tests
-      r_check_args: --no-codoc --no-examples --no-tests --ignore-vignettes
-      after_success:
-        - Rscript -e future.tests::check --args --test-plan=future.batchtools::batchtools_local
-      env: NB='w/ future.tests' ## Just a label
     - os: linux
       r: release
       r_packages:
