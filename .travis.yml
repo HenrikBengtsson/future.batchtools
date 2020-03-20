@@ -46,8 +46,8 @@ matrix:
       r: release
     - os: linux
       r: release
-      r_github_packages:
-        - HenrikBengtsson/future.tests
+      r_packages:
+        - future.tests
       script:
         - R CMD build --no-build-vignettes --no-manual .
         - R CMD INSTALL *.tar.gz
