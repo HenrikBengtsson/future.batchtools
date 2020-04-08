@@ -12,7 +12,9 @@ oplan <- future::plan()
 ## Use local batchtools futures by default
 future::plan(future.batchtools::batchtools_local)
 
-Sys.setenv("R_FUTURE_CACHE_PATH" = file.path(tempdir(), ".future"))
+if (!nzchar(Sys.getenv("R_FUTURE_CACHE_PATH"))) {
+  Sys.setenv("R_FUTURE_CACHE_PATH" = file.path(tempdir(), ".future"))
+}
 
 fullTest <- (Sys.getenv("_R_CHECK_FULL_") != "")
 
