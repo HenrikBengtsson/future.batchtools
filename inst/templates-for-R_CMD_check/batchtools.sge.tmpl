@@ -34,6 +34,10 @@
 ## it to use HPC-wide working directory
 #$ -wd ~/tmp
 
+## SPECIAL: Since we change working directory, the 'startup.Rs' file used
+## by R CMD check is no longer found
+export R_TESTS=
+
 # For troubleshooting if there are errors
 date
 hostname
