@@ -12,6 +12,7 @@ BatchtoolsFuture(
   packages = NULL,
   label = NULL,
   cluster.functions = NULL,
+  registry = list(),
   resources = list(),
   workers = NULL,
   finalize = getOption("future.finalize", TRUE),
@@ -41,8 +42,11 @@ job name for most job schedulers).}
 \item{cluster.functions}{A batchtools \link[batchtools:ClusterFunctions]{ClusterFunctions}
 object.}
 
-\item{resources}{A named list passed to the batchtools template (available
-as variable \code{resources}).}
+\item{registry}{(optional) A named list of settings to control the setup
+of the batchtools registry.}
+
+\item{resources}{(optional) A named list passed to the batchtools template
+(available as variable \code{resources}).}
 
 \item{workers}{(optional) The maximum number of workers the batchtools
 backend may use at any time.   Interactive and "local" backends can only

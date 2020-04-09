@@ -3,18 +3,20 @@ temp_registry <- local({
   ## All known batchtools registries
   regs <- new.env()
 
-  make_registry <- function(...) {
-    ## Temporarily disable batchtools output?
+  make_registry <- function(work.dir = NULL, ...) {
+      ## Temporarily disable batchtools output?
     ## (i.e. messages and progress bars)
     debug <- getOption("future.debug", FALSE)
     batchtools_output <- getOption("future.batchtools.output", debug)
 
+    if (is.null(work.dir)) work.dir <- getwd()
+    
     if (!batchtools_output) {
       oopts <- options(batchtools.verbose = FALSE, batchtools.progress = FALSE)
       on.exit(options(oopts))
     }
 
-    batchtools::makeRegistry(...)
+    batchtools::makeRegistry(work.dir = work.dir, ...)
   } ## make_registry()
 
   function(label = "batchtools", path = NULL, ...) {

@@ -1,9 +1,18 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.8.1-9000 [2019-10-01]
+Version: 0.8.1-9000 [2020-04-09]
 
- * ...
+NEW FEATURES:
+
+ * It is now possible to control the working directory 'work.dir' setting for
+   batchtools registries used by batchtools futures.  This can be done by
+   specifying the new named list argument 'registry' when setting the plan()
+   for any of the 'batchtools_*' backends, e.g.
+   plan(batchtools_sge, registry = list(work.dir = "~")).  The default is
+   registry = list(work.dir = NULL), which corresponds to the previous behavior
+   where the registry's working directory is set to the current working
+   directory of R _when_ the batchtools future is created.
 
 
 Version: 0.8.1 [2019-09-30]

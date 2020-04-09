@@ -24,8 +24,11 @@
 #' @param cluster.functions A batchtools [ClusterFunctions][batchtools::ClusterFunctions]
 #' object.
 #'
-#' @param resources A named list passed to the batchtools template (available
-#' as variable `resources`).
+#' @param registry (optional) A named list of settings to control the setup
+#' of the batchtools registry.
+#'
+#' @param resources (optional) A named list passed to the batchtools template
+#' (available as variable `resources`).
 #'
 #' @param workers (optional) The maximum number of workers the batchtools
 #' backend may use at any time.   Interactive and "local" backends can only
@@ -48,6 +51,7 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
                              substitute = TRUE,
                              globals = TRUE, packages = NULL,
                              label = NULL, cluster.functions = NULL,
+                             registry = list(),
                              resources = list(), workers = NULL,
                              finalize = getOption("future.finalize", TRUE),
                              ...) {
@@ -70,6 +74,11 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
     }
   }
 
+  stop_if_not(is.list(registry))
+  if (length(registry) > 0L) {
+    stopifnot(!is.null(names(registry)), all(nzchar(names(registry))))
+  }
+  
   stop_if_not(is.list(resources))
 
   ## Record globals
@@ -84,7 +93,7 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
   future$packages <- unique(c(packages, gp$packages))
 
   ## Create batchtools registry
-  reg <- temp_registry(label = future$label)
+  reg <- temp_registry(label = future$label, work.dir = registry$work.dir)
   if (!is.null(cluster.functions)) {    ### FIXME
     reg$cluster.functions <- cluster.functions
   }
