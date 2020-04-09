@@ -224,7 +224,7 @@ Contributing to this package is easy.  Just send a [pull request](https://help.g
 
 ## Software status
 
-| Resource      | CRAN        | GitHub Actions      | Travis CI       | Appveyor         |
+| Resource      | CRAN        | GitHub Actions      | Travis CI       | AppVeyor CI      |
 | ------------- | ------------------- | ------------------- | --------------- | ---------------- |
 | _Platforms:_  | _Multiple_          | _Multiple_          | _Linux & macOS_ | _Windows_        |
 | R CMD check   | <a href="https://cran.r-project.org/web/checks/check_results_future.batchtools.html"><img border="0" src="http://www.r-pkg.org/badges/version/future.batchtools" alt="CRAN version"></a> |        | <a href="https://travis-ci.org/HenrikBengtsson/future.batchtools"><img src="https://travis-ci.org/HenrikBengtsson/future.batchtools.svg" alt="Build status"></a>   | <a href="https://ci.appveyor.com/project/HenrikBengtsson/future-batchtools"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/future.batchtools?svg=true" alt="Build status"></a> |
