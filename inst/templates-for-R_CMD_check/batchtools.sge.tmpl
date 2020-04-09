@@ -1,0 +1,50 @@
+## Job name:
+#$ -N fbt-<%= job.hash %>
+
+## Merge standard error and output:
+#$ -j y
+
+## Direct streams to logfile:
+#$ -o <%= log.file %>
+
+## Tell the queue system to use the current directory
+## as the working directory
+## -cwd
+
+## Use environment variables
+#$ -V
+
+## Resources needed:
+<% if (exists("resources", mode = "list") && length(resources) > 0) {
+  ## plan(batchtools_sge, resources = list(custom = "-pe smp 2"))
+  if (isTRUE(getOption("future.debug"))) {
+    R.utils::mcat("resources:")
+    R.utils::mstr(resources)
+  }
+  cat(sprintf("#$ %s\n", resources[["custom"]]))
+} %>
+
+## UCSF HPC Pilot specific
+#$ -S /bin/bash         # Required
+#$ -l mem_free=1G       # Memory usage, required.  Note that this is per slot
+#$ -R yes               # SGE host reservation, highly recommended
+
+## SPECIAL: For R CMD check package testing on HPC environments, which
+## typically uses a temporary working directory that is local, we force
+## it to use HPC-wide working directory
+#$ -wd ~/tmp
+
+# For troubleshooting if there are errors
+date
+hostname
+which Rscript
+Rscript --version
+Rscript -e ".libPaths()"
+
+echo "Command: Rscript -e 'batchtools::doJobCollection("<%= uri %>")' ..."
+Rscript -e 'batchtools::doJobCollection("<%= uri %>")'
+echo "Command: Rscript -e 'batchtools::doJobCollection("<%= uri %>")' ... done"
+
+## For troubleshooting if there are errors
+## https://github.com/UCSF-HPC/pilot-testing/issues/1
+qstat -j $JOB_ID

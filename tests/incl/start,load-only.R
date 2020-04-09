@@ -12,10 +12,6 @@ oplan <- future::plan()
 ## Use local batchtools futures by default
 future::plan(future.batchtools::batchtools_local)
 
-if (!nzchar(Sys.getenv("R_FUTURE_CACHE_PATH"))) {
-  Sys.setenv("R_FUTURE_CACHE_PATH" = file.path(tempdir(), ".future"))
-}
-
 fullTest <- (Sys.getenv("_R_CHECK_FULL_") != "")
 
 isWin32 <- (.Platform$OS.type == "windows" && .Platform$r_arch == "i386")
@@ -25,6 +21,12 @@ all_strategies <- function() {
   strategies <- unlist(strsplit(strategies, split = ","))
   strategies <- gsub(" ", "", strategies)
   strategies <- strategies[nzchar(strategies)]
+  ## When testing e.g. 'batchtools_sge', cf. R_BATCHTOOLS_SEARCH_PATH/batchtools.sge.tmpl
+  if (length(strategies) > 0L && !nzchar(Sys.getenv("R_BATCHTOOLS_SEARCH_PATH"))) {
+    Sys.setenv(R_BATCHTOOLS_SEARCH_PATH = system.file(package = "future.batchtools", "templates-for-R_CMD_check", mustWork = TRUE))
+    dir.create("~/tmp")
+    Sys.setenv("R_FUTURE_CACHE_PATH" = "~/tmp/.future")
+  }
   strategies <- c(future:::supportedStrategies(), strategies)
   unique(strategies)
 }
