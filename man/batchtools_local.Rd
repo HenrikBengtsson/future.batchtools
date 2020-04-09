@@ -12,6 +12,7 @@ batchtools_local(
   globals = TRUE,
   label = NULL,
   workers = 1L,
+  registry = list(),
   ...
 )
 }
@@ -41,8 +42,10 @@ process one future at the time, whereas HPC backends where futures are
 resolved via separate jobs on a scheduler, the default is to assume an
 infinite number of workers.}
 
-\item{\ldots}{Additional arguments passed to
-\code{\link[=BatchtoolsFuture]{BatchtoolsFuture()}}.}
+\item{registry}{(optional) A named list of settings to control the setup
+of the batchtools registry.}
+
+\item{\ldots}{Additional arguments passed to \code{\link[=BatchtoolsFuture]{BatchtoolsFuture()}}.}
 }
 \value{
 An object of class \code{BatchtoolsFuture}.

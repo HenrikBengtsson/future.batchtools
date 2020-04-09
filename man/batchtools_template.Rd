@@ -18,6 +18,7 @@ batchtools_lsf(
   template = NULL,
   resources = list(),
   workers = Inf,
+  registry = list(),
   ...
 )
 
@@ -30,6 +31,7 @@ batchtools_openlava(
   template = NULL,
   resources = list(),
   workers = Inf,
+  registry = list(),
   ...
 )
 
@@ -42,6 +44,7 @@ batchtools_sge(
   template = NULL,
   resources = list(),
   workers = Inf,
+  registry = list(),
   ...
 )
 
@@ -54,6 +57,7 @@ batchtools_slurm(
   template = NULL,
   resources = list(),
   workers = Inf,
+  registry = list(),
   ...
 )
 
@@ -66,6 +70,7 @@ batchtools_torque(
   template = NULL,
   resources = list(),
   workers = Inf,
+  registry = list(),
   ...
 )
 }
@@ -93,14 +98,17 @@ job name for most job schedulers).}
 (in \pkg{brew} format).  If not specified, it is left to the
 \pkg{batchtools} package to locate such file using its search rules.}
 
-\item{resources}{A named list passed to the batchtools template (available
-as variable \code{resources}).}
+\item{resources}{(optional) A named list passed to the batchtools template
+(available as variable \code{resources}).}
 
 \item{workers}{(optional) The maximum number of workers the batchtools
 backend may use at any time.   Interactive and "local" backends can only
 process one future at the time, whereas HPC backends where futures are
 resolved via separate jobs on a scheduler, the default is to assume an
 infinite number of workers.}
+
+\item{registry}{(optional) A named list of settings to control the setup
+of the batchtools registry.}
 
 \item{\ldots}{Additional arguments passed to \code{\link[=BatchtoolsFuture]{BatchtoolsFuture()}}.}
 }

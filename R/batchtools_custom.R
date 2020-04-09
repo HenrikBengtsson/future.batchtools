@@ -5,9 +5,6 @@
 #' @param cluster.functions A
 #' [ClusterFunctions][batchtools::ClusterFunctions] object.
 #'
-#' @param resources A named list passed to the batchtools template
-#' (available as variable `resources`).
-#'
 #' @param \ldots Additional arguments passed to [BatchtoolsFuture()].
 #'
 #' @return An object of class `BatchtoolsFuture`.
@@ -19,7 +16,8 @@
 batchtools_custom <- function(expr, envir = parent.frame(), substitute = TRUE,
                               globals = TRUE, label = NULL,
                               cluster.functions,
-                              resources = list(), workers = NULL, ...) {
+                              resources = list(), workers = NULL,
+                              registry = list(), ...) {
   if (substitute) expr <- substitute(expr)
   stop_if_not(inherits(cluster.functions, "ClusterFunctions"))
 
@@ -29,6 +27,7 @@ batchtools_custom <- function(expr, envir = parent.frame(), substitute = TRUE,
                             cluster.functions = cluster.functions,
                             resources = resources,
                             workers = workers,
+                            registry = registry,
                             ...)
 
   if (!future$lazy) future <- run(future)

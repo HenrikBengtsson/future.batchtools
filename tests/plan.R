@@ -28,6 +28,16 @@ for (type in c("batchtools_interactive", "batchtools_local")) {
   print(v)
   stopifnot(v == 0)
 
+  ## Customize the 'work.dir' of the batchtools registries
+  plan(type, registry = list(work.dir = NULL))
+  f <- future(42, lazy = TRUE)
+  stopifnot(f$config$reg$work.dir == getwd())
+
+  path <- tempdir()
+  plan(type, registry = list(work.dir = path))
+  f <- future(42, lazy = TRUE)
+  stopifnot(f$config$reg$work.dir == path)
+
   mprintf("*** plan('%s') ... DONE\n", type)
 } # for (type ...)
 

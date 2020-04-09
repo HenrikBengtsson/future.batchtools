@@ -11,6 +11,7 @@ batchtools_multicore(
   globals = TRUE,
   label = NULL,
   workers = availableCores(constraints = "multicore"),
+  registry = list(),
   ...
 )
 }
@@ -36,6 +37,9 @@ job name for most job schedulers).}
 
 \item{workers}{The number of multicore processes to be
 available for concurrent batchtools multicore futures.}
+
+\item{registry}{(optional) A named list of settings to control the setup
+of the batchtools registry.}
 
 \item{\ldots}{Additional arguments passed
 to \code{\link[=BatchtoolsFuture]{BatchtoolsFuture()}}.}

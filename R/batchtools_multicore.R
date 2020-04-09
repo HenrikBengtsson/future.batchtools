@@ -8,6 +8,7 @@
 #' multicore batchtools futures._
 #'
 #' @inheritParams BatchtoolsFuture
+#'
 #' @param workers The number of multicore processes to be
 #' available for concurrent batchtools multicore futures.
 #' @param \ldots Additional arguments passed
@@ -29,7 +30,7 @@ batchtools_multicore <- function(expr, envir = parent.frame(),
                             substitute = TRUE, globals = TRUE,
                             label = NULL,
                             workers = availableCores(constraints = "multicore"),
-                            ...) {
+                            registry = list(), ...) {
   if (substitute) expr <- substitute(expr)
 
   if (is.null(workers)) workers <- availableCores(constraints = "multicore")
@@ -41,7 +42,8 @@ batchtools_multicore <- function(expr, envir = parent.frame(),
       availableCores(constraints = "multicore") == 1L) {
     ## covr: skip=1
     return(batchtools_local(expr, envir = envir, substitute = FALSE,
-                            globals = globals, label = label, ...))
+                            globals = globals, label = label,
+                            registry = registry, ...))
   }
 
   oopts <- options(mc.cores = workers)
@@ -53,6 +55,7 @@ batchtools_multicore <- function(expr, envir = parent.frame(),
                             globals = globals,
                             label = label,
                             cluster.functions = cf,
+                            registry = registry, 
                             ...)
 
   if (!future$lazy) future <- run(future)
