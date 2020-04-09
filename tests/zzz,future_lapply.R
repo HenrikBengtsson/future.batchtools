@@ -7,11 +7,11 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   message("All HPC strategies:")
   strategies <- c("batchtools_lsf", "batchtools_openlava", "batchtools_sge",
                   "batchtools_slurm", "batchtools_torque")
-  mprint(strategies)
+  mprint(strategies, debug = TRUE)
   
   message("Supported HPC strategies:")
   strategies <- strategies[sapply(strategies, FUN = test_strategy)]
-  mprint(strategies)
+  mprint(strategies, debug = TRUE)
 
   strategies <- c("batchtools_local", strategies)
   
@@ -33,7 +33,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   if (!fullTest && isWin32) strategies <- character(0L)
   
   message("Strategies to test with:")
-  mprint(strategies)
+  mprint(strategies, debug = TRUE)
   
   
   message("*** future_lapply() ...")
@@ -47,8 +47,9 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   str(list(y0 = y0))
 
   for (strategy in strategies) {
-    mprintf("- plan('%s') ...\n", strategy)
+    mprintf("- plan('%s') ...\n", strategy, debug = TRUE)
     plan(strategy)
+    mprint(plan, debug = TRUE)
     if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
     stopifnot(nbrOfWorkers() < Inf)
   
@@ -70,8 +71,9 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   str(list(y0 = y0))
   
   for (strategy in strategies) {
-    mprintf("- plan('%s') ...\n", strategy)
+    mprintf("- plan('%s') ...\n", strategy, debug = TRUE)
     plan(strategy)
+    mprint(plan, debug = TRUE)
     if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
     stopifnot(nbrOfWorkers() < Inf)
   
@@ -92,8 +94,9 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   str(list(y0 = y0))
   
   for (strategy in strategies) {
-    mprintf("- plan('%s') ...\n", strategy)
+    mprintf("- plan('%s') ...\n", strategy, debug = TRUE)
     plan(strategy)
+    mprint(plan, debug = TRUE)
     if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
     stopifnot(nbrOfWorkers() < Inf)
   
@@ -125,7 +128,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   str(list(y0 = y0))
   
   for (strategy in strategies) {
-    mprintf("- plan('%s') ...\n", strategy)
+    mprintf("- plan('%s') ...\n", strategy, debug = TRUE)
     plan(strategy)
     if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
     stopifnot(nbrOfWorkers() < Inf)

@@ -42,7 +42,7 @@ batchtools_lsf <- function(expr, envir = parent.frame(), substitute = TRUE,
   batchtools_by_template(expr, envir = envir, substitute = FALSE,
                          globals = globals, label = label, template = template,
                          type = "lsf", resources = resources,
-                         workers = workers, ...)
+                         workers = workers, registry = registry, ...)
 }
 class(batchtools_lsf) <- c("batchtools_lsf", "batchtools_template",
                            "batchtools", "multiprocess", "future",
@@ -60,7 +60,7 @@ batchtools_openlava <- function(expr, envir = parent.frame(), substitute = TRUE,
   batchtools_by_template(expr, envir = envir, substitute = FALSE,
                          globals = globals, label = label, template = template,
                          type = "openlava", resources = resources,
-                         workers = workers, ...)
+                         workers = workers, registry = registry, ...)
 }
 class(batchtools_openlava) <- c("batchtools_openlava", "batchtools_template",
                                 "batchtools", "multiprocess", "future",
@@ -78,7 +78,7 @@ batchtools_sge <- function(expr, envir = parent.frame(), substitute = TRUE,
   batchtools_by_template(expr, envir = envir, substitute = FALSE,
                          globals = globals, label = label, template = template,
                          type = "sge", resources = resources,
-                         workers = workers, ...)
+                         workers = workers, registry = registry, ...)
 }
 class(batchtools_sge) <- c("batchtools_sge", "batchtools_template",
                            "batchtools", "multiprocess", "future",
@@ -96,7 +96,7 @@ batchtools_slurm <- function(expr, envir = parent.frame(), substitute = TRUE,
   batchtools_by_template(expr, envir = envir, substitute = FALSE,
                          globals = globals, label = label, template = template,
                          type = "slurm", resources = resources,
-                         workers = workers, ...)
+                         workers = workers, registry = registry, ...)
 }
 class(batchtools_slurm) <- c("batchtools_slurm", "batchtools_template",
                              "batchtools", "multiprocess", "future",
@@ -114,7 +114,7 @@ batchtools_torque <- function(expr, envir = parent.frame(), substitute = TRUE,
   batchtools_by_template(expr, envir = envir, substitute = FALSE,
                          globals = globals, label = label, template = template,
                          type = "torque", resources = resources,
-                         workers = workers, ...)
+                         workers = workers, registry = registry, ...)
 }
 class(batchtools_torque) <- c("batchtools_torque", "batchtools_template",
                               "batchtools", "multiprocess", "future",

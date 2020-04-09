@@ -20,3 +20,5 @@ Sys.setenv("R_FUTURE_CACHE_PATH" = file.path(tmpdir, ".future"))
 ## Make batchtools_<hpc> backends use this as their working directory
 registry <- list(work.dir = tmpdir)
 batchtools_sge <- future::tweak(future.batchtools::batchtools_sge, registry = registry)
+print(batchtools_sge)
+
