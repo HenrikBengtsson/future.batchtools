@@ -138,13 +138,15 @@ print.BatchtoolsFuture <- function(x, ...) {
   ## Ask for status once
   status <- status(x)
   printf("batchtools status: %s\n", paste(sQuote(status), collapse = ", "))
-  if ("error" %in% status) printf("Error: %s\n", loggedError(x))
+  if ("error" %in% status) {
+    printf("Future batchtools error: %s\n", loggedError(x))
+  }
 
   if (is_na(status)) {
     printf("batchtools %s: Not found (happens when finished and deleted)\n",
            class(reg))
   } else {
-    printf("batchtools Registry:\n  ")
+    printf("batchtools Registry:\n")
     printf("  File dir exists: %s\n", file_test("-d", reg$file.dir))
     printf("  Work dir exists: %s\n", file_test("-d", reg$work.dir))
     try(print(reg))
