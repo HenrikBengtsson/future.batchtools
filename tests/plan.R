@@ -37,8 +37,11 @@ for (type in c("batchtools_interactive", "batchtools_local")) {
   path <- tempdir()
   plan(type, registry = list(work.dir = path))
   f <- future(42, lazy = TRUE)
-  utils::str(list(f$config$reg$work.dir, path = path))
-  stopifnot(f$config$reg$work.dir == path)
+  utils::str(list(
+    normalizePath(f$config$reg$work.dir),
+    path = normalizePath(path)
+  ))
+  stopifnot(normalizePath(f$config$reg$work.dir) == normalizePath(path))
 
   mprintf("*** plan('%s') ... DONE\n", type)
 } # for (type ...)
