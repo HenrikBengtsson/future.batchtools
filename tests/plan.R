@@ -31,11 +31,13 @@ for (type in c("batchtools_interactive", "batchtools_local")) {
   ## Customize the 'work.dir' of the batchtools registries
   plan(type, registry = list(work.dir = NULL))
   f <- future(42, lazy = TRUE)
+  utils::str(list(f$config$reg$work.dir, getwd = getwd()))
   stopifnot(f$config$reg$work.dir == getwd())
 
   path <- tempdir()
   plan(type, registry = list(work.dir = path))
   f <- future(42, lazy = TRUE)
+  utils::str(list(f$config$reg$work.dir, path = path))
   stopifnot(f$config$reg$work.dir == path)
 
   mprintf("*** plan('%s') ... DONE\n", type)
