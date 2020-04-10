@@ -1,9 +1,12 @@
 source("incl/start.R")
-library("listenv")
 
 if (requireNamespace("future.apply", quietly = TRUE)) {
   future_lapply <- future.apply::future_lapply
-    
+  library("listenv")
+
+  ## Setup all strategies including custom once for testing on HPC environments
+  print(all_strategies())
+
   message("All HPC strategies:")
   strategies <- c("batchtools_lsf", "batchtools_openlava", "batchtools_sge",
                   "batchtools_slurm", "batchtools_torque")

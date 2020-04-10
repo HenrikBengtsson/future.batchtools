@@ -16,31 +16,40 @@ fullTest <- (Sys.getenv("_R_CHECK_FULL_") != "")
 
 isWin32 <- (.Platform$OS.type == "windows" && .Platform$r_arch == "i386")
 
-all_strategies <- function() {
-  strategies <- Sys.getenv("R_FUTURE_TESTS_STRATEGIES")
-  strategies <- unlist(strsplit(strategies, split = ","))
-  strategies <- gsub(" ", "", strategies)
-  strategies <- strategies[nzchar(strategies)]
-  
-  ## When testing for instance 'batchtools_sge', look for a customize
-  ## template file, e.g. R_BATCHTOOLS_SEARCH_PATH/batchtools.sge.tmpl
-  if (length(strategies) > 0L) {
-    path <- Sys.getenv("R_BATCHTOOLS_SEARCH_PATH")
-    if (!nzchar(path)) {
-      path <- system.file(package = "future.batchtools",
-                          "templates-for-R_CMD_check", mustWork = TRUE)
-      Sys.setenv(R_BATCHTOOLS_SEARCH_PATH = path)
-    } else if (!file_test("-d", path)) {
-      warning("R_BATCHTOOLS_SEARCH_PATH specifies a non-existing folder: ",
-              sQuote(path))
+all_strategies <- local({
+  .cache <- NULL
+  function(envir = parent.frame()) {
+    if (!is.null(.cache)) return(.cache)
+    
+    strategies <- Sys.getenv("R_FUTURE_TESTS_STRATEGIES")
+    strategies <- unlist(strsplit(strategies, split = ","))
+    strategies <- gsub(" ", "", strategies)
+    strategies <- strategies[nzchar(strategies)]
+    
+    ## When testing for instance 'batchtools_sge', look for a customize
+    ## template file, e.g. R_BATCHTOOLS_SEARCH_PATH/batchtools.sge.tmpl
+    if (length(strategies) > 0L) {
+      path <- Sys.getenv("R_BATCHTOOLS_SEARCH_PATH")
+      if (!nzchar(path)) {
+        path <- system.file(package = "future.batchtools",
+                            "templates-for-R_CMD_check", mustWork = TRUE)
+        Sys.setenv(R_BATCHTOOLS_SEARCH_PATH = path)
+      } else if (!file_test("-d", path)) {
+        warning("R_BATCHTOOLS_SEARCH_PATH specifies a non-existing folder: ",
+                sQuote(path))
+      }
+      ## If there is a custom R_BATCHTOOLS_SEARCH_PATH/setup.R' file, run it
+      pathname <- file.path(path, "setup.R")
+      if (file_test("-f", pathname)) source(pathname, local = envir)
     }
-    ## If there is a custom R_BATCHTOOLS_SEARCH_PATH/setup.R' file, run it
-    pathname <- file.path(path, "setup.R")
-    if (file_test("-f", pathname)) source(pathname, local = new.env())
+    
+    strategies <- c(future:::supportedStrategies(), strategies)
+    strategies <- unique(strategies)
+    .cache <<- strategies
+    
+    strategies
   }
-  strategies <- c(future:::supportedStrategies(), strategies)
-  unique(strategies)
-}
+})
 
 test_strategy <- function(strategy) {
   strategy %in% all_strategies()
