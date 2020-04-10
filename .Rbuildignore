@@ -3,6 +3,7 @@
 #----------------------------
 ^.svn
 ^.git
+^.github
 ^.make
 ^INSTALL[.]md$
 ^OVERVIEW[.]md$
@@ -60,4 +61,3 @@ Rplots.pdf$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 
-^batchtools[.].*[.]tmpl$
