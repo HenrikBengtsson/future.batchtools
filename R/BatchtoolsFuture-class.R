@@ -8,8 +8,8 @@
 #' @param substitute Controls whether `expr` should be
 #' `substitute()`:d or not.
 #'
-#' @param globals (optional) a logical, a character vector, a named list, or
-#' a [Globals][globals::Globals] object.  If TRUE, globals are identified by code
+#' @param globals (optional) a logical, a character vector, a named list, or a
+#' [Globals][globals::Globals] object.  If TRUE, globals are identified by code
 #' inspection based on `expr` and `tweak` searching from environment
 #' `envir`.  If FALSE, no globals are used.  If a character vector, then
 #' globals are identified by lookup based their names `globals` searching
@@ -21,8 +21,8 @@
 #'
 #' @param conf A batchtools configuration environment.
 #'
-#' @param cluster.functions A batchtools [ClusterFunctions][batchtools::ClusterFunctions]
-#' object.
+#' @param cluster.functions A batchtools
+#' [ClusterFunctions][batchtools::ClusterFunctions] object.
 #'
 #' @param registry (optional) A named list of settings to control the setup
 #' of the batchtools registry.
@@ -32,9 +32,12 @@
 #'
 #' @param workers (optional) The maximum number of workers the batchtools
 #' backend may use at any time.   Interactive and "local" backends can only
-#' process one future at the time, whereas HPC backends where futures are
-#' resolved via separate jobs on a scheduler, the default is to assume an
-#' infinite number of workers.
+#' process one future at the time (`workers = 1L`), whereas HPC backends,
+#' where futures are resolved via separate jobs on a scheduler, can have
+#' multiple workers.  In the latter, the default is `workers = NULL`, which
+#' will resolve to `getOption("future.batchtools.workers")`.  If that is not
+#' specified, the value of environment variable `R_FUTURE_BATCHTOOLS_WORKERS`
+#' will be used.  If neither are specified, then the default is `+Inf`.
 #'
 #' @param finalize If TRUE, any underlying registries are
 #' deleted when this object is garbage collected, otherwise not.

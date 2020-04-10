@@ -5,6 +5,10 @@ Version: 0.8.1-9000 [2020-04-09]
 
 NEW FEATURES:
 
+ * It is now possible to configure the default number of workers on the job
+   queue of an HPC scheduler via either R option 'future.batchtools.workers'
+   or environment variable 'R_FUTURE_BATCHTOOLS_WORKERS'.
+
  * It is now possible to control the working directory 'work.dir' setting for
    batchtools registries used by batchtools futures.  This can be done by
    specifying the new named list argument 'registry' when setting the plan()

@@ -35,7 +35,7 @@
 batchtools_lsf <- function(expr, envir = parent.frame(), substitute = TRUE,
                            globals = TRUE, label = NULL,
                            template = NULL, resources = list(),
-                           workers = Inf,
+                           workers = NULL,
                            registry = list(), ...) {
   if (substitute) expr <- substitute(expr)
 
@@ -53,7 +53,7 @@ class(batchtools_lsf) <- c("batchtools_lsf", "batchtools_template",
 batchtools_openlava <- function(expr, envir = parent.frame(), substitute = TRUE,
                                 globals = TRUE, label = NULL,
                                 template = NULL, resources = list(),
-                                workers = Inf,
+                                workers = NULL,
                                 registry = list(), ...) {
   if (substitute) expr <- substitute(expr)
 
@@ -71,7 +71,7 @@ class(batchtools_openlava) <- c("batchtools_openlava", "batchtools_template",
 batchtools_sge <- function(expr, envir = parent.frame(), substitute = TRUE,
                            globals = TRUE, label = NULL,
                            template = NULL, resources = list(),
-                           workers = Inf,
+                           workers = NULL,
                            registry = list(), ...) {
   if (substitute) expr <- substitute(expr)
 
@@ -89,7 +89,7 @@ class(batchtools_sge) <- c("batchtools_sge", "batchtools_template",
 batchtools_slurm <- function(expr, envir = parent.frame(), substitute = TRUE,
                              globals = TRUE, label = NULL,
                              template = NULL, resources = list(),
-                             workers = Inf,
+                             workers = NULL,
                              registry = list(), ...) {
   if (substitute) expr <- substitute(expr)
 
@@ -107,7 +107,7 @@ class(batchtools_slurm) <- c("batchtools_slurm", "batchtools_template",
 batchtools_torque <- function(expr, envir = parent.frame(), substitute = TRUE,
                               globals = TRUE, label = NULL,
                               template = NULL, resources = list(),
-                              workers = Inf,
+                              workers = NULL,
                               registry = list(), ...) {
   if (substitute) expr <- substitute(expr)
 
@@ -133,7 +133,7 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
                                    type = c("lsf", "openlava", "sge",
                                             "slurm", "torque"),
                                    resources = list(), label = NULL,
-                                   workers = Inf,
+                                   workers = NULL,
                                    registry = list(), ...) {
   if (substitute) expr <- substitute(expr)
   type <- match.arg(type)
