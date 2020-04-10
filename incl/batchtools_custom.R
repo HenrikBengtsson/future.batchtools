@@ -1,4 +1,6 @@
-options(error = function(...) print(traceback()))
+options(error = function(...) {
+  print(traceback())
+})
 
 cf <- batchtools::makeClusterFunctionsInteractive(external = TRUE)
 print(cf)
@@ -13,5 +15,27 @@ f <- future({
   42L
 })
 print(f)
+v <- value(f)
+print(v)
+
+options(error = NULL)
+
+
+## Create explicit future
+f <- future({
+  cat("PID:", Sys.getpid(), "\n")
+  42L
+})
+print(f)
+v <- value(f)
+print(v)
+
+
+
+## Create explicit future
+f <- future({
+  cat("PID:", Sys.getpid(), "\n")
+  42L
+})
 v <- value(f)
 print(v)
