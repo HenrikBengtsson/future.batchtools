@@ -60,7 +60,6 @@ jobs:
       - name: Install dependencies
         run: |
           Rscript -e "library(remotes)" -e "update(readRDS('depends.Rds'))" -e "remotes::install_cran('rcmdcheck')"
-          Rscript -e "dir(recursive=TRUE, all.files = TRUE)"
           Rscript -e "install.packages('.', type = 'source', repos = NULL)"
 
       - name: Check
