@@ -1,13 +1,14 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.8.1-9000 [2020-04-09]
+Version: 0.8.1-9000 [2020-04-11]
 
 NEW FEATURES:
 
  * It is now possible to configure the default number of workers on the job
    queue of an HPC scheduler via either R option 'future.batchtools.workers'
-   or environment variable 'R_FUTURE_BATCHTOOLS_WORKERS'.
+   or environment variable 'R_FUTURE_BATCHTOOLS_WORKERS'. The default remains
+   at an infinite number of workers (+Inf).
 
  * It is now possible to control the working directory 'work.dir' setting for
    batchtools registries used by batchtools futures.  This can be done by
@@ -18,6 +19,11 @@ NEW FEATURES:
    where the registry's working directory is set to the current working
    directory of R _when_ the batchtools future is created.
 
+DOCUMENTATION:
+
+ * Add help("future.batchtools.options") which descriptions R options and
+   environment variables used specifically by the future.batchtools package.
+   
 
 Version: 0.8.1 [2019-09-30]
 
