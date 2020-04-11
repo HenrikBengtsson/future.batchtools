@@ -139,7 +139,7 @@ print.BatchtoolsFuture <- function(x, ...) {
   status <- status(x)
   printf("batchtools status: %s\n", paste(sQuote(status), collapse = ", "))
   if ("error" %in% status) {
-    printf("Future batchtools error: %s\n", loggedError(x))
+    printf("Error captured by batchtools: %s\n", loggedError(x))
   }
 
   if (is_na(status)) {
