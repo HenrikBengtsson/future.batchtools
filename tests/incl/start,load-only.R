@@ -9,6 +9,10 @@ oopts <- options(
 oopts$future.delete <- getOption("future.delete")
 oplan <- future::plan()
 
+## In case set outside, reset:
+options(future.batchtools.workers = NULL)
+Sys.unsetenv("R_FUTURE_BATCHTOOLS_WORKERS")
+
 ## Use local batchtools futures by default
 future::plan(future.batchtools::batchtools_local)
 
