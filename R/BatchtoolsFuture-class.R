@@ -518,8 +518,9 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
       }
     } else if ("error" %in% stat) {
       cleanup <- FALSE
-      msg <- sprintf("BatchtoolsError in %s ('%s'): %s",
-                     class(future)[1], label, loggedError(future))
+      msg <- sprintf(
+              "BatchtoolsFutureError for %s ('%s') captured by batchtools: %s",
+              class(future)[1], label, loggedError(future))
       stop(BatchtoolsFutureError(msg, future = future))
     } else if ("expired" %in% stat) {
       cleanup <- FALSE
