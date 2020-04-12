@@ -53,7 +53,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
     mprintf("- plan('%s') ...\n", strategy, debug = TRUE)
     plan(strategy)
     mprint(plan, debug = TRUE)
-    if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
+    if (nbrOfWorkers() > 2) plan(strategy, workers = 2L)
     stopifnot(nbrOfWorkers() < Inf)
   
     for (scheduling in list(FALSE, TRUE)) {
@@ -77,7 +77,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
     mprintf("- plan('%s') ...\n", strategy, debug = TRUE)
     plan(strategy)
     mprint(plan, debug = TRUE)
-    if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
+    if (nbrOfWorkers() > 2) plan(strategy, workers = 2L)
     stopifnot(nbrOfWorkers() < Inf)
   
     for (scheduling in list(FALSE, TRUE)) {
@@ -100,7 +100,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
     mprintf("- plan('%s') ...\n", strategy, debug = TRUE)
     plan(strategy)
     mprint(plan, debug = TRUE)
-    if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
+    if (nbrOfWorkers() > 2) plan(strategy, workers = 2L)
     stopifnot(nbrOfWorkers() < Inf)
   
     for (scheduling in list(FALSE, TRUE)) {
@@ -133,7 +133,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   for (strategy in strategies) {
     mprintf("- plan('%s') ...\n", strategy, debug = TRUE)
     plan(strategy)
-    if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
+    if (nbrOfWorkers() > 2) plan(strategy, workers = 2L)
     stopifnot(nbrOfWorkers() < Inf)
     
     for (scheduling in list(FALSE, TRUE)) {
@@ -161,7 +161,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   
   for (strategy in strategies) {
     plan(strategy)
-    if (is.infinite(nbrOfWorkers())) plan(strategy, workers = 2L)
+    if (nbrOfWorkers() > 2) plan(strategy, workers = 2L)
     stopifnot(nbrOfWorkers() < Inf)
     y <- future_lapply("abc.txt", FUN = my_ext)
     stopifnot(identical(y, y_truth))

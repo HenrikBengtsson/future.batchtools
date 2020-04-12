@@ -1,3 +1,5 @@
+library(future.batchtools)
+
 ## Use local batchtools futures
 plan(batchtools_local)
 

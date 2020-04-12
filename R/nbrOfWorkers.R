@@ -49,7 +49,7 @@ nbrOfWorkers.batchtools <- function(evaluator) {
 
 ## Number of available workers in an HPC environment
 ##
-## @return (numeric) A positive integer or +Inf.
+## @return (numeric) A positive integer or `+Inf`.
 availableHpcWorkers <- function() {
   name <- "future.batchtools.workers"
   value <- getOption(name, default = NULL)
@@ -80,5 +80,5 @@ availableHpcWorkers <- function() {
   }
 
   ## Assume an infinite number HPC queue slots
-  +Inf
+  100
 }

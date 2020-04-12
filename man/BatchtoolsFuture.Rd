@@ -55,7 +55,7 @@ where futures are resolved via separate jobs on a scheduler, can have
 multiple workers.  In the latter, the default is \code{workers = NULL}, which
 will resolve to \code{getOption("future.batchtools.workers")}.  If that is not
 specified, the value of environment variable \code{R_FUTURE_BATCHTOOLS_WORKERS}
-will be used.  If neither are specified, then the default is \code{+Inf}.}
+will be used.  If neither are specified, then the default is \code{100}.}
 
 \item{finalize}{If TRUE, any underlying registries are
 deleted when this object is garbage collected, otherwise not.}

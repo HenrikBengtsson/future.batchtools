@@ -1,8 +1,13 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.8.1-9000 [2020-04-11]
+Version: 0.8.1-9000 [2020-04-12]
 
+SIGNIFICANT CHANGES:
+
+ * The default number of workers on HPC environments is now 100. To revert
+   to the previous default of +Inf, see below news entry.
+ 
 NEW FEATURES:
 
  * It is now possible to configure the default number of workers on the job

@@ -9,11 +9,11 @@
 #'
 #' @section Settings for batchtools futures:
 #' \describe{
-#'   \item{\option{future.batchtools.workers}:}{(a positive numeric)
+#'   \item{\option{future.batchtools.workers}:}{(a positive numeric or `+Inf`)
 #'     The default number of workers available on HPC schedulers with
 #'     job queues.  If not set, the value of the 
 #'     \env{R_FUTURE_BATCHTOOLS_WORKERS} environment variable is used.
-#'     (Default: `+Inf`)}
+#'     (Default: `100`)}
 #'
 #'   \item{\option{future.batchtools.output}:}{(logical)
 #'     If TRUE, \pkg{batchtools} will produce extra output.

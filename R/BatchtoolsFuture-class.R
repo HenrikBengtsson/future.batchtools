@@ -37,7 +37,7 @@
 #' multiple workers.  In the latter, the default is `workers = NULL`, which
 #' will resolve to `getOption("future.batchtools.workers")`.  If that is not
 #' specified, the value of environment variable `R_FUTURE_BATCHTOOLS_WORKERS`
-#' will be used.  If neither are specified, then the default is `+Inf`.
+#' will be used.  If neither are specified, then the default is `100`.
 #'
 #' @param finalize If TRUE, any underlying registries are
 #' deleted when this object is garbage collected, otherwise not.

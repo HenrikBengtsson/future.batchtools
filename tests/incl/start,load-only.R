@@ -9,7 +9,7 @@ oopts <- options(
 oopts$future.delete <- getOption("future.delete")
 oplan <- future::plan()
 
-## In case set outside, reset:
+## In case it set outside, reset:
 options(future.batchtools.workers = NULL)
 Sys.unsetenv("R_FUTURE_BATCHTOOLS_WORKERS")
 
