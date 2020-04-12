@@ -1,6 +1,7 @@
 .onLoad <- function(libname, pkgname) {
   inRCmdCheck <- import_future("inRCmdCheck")
   if (inRCmdCheck()) {
+    ## Don't write to current working directory when running R CMD check.
     path <- Sys.getenv("R_FUTURE_CACHE_PATH", file.path(tempdir(), ".future"))
     Sys.setenv("R_FUTURE_CACHE_PATH" = path)
   }

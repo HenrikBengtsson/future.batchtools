@@ -28,14 +28,15 @@
 #'     This option controls how many lines are displayed.
 #'     (Default: `48L`)}
 #'
-#'   \item{\env{R_FUTURE_CACHE_PATH}}{(character string)
+#'   \item{\option{future.cache.path} / \env{R_FUTURE_CACHE_PATH}}{
+#'     (character string)
 #'     An absolute or relative path specifying the root folder in which
 #'     \pkg{batchtools} registry folders are stored.
 #'     (Default: `.future`)}
 #' }
 #'
 #' @aliases
-#' future.cmdargs 
+#' future.cache.path
 #' future.batchtools.expiration.tail
 #' future.batchtools.output
 #' future.batchtools.workers

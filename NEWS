@@ -33,6 +33,9 @@ NEW FEATURES:
    'compress'.  For example, to turn of file compression, use
    plan(batchtools_nnn, registry = list(compress = FALSE)).
 
+ * The default location of the '.future' folder can be controlled by R option
+   'future.cache.path' or environment variable 'R_FUTURE_CACHE_PATH'.
+
 DOCUMENTATION:
 
  * Add help("future.batchtools.options") which descriptions R options and
