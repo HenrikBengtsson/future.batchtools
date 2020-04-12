@@ -1,23 +1,19 @@
 #!/usr/bin/env bash
 
 ## Job name:
-#$ -N fbt-<%= job.hash %>
+#PBS -N fbt-<%= job.hash %>
 
 ## Merge standard error and output:
-#$ -j y
+#PBS -j oe
 
 ## Direct streams to logfile:
-#$ -o <%= log.file %>
+#PBS -o <%= log.file %>
 
 ## Email on abort (a) and termination (e), but not when starting (b)
 #PBS -m ae
 
-## Tell the queue system to use the current directory
-## as the working directory
-## -cwd
-
 ## Mirror environment variables
-#$ -V
+#PBS -V
 
 ## Resources needed:
 <% if (exists("resources", mode = "list") && length(resources) > 0) {
@@ -25,18 +21,16 @@
     R.utils::mcat("resources:")
     R.utils::mstr(resources)
   }
-  cat(sprintf("#$ %s\n", resources[["custom"]]))
-} %>
-
-## UCSF HPC Pilot specific
-#$ -S /bin/bash         # Required
-#$ -l mem_free=1G       # Memory usage, required.  Note that this is per slot
-#$ -R yes               # SGE host reservation, highly recommended
+  opts <- unlist(resources, use.names = TRUE)
+  opts <- sprintf("%s=%s", names(opts), opts)
+  opts <- paste(opts, collapse = ",") %>
+#PBS -l <%= opts %>
+<% } %>
 
 ## SPECIAL: For R CMD check package testing on HPC environments, which
 ## typically uses a temporary working directory that is local, we force
 ## it to use HPC-wide working directory
-#$ -wd ~/tmp
+#PBS -d <%= normalizePath(file.path("~", "tmp")) %>
 
 ## SPECIAL: Since we change working directory, the 'startup.Rs' file used
 ## by R CMD check is no longer found
@@ -53,6 +47,3 @@ echo "Command: Rscript -e 'batchtools::doJobCollection("<%= uri %>")' ..."
 Rscript -e 'batchtools::doJobCollection("<%= uri %>")'
 echo "Command: Rscript -e 'batchtools::doJobCollection("<%= uri %>")' ... done"
 
-## For troubleshooting if there are errors
-## https://github.com/UCSF-HPC/pilot-testing/issues/1
-qstat -j $JOB_ID
