@@ -96,7 +96,7 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
   future$packages <- unique(c(packages, gp$packages))
 
   ## Create batchtools registry
-  reg <- temp_registry(label = future$label, work.dir = registry$work.dir)
+  reg <- temp_registry(label = future$label, config = registry)
   if (!is.null(cluster.functions)) {    ### FIXME
     reg$cluster.functions <- cluster.functions
   }

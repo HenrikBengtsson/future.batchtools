@@ -10,14 +10,23 @@ NEW FEATURES:
    or environment variable 'R_FUTURE_BATCHTOOLS_WORKERS'. The default remains
    at an infinite number of workers (+Inf).
 
- * It is now possible to control the working directory 'work.dir' setting for
-   batchtools registries used by batchtools futures.  This can be done by
-   specifying the new named list argument 'registry' when setting the plan()
-   for any of the 'batchtools_*' backends, e.g.
-   plan(batchtools_sge, registry = list(work.dir = "~")).  The default is
-   registry = list(work.dir = NULL), which corresponds to the previous behavior
-   where the registry's working directory is set to the current working
-   directory of R _when_ the batchtools future is created.
+ * It is now possible to configure the batchtools registries that are used by
+   batchtools futures via new argument 'registry' to plan().  This argument
+   should be a named list of parameters recognized by the 'batchtools' package,
+   e.g. plan(batchtools_sge, registry = list(...)).  For notable example, see
+   below news entries.
+
+ * The default working directory for batchtools futures is the current working
+   directory of R _when_ the batchtools future is created.  This corresponds to
+   specifying plan(batchtools_nnn, registry = list(work.dir = NULL).  Sometimes
+   it is useful to use a explicit working directory that is guaranteed to be
+   available on all workers on a shared file system, e.g. plan(batchtools_nnn,
+   registry = list(work.dir = "~")).
+
+ * It is possible to control if and how batchtools should use file compressions
+   for exported globals and results by specifying batchtools registry parameter
+   'compress'.  For example, to turn of file compression, use
+   plan(batchtools_nnn, registry = list(compress = FALSE)).
 
 DOCUMENTATION:
 
@@ -175,14 +184,14 @@ NEW FEATURES:
 
 BUG FIXES:
    
- * Under plan(batchjobs_*), when being created futures would produce an error
+ * Under plan(batchtools_*), when being created futures would produce an error
    on "all(is.finite(workers)) is not TRUE" due to an outdated sanity check.
 
 SOFTWARE QUALITY:
 
  * TESTS: Added test of future_lapply() for batchtools backends.
 
- * TESTS: Added optional tests for batchjobs_* HPC schedulers listed in
+ * TESTS: Added optional tests for batchtools_* HPC schedulers listed in
    environment variable 'R_FUTURE_TESTS_STRATEGIES'.
 
 CODE REFACTORING:
