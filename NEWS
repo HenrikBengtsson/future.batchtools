@@ -30,7 +30,7 @@ NEW FEATURES:
 
  * It is possible to control if and how batchtools should use file compressions
    for exported globals and results by specifying batchtools registry parameter
-   'compress'.  For example, to turn of file compression, use
+   'compress'.  For example, to turn off file compression, use
    plan(batchtools_nnn, registry = list(compress = FALSE)).
 
  * The default location of the '.future' folder can be controlled by R option
