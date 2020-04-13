@@ -102,7 +102,7 @@ batchtools backends.
 | `batchtools_sge`         | Futures are evaluated via a [Sun/Oracle Grid Engine (SGE)] job scheduler | N/A
 | `batchtools_lsf`         | Futures are evaluated via a [Load Sharing Facility (LSF)] job scheduler  | N/A
 | `batchtools_openlava`    | Futures are evaluated via an [OpenLava] job scheduler                    | N/A
-| `batchtools_custom`      | Futures are evaluated via a custom set of cluster functions                   | N/A
+| `batchtools_custom`      | Futures are evaluated via a custom batchtools configuration R script or via a set of cluster functions  | N/A
 | `batchtools_interactive` | sequential evaluation in the calling R environment                       | `plan(transparent)`
 | `batchtools_multicore`   | parallel evaluation by forking the current R process                     | `plan(multicore)`
 | `batchtools_local`       | sequential evaluation in a separate R process (on current machine)       | `plan(cluster, workers = "localhost")`
