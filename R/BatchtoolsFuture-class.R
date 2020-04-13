@@ -19,14 +19,6 @@
 #' @param label (optional) Label of the future (where applicable, becomes the
 #' job name for most job schedulers).
 #'
-#' @param conf A batchtools configuration environment.
-#'
-#' @param cluster.functions A batchtools
-#' [ClusterFunctions][batchtools::ClusterFunctions] object.
-#'
-#' @param registry (optional) A named list of settings to control the setup
-#' of the batchtools registry.
-#'
 #' @param resources (optional) A named list passed to the batchtools template
 #' (available as variable `resources`).
 #'
@@ -42,6 +34,14 @@
 #' @param finalize If TRUE, any underlying registries are
 #' deleted when this object is garbage collected, otherwise not.
 #'
+#' @param conf.file (optional) A batchtools configuration file.
+#'
+#' @param cluster.functions (optional) A batchtools
+#' [ClusterFunctions][batchtools::ClusterFunctions] object.
+#'
+#' @param registry (optional) A named list of settings to control the setup
+#' of the batchtools registry.
+#'
 #' @param \ldots Additional arguments passed to [future::Future()].
 #'
 #' @return A BatchtoolsFuture object
@@ -53,10 +53,13 @@
 BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
                              substitute = TRUE,
                              globals = TRUE, packages = NULL,
-                             label = NULL, cluster.functions = NULL,
-                             registry = list(),
-                             resources = list(), workers = NULL,
+                             label = NULL,
+                             resources = list(),
+                             workers = NULL,
                              finalize = getOption("future.finalize", TRUE),
+                             conf.file = findConfFile(),
+                             cluster.functions = NULL,
+                             registry = list(),
                              ...) {
   if (substitute) expr <- substitute(expr)
 
@@ -64,8 +67,18 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
 
   if (!is.null(cluster.functions)) {
     stop_if_not(is.list(cluster.functions))
+    stop_if_not(inherits(cluster.functions, "ClusterFunctions"))
+  } else if (missing(conf.file)) {
+    ## BACKWARD COMPATILITY: Only when calling BatchtoolsFuture() directly
+    cluster.functions <- makeClusterFunctionsInteractive(external = FALSE)
+  } else {
+    ## If 'cluster.functions' is not specified, then 'conf.file' must
+    ## exist
+    if (!file_test("-f", conf.file)) {
+      stop("No such batchtools configuration file: ", sQuote(conf.file))
+    }
   }
-
+  
   if (is.function(workers)) workers <- workers()
   if (!is.null(workers)) {
     stop_if_not(length(workers) >= 1)
@@ -96,10 +109,12 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
   future$packages <- unique(c(packages, gp$packages))
 
   ## Create batchtools registry
-  reg <- temp_registry(label = future$label, config = registry)
-  if (!is.null(cluster.functions)) {    ### FIXME
-    reg$cluster.functions <- cluster.functions
-  }
+  reg <- temp_registry(
+    label = future$label,
+    conf.file = conf.file,
+    cluster.functions = cluster.functions,
+    config = registry
+  )
   debug <- getOption("future.debug", FALSE)
   if (debug) mprint(reg)
 

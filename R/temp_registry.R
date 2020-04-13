@@ -3,8 +3,8 @@ temp_registry <- local({
   ## All known batchtools registries
   regs <- new.env()
 
-  make_registry <- function(config = list(), ...) {
-      ## Temporarily disable batchtools output?
+  make_registry <- function(cluster.functions = NULL, config = list(), ...) {
+    ## Temporarily disable batchtools output?
     ## (i.e. messages and progress bars)
     debug <- getOption("future.debug", FALSE)
     batchtools_output <- getOption("future.batchtools.output", debug)
@@ -19,6 +19,10 @@ temp_registry <- local({
     }
 
     reg <- makeRegistry(work.dir = work.dir, ...)
+
+    if (!is.null(cluster.functions)) {    ### FIXME
+      reg$cluster.functions <- cluster.functions
+    }
 
     ## Post-tweak the batchtools registry?
     ## This avoids having to set up a custom batchtools 'conf.file' etc.

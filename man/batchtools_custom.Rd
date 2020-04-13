@@ -10,9 +10,10 @@ batchtools_custom(
   substitute = TRUE,
   globals = TRUE,
   label = NULL,
-  cluster.functions,
   resources = list(),
   workers = NULL,
+  conf.file = findConfFile(),
+  cluster.functions = NULL,
   registry = list(),
   ...
 )
@@ -37,9 +38,6 @@ globals are used as is.}
 \item{label}{(optional) Label of the future (where applicable, becomes the
 job name for most job schedulers).}
 
-\item{cluster.functions}{A
-\link[batchtools:ClusterFunctions]{ClusterFunctions} object.}
-
 \item{resources}{(optional) A named list passed to the batchtools template
 (available as variable \code{resources}).}
 
@@ -51,6 +49,12 @@ multiple workers.  In the latter, the default is \code{workers = NULL}, which
 will resolve to \code{getOption("future.batchtools.workers")}.  If that is not
 specified, the value of environment variable \code{R_FUTURE_BATCHTOOLS_WORKERS}
 will be used.  If neither are specified, then the default is \code{100}.}
+
+\item{conf.file}{(character) A batchtools configuration file as for
+instance returned by \code{\link[batchtools:findConfFile]{batchtools::findConfFile()}}.}
+
+\item{cluster.functions}{A
+\link[batchtools:ClusterFunctions]{ClusterFunctions} object.}
 
 \item{registry}{(optional) A named list of settings to control the setup
 of the batchtools registry.}

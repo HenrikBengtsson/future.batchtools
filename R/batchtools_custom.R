@@ -2,6 +2,9 @@
 #'
 #' @inheritParams BatchtoolsFuture
 #'
+#' @param conf.file (character) A batchtools configuration file as for
+#' instance returned by [batchtools::findConfFile()].
+#'
 #' @param cluster.functions A
 #' [ClusterFunctions][batchtools::ClusterFunctions] object.
 #'
@@ -12,20 +15,25 @@
 #' @example incl/batchtools_custom.R
 #'
 #' @export
+#' @importFrom batchtools findConfFile
 #' @importFrom utils file_test
 batchtools_custom <- function(expr, envir = parent.frame(), substitute = TRUE,
-                              globals = TRUE, label = NULL,
-                              cluster.functions,
-                              resources = list(), workers = NULL,
-                              registry = list(), ...) {
+                              globals = TRUE,
+                              label = NULL,
+                              resources = list(),
+                              workers = NULL,
+                              conf.file = findConfFile(),
+                              cluster.functions = NULL,
+                              registry = list(),
+                              ...) {
   if (substitute) expr <- substitute(expr)
-  stop_if_not(inherits(cluster.functions, "ClusterFunctions"))
 
   future <- BatchtoolsFuture(expr = expr, envir = envir, substitute = FALSE,
                             globals = globals,
                             label = label,
-                            cluster.functions = cluster.functions,
                             resources = resources,
+                            conf.file = conf.file,
+                            cluster.functions = cluster.functions,
                             workers = workers,
                             registry = registry,
                             ...)

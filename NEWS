@@ -36,6 +36,8 @@ NEW FEATURES:
  * The default location of the '.future' folder can be controlled by R option
    'future.cache.path' or environment variable 'R_FUTURE_CACHE_PATH'.
 
+ * batchtools_custom() and BatchtoolsFuture gained argument 'conf.file'.
+
 DOCUMENTATION:
 
  * Add help("future.batchtools.options") which descriptions R options and

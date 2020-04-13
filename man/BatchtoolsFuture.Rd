@@ -11,11 +11,12 @@ BatchtoolsFuture(
   globals = TRUE,
   packages = NULL,
   label = NULL,
-  cluster.functions = NULL,
-  registry = list(),
   resources = list(),
   workers = NULL,
   finalize = getOption("future.finalize", TRUE),
+  conf.file = findConfFile(),
+  cluster.functions = NULL,
+  registry = list(),
   ...
 )
 }
@@ -39,12 +40,6 @@ globals are used as is.}
 \item{label}{(optional) Label of the future (where applicable, becomes the
 job name for most job schedulers).}
 
-\item{cluster.functions}{A batchtools
-\link[batchtools:ClusterFunctions]{ClusterFunctions} object.}
-
-\item{registry}{(optional) A named list of settings to control the setup
-of the batchtools registry.}
-
 \item{resources}{(optional) A named list passed to the batchtools template
 (available as variable \code{resources}).}
 
@@ -60,7 +55,13 @@ will be used.  If neither are specified, then the default is \code{100}.}
 \item{finalize}{If TRUE, any underlying registries are
 deleted when this object is garbage collected, otherwise not.}
 
-\item{conf}{A batchtools configuration environment.}
+\item{conf.file}{(optional) A batchtools configuration file.}
+
+\item{cluster.functions}{(optional) A batchtools
+\link[batchtools:ClusterFunctions]{ClusterFunctions} object.}
+
+\item{registry}{(optional) A named list of settings to control the setup
+of the batchtools registry.}
 
 \item{\ldots}{Additional arguments passed to \code{\link[future:Future]{future::Future()}}.}
 }
