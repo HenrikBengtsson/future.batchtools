@@ -13,6 +13,20 @@ oplan <- future::plan()
 options(future.batchtools.workers = NULL)
 Sys.unsetenv("R_FUTURE_BATCHTOOLS_WORKERS")
 
+path <- Sys.getenv("R_BATCHTOOLS_SEARCH_PATH")
+if (!nzchar(path)) {
+  path <- system.file(package = "future.batchtools",
+                      "templates-for-R_CMD_check", mustWork = TRUE)
+  Sys.setenv(R_BATCHTOOLS_SEARCH_PATH = path)
+} else {
+  warning("Using a non-standard R_BATCHTOOLS_SEARCH_PATH while testing: ",
+          sQuote(path))
+  if (!file_test("-d", path)) {
+    stop("R_BATCHTOOLS_SEARCH_PATH specifies a non-existing folder: ",
+         sQuote(path))
+  }
+}
+
 ## Use local batchtools futures by default
 future::plan(future.batchtools::batchtools_local)
 
@@ -33,15 +47,6 @@ all_strategies <- local({
     ## When testing for instance 'batchtools_sge', look for a customize
     ## template file, e.g. R_BATCHTOOLS_SEARCH_PATH/batchtools.sge.tmpl
     if (length(strategies) > 0L) {
-      path <- Sys.getenv("R_BATCHTOOLS_SEARCH_PATH")
-      if (!nzchar(path)) {
-        path <- system.file(package = "future.batchtools",
-                            "templates-for-R_CMD_check", mustWork = TRUE)
-        Sys.setenv(R_BATCHTOOLS_SEARCH_PATH = path)
-      } else if (!file_test("-d", path)) {
-        warning("R_BATCHTOOLS_SEARCH_PATH specifies a non-existing folder: ",
-                sQuote(path))
-      }
       ## If there is a custom R_BATCHTOOLS_SEARCH_PATH/setup.R' file, run it
       pathname <- file.path(path, "setup.R")
       if (file_test("-f", pathname)) source(pathname, local = envir)

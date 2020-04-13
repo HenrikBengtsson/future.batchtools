@@ -4,13 +4,22 @@ library("listenv")
 
 message("*** batchtools_custom() ...")
 
+message("*** batchtools_custom() w/ 'conf.file' on R_BATCHTOOLS_SEARCH_PATH")
+
+f <- batchtools_custom({
+  42L
+})
+print(f)
+stopifnot(inherits(f, "BatchtoolsFuture"))
+v <- value(f)
+print(v)
+stopifnot(v == 42L)
+
+
+message("*** batchtools_custom() w/ 'cluster.functions' without globals")
+
 cf <- makeClusterFunctionsInteractive(external = TRUE)
 str(cf)
-
-
-message("*** batchtools_custom() ...")
-
-message("*** batchtools_custom() without globals")
 
 f <- batchtools_custom({
   42L
@@ -27,7 +36,7 @@ print(y)
 stopifnot(y == 42L)
 
 
-message("*** batchtools_custom() with globals")
+message("*** batchtools_custom()  w/ 'cluster.functions' with globals")
 ## A global variable
 a <- 0
 f <- batchtools_custom({
@@ -50,7 +59,7 @@ print(v)
 stopifnot(v == 0)
 
 
-message("*** batchtools_custom() with globals (tricky)")
+message("*** batchtools_custom()  w/ 'cluster.functions' with globals (tricky)")
 x <- listenv()
 for (ii in 1:2) {
   x[[ii]] <- batchtools_custom({ ii }, globals = TRUE, cluster.functions = cf)
@@ -59,7 +68,7 @@ v <- unlist(values(x))
 stopifnot(all(v == 1:2))  ## Make sure globals are frozen
 
 
-message("*** batchtools_custom() and errors")
+message("*** batchtools_custom()  w/ 'cluster.functions' and errors")
 f <- batchtools_custom({
   stop("Whoops!")
   1
