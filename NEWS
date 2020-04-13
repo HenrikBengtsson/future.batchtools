@@ -1,7 +1,7 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.8.1-9000 [2020-04-12]
+Version: 0.8.1-9000 [2020-04-13]
 
 SIGNIFICANT CHANGES:
 
@@ -12,8 +12,7 @@ NEW FEATURES:
 
  * It is now possible to configure the default number of workers on the job
    queue of an HPC scheduler via either R option 'future.batchtools.workers'
-   or environment variable 'R_FUTURE_BATCHTOOLS_WORKERS'. The default remains
-   at an infinite number of workers (+Inf).
+   or environment variable 'R_FUTURE_BATCHTOOLS_WORKERS'.
 
  * It is now possible to configure the batchtools registries that are used by
    batchtools futures via new argument 'registry' to plan().  This argument
@@ -37,6 +36,8 @@ NEW FEATURES:
    'future.cache.path' or environment variable 'R_FUTURE_CACHE_PATH'.
 
  * batchtools_custom() and BatchtoolsFuture gained argument 'conf.file'.
+   Using plan(batchtools_custom) will now use any batchtools configuration
+   file (an R script) found on the batchtools::findConfFile() search path.
 
 DOCUMENTATION:
 
