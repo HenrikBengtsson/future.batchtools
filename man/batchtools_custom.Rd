@@ -4,9 +4,19 @@
 \alias{batchtools_custom}
 \title{Batchtools futures for custom batchtools configuration}
 \usage{
-batchtools_custom(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = NULL, cluster.functions,
-  resources = list(), workers = NULL, ...)
+batchtools_custom(
+  expr,
+  envir = parent.frame(),
+  substitute = TRUE,
+  globals = TRUE,
+  label = NULL,
+  resources = list(),
+  workers = NULL,
+  conf.file = findConfFile(),
+  cluster.functions = NULL,
+  registry = list(),
+  ...
+)
 }
 \arguments{
 \item{expr}{The R expression to be evaluated}
@@ -17,8 +27,8 @@ should be located.}
 \item{substitute}{Controls whether \code{expr} should be
 \code{substitute()}:d or not.}
 
-\item{globals}{(optional) a logical, a character vector, a named list, or
-a \link[globals:Globals]{Globals} object.  If TRUE, globals are identified by code
+\item{globals}{(optional) a logical, a character vector, a named list, or a
+\link[globals:Globals]{Globals} object.  If TRUE, globals are identified by code
 inspection based on \code{expr} and \code{tweak} searching from environment
 \code{envir}.  If FALSE, no globals are used.  If a character vector, then
 globals are identified by lookup based their names \code{globals} searching
@@ -28,17 +38,26 @@ globals are used as is.}
 \item{label}{(optional) Label of the future (where applicable, becomes the
 job name for most job schedulers).}
 
-\item{cluster.functions}{A
-\link[batchtools:ClusterFunctions]{ClusterFunctions} object.}
-
-\item{resources}{A named list passed to the batchtools template
+\item{resources}{(optional) A named list passed to the batchtools template
 (available as variable \code{resources}).}
 
 \item{workers}{(optional) The maximum number of workers the batchtools
 backend may use at any time.   Interactive and "local" backends can only
-process one future at the time, whereas HPC backends where futures are
-resolved via separate jobs on a scheduler, the default is to assume an
-infinite number of workers.}
+process one future at the time (\code{workers = 1L}), whereas HPC backends,
+where futures are resolved via separate jobs on a scheduler, can have
+multiple workers.  In the latter, the default is \code{workers = NULL}, which
+will resolve to \code{getOption("future.batchtools.workers")}.  If that is not
+specified, the value of environment variable \code{R_FUTURE_BATCHTOOLS_WORKERS}
+will be used.  If neither are specified, then the default is \code{100}.}
+
+\item{conf.file}{(character) A batchtools configuration file as for
+instance returned by \code{\link[batchtools:findConfFile]{batchtools::findConfFile()}}.}
+
+\item{cluster.functions}{A
+\link[batchtools:ClusterFunctions]{ClusterFunctions} object.}
+
+\item{registry}{(optional) A named list of settings to control the setup
+of the batchtools registry.}
 
 \item{\ldots}{Additional arguments passed to \code{\link[=BatchtoolsFuture]{BatchtoolsFuture()}}.}
 }
@@ -49,12 +68,43 @@ An object of class \code{BatchtoolsFuture}.
 Batchtools futures for custom batchtools configuration
 }
 \examples{
+options(error = function(...) {
+  print(traceback())
+})
+
 cf <- batchtools::makeClusterFunctionsInteractive(external = TRUE)
+print(cf)
+str(cf)
 plan(batchtools_custom, cluster.functions = cf)
+print(plan())
+print(nbrOfWorkers())
 
 ## Create explicit future
 f <- future({
-  cat("PID:", Sys.getpid(), "\\n")
+  cat("PID:", Sys.getpid(), "\n")
+  42L
+})
+print(f)
+v <- value(f)
+print(v)
+
+options(error = NULL)
+
+
+## Create explicit future
+f <- future({
+  cat("PID:", Sys.getpid(), "\n")
+  42L
+})
+print(f)
+v <- value(f)
+print(v)
+
+
+
+## Create explicit future
+f <- future({
+  cat("PID:", Sys.getpid(), "\n")
   42L
 })
 v <- value(f)

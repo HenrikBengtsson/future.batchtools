@@ -4,10 +4,21 @@
 \alias{BatchtoolsFuture}
 \title{A batchtools future is a future whose value will be resolved via batchtools}
 \usage{
-BatchtoolsFuture(expr = NULL, envir = parent.frame(),
-  substitute = TRUE, globals = TRUE, packages = NULL, label = NULL,
-  cluster.functions = NULL, resources = list(), workers = NULL,
-  finalize = getOption("future.finalize", TRUE), ...)
+BatchtoolsFuture(
+  expr = NULL,
+  envir = parent.frame(),
+  substitute = TRUE,
+  globals = TRUE,
+  packages = NULL,
+  label = NULL,
+  resources = list(),
+  workers = NULL,
+  finalize = getOption("future.finalize", TRUE),
+  conf.file = findConfFile(),
+  cluster.functions = NULL,
+  registry = list(),
+  ...
+)
 }
 \arguments{
 \item{expr}{The R expression to be evaluated}
@@ -18,8 +29,8 @@ should be located.}
 \item{substitute}{Controls whether \code{expr} should be
 \code{substitute()}:d or not.}
 
-\item{globals}{(optional) a logical, a character vector, a named list, or
-a \link[globals:Globals]{Globals} object.  If TRUE, globals are identified by code
+\item{globals}{(optional) a logical, a character vector, a named list, or a
+\link[globals:Globals]{Globals} object.  If TRUE, globals are identified by code
 inspection based on \code{expr} and \code{tweak} searching from environment
 \code{envir}.  If FALSE, no globals are used.  If a character vector, then
 globals are identified by lookup based their names \code{globals} searching
@@ -29,22 +40,28 @@ globals are used as is.}
 \item{label}{(optional) Label of the future (where applicable, becomes the
 job name for most job schedulers).}
 
-\item{cluster.functions}{A batchtools \link[batchtools:ClusterFunctions]{ClusterFunctions}
-object.}
-
-\item{resources}{A named list passed to the batchtools template (available
-as variable \code{resources}).}
+\item{resources}{(optional) A named list passed to the batchtools template
+(available as variable \code{resources}).}
 
 \item{workers}{(optional) The maximum number of workers the batchtools
 backend may use at any time.   Interactive and "local" backends can only
-process one future at the time, whereas HPC backends where futures are
-resolved via separate jobs on a scheduler, the default is to assume an
-infinite number of workers.}
+process one future at the time (\code{workers = 1L}), whereas HPC backends,
+where futures are resolved via separate jobs on a scheduler, can have
+multiple workers.  In the latter, the default is \code{workers = NULL}, which
+will resolve to \code{getOption("future.batchtools.workers")}.  If that is not
+specified, the value of environment variable \code{R_FUTURE_BATCHTOOLS_WORKERS}
+will be used.  If neither are specified, then the default is \code{100}.}
 
 \item{finalize}{If TRUE, any underlying registries are
 deleted when this object is garbage collected, otherwise not.}
 
-\item{conf}{A batchtools configuration environment.}
+\item{conf.file}{(optional) A batchtools configuration file.}
+
+\item{cluster.functions}{(optional) A batchtools
+\link[batchtools:ClusterFunctions]{ClusterFunctions} object.}
+
+\item{registry}{(optional) A named list of settings to control the setup
+of the batchtools registry.}
 
 \item{\ldots}{Additional arguments passed to \code{\link[future:Future]{future::Future()}}.}
 }

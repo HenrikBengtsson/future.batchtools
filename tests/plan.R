@@ -15,7 +15,7 @@ for (type in c("batchtools_interactive", "batchtools_local")) {
   mprintf("*** plan('%s') ...\n", type)
 
   plan(type)
-  stopifnot(inherits(plan(), "batchtools"))
+  stopifnot(inherits(plan("next"), "batchtools"))
 
   a <- 0
   f <- future({
@@ -27,6 +27,29 @@ for (type in c("batchtools_interactive", "batchtools_local")) {
   v <- value(f)
   print(v)
   stopifnot(v == 0)
+
+
+  ## Customize the 'work.dir' of the batchtools registries
+  normalize_path <- function(path) {
+    if (!utils::file_test("-d", path)) stop("No such path: ", path)
+    opwd <- getwd()
+    on.exit(setwd(opwd))
+    setwd(normalizePath(path))
+    getwd()
+  }
+  plan(type, registry = list(work.dir = NULL))
+  f <- future(42, lazy = TRUE)
+  utils::str(list(normalize_path(f$config$reg$work.dir), getwd = getwd()))
+  stopifnot(normalize_path(f$config$reg$work.dir) == getwd())
+
+  path <- tempdir()
+  plan(type, registry = list(work.dir = path))
+  f <- future(42, lazy = TRUE)
+  utils::str(list(
+    normalizePath(f$config$reg$work.dir),
+    path = normalizePath(path)
+  ))
+  stopifnot(normalize_path(f$config$reg$work.dir) == normalize_path(path))
 
   mprintf("*** plan('%s') ... DONE\n", type)
 } # for (type ...)

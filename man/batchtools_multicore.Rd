@@ -4,9 +4,16 @@
 \alias{batchtools_multicore}
 \title{batchtools multicore futures}
 \usage{
-batchtools_multicore(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = NULL, workers = availableCores(constraints
-  = "multicore"), ...)
+batchtools_multicore(
+  expr,
+  envir = parent.frame(),
+  substitute = TRUE,
+  globals = TRUE,
+  label = NULL,
+  workers = availableCores(constraints = "multicore"),
+  registry = list(),
+  ...
+)
 }
 \arguments{
 \item{expr}{The R expression to be evaluated}
@@ -17,8 +24,8 @@ should be located.}
 \item{substitute}{Controls whether \code{expr} should be
 \code{substitute()}:d or not.}
 
-\item{globals}{(optional) a logical, a character vector, a named list, or
-a \link[globals:Globals]{Globals} object.  If TRUE, globals are identified by code
+\item{globals}{(optional) a logical, a character vector, a named list, or a
+\link[globals:Globals]{Globals} object.  If TRUE, globals are identified by code
 inspection based on \code{expr} and \code{tweak} searching from environment
 \code{envir}.  If FALSE, no globals are used.  If a character vector, then
 globals are identified by lookup based their names \code{globals} searching
@@ -30,6 +37,9 @@ job name for most job schedulers).}
 
 \item{workers}{The number of multicore processes to be
 available for concurrent batchtools multicore futures.}
+
+\item{registry}{(optional) A named list of settings to control the setup
+of the batchtools registry.}
 
 \item{\ldots}{Additional arguments passed
 to \code{\link[=BatchtoolsFuture]{BatchtoolsFuture()}}.}

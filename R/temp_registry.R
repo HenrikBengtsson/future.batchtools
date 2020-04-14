@@ -1,23 +1,41 @@
-#' @importFrom batchtools makeRegistry
+#' @importFrom batchtools makeRegistry saveRegistry
 temp_registry <- local({
   ## All known batchtools registries
   regs <- new.env()
 
-  make_registry <- function(...) {
+  make_registry <- function(cluster.functions = NULL, config = list(), ...) {
     ## Temporarily disable batchtools output?
     ## (i.e. messages and progress bars)
     debug <- getOption("future.debug", FALSE)
     batchtools_output <- getOption("future.batchtools.output", debug)
 
+    work.dir <- config$work.dir
+    if (is.null(work.dir)) work.dir <- getwd()
+    config$work.dir <- NULL
+    
     if (!batchtools_output) {
       oopts <- options(batchtools.verbose = FALSE, batchtools.progress = FALSE)
       on.exit(options(oopts))
     }
 
-    batchtools::makeRegistry(...)
+    reg <- makeRegistry(work.dir = work.dir, ...)
+
+    if (!is.null(cluster.functions)) {    ### FIXME
+      reg$cluster.functions <- cluster.functions
+    }
+
+    ## Post-tweak the batchtools registry?
+    ## This avoids having to set up a custom batchtools 'conf.file' etc.
+    if (length(config) > 0L) {
+      names <- names(config)
+      for (name in names) reg[[name]] <- config[[name]]
+      saveRegistry(reg)
+    }
+    
+    reg
   } ## make_registry()
 
-  function(label = "batchtools", path = NULL, ...) {
+  function(label = "batchtools", path = NULL, config = list(), ...) {
     if (is.null(label)) label <- "batchtools"
     ## The job label (the name on the job queue) - may be duplicated
     label <- as.character(label)
@@ -26,6 +44,12 @@ temp_registry <- local({
     ## This session's path holding all of its future batchtools directories
     ##   e.g. .future/<datetimestamp>-<unique_id>/
     if (is.null(path)) path <- future_cache_path()
+
+    if (length(config) > 0L) {
+      stop_if_not(is.list(config))
+      names <- names(config)
+      stop_if_not(!is.null(names), all(nzchar(names)))
+    }
 
     ## The batchtools subfolder for a specific future - must be unique
     prefix <- sprintf("%s_", label)
@@ -50,7 +74,7 @@ temp_registry <- local({
     ## expression "^[a-zA-Z]+[0-9a-zA-Z_]*$".
     ## /HB 2016-10-19
     reg_id <- as_valid_registry_id(label)
-    make_registry(file.dir = path_registry, ...)
+    make_registry(file.dir = path_registry, config = config, ...)
   }
 })
 

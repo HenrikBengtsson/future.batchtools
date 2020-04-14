@@ -20,4 +20,5 @@
 #'
 #' @docType package
 #' @name future.batchtools
+#' @aliases future.batchtools-package
 NULL

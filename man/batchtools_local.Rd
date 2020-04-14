@@ -5,8 +5,16 @@
 \alias{batchtools_interactive}
 \title{batchtools local and interactive futures}
 \usage{
-batchtools_local(expr, envir = parent.frame(), substitute = TRUE,
-  globals = TRUE, label = NULL, workers = 1L, ...)
+batchtools_local(
+  expr,
+  envir = parent.frame(),
+  substitute = TRUE,
+  globals = TRUE,
+  label = NULL,
+  workers = 1L,
+  registry = list(),
+  ...
+)
 }
 \arguments{
 \item{expr}{The R expression to be evaluated}
@@ -17,8 +25,8 @@ should be located.}
 \item{substitute}{Controls whether \code{expr} should be
 \code{substitute()}:d or not.}
 
-\item{globals}{(optional) a logical, a character vector, a named list, or
-a \link[globals:Globals]{Globals} object.  If TRUE, globals are identified by code
+\item{globals}{(optional) a logical, a character vector, a named list, or a
+\link[globals:Globals]{Globals} object.  If TRUE, globals are identified by code
 inspection based on \code{expr} and \code{tweak} searching from environment
 \code{envir}.  If FALSE, no globals are used.  If a character vector, then
 globals are identified by lookup based their names \code{globals} searching
@@ -30,12 +38,17 @@ job name for most job schedulers).}
 
 \item{workers}{(optional) The maximum number of workers the batchtools
 backend may use at any time.   Interactive and "local" backends can only
-process one future at the time, whereas HPC backends where futures are
-resolved via separate jobs on a scheduler, the default is to assume an
-infinite number of workers.}
+process one future at the time (\code{workers = 1L}), whereas HPC backends,
+where futures are resolved via separate jobs on a scheduler, can have
+multiple workers.  In the latter, the default is \code{workers = NULL}, which
+will resolve to \code{getOption("future.batchtools.workers")}.  If that is not
+specified, the value of environment variable \code{R_FUTURE_BATCHTOOLS_WORKERS}
+will be used.  If neither are specified, then the default is \code{100}.}
 
-\item{\ldots}{Additional arguments passed to
-\code{\link[=BatchtoolsFuture]{BatchtoolsFuture()}}.}
+\item{registry}{(optional) A named list of settings to control the setup
+of the batchtools registry.}
+
+\item{\ldots}{Additional arguments passed to \code{\link[=BatchtoolsFuture]{BatchtoolsFuture()}}.}
 }
 \value{
 An object of class \code{BatchtoolsFuture}.

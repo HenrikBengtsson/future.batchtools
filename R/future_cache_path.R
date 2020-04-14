@@ -3,7 +3,7 @@ future_cache_path <- local({
   ## The subfolder used for this session
   dir <- NULL
 
-  function(root_path = Sys.getenv("R_FUTURE_CACHE_PATH", ".future"), absolute = TRUE, create = TRUE) {
+  function(root_path = getOption("future.cache.path", Sys.getenv("R_FUTURE_CACHE_PATH", ".future")), absolute = TRUE, create = TRUE) {
     if (is.null(dir)) {
       id <- basename(tempdir())
       id <- gsub("Rtmp", "", id, fixed = TRUE)

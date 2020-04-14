@@ -51,6 +51,9 @@ message("*** nbrOfWorkers() - multicore ... DONE")
 
 message("*** nbrOfWorkers() - templates ...")
 
+## Test with +Inf workers
+options(future.batchtools.workers = +Inf)
+
 n <- nbrOfWorkers(batchtools_lsf)
 message("Number of workers: ", n)
 stopifnot(is.infinite(n))

@@ -8,8 +8,8 @@
 #' @param substitute Controls whether `expr` should be
 #' `substitute()`:d or not.
 #'
-#' @param globals (optional) a logical, a character vector, a named list, or
-#' a [Globals][globals::Globals] object.  If TRUE, globals are identified by code
+#' @param globals (optional) a logical, a character vector, a named list, or a
+#' [Globals][globals::Globals] object.  If TRUE, globals are identified by code
 #' inspection based on `expr` and `tweak` searching from environment
 #' `envir`.  If FALSE, no globals are used.  If a character vector, then
 #' globals are identified by lookup based their names `globals` searching
@@ -19,22 +19,28 @@
 #' @param label (optional) Label of the future (where applicable, becomes the
 #' job name for most job schedulers).
 #'
-#' @param conf A batchtools configuration environment.
-#'
-#' @param cluster.functions A batchtools [ClusterFunctions][batchtools::ClusterFunctions]
-#' object.
-#'
-#' @param resources A named list passed to the batchtools template (available
-#' as variable `resources`).
+#' @param resources (optional) A named list passed to the batchtools template
+#' (available as variable `resources`).
 #'
 #' @param workers (optional) The maximum number of workers the batchtools
 #' backend may use at any time.   Interactive and "local" backends can only
-#' process one future at the time, whereas HPC backends where futures are
-#' resolved via separate jobs on a scheduler, the default is to assume an
-#' infinite number of workers.
+#' process one future at the time (`workers = 1L`), whereas HPC backends,
+#' where futures are resolved via separate jobs on a scheduler, can have
+#' multiple workers.  In the latter, the default is `workers = NULL`, which
+#' will resolve to `getOption("future.batchtools.workers")`.  If that is not
+#' specified, the value of environment variable `R_FUTURE_BATCHTOOLS_WORKERS`
+#' will be used.  If neither are specified, then the default is `100`.
 #'
 #' @param finalize If TRUE, any underlying registries are
 #' deleted when this object is garbage collected, otherwise not.
+#'
+#' @param conf.file (optional) A batchtools configuration file.
+#'
+#' @param cluster.functions (optional) A batchtools
+#' [ClusterFunctions][batchtools::ClusterFunctions] object.
+#'
+#' @param registry (optional) A named list of settings to control the setup
+#' of the batchtools registry.
 #'
 #' @param \ldots Additional arguments passed to [future::Future()].
 #'
@@ -47,9 +53,13 @@
 BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
                              substitute = TRUE,
                              globals = TRUE, packages = NULL,
-                             label = NULL, cluster.functions = NULL,
-                             resources = list(), workers = NULL,
+                             label = NULL,
+                             resources = list(),
+                             workers = NULL,
                              finalize = getOption("future.finalize", TRUE),
+                             conf.file = findConfFile(),
+                             cluster.functions = NULL,
+                             registry = list(),
                              ...) {
   if (substitute) expr <- substitute(expr)
 
@@ -57,8 +67,18 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
 
   if (!is.null(cluster.functions)) {
     stop_if_not(is.list(cluster.functions))
+    stop_if_not(inherits(cluster.functions, "ClusterFunctions"))
+  } else if (missing(conf.file)) {
+    ## BACKWARD COMPATILITY: Only when calling BatchtoolsFuture() directly
+    cluster.functions <- makeClusterFunctionsInteractive(external = FALSE)
+  } else {
+    ## If 'cluster.functions' is not specified, then 'conf.file' must
+    ## exist
+    if (!file_test("-f", conf.file)) {
+      stop("No such batchtools configuration file: ", sQuote(conf.file))
+    }
   }
-
+  
   if (is.function(workers)) workers <- workers()
   if (!is.null(workers)) {
     stop_if_not(length(workers) >= 1)
@@ -70,6 +90,11 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
     }
   }
 
+  stop_if_not(is.list(registry))
+  if (length(registry) > 0L) {
+    stopifnot(!is.null(names(registry)), all(nzchar(names(registry))))
+  }
+  
   stop_if_not(is.list(resources))
 
   ## Record globals
@@ -84,10 +109,12 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
   future$packages <- unique(c(packages, gp$packages))
 
   ## Create batchtools registry
-  reg <- temp_registry(label = future$label)
-  if (!is.null(cluster.functions)) {    ### FIXME
-    reg$cluster.functions <- cluster.functions
-  }
+  reg <- temp_registry(
+    label = future$label,
+    conf.file = conf.file,
+    cluster.functions = cluster.functions,
+    config = registry
+  )
   debug <- getOption("future.debug", FALSE)
   if (debug) mprint(reg)
 
@@ -126,13 +153,15 @@ print.BatchtoolsFuture <- function(x, ...) {
   ## Ask for status once
   status <- status(x)
   printf("batchtools status: %s\n", paste(sQuote(status), collapse = ", "))
-  if ("error" %in% status) printf("Error: %s\n", loggedError(x))
+  if ("error" %in% status) {
+    printf("Error captured by batchtools: %s\n", loggedError(x))
+  }
 
   if (is_na(status)) {
     printf("batchtools %s: Not found (happens when finished and deleted)\n",
            class(reg))
   } else {
-    printf("batchtools Registry:\n  ")
+    printf("batchtools Registry:\n")
     printf("  File dir exists: %s\n", file_test("-d", reg$file.dir))
     printf("  Work dir exists: %s\n", file_test("-d", reg$work.dir))
     try(print(reg))
@@ -504,8 +533,9 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
       }
     } else if ("error" %in% stat) {
       cleanup <- FALSE
-      msg <- sprintf("BatchtoolsError in %s ('%s'): %s",
-                     class(future)[1], label, loggedError(future))
+      msg <- sprintf(
+              "BatchtoolsFutureError for %s ('%s') captured by batchtools: %s",
+              class(future)[1], label, loggedError(future))
       stop(BatchtoolsFutureError(msg, future = future))
     } else if ("expired" %in% stat) {
       cleanup <- FALSE

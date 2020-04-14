@@ -4,7 +4,8 @@
 #' @export
 batchtools_interactive <- function(expr, envir = parent.frame(),
                                    substitute = TRUE, globals = TRUE,
-                                   label = NULL, workers = 1L, ...) {
+                                   label = NULL, workers = 1L,
+                                   registry = list(), ...) {
   if (substitute) expr <- substitute(expr)
 
   cf <- makeClusterFunctionsInteractive(external = FALSE)
@@ -14,6 +15,7 @@ batchtools_interactive <- function(expr, envir = parent.frame(),
                             label = label,
                             workers = workers,
                             cluster.functions = cf,
+                            registry = registry, 
                             ...)
 
   if (!future$lazy) future <- run(future)

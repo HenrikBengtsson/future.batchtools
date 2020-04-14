@@ -9,8 +9,7 @@
 #'
 #' @inheritParams BatchtoolsFuture
 #' 
-#' @param \ldots Additional arguments passed to
-#' [BatchtoolsFuture()].
+#' @param \ldots Additional arguments passed to [BatchtoolsFuture()].
 #'
 #' @return An object of class `BatchtoolsFuture`.
 #'
@@ -37,7 +36,7 @@
 #' @export
 batchtools_local <- function(expr, envir = parent.frame(), substitute = TRUE,
                              globals = TRUE, label = NULL,
-                             workers = 1L, ...) {
+                             workers = 1L, registry = list(), ...) {
   if (substitute) expr <- substitute(expr)
 
   cf <- makeClusterFunctionsInteractive(external = TRUE)
@@ -47,6 +46,7 @@ batchtools_local <- function(expr, envir = parent.frame(), substitute = TRUE,
                             label = label,
                             workers = workers,
                             cluster.functions = cf,
+                            registry = registry,
                             ...)
 
   if (!future$lazy) future <- run(future)

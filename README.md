@@ -102,7 +102,7 @@ batchtools backends.
 | `batchtools_sge`         | Futures are evaluated via a [Sun/Oracle Grid Engine (SGE)] job scheduler | N/A
 | `batchtools_lsf`         | Futures are evaluated via a [Load Sharing Facility (LSF)] job scheduler  | N/A
 | `batchtools_openlava`    | Futures are evaluated via an [OpenLava] job scheduler                    | N/A
-| `batchtools_custom`      | Futures are evaluated via a custom set of cluster functions                   | N/A
+| `batchtools_custom`      | Futures are evaluated via a custom batchtools configuration R script or via a set of cluster functions  | N/A
 | `batchtools_interactive` | sequential evaluation in the calling R environment                       | `plan(transparent)`
 | `batchtools_multicore`   | parallel evaluation by forking the current R process                     | `plan(multicore)`
 | `batchtools_local`       | sequential evaluation in a separate R process (on current machine)       | `plan(cluster, workers = "localhost")`
@@ -224,8 +224,8 @@ Contributing to this package is easy.  Just send a [pull request](https://help.g
 
 ## Software status
 
-| Resource:     | CRAN        | Travis CI       | AppVeyor         |
-| ------------- | ------------------- | --------------- | ---------------- |
-| _Platforms:_  | _Multiple_          | _Linux & macOS_ | _Windows_        |
-| R CMD check   | <a href="https://cran.r-project.org/web/checks/check_results_future.batchtools.html"><img border="0" src="http://www.r-pkg.org/badges/version/future.batchtools" alt="CRAN version"></a> | <a href="https://travis-ci.org/HenrikBengtsson/future.batchtools"><img src="https://travis-ci.org/HenrikBengtsson/future.batchtools.svg" alt="Build status"></a>   | <a href="https://ci.appveyor.com/project/HenrikBengtsson/future-batchtools"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/future.batchtools?svg=true" alt="Build status"></a> |
-| Test coverage |                     | <a href="https://codecov.io/gh/HenrikBengtsson/future.batchtools"><img src="https://codecov.io/gh/HenrikBengtsson/future.batchtools/branch/develop/graph/badge.svg" alt="Coverage Status"/></a>     |                  |
+| Resource      | CRAN        | GitHub Actions      | Travis CI       | AppVeyor CI      |
+| ------------- | ------------------- | ------------------- | --------------- | ---------------- |
+| _Platforms:_  | _Multiple_          | _Multiple_          | _Linux & macOS_ | _Windows_        |
+| R CMD check   | <a href="https://cran.r-project.org/web/checks/check_results_future.batchtools.html"><img border="0" src="http://www.r-pkg.org/badges/version/future.batchtools" alt="CRAN version"></a> | <a href="https://github.com/HenrikBengtsson/future.batchtools/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/HenrikBengtsson/future.batchtools/workflows/R-CMD-check/badge.svg?branch=develop" alt="Build status"></a>       | <a href="https://travis-ci.org/HenrikBengtsson/future.batchtools"><img src="https://travis-ci.org/HenrikBengtsson/future.batchtools.svg" alt="Build status"></a>   | <a href="https://ci.appveyor.com/project/HenrikBengtsson/future-batchtools"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/future.batchtools?svg=true" alt="Build status"></a> |
+| Test coverage |                     |                     | <a href="https://codecov.io/gh/HenrikBengtsson/future.batchtools"><img src="https://codecov.io/gh/HenrikBengtsson/future.batchtools/branch/develop/graph/badge.svg" alt="Coverage Status"/></a>     |                  |

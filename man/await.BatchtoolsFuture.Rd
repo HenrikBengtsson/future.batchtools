@@ -4,10 +4,14 @@
 \alias{await.BatchtoolsFuture}
 \title{Awaits the value of a batchtools future}
 \usage{
-\method{await}{BatchtoolsFuture}(future, cleanup = TRUE,
+\method{await}{BatchtoolsFuture}(
+  future,
+  cleanup = TRUE,
   timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60),
   delta = getOption("future.wait.interval", 1),
-  alpha = getOption("future.wait.alpha", 1.01), ...)
+  alpha = getOption("future.wait.alpha", 1.01),
+  ...
+)
 }
 \arguments{
 \item{future}{The future.}
