@@ -40,8 +40,9 @@ globals are used as is.}
 \item{label}{(optional) Label of the future (where applicable, becomes the
 job name for most job schedulers).}
 
-\item{resources}{(optional) A named list passed to the batchtools template
-(available as variable \code{resources}).}
+\item{resources}{(optional) A named list passed to the \pkg{batchtools}
+template (available as variable \code{resources}).  See Section 'Resources'
+in \code{\link[batchtools:submitJobs]{batchtools::submitJobs()}} more details.}
 
 \item{workers}{(optional) The maximum number of workers the batchtools
 backend may use at any time.   Interactive and "local" backends can only

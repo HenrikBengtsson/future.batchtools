@@ -19,8 +19,9 @@
 #' @param label (optional) Label of the future (where applicable, becomes the
 #' job name for most job schedulers).
 #'
-#' @param resources (optional) A named list passed to the batchtools template
-#' (available as variable `resources`).
+#' @param resources (optional) A named list passed to the \pkg{batchtools}
+#' template (available as variable `resources`).  See Section 'Resources'
+#' in [batchtools::submitJobs()] more details.
 #'
 #' @param workers (optional) The maximum number of workers the batchtools
 #' backend may use at any time.   Interactive and "local" backends can only
