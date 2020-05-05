@@ -64,7 +64,27 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
                              ...) {
   if (substitute) expr <- substitute(expr)
 
-  if (!is.null(label)) label <- as.character(label)
+  ## Record globals
+  gp <- getGlobalsAndPackages(expr, envir = envir, globals = globals)
+
+  future <- Future(expr = gp$expr, envir = envir, substitute = FALSE,
+                   globals = gp$globals,
+                   packages = unique(c(packages, gp$packages)),
+                   label = label,
+                   version = "1.8", .callResult = TRUE,
+                   ...)
+
+  if (is.function(workers)) workers <- workers()
+  if (!is.null(workers)) {
+    stop_if_not(length(workers) >= 1)
+    if (is.numeric(workers)) {
+      stop_if_not(!anyNA(workers), all(workers >= 1))
+    } else {
+      stop("Argument 'workers' should be either a numeric or a function: ",
+           mode(workers))
+    }
+  }
+  future$workers <- workers
 
   if (!is.null(cluster.functions)) {
     stop_if_not(is.list(cluster.functions))
@@ -80,34 +100,12 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
     }
   }
   
-  if (is.function(workers)) workers <- workers()
-  if (!is.null(workers)) {
-    stop_if_not(length(workers) >= 1)
-    if (is.numeric(workers)) {
-      stop_if_not(!anyNA(workers), all(workers >= 1))
-    } else {
-      stop("Argument 'workers' should be either a numeric or a function: ",
-           mode(workers))
-    }
-  }
-
   stop_if_not(is.list(registry))
   if (length(registry) > 0L) {
     stopifnot(!is.null(names(registry)), all(nzchar(names(registry))))
   }
   
   stop_if_not(is.list(resources))
-
-  ## Record globals
-  gp <- getGlobalsAndPackages(expr, envir = envir, globals = globals)
-
-  future <- Future(expr = gp$expr, envir = envir, substitute = FALSE,
-                   workers = workers, label = label,
-                   version = "1.8", .callResult = TRUE,
-                   ...)
-
-  future$globals <- gp$globals
-  future$packages <- unique(c(packages, gp$packages))
 
   ## Create batchtools registry
   reg <- temp_registry(
