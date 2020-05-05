@@ -71,7 +71,6 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
                    globals = gp$globals,
                    packages = unique(c(packages, gp$packages)),
                    label = label,
-                   version = "1.8", .callResult = TRUE,
                    ...)
 
   if (is.function(workers)) workers <- workers()
