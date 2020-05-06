@@ -49,7 +49,6 @@
 #'
 #' @export
 #' @importFrom future Future getGlobalsAndPackages
-#' @importFrom batchtools submitJobs
 #' @keywords internal
 BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
                              substitute = TRUE,
@@ -340,7 +339,7 @@ result.BatchtoolsFuture <- function(future, cleanup = TRUE, ...) {
 
 
 #' @importFrom future run getExpression
-#' @importFrom batchtools batchExport batchMap saveRegistry setJobNames
+#' @importFrom batchtools batchExport batchMap saveRegistry setJobNames submitJobs
 #' @export
 run.BatchtoolsFuture <- function(future, ...) {
   if (future$state != "created") {
