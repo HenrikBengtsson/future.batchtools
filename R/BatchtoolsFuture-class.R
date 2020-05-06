@@ -72,6 +72,28 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
                    label = label,
                    ...)
 
+  future <- as_BatchtoolsFuture(future,
+                                resources = resources,
+                                workers = workers,
+                                finalize = finalize,
+                                conf.file = conf.file,
+                                cluster.functions = cluster.functions,
+                                registry = registry)
+
+  future
+}
+
+
+## Helper function to create a BatchtoolsFuture from a vanilla Future
+#' @importFrom utils file_test
+as_BatchtoolsFuture <- function(future,
+                                resources = list(),
+                                workers = NULL,
+                                finalize = getOption("future.finalize", TRUE),
+                                conf.file = findConfFile(),
+                                cluster.functions = NULL,
+                                registry = list(),
+                                ...) {
   if (is.function(workers)) workers <- workers()
   if (!is.null(workers)) {
     stop_if_not(length(workers) >= 1)
