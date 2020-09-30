@@ -59,12 +59,12 @@ deleted when this object is garbage collected, otherwise not.}
 \item{conf.file}{(optional) A batchtools configuration file.}
 
 \item{cluster.functions}{(optional) A batchtools
-\link[batchtools:ClusterFunctions]{ClusterFunctions} object.}
+\link[batchtools:makeClusterFunctions]{ClusterFunctions} object.}
 
 \item{registry}{(optional) A named list of settings to control the setup
 of the batchtools registry.}
 
-\item{\ldots}{Additional arguments passed to \code{\link[future:Future]{future::Future()}}.}
+\item{\ldots}{Additional arguments passed to \code{\link[future:Future-class]{future::Future()}}.}
 }
 \value{
 A BatchtoolsFuture object
