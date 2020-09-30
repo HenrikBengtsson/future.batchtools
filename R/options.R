@@ -28,15 +28,26 @@
 #'     This option controls how many lines are displayed.
 #'     (Default: `48L`)}
 #'
-#'   \item{\option{future.cache.path} / \env{R_FUTURE_CACHE_PATH}}{
+#'   \item{\option{future.cache.path} / \env{R_FUTURE_CACHE_PATH}:}{
 #'     (character string)
 #'     An absolute or relative path specifying the root folder in which
 #'     \pkg{batchtools} registry folders are stored.
 #'     (Default: `.future`)}
+#'
+#'   \item{\option{future.delete}:}{(logical)
+#'     Controls whether or not the future's \pkg{batchtools} registry folder
+#'     is deleted after the future result has been collected.
+#'     If TRUE, it is always deleted.
+#'     If FALSE, it is never deleted.
+#'     If not set or NULL, the it is deleted, unless running in non-interactive
+#'     mode and the batchtools job failed or expired, which helps to
+#'     troubleshoot when running in batch mode.
+#'     (Default: NULL (not set))}
 #' }
 #'
 #' @aliases
 #' future.cache.path
+#' future.delete
 #' future.batchtools.expiration.tail
 #' future.batchtools.output
 #' future.batchtools.workers
