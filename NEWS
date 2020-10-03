@@ -1,11 +1,12 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.9.0-9000 [2020-09-30]
+Version: 0.9.0-9000 [2020-10-02]
 
 DOCUMENTATION:
 
- * Documenting option 'future.debug' in help("future.batchtools.options").
+ * Document option 'future.delete' and clarify option 'future.cache.path'
+   in help("future.batchtools.options").
  
 
 Version: 0.9.0 [2020-04-14]

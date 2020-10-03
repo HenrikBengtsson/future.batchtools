@@ -32,7 +32,11 @@
 #'     (character string)
 #'     An absolute or relative path specifying the root folder in which
 #'     \pkg{batchtools} registry folders are stored.
-#'     (Default: `.future`)}
+#'     This folder needs to be accessible from all hosts ("workers").
+#'     Specifically, it must _not_ be a folder that is only local to the
+#'     machine such as `file.path(tempdir(), ".future"` if an job scheduler
+#'     on a HPC environment is used.
+#'     (Default: `.future` in the current working directory)}
 #'
 #'   \item{\option{future.delete}:}{(logical)
 #'     Controls whether or not the future's \pkg{batchtools} registry folder
@@ -45,6 +49,13 @@
 #'     (Default: NULL (not set))}
 #' }
 #'
+#' @examples
+#' # Set an R option:
+#' options(future.cache.path = "/cluster-wide/folder/.future")
+#'
+#' # Set an environment variable:
+#' Sys.setenv(R_FUTURE_RNG_ONMISUSE = "/cluster-wide/folder/.future")
+#' 
 #' @aliases
 #' future.cache.path
 #' future.delete
