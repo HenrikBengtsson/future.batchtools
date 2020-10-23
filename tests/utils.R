@@ -31,7 +31,7 @@ printf("x = %s.\n", hpaste(x))
 printf("x = %s.\n", hpaste(x, max_head = 2))
 ## x = 1, 2, ..., 6.
 
-printf("x = %s.\n", hpaste(x), max_head = 3) # Default
+printf("x = %s.\n", hpaste(x, max_head = 3)) # Default
 ## x = 1, 2, 3, ..., 6.
 
 # It will never output 1, 2, 3, 4, ..., 6
