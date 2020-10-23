@@ -54,7 +54,7 @@ will be used.  If neither are specified, then the default is \code{100}.}
 instance returned by \code{\link[batchtools:findConfFile]{batchtools::findConfFile()}}.}
 
 \item{cluster.functions}{A
-\link[batchtools:ClusterFunctions]{ClusterFunctions} object.}
+\link[batchtools:makeClusterFunctions]{ClusterFunctions} object.}
 
 \item{registry}{(optional) A named list of settings to control the setup
 of the batchtools registry.}
