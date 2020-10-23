@@ -19,8 +19,9 @@
 #' @param label (optional) Label of the future (where applicable, becomes the
 #' job name for most job schedulers).
 #'
-#' @param resources (optional) A named list passed to the batchtools template
-#' (available as variable `resources`).
+#' @param resources (optional) A named list passed to the \pkg{batchtools}
+#' template (available as variable `resources`).  See Section 'Resources'
+#' in [batchtools::submitJobs()] more details.
 #'
 #' @param workers (optional) The maximum number of workers the batchtools
 #' backend may use at any time.   Interactive and "local" backends can only
@@ -48,7 +49,6 @@
 #'
 #' @export
 #' @importFrom future Future getGlobalsAndPackages
-#' @importFrom batchtools submitJobs
 #' @keywords internal
 BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
                              substitute = TRUE,
@@ -63,7 +63,48 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
                              ...) {
   if (substitute) expr <- substitute(expr)
 
-  if (!is.null(label)) label <- as.character(label)
+  ## Record globals
+  gp <- getGlobalsAndPackages(expr, envir = envir, globals = globals)
+
+  future <- Future(expr = gp$expr, envir = envir, substitute = FALSE,
+                   globals = gp$globals,
+                   packages = unique(c(packages, gp$packages)),
+                   label = label,
+                   ...)
+
+  future <- as_BatchtoolsFuture(future,
+                                resources = resources,
+                                workers = workers,
+                                finalize = finalize,
+                                conf.file = conf.file,
+                                cluster.functions = cluster.functions,
+                                registry = registry)
+
+  future
+}
+
+
+## Helper function to create a BatchtoolsFuture from a vanilla Future
+#' @importFrom utils file_test
+as_BatchtoolsFuture <- function(future,
+                                resources = list(),
+                                workers = NULL,
+                                finalize = getOption("future.finalize", TRUE),
+                                conf.file = findConfFile(),
+                                cluster.functions = NULL,
+                                registry = list(),
+                                ...) {
+  if (is.function(workers)) workers <- workers()
+  if (!is.null(workers)) {
+    stop_if_not(length(workers) >= 1)
+    if (is.numeric(workers)) {
+      stop_if_not(!anyNA(workers), all(workers >= 1))
+    } else {
+      stop("Argument 'workers' should be either a numeric or a function: ",
+           mode(workers))
+    }
+  }
+  future$workers <- workers
 
   if (!is.null(cluster.functions)) {
     stop_if_not(is.list(cluster.functions))
@@ -79,34 +120,12 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
     }
   }
   
-  if (is.function(workers)) workers <- workers()
-  if (!is.null(workers)) {
-    stop_if_not(length(workers) >= 1)
-    if (is.numeric(workers)) {
-      stop_if_not(!anyNA(workers), all(workers >= 1))
-    } else {
-      stop("Argument 'workers' should be either a numeric or a function: ",
-           mode(workers))
-    }
-  }
-
   stop_if_not(is.list(registry))
   if (length(registry) > 0L) {
     stopifnot(!is.null(names(registry)), all(nzchar(names(registry))))
   }
   
   stop_if_not(is.list(resources))
-
-  ## Record globals
-  gp <- getGlobalsAndPackages(expr, envir = envir, globals = globals)
-
-  future <- Future(expr = gp$expr, envir = envir, substitute = FALSE,
-                   workers = workers, label = label,
-                   version = "1.8", .callResult = TRUE,
-                   ...)
-
-  future$globals <- gp$globals
-  future$packages <- unique(c(packages, gp$packages))
 
   ## Create batchtools registry
   reg <- temp_registry(
@@ -342,13 +361,14 @@ result.BatchtoolsFuture <- function(future, cleanup = TRUE, ...) {
 
 
 #' @importFrom future run getExpression
-#' @importFrom batchtools batchExport batchMap saveRegistry setJobNames
+#' @importFrom batchtools batchExport batchMap saveRegistry setJobNames submitJobs
 #' @export
 run.BatchtoolsFuture <- function(future, ...) {
   if (future$state != "created") {
     label <- future$label
     if (is.null(label)) label <- "<none>"
-    stop(sprintf("A future ('%s') can only be launched once.", label))
+    msg <- sprintf("A future ('%s') can only be launched once.", label)
+    stop(FutureError(msg, future = future))
   }
 
   ## Assert that the process that created the future is

@@ -69,7 +69,7 @@ for (cores in 1:min(2L, availableCores("multicore"))) {
     }
     mprintf(" - Resolving %d batchtools_multicore futures\n", length(x))
     if (globals || f$config$reg$cluster.functions$name == "Multicore") {
-      v <- unlist(values(x))
+      v <- unlist(value(x))
       stopifnot(all(v == 1:2))
     } else {
       v <- lapply(x, FUN = function(f) tryCatch(value(f), error = identity))

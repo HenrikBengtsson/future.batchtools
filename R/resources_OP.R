@@ -5,9 +5,9 @@
 #'
 #' @param fassignment The future assignment, e.g.
 #'        \code{x \%<-\% \{ expr \}}.
-#' @param tweaks A named list (or vector) of resource
-#' batchtools parameters that should be changed relative to
-#' the current strategy.
+#' @param tweaks A named list (or vector) of resource \pkg{batchtools}
+#' parameters (see Section 'Resources' in [batchtools::submitJobs()])
+#' that should be changed relative to the current strategy.
 #'
 #' @export
 #' @importFrom future plan tweak

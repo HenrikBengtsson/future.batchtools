@@ -98,8 +98,9 @@ job name for most job schedulers).}
 (in \pkg{brew} format).  If not specified, it is left to the
 \pkg{batchtools} package to locate such file using its search rules.}
 
-\item{resources}{(optional) A named list passed to the batchtools template
-(available as variable \code{resources}).}
+\item{resources}{(optional) A named list passed to the \pkg{batchtools}
+template (available as variable \code{resources}).  See Section 'Resources'
+in \code{\link[batchtools:submitJobs]{batchtools::submitJobs()}} more details.}
 
 \item{workers}{(optional) The maximum number of workers the batchtools
 backend may use at any time.   Interactive and "local" backends can only

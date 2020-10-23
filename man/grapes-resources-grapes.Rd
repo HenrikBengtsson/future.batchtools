@@ -10,9 +10,9 @@ fassignment \%resources\% tweaks
 \item{fassignment}{The future assignment, e.g.
 \code{x \%<-\% \{ expr \}}.}
 
-\item{tweaks}{A named list (or vector) of resource
-batchtools parameters that should be changed relative to
-the current strategy.}
+\item{tweaks}{A named list (or vector) of resource \pkg{batchtools}
+parameters (see Section 'Resources' in \code{\link[batchtools:submitJobs]{batchtools::submitJobs()}})
+that should be changed relative to the current strategy.}
 }
 \description{
 Temporarily tweaks the resources for the current batchtools strategy
