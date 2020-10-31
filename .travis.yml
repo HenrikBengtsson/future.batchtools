@@ -59,7 +59,6 @@ matrix:
         - covr
       script:
         - R CMD build --no-build-vignettes --no-manual .
-      after_success:
         - Rscript -e 'covr::codecov(quiet=FALSE)'
       env: NB='w/ covr' ## Just a label
 
