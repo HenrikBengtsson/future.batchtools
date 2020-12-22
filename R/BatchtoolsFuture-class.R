@@ -146,7 +146,7 @@ as_BatchtoolsFuture <- function(future,
   future <- structure(future, class = c("BatchtoolsFuture", class(future)))
 
   ## Register finalizer?
-  if (finalize) future <- add_finalizer(future)
+  if (finalize) future <- add_finalizer(future, debug = debug)
 
   future
 }
@@ -213,6 +213,12 @@ loggedOutput <- function(...) UseMethod("loggedOutput")
 #' @export loggedOutput
 #' @importFrom batchtools getStatus
 status.BatchtoolsFuture <- function(future, ...) {
+  debug <- getOption("future.debug", FALSE)
+  if (debug) {
+    mdebug("status() for ", class(future)[1], " ...")
+    on.exit(mdebug("status() for ", class(future)[1], " ... done"), add = TRUE)
+  }
+  
   ## WORKAROUND: Avoid warnings on partially matched arguments
   get_status <- function(...) {
     ## Temporarily disable batchtools output?
@@ -248,6 +254,8 @@ status.BatchtoolsFuture <- function(future, ...) {
   if (inherits(result, "FutureResult")) {
     if (result_has_errors(result)) status <- unique(c("error", status))
   }
+
+  if (debug) mdebug("- status: ", paste(sQuote(status), collapse = ", "))
 
   status
 }
@@ -735,12 +743,23 @@ delete.BatchtoolsFuture <- function(future,
 
 add_finalizer <- function(...) UseMethod("add_finalizer")
 
-add_finalizer.BatchtoolsFuture <- function(future, ...) {
+add_finalizer.BatchtoolsFuture <- function(future, debug = FALSE, ...) {
   ## Register finalizer (will clean up registries etc.)
 
+  if (debug) {
+    mdebug("add_finalizer() for ", sQuote(class(future)[1]), " ...")
+    on.exit(mdebug("add_finalizer() for ", sQuote(class(future)[1]), " ... done"), add = TRUE)
+  }
+
   reg.finalizer(future, f = function(gcenv) {
+    if (debug) {
+      if (!exists("mdebug", mode = "function")) mdebug <- message
+      mdebug("Finalize ", sQuote(class(future)[1]), " ...")
+      on.exit(mdebug("Finalize ", sQuote(class(future)[1]), " ... done"), add = TRUE)
+    }
     if (inherits(future, "BatchtoolsFuture") &&
         "future.batchtools" %in% loadedNamespaces()) {
+      if (debug) mdebug("- attempting to delete future")
       try({
         delete(future, onRunning = "skip", onMissing = "ignore",
                onFailure = "warning")
