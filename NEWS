@@ -1,7 +1,12 @@
 Package: future.batchtools
 ==========================
 
-Version: 0.9.0-9000 [2020-12-21]
+Version: 0.9.0-9000 [2020-12-23]
+
+SIGNIFICANT CHANGES:
+
+ * Lazy batchtools futures only creates the internal batchtools registry when
+   the future is launched.
 
 DOCUMENTATION:
 

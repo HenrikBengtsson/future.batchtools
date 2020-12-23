@@ -127,28 +127,18 @@ as_BatchtoolsFuture <- function(future,
   
   stop_if_not(is.list(resources))
 
-  ## Create batchtools registry
-  reg <- temp_registry(
-    label = future$label,
+  ## batchtools configuration
+  future$config <- list(
+    reg = NULL,
+    jobid = NA_integer_,
+    resources = resources,
     conf.file = conf.file,
     cluster.functions = cluster.functions,
-    config = registry
+    registry = registry,
+    finalize = finalize
   )
-  debug <- getOption("future.debug", FALSE)
-  if (debug) mprint(reg)
 
-  ## batchtools configuration
-  config <- list(reg = reg, jobid = NA_integer_,
-                 resources = resources)
-
-  future$config <- config
-
-  future <- structure(future, class = c("BatchtoolsFuture", class(future)))
-
-  ## Register finalizer?
-  if (finalize) future <- add_finalizer(future, debug = debug)
-
-  future
+  structure(future, class = c("BatchtoolsFuture", class(future)))
 }
 
 
