@@ -165,9 +165,12 @@ print.BatchtoolsFuture <- function(x, ...) {
   ## batchtools specific
   reg <- x$config$reg
 
-  ## Type of batchtools future
-  printf("batchtools cluster functions: %s\n",
-         sQuote(reg$cluster.functions$name))
+  if (inherits(reg, "Registry")) {
+    printf("batchtools cluster functions: %s\n",
+           sQuote(reg$cluster.functions$name))
+  } else {
+    printf("batchtools cluster functions: N/A\n")
+  }
 
   ## Ask for status once
   status <- status(x)
@@ -180,10 +183,14 @@ print.BatchtoolsFuture <- function(x, ...) {
     printf("batchtools %s: Not found (happens when finished and deleted)\n",
            class(reg))
   } else {
-    printf("batchtools Registry:\n")
-    printf("  File dir exists: %s\n", file_test("-d", reg$file.dir))
-    printf("  Work dir exists: %s\n", file_test("-d", reg$work.dir))
-    try(print(reg))
+    if (inherits(reg, "Registry")) {
+      printf("batchtools Registry:\n")
+      printf("  File dir exists: %s\n", file_test("-d", reg$file.dir))
+      printf("  Work dir exists: %s\n", file_test("-d", reg$work.dir))
+      try(print(reg))
+    } else {
+      printf("batchtools Registry: N/A\n")
+    }
   }
 
   invisible(x)
@@ -286,6 +293,7 @@ loggedError.BatchtoolsFuture <- function(future, ...) {
 
   config <- future$config
   reg <- config$reg
+  if (!inherits(reg, "Registry")) return(NULL)
   jobid <- config$jobid
   res <- getErrorMessages(reg = reg, ids = jobid)  ### CHECKED
   msg <- res$message
@@ -310,6 +318,7 @@ loggedOutput.BatchtoolsFuture <- function(future, ...) {
 
   config <- future$config
   reg <- config$reg
+  if (!inherits(reg, "Registry")) return(NULL)
   jobid <- config$jobid
   getLog(id = jobid, reg = reg)
 } # loggedOutput()
@@ -400,7 +409,29 @@ run.BatchtoolsFuture <- function(future, ...) {
   ## Always evaluate in local environment
   expr <- substitute(local(expr), list(expr = expr))
 
+  ## (i) Create batchtools registry
   reg <- future$config$reg
+  stop_if_not(is.null(reg) || inherits(reg, "Registry"))
+  if (is.null(reg)) {
+    if (debug) mprint("- Creating batchtools registry")
+    config <- future$config
+    stop_if_not(is.list(config))
+    
+    ## Create batchtools registry
+    reg <- temp_registry(
+      label             = future$label,
+      conf.file         = config$conf.file,
+      cluster.functions = config$cluster.functions,
+      config            = config$registry
+    )
+    if (debug) mprint(reg)
+    future$config$reg <- reg
+
+    ## Register finalizer?
+    if (config$finalize) future <- add_finalizer(future)
+    
+    config <- NULL
+  }
   stop_if_not(inherits(reg, "Registry"))
 
   ## (ii) Attach packages that needs to be attached
@@ -522,6 +553,7 @@ await.BatchtoolsFuture <- function(future, cleanup = TRUE,
   expr <- future$expr
   config <- future$config
   reg <- config$reg
+  stop_if_not(inherits(reg, "Registry"))
   jobid <- config$jobid
 
   mdebug("batchtools::waitForJobs() ...")
@@ -641,6 +673,10 @@ delete.BatchtoolsFuture <- function(future,
   ## Identify registry
   config <- future$config
   reg <- config$reg
+  
+  ## Trying to delete a non-launched batchtools future?
+  if (!inherits(reg, "Registry")) return(invisible(TRUE))
+  
   path <- reg$file.dir
 
   ## Already deleted?
