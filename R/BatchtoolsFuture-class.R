@@ -751,19 +751,29 @@ add_finalizer.BatchtoolsFuture <- function(future, debug = FALSE, ...) {
     on.exit(mdebug("add_finalizer() for ", sQuote(class(future)[1]), " ... done"), add = TRUE)
   }
 
-  reg.finalizer(future, f = function(gcenv) {
+  reg.finalizer(future, f = function(f) {
     if (debug) {
       if (!exists("mdebug", mode = "function")) mdebug <- message
-      mdebug("Finalize ", sQuote(class(future)[1]), " ...")
-      on.exit(mdebug("Finalize ", sQuote(class(future)[1]), " ... done"), add = TRUE)
+      mdebug("Finalize ", sQuote(class(f)[1]), " ...")
+      on.exit(mdebug("Finalize ", sQuote(class(f)[1]), " ... done"), add = TRUE)
     }
-    if (inherits(future, "BatchtoolsFuture") &&
-        "future.batchtools" %in% loadedNamespaces()) {
-      if (debug) mdebug("- attempting to delete future")
-      try({
-        delete(future, onRunning = "skip", onMissing = "ignore",
-               onFailure = "warning")
+    if (inherits(f, "BatchtoolsFuture") && "future.batchtools" %in% loadedNamespaces()) {
+      if (debug) {
+        mdebug("- attempting to delete future")
+        if (requireNamespace("utils", quietly = TRUE)) {
+          mdebug(utils::capture.output(utils::str(as.list(f))))
+        }
+      }
+      res <- try({
+        delete(f, onRunning = "skip", onMissing = "ignore", onFailure = "warning")
       })
+      if (debug) {
+        if (inherits(res, "try-error")) {
+          mdebug("- Failed to delete: ", sQuote(res))
+        } else {
+          mdebug("- deleted: ", res)
+        }
+      }
     }
   }, onexit = TRUE)
 
