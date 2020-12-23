@@ -25,9 +25,9 @@ for (cleanup in c(FALSE, TRUE)) {
   ## result in the removal of batchtools registry files
 
   reg.finalizer(f, function(f) {
-    message("Garbage collection future ...")
+    message("Garbage collecting future ...")
     print(f)
-    message("Garbage collection future ... DONE")
+    message("Garbage collecting future ... DONE")
   }, onexit = TRUE)
   rm(list = "f")
   gc()
