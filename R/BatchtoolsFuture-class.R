@@ -522,7 +522,6 @@ run.BatchtoolsFuture <- function(future, ...) {
 #' and will no longer available in subsequent calls.  If called
 #' again, an error may be thrown.
 #'
-#' @export
 #' @importFrom batchtools getErrorMessages loadResult waitForJobs
 #' @importFrom utils tail
 #' @keywords internal
