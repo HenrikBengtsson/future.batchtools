@@ -67,7 +67,7 @@ troubleshoot when running in batch mode.
 options(future.cache.path = "/cluster-wide/folder/.future")
 
 # Set an environment variable:
-Sys.setenv(R_FUTURE_RNG_ONMISUSE = "/cluster-wide/folder/.future")
+Sys.setenv(R_FUTURE_CACHE_PATH = "/cluster-wide/folder/.future")
 
 }
 \keyword{internal}
