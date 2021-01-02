@@ -502,8 +502,6 @@ run.BatchtoolsFuture <- function(future, ...) {
 } ## run()
 
 
-await <- function(...) UseMethod("await")
-
 #' Awaits the value of a batchtools future
 #'
 #' @param future The future.
@@ -528,13 +526,11 @@ await <- function(...) UseMethod("await")
 #' @importFrom batchtools getErrorMessages loadResult waitForJobs
 #' @importFrom utils tail
 #' @keywords internal
-await.BatchtoolsFuture <- function(future, cleanup = TRUE,
-                                   timeout = getOption("future.wait.timeout",
-                                                       30 * 24 * 60 * 60),
-                                   delta = getOption("future.wait.interval",
-                                                     1.0),
-                                   alpha = getOption("future.wait.alpha", 1.01),
-                                   ...) {
+await <- function(future, cleanup = TRUE,
+                  timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60),
+                  delta = getOption("future.wait.interval", 1.0),
+                  alpha = getOption("future.wait.alpha", 1.01),
+                  ...) {
   stop_if_not(is.finite(timeout), timeout >= 0)
   stop_if_not(is.finite(alpha), alpha > 0)
   
