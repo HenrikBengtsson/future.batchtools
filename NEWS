@@ -8,8 +8,8 @@ SIGNIFICANT CHANGES:
  * Lazy batchtools futures only creates the internal batchtools registry when
    the future is launched.
 
- * Removed S3 generic await(), which is a function that was only used for
-   internal purposes.
+ * Removed S3 generic functions await(), finished(), and status(), which were
+   functions that were used for internal purposes.
 
 DOCUMENTATION:
 
@@ -23,8 +23,8 @@ BUG FIXES:
 
 DEPRECATED AND DEFUNCT:
 
- * Removed S3 generic await(), which is a function that was only used for
-   internal purposes.
+ * Removed S3 generic functions await(), finished(), and status(), which were
+   functions that were used for internal purposes.
 
 
 Version: 0.9.0 [2020-04-14]

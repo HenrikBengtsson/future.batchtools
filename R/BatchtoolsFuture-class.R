@@ -187,29 +187,8 @@ print.BatchtoolsFuture <- function(x, ...) {
 }
 
 
-status <- function(...) UseMethod("status")
-finished <- function(...) UseMethod("finished")
-loggedError <- function(...) UseMethod("loggedError")
-loggedOutput <- function(...) UseMethod("loggedOutput")
-
-#' Status of batchtools future
-#'
-#' @param future The future.
-#' @param \ldots Not used.
-#'
-#' @return A character vector or a logical scalar.
-#'
-#' @aliases status finished result
-#'          loggedError loggedOutput
-#' @keywords internal
-#'
-#' @export
-#' @export status
-#' @export finished
-#' @export loggedError
-#' @export loggedOutput
 #' @importFrom batchtools getStatus
-status.BatchtoolsFuture <- function(future, ...) {
+status <- function(future, ...) {
   debug <- getOption("future.debug", FALSE)
   if (debug) {
     mdebug("status() for ", class(future)[1], " ...")
@@ -258,16 +237,32 @@ status.BatchtoolsFuture <- function(future, ...) {
 }
 
 
-#' @export
-#' @keywords internal
-finished.BatchtoolsFuture <- function(future, ...) {
+finished <- function(future, ...) {
   status <- status(future)
   if (is_na(status)) return(NA)
   any(c("finished", "error", "expired") %in% status)
 }
 
-#' @export
+
+
+#' Logged output of batchtools future
+#'
+#' @param future The future.
+#' @param \ldots Not used.
+#'
+#' @return A character vector or a logical scalar.
+#'
+#' @aliases loggedOutput loggedError
+#'
+#' @export loggedError
+#' @export loggedOutput
 #' @keywords internal
+loggedOutput <- function(...) UseMethod("loggedOutput")
+loggedError <- function(...) UseMethod("loggedError")
+
+
+#' @importFrom batchtools getErrorMessages
+#' @export
 loggedError.BatchtoolsFuture <- function(future, ...) {
   stat <- status(future)
   if (is_na(stat)) return(NULL)
@@ -294,7 +289,6 @@ loggedError.BatchtoolsFuture <- function(future, ...) {
 
 #' @importFrom batchtools getLog
 #' @export
-#' @keywords internal
 loggedOutput.BatchtoolsFuture <- function(future, ...) {
   stat <- status(future)
   if (is_na(stat)) return(NULL)
@@ -502,29 +496,8 @@ run.BatchtoolsFuture <- function(future, ...) {
 } ## run()
 
 
-#' Awaits the value of a batchtools future
-#'
-#' @param future The future.
-#' @param cleanup If TRUE, the registry is completely removed upon
-#' success, otherwise not.
-#' @param timeout Total time (in seconds) waiting before generating an error.
-#' @param delta The number of seconds to wait between each poll.
-#' @param alpha A factor to scale up the waiting time in each iteration such
-#' that the waiting time in the k:th iteration is `alpha ^ k * delta`.
-#' @param \ldots Not used.
-#'
-#' @return The value of the evaluated expression.
-#' If an error occurs, an informative Exception is thrown.
-#'
-#' @details
-#' Note that `await()` should only be called once, because
-#' after being called the actual asynchronous future may be removed
-#' and will no longer available in subsequent calls.  If called
-#' again, an error may be thrown.
-#'
-#' @importFrom batchtools getErrorMessages loadResult waitForJobs
+#' @importFrom batchtools loadResult waitForJobs
 #' @importFrom utils tail
-#' @keywords internal
 await <- function(future, cleanup = TRUE,
                   timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60),
                   delta = getOption("future.wait.interval", 1.0),
