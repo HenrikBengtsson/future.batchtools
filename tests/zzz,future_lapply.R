@@ -50,7 +50,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   str(list(y0 = y0))
 
   for (strategy in strategies) {
-    mprintf("- plan('%s') ...\n", strategy, debug = TRUE)
+    mprintf("- plan('%s') ...\n", strategy)
     plan(strategy)
     mprint(plan, debug = TRUE)
     if (nbrOfWorkers() > 2) plan(strategy, workers = 2L)
@@ -74,7 +74,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   str(list(y0 = y0))
   
   for (strategy in strategies) {
-    mprintf("- plan('%s') ...\n", strategy, debug = TRUE)
+    mprintf("- plan('%s') ...\n", strategy)
     plan(strategy)
     mprint(plan, debug = TRUE)
     if (nbrOfWorkers() > 2) plan(strategy, workers = 2L)
@@ -97,7 +97,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   str(list(y0 = y0))
   
   for (strategy in strategies) {
-    mprintf("- plan('%s') ...\n", strategy, debug = TRUE)
+    mprintf("- plan('%s') ...\n", strategy)
     plan(strategy)
     mprint(plan, debug = TRUE)
     if (nbrOfWorkers() > 2) plan(strategy, workers = 2L)
@@ -131,7 +131,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   str(list(y0 = y0))
   
   for (strategy in strategies) {
-    mprintf("- plan('%s') ...\n", strategy, debug = TRUE)
+    mprintf("- plan('%s') ...\n", strategy)
     plan(strategy)
     if (nbrOfWorkers() > 2) plan(strategy, workers = 2L)
     stopifnot(nbrOfWorkers() < Inf)

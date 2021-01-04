@@ -64,7 +64,7 @@ x <- listenv()
 for (ii in 1:2) {
   x[[ii]] <- batchtools_custom({ ii }, globals = TRUE, cluster.functions = cf)
 }
-v <- unlist(values(x))
+v <- unlist(value(x))
 stopifnot(all(v == 1:2))  ## Make sure globals are frozen
 
 

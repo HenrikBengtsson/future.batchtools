@@ -1,10 +1,23 @@
 ## Record original state
 ovars <- ls()
+oenvs <- oenvs0 <- Sys.getenv()
+oopts0 <- options()
+
+covr_testing <- ("covr" %in% loadedNamespaces())
+on_solaris <- grepl("^solaris", R.version$os)
+on_macos <- grepl("^darwin", R.version$os)
+on_githubactions <- as.logical(Sys.getenv("GITHUB_ACTIONS", "FALSE"))
+
+## Default options
 oopts <- options(
   warn = 1L,
   mc.cores = 2L,
   future.debug = FALSE,
-  future.wait.interval = 0.1  ## Speed up await() and delete()
+  future.wait.interval = 0.1,  ## Speed up await() and delete()
+  ## Reset the following during testing in case
+  ## they are set on the test system
+  future.availableCores.system = NULL,
+  future.availableCores.fallback = NULL
 )
 oopts$future.delete <- getOption("future.delete")
 oplan <- future::plan()

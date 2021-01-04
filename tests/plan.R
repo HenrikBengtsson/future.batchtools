@@ -39,17 +39,30 @@ for (type in c("batchtools_interactive", "batchtools_local")) {
   }
   plan(type, registry = list(work.dir = NULL))
   f <- future(42, lazy = TRUE)
-  utils::str(list(normalize_path(f$config$reg$work.dir), getwd = getwd()))
-  stopifnot(normalize_path(f$config$reg$work.dir) == getwd())
+  ## In future releases, lazy futures may stay vanilla Future objects
+  if (inherits(f, "BatchtoolsFuture")) {
+    if (!is.null(f$config$reg)) {
+      utils::str(list(
+        normalize_path(f$config$reg$work.dir),
+        getwd = getwd()
+      ))
+      stopifnot(normalize_path(f$config$reg$work.dir) == getwd())
+    }
+  }
 
   path <- tempdir()
   plan(type, registry = list(work.dir = path))
   f <- future(42, lazy = TRUE)
-  utils::str(list(
-    normalizePath(f$config$reg$work.dir),
-    path = normalizePath(path)
-  ))
-  stopifnot(normalize_path(f$config$reg$work.dir) == normalize_path(path))
+  ## In future releases, lazy futures may stay vanilla Future objects
+  if (inherits(f, "BatchtoolsFuture")) {
+    if (!is.null(f$config$reg)) {
+      utils::str(list(
+        normalize_path(f$config$reg$work.dir),
+        path = normalize_path(path)
+      ))
+      stopifnot(normalize_path(f$config$reg$work.dir) == normalize_path(path))
+    }
+  }
 
   mprintf("*** plan('%s') ... DONE\n", type)
 } # for (type ...)

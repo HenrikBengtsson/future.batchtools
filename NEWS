@@ -1,6 +1,32 @@
 Package: future.batchtools
 ==========================
 
+Version: 0.10.0 [2021-01-02]
+
+SIGNIFICANT CHANGES:
+
+ * Lazy batchtools futures only creates the internal batchtools registry when
+   the future is launched.
+
+ * Removed S3 generic functions await(), finished(), and status(), which were
+   functions that were used for internal purposes.
+
+DOCUMENTATION:
+
+ * Document option 'future.delete' and clarify option 'future.cache.path'
+   in help("future.batchtools.options").
+
+BUG FIXES:
+
+ * If run() was called twice for a BatchtoolsFuture, it would not produce
+   a FutureError but only a regular non-classed error.
+
+DEPRECATED AND DEFUNCT:
+
+ * Removed S3 generic functions await(), finished(), and status(), which were
+   functions that were used for internal purposes.
+
+
 Version: 0.9.0 [2020-04-14]
 
 SIGNIFICANT CHANGES:
@@ -27,7 +53,7 @@ NEW FEATURES:
    available on all workers on a shared file system, e.g. plan(batchtools_nnn,
    registry = list(work.dir = "~")).
 
- * It is possible to control if and how batchtools should use file compressions
+ * It is possible to control if and how batchtools should use file compression
    for exported globals and results by specifying batchtools registry parameter
    'compress'.  For example, to turn off file compression, use
    plan(batchtools_nnn, registry = list(compress = FALSE)).
@@ -112,8 +138,8 @@ BUG FIXES:
  * A bug was introduced in future.batchtools 0.7.0 that could result in "Error 
    in readLog(id, reg = reg) : Log file for job with id 1 not available" when
    using one of the batchtools backends.  It occurred when the value was
-   queried.  It was observered using 'batchtools_torque' but not when using
-   'batchools_local'.  This bug was missed because the 0.7.0 release was not
+   queried.  It was observed using 'batchtools_torque' but not when using
+   'batchtools_local'.  This bug was missed because the 0.7.0 release was not
    tested on an TORQUE/PBS HPC scheduler as it should have.
 
 

@@ -18,9 +18,6 @@ for (strategy in strategies) {
   ## In future (> 1.14.0), resolved() will launch lazy future,
   ## which means for some backends (e.g. sequential) this means
   ## that resolved() might end up returning TRUE.
-  if (packageVersion("future") <= "1.14.0") {
-    stopifnot(!resolved(f))
-  }
   f <- resolve(f)
   stopifnot(resolved(f))
   v <- value(f)
@@ -33,9 +30,6 @@ for (strategy in strategies) {
   ## In future (> 1.14.0), resolved() will launch lazy future,
   ## which means for some backends (e.g. sequential) this means
   ## that resolved() might end up returning TRUE.
-  if (packageVersion("future") <= "1.14.0") {
-    stopifnot(!resolved(f))
-  }
   f <- resolve(f)
   stopifnot(resolved(f))
   stopifnot(v == 84)

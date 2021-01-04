@@ -64,10 +64,10 @@ library("future")
 library("listenv")
 ## The first level of futures should be submitted to the
 ## cluster using batchtools.  The second level of futures
-## should be using multiprocessing, where the number of
+## should be using multisession, where the number of
 ## parallel processes is automatically decided based on
 ## what the cluster grants to each compute node.
-plan(list(batchtools_torque, multiprocess))
+plan(list(batchtools_torque, multisession))
 
 ## Find all samples (one FASTQ file per sample)
 fqs <- dir(pattern = "[.]fastq$")
@@ -96,11 +96,11 @@ bams <- as.list(bams)
 ```
 Note that a user who do not have access to a cluster could use the same script processing samples sequentially and chromosomes in parallel on a single machine using:
 ```r
-plan(list(sequential, multiprocess))
+plan(list(sequential, multisession))
 ```
 or samples in parallel and chromosomes sequentially using:
 ```r
-plan(list(multiprocess, sequential))
+plan(list(multisession, sequential))
 ```
 
 For an introduction as well as full details on how to use futures,
@@ -177,10 +177,10 @@ To specify the `resources` argument at the same time as using nested future stra
 ```r
 plan(list(
   tweak(batchtools_torque, resources = list(nodes = "1:ppn=12", vmem = "5gb")),
-  multiprocess
+  multisession
 ))
 ```
-causes the first level of futures to be submitted via the TORQUE job scheduler requesting 12 cores and 5 GiB of memory per job.  The second level of futures will be evaluated using multiprocessing using the 12 cores given to each job by the scheduler.
+causes the first level of futures to be submitted via the TORQUE job scheduler requesting 12 cores and 5 GiB of memory per job.  The second level of futures will be evaluated using multisession using the 12 cores given to each job by the scheduler.
 
 A similar filename format is used for the other types of job schedulers supported.  For instance, for Slurm the template file should be named `./batchtools.slurm.tmpl` or `~/.batchtools.slurm.tmpl` in order for
 ```r

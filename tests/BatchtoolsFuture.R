@@ -35,8 +35,10 @@ f <- BatchtoolsFuture({ x <- 1 })
 
 ## Hack to emulate where batchtools registry is deleted or fails
 f$state <- "running"
-path <- f$config$reg$file.dir
-unlink(path, recursive = TRUE)
+if (!is.null(f$config$reg)) {
+  path <- f$config$reg$file.dir
+  unlink(path, recursive = TRUE)
+}
 
 res <- tryCatch({
   value(f)
@@ -54,20 +56,6 @@ stopifnot(inherits(res, "error"))
 message("*** BatchtoolsFuture() - registry exceptions ... DONE")
 
 message("*** BatchtoolsFuture() - exceptions ...")
-
-f <- BatchtoolsFuture({ 42L })
-res <- tryCatch({
-  loggedError(f)
-}, error = function(ex) ex)
-print(res)
-stopifnot(inherits(res, "error"))
-
-f <- BatchtoolsFuture({ 42L })
-res <- tryCatch({
-  loggedOutput(f)
-}, error = function(ex) ex)
-print(res)
-stopifnot(inherits(res, "error"))
 
 res <- try(f <- BatchtoolsFuture(42L, workers = integer(0)), silent = TRUE)
 print(res)
