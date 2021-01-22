@@ -64,3 +64,4 @@ batchtools_multicore <- function(expr, envir = parent.frame(),
 }
 class(batchtools_multicore) <- c("batchtools_multicore", "batchtools",
                                  "multiprocess", "future", "function")
+attr(batchtools_multicore, "tweakable") <- c("finalize")

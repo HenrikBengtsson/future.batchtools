@@ -47,6 +47,7 @@ batchtools_lsf <- function(expr, envir = parent.frame(), substitute = TRUE,
 class(batchtools_lsf) <- c("batchtools_lsf", "batchtools_template",
                            "batchtools", "multiprocess", "future",
                            "function")
+attr(batchtools_lsf, "tweakable") <- c("finalize")
 
 #' @export
 #' @rdname batchtools_template
@@ -65,6 +66,7 @@ batchtools_openlava <- function(expr, envir = parent.frame(), substitute = TRUE,
 class(batchtools_openlava) <- c("batchtools_openlava", "batchtools_template",
                                 "batchtools", "multiprocess", "future",
                                 "function")
+attr(batchtools_openlava, "tweakable") <- c("finalize")
 
 #' @export
 #' @rdname batchtools_template
@@ -83,6 +85,7 @@ batchtools_sge <- function(expr, envir = parent.frame(), substitute = TRUE,
 class(batchtools_sge) <- c("batchtools_sge", "batchtools_template",
                            "batchtools", "multiprocess", "future",
                            "function")
+attr(batchtools_sge, "tweakable") <- c("finalize")
 
 #' @export
 #' @rdname batchtools_template
@@ -101,6 +104,7 @@ batchtools_slurm <- function(expr, envir = parent.frame(), substitute = TRUE,
 class(batchtools_slurm) <- c("batchtools_slurm", "batchtools_template",
                              "batchtools", "multiprocess", "future",
                              "function")
+attr(batchtools_slurm, "tweakable") <- c("finalize")
 
 #' @export
 #' @rdname batchtools_template
@@ -119,6 +123,7 @@ batchtools_torque <- function(expr, envir = parent.frame(), substitute = TRUE,
 class(batchtools_torque) <- c("batchtools_torque", "batchtools_template",
                               "batchtools", "multiprocess", "future",
                               "function")
+attr(batchtools_torque, "tweakable") <- c("finalize")
 
 #' @importFrom batchtools findTemplateFile
 #' @importFrom batchtools makeClusterFunctionsLSF
