@@ -25,3 +25,4 @@ batchtools_interactive <- function(expr, envir = parent.frame(),
 class(batchtools_interactive) <- c("batchtools_interactive", "batchtools",
                                    "uniprocess", "future", "function")
 attr(batchtools_interactive, "tweakable") <- c("finalize")
+attr(batchtools_interactive, "untweakable") <- c("workers")

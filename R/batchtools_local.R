@@ -56,3 +56,4 @@ batchtools_local <- function(expr, envir = parent.frame(), substitute = TRUE,
 class(batchtools_local) <- c("batchtools_local", "batchtools", "uniprocess",
                              "future", "function")
 attr(batchtools_local, "tweakable") <- c("finalize")
+attr(batchtools_local, "untweakable") <- c("workers")
