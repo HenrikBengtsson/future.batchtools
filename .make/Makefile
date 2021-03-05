@@ -286,7 +286,7 @@ check_Rex:
 
 
 covr:
-	$(R_SCRIPT) -e "source('.covr.R'); covr::shine(covr)"
+	$(R_SCRIPT) -e "c <- covr::package_coverage(quiet = FALSE); saveRDS(c, '.covr.rds'); print(c); covr::report(c)"
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -491,3 +491,10 @@ appveyor.yml: .make/appveyor.yml.rsp
 	$(R_SCRIPT) -e "R.rsp::rfile('$<', postprocess=FALSE)"
 
 config: .travis.yml appveyor.yml README.md
+
+## Include any other Makefile.*, if they exists
+INCLUDES := $(wildcard .make/Makefile.*)
+ifneq ($(strip $(INCLUDES)),)
+  include $(INCLUDES)
+endif
+
