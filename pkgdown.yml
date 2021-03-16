@@ -1,7 +1,7 @@
 pandoc: 1.19.2.4
-pkgdown: 1.6.1
-pkgdown_sha: ~
+pkgdown: 1.6.1.9000
+pkgdown_sha: ae4332d48aedc46be2b532b26661a9bc6b7244fc
 articles:
   future.batchtools: future.batchtools.html
-last_built: 2021-03-10T21:42Z
+last_built: 2021-03-16T03:56Z
 

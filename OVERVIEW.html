@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FutureError class for errors related to BatchtoolsFuture:s — BatchtoolsFutureError • future.batchtools</title>
+<title>NA • future.batchtools</title>
 
 
 <!-- jquery -->
@@ -18,8 +18,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
-<link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script>
+<link rel="stylesheet" href="bootstrap-toc.css">
+<script src="bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
@@ -33,14 +33,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script>
+<link href="pkgdown.css" rel="stylesheet">
+<script src="pkgdown.js"></script>
 
 
 
 
-<meta property="og:title" content="FutureError class for errors related to BatchtoolsFuture:s — BatchtoolsFutureError" />
-<meta property="og:description" content="FutureError class for errors related to BatchtoolsFuture:s" />
+<meta property="og:title" content="NA" />
 
 
 
@@ -67,7 +66,7 @@
   <body data-spy="scroll" data-target="#toc">
     
 
-    <div class="container template-reference-topic">
+    <div class="container template-title-body">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -79,7 +78,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">future.batchtools</a>
+        <a class="navbar-link" href="index.html">future.batchtools</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0-9000</span>
       </span>
     </div>
@@ -87,7 +86,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -97,12 +96,12 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/future.batchtools.html">A Future for batchtools</a>
+      <a href="articles/future.batchtools.html">A Future for batchtools</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -123,36 +122,45 @@
       </header>
 
 <div class="row">
-  <div class="col-md-9 contents">
+  <div class="contents col-md-9">
     <div class="page-header">
-    <h1>FutureError class for errors related to BatchtoolsFuture:s</h1>
-    <small class="dont-index">Source: <a href='https://github.com/HenrikBengtsson/future.batchtools/blob/master/R/BatchtoolsFutureError.R'><code>R/BatchtoolsFutureError.R</code></a></small>
-    <div class="hidden name"><code>BatchtoolsFutureError.Rd</code></div>
+      <h1>NA</h1>
     </div>
 
-    <div class="ref-description">
-    <p>FutureError class for errors related to BatchtoolsFuture:s</p>
-    </div>
 
-    <pre class="usage"><span class='fu'>BatchtoolsFutureError</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>...</th>
-      <td><p>Arguments passed to <a href='https://rdrr.io/pkg/future/man/FutureCondition.html'>FutureError</a>.</p></td>
-    </tr>
-    </table>
+<p>&lt;%</p>
+<div id="reuse-the-future-vignette" class="section level2">
+<h2 class="hasAnchor">
+<a href="#reuse-the-future-vignette" class="anchor"></a>Reuse the future vignette</h2>
+<p>md &lt;- R.rsp::rstring(file=“vignettes/future.batchtools.md.rsp”, postprocess=FALSE)</p>
+</div>
+<div id="drop-the-header-i-e-anything-before-the-first-h2-header" class="section level2">
+<h2 class="hasAnchor">
+<a href="#drop-the-header-i-e-anything-before-the-first-h2-header" class="anchor"></a>Drop the header, i.e. anything before the first “H2” header</h2>
+<p>md &lt;- unlist(strsplit(md, split=“\n”, fixed=TRUE)) row &lt;- grep(“^##”, md)[1] if (!is.na(row)) md &lt;- md[-seq_len(row-1)]</p>
+</div>
+<div id="drop-the-footer-i-e-anything-after-the-first-horizontal-line" class="section level2">
+<h2 class="hasAnchor">
+<a href="#drop-the-footer-i-e-anything-after-the-first-horizontal-line" class="anchor"></a>Drop the footer, i.e. anything after the first horizontal line</h2>
+<p>row &lt;- grep(“^—”, md)[1] if (!is.na(row)) md &lt;- md[seq_len(row-1)]</p>
+</div>
+<div id="output" class="section level2">
+<h2 class="hasAnchor">
+<a href="#output" class="anchor"></a>Output</h2>
+<p>cat(md, sep=“\n”) %&gt;</p>
+</div>
 
 
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
+
 </div>
+
 
 
       <footer>
