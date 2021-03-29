@@ -9,8 +9,7 @@
 
 </div>
 
-
-# future.batchtools: A Future API for Parallel and Distributed Processing using 'batchtools'
+# future.batchtools: A Future API for Parallel and Distributed Processing using 'batchtools' 
 
 ## Introduction
 The [future] package provides a generic API for using futures in R.
