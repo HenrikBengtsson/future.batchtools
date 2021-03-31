@@ -31,7 +31,7 @@ loaded via a namespace (and not attached):
 [22] fastmap_1.1.0       withr_2.4.1         httr_1.4.2         
 [25] knitr_1.31          xml2_1.3.2          systemfonts_1.0.1  
 [28] rappdirs_0.3.3      hms_1.0.0           desc_1.3.0         
-[31] fs_1.5.0            vctrs_0.3.6         globals_0.14.0-9000
+[31] fs_1.5.0            vctrs_0.3.7         globals_0.14.0-9000
 [34] rprojroot_2.0.2     data.table_1.14.0   glue_1.4.2         
 [37] listenv_0.8.0-9000  R6_2.5.0            textshaping_0.3.3  
 [40] fansi_0.4.2         parallelly_1.24.0   base64url_1.4      
