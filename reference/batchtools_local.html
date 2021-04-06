@@ -297,27 +297,27 @@ and batchtools interactive futures on the one set up by
 <code><a href='https://rdrr.io/pkg/batchtools/man/makeClusterFunctionsInteractive.html'>batchtools::makeClusterFunctionsInteractive()</a></code>.
 These are supported by all operating systems.</p>
 <p>An alternative to batchtools local futures is to use
-<a href='https://rdrr.io/pkg/future/man/cluster.html'>cluster</a> futures of the <span class="pkg">future</span>
+<a href='https://future.futureverse.org/reference/cluster.html'>cluster</a> futures of the <span class="pkg">future</span>
 package with a single local background session, i.e.
-<code><a href='https://rdrr.io/pkg/future/man/plan.html'>plan(cluster, workers = "localhost")</a></code>.</p>
+<code><a href='https://future.futureverse.org/reference/plan.html'>plan(cluster, workers = "localhost")</a></code>.</p>
 <p>An alternative to batchtools interactive futures is to use
-<a href='https://rdrr.io/pkg/future/man/sequential.html'>transparent</a> futures of the
+<a href='https://future.futureverse.org/reference/sequential.html'>transparent</a> futures of the
 <span class="pkg">future</span> package.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Use local batchtools futures</span>
-<span class='fu'><a href='https://rdrr.io/pkg/future/man/plan.html'>plan</a></span><span class='op'>(</span><span class='va'>batchtools_local</span><span class='op'>)</span>
+<span class='fu'><a href='https://future.futureverse.org/reference/plan.html'>plan</a></span><span class='op'>(</span><span class='va'>batchtools_local</span><span class='op'>)</span>
 
 <span class='co'>## A global variable</span>
 <span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
 
 <span class='co'>## Create explicit future</span>
-<span class='va'>f</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/future/man/future.html'>future</a></span><span class='op'>(</span><span class='op'>{</span>
+<span class='va'>f</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://future.futureverse.org/reference/future.html'>future</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fl'>3</span>
   <span class='va'>c</span> <span class='op'>&lt;-</span> <span class='fl'>2</span>
   <span class='va'>a</span> <span class='op'>*</span> <span class='va'>b</span> <span class='op'>*</span> <span class='va'>c</span>
 <span class='op'>}</span><span class='op'>)</span>
-<span class='va'>v</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/future/man/value.html'>value</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>
+<span class='va'>v</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://future.futureverse.org/reference/value.html'>value</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 6</div><div class='input'>
 

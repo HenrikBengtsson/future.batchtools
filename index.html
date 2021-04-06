@@ -174,14 +174,14 @@
 <p>This is obviously a toy example to illustrate what futures look like and how to work with them.</p>
 <p>A more realistic example comes from the field of cancer research where very large data FASTQ files, which hold a large number of short DNA sequence reads, are produced. The first step toward a biological interpretation of these data is to align the reads in each sample (one FASTQ file) toward the human genome. In order to speed this up, we can have each file be processed by a separate compute node and each node we can use 24 parallel processes such that each process aligns a separate chromosome. Here is an outline of how this nested parallelism could be implemented using futures.</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/HenrikBengtsson/future" class="external-link">"future"</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://future.futureverse.org" class="external-link">"future"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/HenrikBengtsson/listenv" class="external-link">"listenv"</a></span><span class="op">)</span>
 <span class="co">## The first level of futures should be submitted to the</span>
 <span class="co">## cluster using batchtools.  The second level of futures</span>
 <span class="co">## should be using multisession, where the number of</span>
 <span class="co">## parallel processes is automatically decided based on</span>
 <span class="co">## what the cluster grants to each compute node.</span>
-<span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">batchtools_torque</span>, <span class="va">multisession</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">batchtools_torque</span>, <span class="va">multisession</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">## Find all samples (one FASTQ file per sample)</span>
 <span class="va">fqs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">dir</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"[.]fastq$"</span><span class="op">)</span>
@@ -209,10 +209,10 @@
 <span class="va">bams</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">bams</span><span class="op">)</span></code></pre></div>
 <p>Note that a user who do not have access to a cluster could use the same script processing samples sequentially and chromosomes in parallel on a single machine using:</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">sequential</span>, <span class="va">multisession</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">sequential</span>, <span class="va">multisession</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>or samples in parallel and chromosomes sequentially using:</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">multisession</span>, <span class="va">sequential</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">multisession</span>, <span class="va">sequential</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>For an introduction as well as full details on how to use futures, please consult the package vignettes of the <a href="https://cran.r-project.org/package=future" class="external-link">future</a> package.</p>
 </div>
 <div id="choosing-batchtools-backend" class="section level2">
@@ -264,17 +264,17 @@
 <tr class="odd">
 <td align="left"><code>batchtools_interactive</code></td>
 <td align="left">sequential evaluation in the calling R environment</td>
-<td align="left"><code><a href="https://rdrr.io/pkg/future/man/plan.html" class="external-link">plan(transparent)</a></code></td>
+<td align="left"><code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan(transparent)</a></code></td>
 </tr>
 <tr class="even">
 <td align="left"><code>batchtools_multicore</code></td>
 <td align="left">parallel evaluation by forking the current R process</td>
-<td align="left"><code><a href="https://rdrr.io/pkg/future/man/plan.html" class="external-link">plan(multicore)</a></code></td>
+<td align="left"><code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan(multicore)</a></code></td>
 </tr>
 <tr class="odd">
 <td align="left"><code>batchtools_local</code></td>
 <td align="left">sequential evaluation in a separate R process (on current machine)</td>
-<td align="left"><code><a href="https://rdrr.io/pkg/future/man/plan.html" class="external-link">plan(cluster, workers = "localhost")</a></code></td>
+<td align="left"><code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan(cluster, workers = "localhost")</a></code></td>
 </tr>
 </tbody>
 </table>
@@ -311,10 +311,10 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">plan</span>(batchtools_torque)</code></pre></div>
 <p>Resource parameters can be specified via argument <code>resources</code> which should be a named list and is passed as is to the template file. For example, to request that each job would get alloted 12 cores (one a single machine) and up to 5 GiB of memory, use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">plan</span>(batchtools_torque, <span class="dt">resources =</span> <span class="kw">list</span>(<span class="dt">nodes =</span> <span class="st">"1:ppn=12"</span>, <span class="dt">vmem =</span> <span class="st">"5gb"</span>))</code></pre></div>
-<p>To specify the <code>resources</code> argument at the same time as using nested future strategies, one can use <code><a href="https://rdrr.io/pkg/future/man/tweak.html" class="external-link">tweak()</a></code> to tweak the default arguments. For instance,</p>
+<p>To specify the <code>resources</code> argument at the same time as using nested future strategies, one can use <code><a href="https://future.futureverse.org/reference/tweak.html" class="external-link">tweak()</a></code> to tweak the default arguments. For instance,</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/future/man/tweak.html" class="external-link">tweak</a></span><span class="op">(</span><span class="va">batchtools_torque</span>, resources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>nodes <span class="op">=</span> <span class="st">"1:ppn=12"</span>, vmem <span class="op">=</span> <span class="st">"5gb"</span><span class="op">)</span><span class="op">)</span>,
+<code class="sourceCode R"><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://future.futureverse.org/reference/tweak.html" class="external-link">tweak</a></span><span class="op">(</span><span class="va">batchtools_torque</span>, resources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>nodes <span class="op">=</span> <span class="st">"1:ppn=12"</span>, vmem <span class="op">=</span> <span class="st">"5gb"</span><span class="op">)</span><span class="op">)</span>,
   <span class="va">multisession</span>
 <span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>causes the first level of futures to be submitted via the TORQUE job scheduler requesting 12 cores and 5 GiB of memory per job. The second level of futures will be evaluated using multisession using the 12 cores given to each job by the scheduler.</p>
@@ -330,8 +330,8 @@
 <a href="#demos" class="anchor"></a>Demos</h2>
 <p>The <a href="https://cran.r-project.org/package=future" class="external-link">future</a> package provides a demo using futures for calculating a set of Mandelbrot planes. The demo does not assume anything about what type of futures are used. <em>The user has full control of how futures are evaluated</em>. For instance, to use local batchtools futures, run the demo as:</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/HenrikBengtsson/future.batchtools" class="external-link">"future.batchtools"</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">batchtools_local</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://future.batchtools.futureverse.org">"future.batchtools"</a></span><span class="op">)</span>
+<span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">batchtools_local</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/demo.html" class="external-link">demo</a></span><span class="op">(</span><span class="st">"mandelbrot"</span>, package <span class="op">=</span> <span class="st">"future"</span>, ask <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="installation" class="section level2">
@@ -362,6 +362,8 @@
 <li>Browse source code at <br><a href="https://github.com/HenrikBengtsson/future.batchtools/">https://​github.com/​HenrikBengtsson/​future.batchtools/​</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/HenrikBengtsson/future.batchtools/issues">https://​github.com/​HenrikBengtsson/​future.batchtools/​issues</a>
+</li>
+<li>Roadmap/Milestones at <br><a href="https://github.com/HenrikBengtsson/future.batchtools/milestones">https://​github.com/​HenrikBengtsson/​future.batchtools/​milestones</a>
 </li>
 <li>The Futureverse Project at <br><a href="https://www.futureverse.org/">https://​www.futureverse.org/​</a>
 </li>
