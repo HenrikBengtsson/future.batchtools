@@ -34,7 +34,7 @@ loaded via a namespace (and not attached):
 [31] fs_1.5.0               vctrs_0.3.7            globals_0.14.0-9000   
 [34] rprojroot_2.0.2        data.table_1.14.0      glue_1.4.2            
 [37] listenv_0.8.0-9000     R6_2.5.0               textshaping_0.3.3     
-[40] fansi_0.4.2            parallelly_1.24.0-9001 base64url_1.4         
+[40] parallelly_1.24.0-9001 fansi_0.4.2            base64url_1.4         
 [43] rmarkdown_2.7          purrr_0.3.4            magrittr_2.0.1        
 [46] whisker_0.4            backports_1.2.1        batchtools_0.9.15     
 [49] codetools_0.2-18       ellipsis_0.3.1         htmltools_0.5.1.1     
