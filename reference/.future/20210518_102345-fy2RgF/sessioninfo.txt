@@ -1,4 +1,4 @@
-R version 4.1.0 RC (2021-05-10 r80282)
+R version 4.1.0 Patched (2021-05-18 r80320)
 Platform: x86_64-pc-linux-gnu (64-bit)
 Running under: Ubuntu 18.04.5 LTS
 
