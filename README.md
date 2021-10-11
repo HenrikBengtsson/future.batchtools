@@ -1,7 +1,7 @@
 
 
 <div id="badges"><!-- pkgdown markup -->
-<a href="https://CRAN.R-project.org/web/checks/check_results_future.batchtools.html"><img border="0" src="https://www.r-pkg.org/badges/version/future.batchtools" alt="CRAN check status"/></a> <a href="https://github.com/HenrikBengtsson/future.batchtools/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/HenrikBengtsson/future.batchtools/workflows/R-CMD-check/badge.svg?branch=develop" alt="Build status"/></a> <a href="https://travis-ci.org/HenrikBengtsson/future.batchtools"><img border="0" src="https://travis-ci.org/HenrikBengtsson/future.batchtools.svg" alt="Build status"/></a> <a href="https://ci.appveyor.com/project/HenrikBengtsson/future-batchtools"><img border="0" src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/future.batchtools?svg=true" alt="Build status"/></a> <a href="https://codecov.io/gh/HenrikBengtsson/future.batchtools"><img border="0" src="https://codecov.io/gh/HenrikBengtsson/future.batchtools/branch/develop/graph/badge.svg" alt="Coverage Status"/></a> 
+<a href="https://CRAN.R-project.org/web/checks/check_results_future.batchtools.html"><img border="0" src="https://www.r-pkg.org/badges/version/future.batchtools" alt="CRAN check status"/></a> <a href="https://github.com/HenrikBengtsson/future.batchtools/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/HenrikBengtsson/future.batchtools/actions/workflows/R-CMD-check.yaml/badge.svg?branch=develop" alt="R CMD check status"/></a>    <a href="https://codecov.io/gh/HenrikBengtsson/future.batchtools"><img border="0" src="https://codecov.io/gh/HenrikBengtsson/future.batchtools/branch/develop/graph/badge.svg" alt="Coverage Status"/></a> 
 </div>
 
 # future.batchtools: A Future API for Parallel and Distributed Processing using 'batchtools' 
@@ -226,4 +226,4 @@ This will install the package from source.
 ## Contributing
 
 To contribute to this package, please see [CONTRIBUTING.md](CONTRIBUTING.md).
- 
+
