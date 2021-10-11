@@ -21,5 +21,4 @@
 revdep/data.sqlite
 revdep/checks/*
 revdep/library/*
-.github/
 docs/
