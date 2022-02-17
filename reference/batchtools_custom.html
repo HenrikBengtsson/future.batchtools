@@ -45,7 +45,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://www.futureverse.org/">
+  <a href="https://www.futureverse.org/" class="external-link">
     <span class="fas fa-fast-backward"></span>
      
   </a>
@@ -57,56 +57,56 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="https://BiocParallel.FutureParam.futureverse.org">BiocParallel.FutureParam</a>
+      <a href="https://BiocParallel.FutureParam.futureverse.org" class="external-link">BiocParallel.FutureParam</a>
     </li>
     <li>
-      <a href="https://doFuture.futureverse.org">doFuture</a>
+      <a href="https://doFuture.futureverse.org" class="external-link">doFuture</a>
     </li>
     <li>
-      <a href="https://furrr.futureverse.org">furrr</a>
+      <a href="https://furrr.futureverse.org" class="external-link">furrr</a>
     </li>
     <li>
-      <a href="https://future.futureverse.org">future</a>
+      <a href="https://future.futureverse.org" class="external-link">future</a>
     </li>
     <li>
-      <a href="https://future.apply.futureverse.org">future.apply</a>
+      <a href="https://future.apply.futureverse.org" class="external-link">future.apply</a>
     </li>
     <li>
       <a href="https://future.batchtools.futureverse.org">future.batchtools</a>
     </li>
     <li>
-      <a href="https://future.callr.futureverse.org">future.callr</a>
+      <a href="https://future.callr.futureverse.org" class="external-link">future.callr</a>
     </li>
     <li>
-      <a href="https://future.tests.futureverse.org">future.tests</a>
+      <a href="https://future.tests.futureverse.org" class="external-link">future.tests</a>
     </li>
     <li>
-      <a href="https://globals.futureverse.org">globals</a>
+      <a href="https://globals.futureverse.org" class="external-link">globals</a>
     </li>
     <li>
-      <a href="https://listenv.futureverse.org">listenv</a>
+      <a href="https://listenv.futureverse.org" class="external-link">listenv</a>
     </li>
     <li>
-      <a href="https://parallelly.futureverse.org">parallelly</a>
+      <a href="https://parallelly.futureverse.org" class="external-link">parallelly</a>
     </li>
     <li>
-      <a href="https://progressr.futureverse.org">progressr</a>
+      <a href="https://progressr.futureverse.org" class="external-link">progressr</a>
     </li>
     <li>
-      <a href="https://future.mapreduce.futureverse.org">future.mapreduce (experimental)</a>
+      <a href="https://future.mapreduce.futureverse.org" class="external-link">future.mapreduce (experimental)</a>
     </li>
     <li>
-      <a href="https://marshal.futureverse.org">marshal (experimental)</a>
+      <a href="https://marshal.futureverse.org" class="external-link">marshal (experimental)</a>
     </li>
   </ul></li>
 <li>
-  <a href="https://cloud.r-project.org/package=future.batchtools">
+  <a href="https://cloud.r-project.org/package=future.batchtools" class="external-link">
     <span class="fab fa-r-project"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/HenrikBengtsson/future.batchtools/">
+  <a href="https://github.com/HenrikBengtsson/future.batchtools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -126,7 +126,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Batchtools futures for custom batchtools configuration</h1>
-    <small class="dont-index">Source: <a href="https://github.com/HenrikBengtsson/future.batchtools/blob/master/R/batchtools_custom.R"><code>R/batchtools_custom.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/HenrikBengtsson/future.batchtools/blob/HEAD/R/batchtools_custom.R" class="external-link"><code>R/batchtools_custom.R</code></a></small>
     <div class="hidden name"><code>batchtools_custom.Rd</code></div>
     </div>
 
@@ -134,81 +134,87 @@
     <p>Batchtools futures for custom batchtools configuration</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">batchtools_custom</span><span class="op">(</span>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">batchtools_custom</span><span class="op">(</span>
   <span class="va">expr</span>,
-  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,
+  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,
   substitute <span class="op">=</span> <span class="cn">TRUE</span>,
   globals <span class="op">=</span> <span class="cn">TRUE</span>,
   label <span class="op">=</span> <span class="cn">NULL</span>,
-  resources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>,
+  resources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
   workers <span class="op">=</span> <span class="cn">NULL</span>,
   conf.file <span class="op">=</span> <span class="fu">findConfFile</span><span class="op">(</span><span class="op">)</span>,
   cluster.functions <span class="op">=</span> <span class="cn">NULL</span>,
-  registry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>,
+  registry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
+    </div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>expr</th>
-      <td><p>The R expression to be evaluated</p></td>
-    </tr><tr><th>envir</th>
-      <td><p>The environment in which global environment
-should be located.</p></td>
-    </tr><tr><th>substitute</th>
-      <td><p>Controls whether <code>expr</code> should be
-<code><a href="https://rdrr.io/r/base/substitute.html">substitute()</a></code>:d or not.</p></td>
-    </tr><tr><th>globals</th>
-      <td><p>(optional) a logical, a character vector, a named list, or a
-<a href="https://rdrr.io/pkg/globals/man/Globals.html">Globals</a> object.  If TRUE, globals are identified by code
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>expr</dt>
+<dd><p>The R expression to be evaluated</p></dd>
+<dt>envir</dt>
+<dd><p>The environment in which global environment
+should be located.</p></dd>
+<dt>substitute</dt>
+<dd><p>Controls whether <code>expr</code> should be
+<code><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute()</a></code>:d or not.</p></dd>
+<dt>globals</dt>
+<dd><p>(optional) a logical, a character vector, a named list, or a
+<a href="https://rdrr.io/pkg/globals/man/Globals.html" class="external-link">Globals</a> object.  If TRUE, globals are identified by code
 inspection based on <code>expr</code> and <code>tweak</code> searching from environment
 <code>envir</code>.  If FALSE, no globals are used.  If a character vector, then
 globals are identified by lookup based their names <code>globals</code> searching
 from environment <code>envir</code>.  If a named list or a Globals object, the
-globals are used as is.</p></td>
-    </tr><tr><th>label</th>
-      <td><p>(optional) Label of the future (where applicable, becomes the
-job name for most job schedulers).</p></td>
-    </tr><tr><th>resources</th>
-      <td><p>(optional) A named list passed to the <span class="pkg">batchtools</span>
+globals are used as is.</p></dd>
+<dt>label</dt>
+<dd><p>(optional) Label of the future (where applicable, becomes the
+job name for most job schedulers).</p></dd>
+<dt>resources</dt>
+<dd><p>(optional) A named list passed to the <span class="pkg">batchtools</span>
 template (available as variable <code>resources</code>).  See Section 'Resources'
-in <code><a href="https://rdrr.io/pkg/batchtools/man/submitJobs.html">batchtools::submitJobs()</a></code> more details.</p></td>
-    </tr><tr><th>workers</th>
-      <td><p>(optional) The maximum number of workers the batchtools
+in <code><a href="https://rdrr.io/pkg/batchtools/man/submitJobs.html" class="external-link">batchtools::submitJobs()</a></code> more details.</p></dd>
+<dt>workers</dt>
+<dd><p>(optional) The maximum number of workers the batchtools
 backend may use at any time.   Interactive and "local" backends can only
 process one future at the time (<code>workers = 1L</code>), whereas HPC backends,
 where futures are resolved via separate jobs on a scheduler, can have
 multiple workers.  In the latter, the default is <code>workers = NULL</code>, which
 will resolve to <code>getOption("future.batchtools.workers")</code>.  If that is not
 specified, the value of environment variable <code>R_FUTURE_BATCHTOOLS_WORKERS</code>
-will be used.  If neither are specified, then the default is <code>100</code>.</p></td>
-    </tr><tr><th>conf.file</th>
-      <td><p>(character) A batchtools configuration file as for
-instance returned by <code><a href="https://rdrr.io/pkg/batchtools/man/findConfFile.html">batchtools::findConfFile()</a></code>.</p></td>
-    </tr><tr><th>cluster.functions</th>
-      <td><p>A
-<a href="https://rdrr.io/pkg/batchtools/man/makeClusterFunctions.html">ClusterFunctions</a> object.</p></td>
-    </tr><tr><th>registry</th>
-      <td><p>(optional) A named list of settings to control the setup
-of the batchtools registry.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Additional arguments passed to <code><a href="BatchtoolsFuture.html">BatchtoolsFuture()</a></code>.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+will be used.  If neither are specified, then the default is <code>100</code>.</p></dd>
+<dt>conf.file</dt>
+<dd><p>(character) A batchtools configuration file as for
+instance returned by <code><a href="https://rdrr.io/pkg/batchtools/man/findConfFile.html" class="external-link">batchtools::findConfFile()</a></code>.</p></dd>
+<dt>cluster.functions</dt>
+<dd><p>A
+<a href="https://rdrr.io/pkg/batchtools/man/makeClusterFunctions.html" class="external-link">ClusterFunctions</a> object.</p></dd>
+<dt>registry</dt>
+<dd><p>(optional) A named list of settings to control the setup
+of the batchtools registry.</p></dd>
+<dt>...</dt>
+<dd><p>Additional arguments passed to <code><a href="BatchtoolsFuture.html">BatchtoolsFuture()</a></code>.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>An object of class <code>BatchtoolsFuture</code>.</p>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/traceback.html">traceback</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/traceback.html" class="external-link">traceback</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">cf</span> <span class="op">&lt;-</span> <span class="fu">batchtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/batchtools/man/makeClusterFunctionsInteractive.html">makeClusterFunctionsInteractive</a></span><span class="op">(</span>external <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">cf</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">cf</span> <span class="op">&lt;-</span> <span class="fu">batchtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/batchtools/man/makeClusterFunctionsInteractive.html" class="external-link">makeClusterFunctionsInteractive</a></span><span class="op">(</span>external <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cf</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ClusterFunctions for mode: Interactive</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   List queued Jobs : FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   List running Jobs: FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Kill Jobs        : FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Hooks            : -</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">cf</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cf</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ name                : chr "Interactive"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ submitJob           :function (reg, jc)  </span>
@@ -222,21 +228,21 @@ of the batchtools registry.</p></td>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ fs.latency          : num 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ hooks               : list()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  - attr(*, "class")= chr "ClusterFunctions"</span>
-<span class="r-in"><span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="va">batchtools_custom</span>, cluster.functions <span class="op">=</span> <span class="va">cf</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">batchtools_custom</span>, cluster.functions <span class="op">=</span> <span class="va">cf</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> batchtools_custom:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - args: function (..., workers = NULL, envir = parent.frame(), cluster.functions = list(name = "Interactive", submitJob = function (reg, jc) { assertRegistry(reg, writeable = TRUE) assertClass(jc, "JobCollection") if (external) { runOSCommand(Rscript(), sprintf("-e \"batchtools::doJobCollection('%s', output = '%s')\"", jc$uri, jc$log.file)) } else { doJobCollection(jc, output = jc$log.file) } makeSubmitJobResult(status = 0L, batch.id = "cfInteractive") }, killJob = NULL, listJobsQueued = NULL, listJobsRunning = NULL, array.var = NA_character_, store.job.collection = TRUE, store.job.files = FALSE, scheduler.latency = 0, fs.latency = 0, hooks = list()))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - args: function (..., cluster.functions = list(name = "Interactive", submitJob = function (reg, jc) { assertRegistry(reg, writeable = TRUE) assertClass(jc, "JobCollection") if (external) { runOSCommand(Rscript(), sprintf("-e \"batchtools::doJobCollection('%s', output = '%s')\"", jc$uri, jc$log.file)) } else { doJobCollection(jc, output = jc$log.file) } makeSubmitJobResult(status = 0L, batch.id = "cfInteractive") }, killJob = NULL, listJobsQueued = NULL, listJobsRunning = NULL, array.var = NA_character_, store.job.collection = TRUE, store.job.files = FALSE, scheduler.latency = 0, fs.latency = 0, hooks = list()), envir = parent.frame(), workers = NULL)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - tweaked: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - call: plan(batchtools_custom, cluster.functions = cf)</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://future.futureverse.org/reference/nbrOfWorkers.html">nbrOfWorkers</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://future.futureverse.org/reference/nbrOfWorkers.html" class="external-link">nbrOfWorkers</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Create explicit future</span></span>
-<span class="r-in"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"PID:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/future.html" class="external-link">future</a></span><span class="op">(</span><span class="op">{</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"PID:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html" class="external-link">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
 <span class="r-in">  <span class="fl">42L</span></span>
 <span class="r-in"><span class="op">}</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> BatchtoolsFuture:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Label: ‘&lt;none&gt;’</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Expression:</span>
@@ -247,7 +253,7 @@ of the batchtools registry.</p></td>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Lazy evaluation: FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Asynchronous evaluation: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Local evaluation: TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Environment: 0x556a94f12400</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Environment: 0x5591a4ba78b8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Capture standard output: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Capture condition classes: ‘condition’ (excluding ‘nothing’)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Globals: &lt;none&gt;</span>
@@ -257,7 +263,7 @@ of the batchtools registry.</p></td>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Value: &lt;not collected&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Conditions captured: &lt;none&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Early signaling: FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Owner process: b437e637-8c56-011d-f52e-3915419fe8dd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Owner process: d64d12de-ad86-eca1-5196-11b9ca252d87</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class: ‘BatchtoolsFuture’, ‘Future’, ‘environment’</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> batchtools cluster functions: ‘Interactive’</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> batchtools status: ‘defined’, ‘finished’, ‘started’, ‘submitted’</span>
@@ -266,25 +272,25 @@ of the batchtools registry.</p></td>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Work dir exists: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Job Registry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Backend  : Interactive</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   File dir : /tmp/hb/Rtmpaq8Mtw/future.batchtools/docs/reference/.future/20211010_193210-9ORTIM/batchtools_850164642</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Work dir : /tmp/hb/Rtmpaq8Mtw/future.batchtools/docs/reference</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   File dir : /tmp/hb/RtmpxK2Pdp/future.batchtools/docs/reference/.future/20220216_171557-D1Ptbr/batchtools_1055938990</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Work dir : /tmp/hb/RtmpxK2Pdp/future.batchtools/docs/reference</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Jobs     : 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Seed     : 10819</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Seed     : 11604</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Writeable: TRUE</span>
-<span class="r-in"><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PID: 11333 </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/value.html" class="external-link">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PID: 15479 </span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 42</span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>error <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>error <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Create explicit future</span></span>
-<span class="r-in"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"PID:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/future.html" class="external-link">future</a></span><span class="op">(</span><span class="op">{</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"PID:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html" class="external-link">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
 <span class="r-in">  <span class="fl">42L</span></span>
 <span class="r-in"><span class="op">}</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> BatchtoolsFuture:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Label: ‘&lt;none&gt;’</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Expression:</span>
@@ -295,7 +301,7 @@ of the batchtools registry.</p></td>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Lazy evaluation: FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Asynchronous evaluation: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Local evaluation: TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Environment: 0x556a94f12400</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Environment: 0x5591a3026ab8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Capture standard output: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Capture condition classes: ‘condition’ (excluding ‘nothing’)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Globals: &lt;none&gt;</span>
@@ -305,7 +311,7 @@ of the batchtools registry.</p></td>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Value: &lt;not collected&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Conditions captured: &lt;none&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Early signaling: FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Owner process: b437e637-8c56-011d-f52e-3915419fe8dd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Owner process: d64d12de-ad86-eca1-5196-11b9ca252d87</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class: ‘BatchtoolsFuture’, ‘Future’, ‘environment’</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> batchtools cluster functions: ‘Interactive’</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> batchtools status: ‘defined’, ‘finished’, ‘started’, ‘submitted’</span>
@@ -314,28 +320,29 @@ of the batchtools registry.</p></td>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Work dir exists: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Job Registry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Backend  : Interactive</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   File dir : /tmp/hb/Rtmpaq8Mtw/future.batchtools/docs/reference/.future/20211010_193210-9ORTIM/batchtools_324358958</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Work dir : /tmp/hb/Rtmpaq8Mtw/future.batchtools/docs/reference</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   File dir : /tmp/hb/RtmpxK2Pdp/future.batchtools/docs/reference/.future/20220216_171557-D1Ptbr/batchtools_890241445</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Work dir : /tmp/hb/RtmpxK2Pdp/future.batchtools/docs/reference</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Jobs     : 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Seed     : 7755</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Seed     : 24000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Writeable: TRUE</span>
-<span class="r-in"><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PID: 11355 </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/value.html" class="external-link">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PID: 15549 </span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 42</span>
 <span class="r-in"></span>
 <span class="r-in"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Create explicit future</span></span>
-<span class="r-in"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"PID:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/future.html" class="external-link">future</a></span><span class="op">(</span><span class="op">{</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"PID:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html" class="external-link">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
 <span class="r-in">  <span class="fl">42L</span></span>
 <span class="r-in"><span class="op">}</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PID: 11380 </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/value.html" class="external-link">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PID: 15665 </span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 42</span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
@@ -348,7 +355,7 @@ of the batchtools registry.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9003.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9003.</p>
 </div>
 
       </footer></div>

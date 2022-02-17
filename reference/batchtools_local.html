@@ -50,7 +50,7 @@ Both types of futures will block until the futures are resolved."><!-- mathjax -
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://www.futureverse.org/">
+  <a href="https://www.futureverse.org/" class="external-link">
     <span class="fas fa-fast-backward"></span>
      
   </a>
@@ -62,56 +62,56 @@ Both types of futures will block until the futures are resolved."><!-- mathjax -
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="https://BiocParallel.FutureParam.futureverse.org">BiocParallel.FutureParam</a>
+      <a href="https://BiocParallel.FutureParam.futureverse.org" class="external-link">BiocParallel.FutureParam</a>
     </li>
     <li>
-      <a href="https://doFuture.futureverse.org">doFuture</a>
+      <a href="https://doFuture.futureverse.org" class="external-link">doFuture</a>
     </li>
     <li>
-      <a href="https://furrr.futureverse.org">furrr</a>
+      <a href="https://furrr.futureverse.org" class="external-link">furrr</a>
     </li>
     <li>
-      <a href="https://future.futureverse.org">future</a>
+      <a href="https://future.futureverse.org" class="external-link">future</a>
     </li>
     <li>
-      <a href="https://future.apply.futureverse.org">future.apply</a>
+      <a href="https://future.apply.futureverse.org" class="external-link">future.apply</a>
     </li>
     <li>
       <a href="https://future.batchtools.futureverse.org">future.batchtools</a>
     </li>
     <li>
-      <a href="https://future.callr.futureverse.org">future.callr</a>
+      <a href="https://future.callr.futureverse.org" class="external-link">future.callr</a>
     </li>
     <li>
-      <a href="https://future.tests.futureverse.org">future.tests</a>
+      <a href="https://future.tests.futureverse.org" class="external-link">future.tests</a>
     </li>
     <li>
-      <a href="https://globals.futureverse.org">globals</a>
+      <a href="https://globals.futureverse.org" class="external-link">globals</a>
     </li>
     <li>
-      <a href="https://listenv.futureverse.org">listenv</a>
+      <a href="https://listenv.futureverse.org" class="external-link">listenv</a>
     </li>
     <li>
-      <a href="https://parallelly.futureverse.org">parallelly</a>
+      <a href="https://parallelly.futureverse.org" class="external-link">parallelly</a>
     </li>
     <li>
-      <a href="https://progressr.futureverse.org">progressr</a>
+      <a href="https://progressr.futureverse.org" class="external-link">progressr</a>
     </li>
     <li>
-      <a href="https://future.mapreduce.futureverse.org">future.mapreduce (experimental)</a>
+      <a href="https://future.mapreduce.futureverse.org" class="external-link">future.mapreduce (experimental)</a>
     </li>
     <li>
-      <a href="https://marshal.futureverse.org">marshal (experimental)</a>
+      <a href="https://marshal.futureverse.org" class="external-link">marshal (experimental)</a>
     </li>
   </ul></li>
 <li>
-  <a href="https://cloud.r-project.org/package=future.batchtools">
+  <a href="https://cloud.r-project.org/package=future.batchtools" class="external-link">
     <span class="fab fa-r-project"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/HenrikBengtsson/future.batchtools/">
+  <a href="https://github.com/HenrikBengtsson/future.batchtools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -131,7 +131,7 @@ Both types of futures will block until the futures are resolved."><!-- mathjax -
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>batchtools local and interactive futures</h1>
-    <small class="dont-index">Source: <a href="https://github.com/HenrikBengtsson/future.batchtools/blob/master/R/batchtools_local.R"><code>R/batchtools_local.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/HenrikBengtsson/future.batchtools/blob/HEAD/R/batchtools_local.R" class="external-link"><code>R/batchtools_local.R</code></a></small>
     <div class="hidden name"><code>batchtools_local.Rd</code></div>
     </div>
 
@@ -144,96 +144,104 @@ be assigned to the calling environment rather than to a local one).
 Both types of futures will block until the futures are resolved.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">batchtools_local</span><span class="op">(</span>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">batchtools_local</span><span class="op">(</span>
   <span class="va">expr</span>,
-  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,
+  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,
   substitute <span class="op">=</span> <span class="cn">TRUE</span>,
   globals <span class="op">=</span> <span class="cn">TRUE</span>,
   label <span class="op">=</span> <span class="cn">NULL</span>,
   workers <span class="op">=</span> <span class="fl">1L</span>,
-  registry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>,
+  registry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
+    </div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>expr</th>
-      <td><p>The R expression to be evaluated</p></td>
-    </tr><tr><th>envir</th>
-      <td><p>The environment in which global environment
-should be located.</p></td>
-    </tr><tr><th>substitute</th>
-      <td><p>Controls whether <code>expr</code> should be
-<code><a href="https://rdrr.io/r/base/substitute.html">substitute()</a></code>:d or not.</p></td>
-    </tr><tr><th>globals</th>
-      <td><p>(optional) a logical, a character vector, a named list, or a
-<a href="https://rdrr.io/pkg/globals/man/Globals.html">Globals</a> object.  If TRUE, globals are identified by code
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>expr</dt>
+<dd><p>The R expression to be evaluated</p></dd>
+<dt>envir</dt>
+<dd><p>The environment in which global environment
+should be located.</p></dd>
+<dt>substitute</dt>
+<dd><p>Controls whether <code>expr</code> should be
+<code><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute()</a></code>:d or not.</p></dd>
+<dt>globals</dt>
+<dd><p>(optional) a logical, a character vector, a named list, or a
+<a href="https://rdrr.io/pkg/globals/man/Globals.html" class="external-link">Globals</a> object.  If TRUE, globals are identified by code
 inspection based on <code>expr</code> and <code>tweak</code> searching from environment
 <code>envir</code>.  If FALSE, no globals are used.  If a character vector, then
 globals are identified by lookup based their names <code>globals</code> searching
 from environment <code>envir</code>.  If a named list or a Globals object, the
-globals are used as is.</p></td>
-    </tr><tr><th>label</th>
-      <td><p>(optional) Label of the future (where applicable, becomes the
-job name for most job schedulers).</p></td>
-    </tr><tr><th>workers</th>
-      <td><p>(optional) The maximum number of workers the batchtools
+globals are used as is.</p></dd>
+<dt>label</dt>
+<dd><p>(optional) Label of the future (where applicable, becomes the
+job name for most job schedulers).</p></dd>
+<dt>workers</dt>
+<dd><p>(optional) The maximum number of workers the batchtools
 backend may use at any time.   Interactive and "local" backends can only
 process one future at the time (<code>workers = 1L</code>), whereas HPC backends,
 where futures are resolved via separate jobs on a scheduler, can have
 multiple workers.  In the latter, the default is <code>workers = NULL</code>, which
 will resolve to <code>getOption("future.batchtools.workers")</code>.  If that is not
 specified, the value of environment variable <code>R_FUTURE_BATCHTOOLS_WORKERS</code>
-will be used.  If neither are specified, then the default is <code>100</code>.</p></td>
-    </tr><tr><th>registry</th>
-      <td><p>(optional) A named list of settings to control the setup
-of the batchtools registry.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Additional arguments passed to <code><a href="BatchtoolsFuture.html">BatchtoolsFuture()</a></code>.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+will be used.  If neither are specified, then the default is <code>100</code>.</p></dd>
+<dt>registry</dt>
+<dd><p>(optional) A named list of settings to control the setup
+of the batchtools registry.</p></dd>
+<dt>...</dt>
+<dd><p>Additional arguments passed to <code><a href="BatchtoolsFuture.html">BatchtoolsFuture()</a></code>.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>An object of class <code>BatchtoolsFuture</code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details</h2>
     <p>batchtools local futures rely on the batchtools backend set up by
-<code><a href="https://rdrr.io/pkg/batchtools/man/makeClusterFunctionsInteractive.html">batchtools::makeClusterFunctionsInteractive(external = TRUE)</a></code>
+<code><a href="https://rdrr.io/pkg/batchtools/man/makeClusterFunctionsInteractive.html" class="external-link">batchtools::makeClusterFunctionsInteractive(external = TRUE)</a></code>
 and batchtools interactive futures on the one set up by
-<code><a href="https://rdrr.io/pkg/batchtools/man/makeClusterFunctionsInteractive.html">batchtools::makeClusterFunctionsInteractive()</a></code>.
+<code><a href="https://rdrr.io/pkg/batchtools/man/makeClusterFunctionsInteractive.html" class="external-link">batchtools::makeClusterFunctionsInteractive()</a></code>.
 These are supported by all operating systems.</p>
 <p>An alternative to batchtools local futures is to use
-<a href="https://future.futureverse.org/reference/cluster.html">cluster</a> futures of the <span class="pkg">future</span>
+<a href="https://future.futureverse.org/reference/cluster.html" class="external-link">cluster</a> futures of the <span class="pkg">future</span>
 package with a single local background session, i.e.
 <code>plan(cluster, workers = "localhost")</code>.</p>
 <p>An alternative to batchtools interactive futures is to use
-<a href="https://future.futureverse.org/reference/sequential.html">transparent</a> futures of the
+<a href="https://future.futureverse.org/reference/sequential.html" class="external-link">transparent</a> futures of the
 <span class="pkg">future</span> package.</p>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Use local batchtools futures</span></span>
-<span class="r-in"><span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="va">batchtools_local</span><span class="op">)</span></span>
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Use local batchtools futures</span></span>
+<span class="r-in"><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">batchtools_local</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## A global variable</span></span>
 <span class="r-in"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Create explicit future</span></span>
-<span class="r-in"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span></span>
+<span class="r-in"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/future.html" class="external-link">future</a></span><span class="op">(</span><span class="op">{</span></span>
 <span class="r-in">  <span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
 <span class="r-in">  <span class="va">c</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
 <span class="r-in">  <span class="va">a</span> <span class="op">*</span> <span class="va">b</span> <span class="op">*</span> <span class="va">c</span></span>
 <span class="r-in"><span class="op">}</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/value.html" class="external-link">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 6</span>
 <span class="r-in"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Create implicit future</span></span>
-<span class="r-in"><span class="va">v</span> <span class="op"><a href="https://future.futureverse.org/reference/future.html">%&lt;-%</a></span> <span class="op">{</span></span>
+<span class="r-in"><span class="va">v</span> <span class="op"><a href="https://future.futureverse.org/reference/future.html" class="external-link">%&lt;-%</a></span> <span class="op">{</span></span>
 <span class="r-in">  <span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
 <span class="r-in">  <span class="va">c</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
 <span class="r-in">  <span class="va">a</span> <span class="op">*</span> <span class="va">b</span> <span class="op">*</span> <span class="va">c</span></span>
 <span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 6</span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
@@ -246,7 +254,7 @@ package with a single local background session, i.e.
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9003.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9003.</p>
 </div>
 
       </footer></div>

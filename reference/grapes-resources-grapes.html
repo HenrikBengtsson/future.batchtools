@@ -45,7 +45,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://www.futureverse.org/">
+  <a href="https://www.futureverse.org/" class="external-link">
     <span class="fas fa-fast-backward"></span>
      
   </a>
@@ -57,56 +57,56 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="https://BiocParallel.FutureParam.futureverse.org">BiocParallel.FutureParam</a>
+      <a href="https://BiocParallel.FutureParam.futureverse.org" class="external-link">BiocParallel.FutureParam</a>
     </li>
     <li>
-      <a href="https://doFuture.futureverse.org">doFuture</a>
+      <a href="https://doFuture.futureverse.org" class="external-link">doFuture</a>
     </li>
     <li>
-      <a href="https://furrr.futureverse.org">furrr</a>
+      <a href="https://furrr.futureverse.org" class="external-link">furrr</a>
     </li>
     <li>
-      <a href="https://future.futureverse.org">future</a>
+      <a href="https://future.futureverse.org" class="external-link">future</a>
     </li>
     <li>
-      <a href="https://future.apply.futureverse.org">future.apply</a>
+      <a href="https://future.apply.futureverse.org" class="external-link">future.apply</a>
     </li>
     <li>
       <a href="https://future.batchtools.futureverse.org">future.batchtools</a>
     </li>
     <li>
-      <a href="https://future.callr.futureverse.org">future.callr</a>
+      <a href="https://future.callr.futureverse.org" class="external-link">future.callr</a>
     </li>
     <li>
-      <a href="https://future.tests.futureverse.org">future.tests</a>
+      <a href="https://future.tests.futureverse.org" class="external-link">future.tests</a>
     </li>
     <li>
-      <a href="https://globals.futureverse.org">globals</a>
+      <a href="https://globals.futureverse.org" class="external-link">globals</a>
     </li>
     <li>
-      <a href="https://listenv.futureverse.org">listenv</a>
+      <a href="https://listenv.futureverse.org" class="external-link">listenv</a>
     </li>
     <li>
-      <a href="https://parallelly.futureverse.org">parallelly</a>
+      <a href="https://parallelly.futureverse.org" class="external-link">parallelly</a>
     </li>
     <li>
-      <a href="https://progressr.futureverse.org">progressr</a>
+      <a href="https://progressr.futureverse.org" class="external-link">progressr</a>
     </li>
     <li>
-      <a href="https://future.mapreduce.futureverse.org">future.mapreduce (experimental)</a>
+      <a href="https://future.mapreduce.futureverse.org" class="external-link">future.mapreduce (experimental)</a>
     </li>
     <li>
-      <a href="https://marshal.futureverse.org">marshal (experimental)</a>
+      <a href="https://marshal.futureverse.org" class="external-link">marshal (experimental)</a>
     </li>
   </ul></li>
 <li>
-  <a href="https://cloud.r-project.org/package=future.batchtools">
+  <a href="https://cloud.r-project.org/package=future.batchtools" class="external-link">
     <span class="fab fa-r-project"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/HenrikBengtsson/future.batchtools/">
+  <a href="https://github.com/HenrikBengtsson/future.batchtools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -126,7 +126,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Temporarily tweaks the resources for the current batchtools strategy</h1>
-    <small class="dont-index">Source: <a href="https://github.com/HenrikBengtsson/future.batchtools/blob/master/R/resources_OP.R"><code>R/resources_OP.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/HenrikBengtsson/future.batchtools/blob/HEAD/R/resources_OP.R" class="external-link"><code>R/resources_OP.R</code></a></small>
     <div class="hidden name"><code>grapes-resources-grapes.Rd</code></div>
     </div>
 
@@ -134,17 +134,22 @@
     <p>Temporarily tweaks the resources for the current batchtools strategy</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="va">fassignment</span> <span class="op">%resources%</span> <span class="va">tweaks</span></code></pre></div>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="va">fassignment</span> <span class="op">%resources%</span> <span class="va">tweaks</span></code></pre></div>
+    </div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>fassignment</th>
-      <td><p>The future assignment, e.g.
-<code>x %&lt;-% { expr }</code>.</p></td>
-    </tr><tr><th>tweaks</th>
-      <td><p>A named list (or vector) of resource <span class="pkg">batchtools</span>
-parameters (see Section 'Resources' in <code><a href="https://rdrr.io/pkg/batchtools/man/submitJobs.html">batchtools::submitJobs()</a></code>)
-that should be changed relative to the current strategy.</p></td>
-    </tr></table></div>
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>fassignment</dt>
+<dd><p>The future assignment, e.g.
+<code>x %&lt;-% { expr }</code>.</p></dd>
+<dt>tweaks</dt>
+<dd><p>A named list (or vector) of resource <span class="pkg">batchtools</span>
+parameters (see Section 'Resources' in <code><a href="https://rdrr.io/pkg/batchtools/man/submitJobs.html" class="external-link">batchtools::submitJobs()</a></code>)
+that should be changed relative to the current strategy.</p></dd>
+</dl></div>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
     </nav></div>
@@ -156,7 +161,7 @@ that should be changed relative to the current strategy.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9003.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9003.</p>
 </div>
 
       </footer></div>

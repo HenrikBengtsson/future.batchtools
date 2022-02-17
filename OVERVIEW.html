@@ -45,7 +45,7 @@
   <a href="news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://www.futureverse.org/">
+  <a href="https://www.futureverse.org/" class="external-link">
     <span class="fas fa-fast-backward"></span>
      
   </a>
@@ -57,56 +57,56 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="https://BiocParallel.FutureParam.futureverse.org">BiocParallel.FutureParam</a>
+      <a href="https://BiocParallel.FutureParam.futureverse.org" class="external-link">BiocParallel.FutureParam</a>
     </li>
     <li>
-      <a href="https://doFuture.futureverse.org">doFuture</a>
+      <a href="https://doFuture.futureverse.org" class="external-link">doFuture</a>
     </li>
     <li>
-      <a href="https://furrr.futureverse.org">furrr</a>
+      <a href="https://furrr.futureverse.org" class="external-link">furrr</a>
     </li>
     <li>
-      <a href="https://future.futureverse.org">future</a>
+      <a href="https://future.futureverse.org" class="external-link">future</a>
     </li>
     <li>
-      <a href="https://future.apply.futureverse.org">future.apply</a>
+      <a href="https://future.apply.futureverse.org" class="external-link">future.apply</a>
     </li>
     <li>
       <a href="https://future.batchtools.futureverse.org">future.batchtools</a>
     </li>
     <li>
-      <a href="https://future.callr.futureverse.org">future.callr</a>
+      <a href="https://future.callr.futureverse.org" class="external-link">future.callr</a>
     </li>
     <li>
-      <a href="https://future.tests.futureverse.org">future.tests</a>
+      <a href="https://future.tests.futureverse.org" class="external-link">future.tests</a>
     </li>
     <li>
-      <a href="https://globals.futureverse.org">globals</a>
+      <a href="https://globals.futureverse.org" class="external-link">globals</a>
     </li>
     <li>
-      <a href="https://listenv.futureverse.org">listenv</a>
+      <a href="https://listenv.futureverse.org" class="external-link">listenv</a>
     </li>
     <li>
-      <a href="https://parallelly.futureverse.org">parallelly</a>
+      <a href="https://parallelly.futureverse.org" class="external-link">parallelly</a>
     </li>
     <li>
-      <a href="https://progressr.futureverse.org">progressr</a>
+      <a href="https://progressr.futureverse.org" class="external-link">progressr</a>
     </li>
     <li>
-      <a href="https://future.mapreduce.futureverse.org">future.mapreduce (experimental)</a>
+      <a href="https://future.mapreduce.futureverse.org" class="external-link">future.mapreduce (experimental)</a>
     </li>
     <li>
-      <a href="https://marshal.futureverse.org">marshal (experimental)</a>
+      <a href="https://marshal.futureverse.org" class="external-link">marshal (experimental)</a>
     </li>
   </ul></li>
 <li>
-  <a href="https://cloud.r-project.org/package=future.batchtools">
+  <a href="https://cloud.r-project.org/package=future.batchtools" class="external-link">
     <span class="fab fa-r-project"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/HenrikBengtsson/future.batchtools/">
+  <a href="https://github.com/HenrikBengtsson/future.batchtools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -129,26 +129,18 @@
     </div>
 
 
-<p>&lt;%</p>
-<div id="reuse-the-future-vignette" class="section level2">
-<h2 class="hasAnchor">
-<a href="#reuse-the-future-vignette" class="anchor" aria-hidden="true"></a>Reuse the future vignette</h2>
-<p>md &lt;- R.rsp::rstring(file=“vignettes/future.batchtools.md.rsp”, postprocess=FALSE)</p>
+<p>&lt;% ## Reuse the future vignette md &lt;- R.rsp::rstring(file=“vignettes/future.batchtools.md.rsp”, postprocess=FALSE)</p>
+<div class="section level2">
+<h2 id="drop-the-header-ie-anything-before-the-first-h2-header">Drop the header, i.e. anything before the first “H2” header<a class="anchor" aria-label="anchor" href="#drop-the-header-ie-anything-before-the-first-h2-header"></a></h2>
+<p>md &lt;- unlist(strsplit(md, split=“”, fixed=TRUE)) row &lt;- grep(“^##”, md)[1] if (!is.na(row)) md &lt;- md[-seq_len(row-1)]</p>
 </div>
-<div id="drop-the-header-i-e-anything-before-the-first-h2-header" class="section level2">
-<h2 class="hasAnchor">
-<a href="#drop-the-header-i-e-anything-before-the-first-h2-header" class="anchor" aria-hidden="true"></a>Drop the header, i.e. anything before the first “H2” header</h2>
-<p>md &lt;- unlist(strsplit(md, split=“\n”, fixed=TRUE)) row &lt;- grep(“^##”, md)[1] if (!is.na(row)) md &lt;- md[-seq_len(row-1)]</p>
-</div>
-<div id="drop-the-footer-i-e-anything-after-the-first-horizontal-line" class="section level2">
-<h2 class="hasAnchor">
-<a href="#drop-the-footer-i-e-anything-after-the-first-horizontal-line" class="anchor" aria-hidden="true"></a>Drop the footer, i.e. anything after the first horizontal line</h2>
+<div class="section level2">
+<h2 id="drop-the-footer-ie-anything-after-the-first-horizontal-line">Drop the footer, i.e. anything after the first horizontal line<a class="anchor" aria-label="anchor" href="#drop-the-footer-ie-anything-after-the-first-horizontal-line"></a></h2>
 <p>row &lt;- grep(“^—”, md)[1] if (!is.na(row)) md &lt;- md[seq_len(row-1)]</p>
 </div>
-<div id="output" class="section level2">
-<h2 class="hasAnchor">
-<a href="#output" class="anchor" aria-hidden="true"></a>Output</h2>
-<p>cat(md, sep=“\n”) %&gt;</p>
+<div class="section level2">
+<h2 id="output">Output<a class="anchor" aria-label="anchor" href="#output"></a></h2>
+<p>cat(md, sep=“”) %&gt;</p>
 </div>
 
 
@@ -167,7 +159,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9003.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9003.</p>
 </div>
 
       </footer></div>

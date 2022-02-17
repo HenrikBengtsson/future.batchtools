@@ -50,7 +50,7 @@ WARNING: Note that the names and the default values of these options may change 
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://www.futureverse.org/">
+  <a href="https://www.futureverse.org/" class="external-link">
     <span class="fas fa-fast-backward"></span>
      
   </a>
@@ -62,56 +62,56 @@ WARNING: Note that the names and the default values of these options may change 
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="https://BiocParallel.FutureParam.futureverse.org">BiocParallel.FutureParam</a>
+      <a href="https://BiocParallel.FutureParam.futureverse.org" class="external-link">BiocParallel.FutureParam</a>
     </li>
     <li>
-      <a href="https://doFuture.futureverse.org">doFuture</a>
+      <a href="https://doFuture.futureverse.org" class="external-link">doFuture</a>
     </li>
     <li>
-      <a href="https://furrr.futureverse.org">furrr</a>
+      <a href="https://furrr.futureverse.org" class="external-link">furrr</a>
     </li>
     <li>
-      <a href="https://future.futureverse.org">future</a>
+      <a href="https://future.futureverse.org" class="external-link">future</a>
     </li>
     <li>
-      <a href="https://future.apply.futureverse.org">future.apply</a>
+      <a href="https://future.apply.futureverse.org" class="external-link">future.apply</a>
     </li>
     <li>
       <a href="https://future.batchtools.futureverse.org">future.batchtools</a>
     </li>
     <li>
-      <a href="https://future.callr.futureverse.org">future.callr</a>
+      <a href="https://future.callr.futureverse.org" class="external-link">future.callr</a>
     </li>
     <li>
-      <a href="https://future.tests.futureverse.org">future.tests</a>
+      <a href="https://future.tests.futureverse.org" class="external-link">future.tests</a>
     </li>
     <li>
-      <a href="https://globals.futureverse.org">globals</a>
+      <a href="https://globals.futureverse.org" class="external-link">globals</a>
     </li>
     <li>
-      <a href="https://listenv.futureverse.org">listenv</a>
+      <a href="https://listenv.futureverse.org" class="external-link">listenv</a>
     </li>
     <li>
-      <a href="https://parallelly.futureverse.org">parallelly</a>
+      <a href="https://parallelly.futureverse.org" class="external-link">parallelly</a>
     </li>
     <li>
-      <a href="https://progressr.futureverse.org">progressr</a>
+      <a href="https://progressr.futureverse.org" class="external-link">progressr</a>
     </li>
     <li>
-      <a href="https://future.mapreduce.futureverse.org">future.mapreduce (experimental)</a>
+      <a href="https://future.mapreduce.futureverse.org" class="external-link">future.mapreduce (experimental)</a>
     </li>
     <li>
-      <a href="https://marshal.futureverse.org">marshal (experimental)</a>
+      <a href="https://marshal.futureverse.org" class="external-link">marshal (experimental)</a>
     </li>
   </ul></li>
 <li>
-  <a href="https://cloud.r-project.org/package=future.batchtools">
+  <a href="https://cloud.r-project.org/package=future.batchtools" class="external-link">
     <span class="fab fa-r-project"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/HenrikBengtsson/future.batchtools/">
+  <a href="https://github.com/HenrikBengtsson/future.batchtools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -131,43 +131,49 @@ WARNING: Note that the names and the default values of these options may change 
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Options used for batchtools futures</h1>
-    <small class="dont-index">Source: <a href="https://github.com/HenrikBengtsson/future.batchtools/blob/master/R/options.R"><code>R/options.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/HenrikBengtsson/future.batchtools/blob/HEAD/R/options.R" class="external-link"><code>R/options.R</code></a></small>
     <div class="hidden name"><code>future.batchtools.options.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Below are the <span style="R">R</span> options and environment variables that are used by the
 <span class="pkg">future.batchtools</span> package.
-See <a href="https://future.futureverse.org/reference/future.options.html">future::future.options</a> for additional ones that apply to futures
+See <a href="https://future.futureverse.org/reference/future.options.html" class="external-link">future::future.options</a> for additional ones that apply to futures
 in general.<br><br><em>WARNING: Note that the names and the default values of these options may change in future versions of the package.  Please use with care until further notice.</em></p>
     </div>
 
 
-
-    <h2 class="hasAnchor" id="settings-for-batchtools-futures"><a class="anchor" href="#settings-for-batchtools-futures"></a>Settings for batchtools futures</h2>
-
+    <div id="settings-for-batchtools-futures">
+    <h2>Settings for batchtools futures</h2>
     
 
-<dl><dt><span class="option">future.batchtools.workers</span>:</dt><dd><p>(a positive numeric or <code>+Inf</code>)
+<dl><dt><span class="option">future.batchtools.workers</span>:</dt>
+<dd><p>(a positive numeric or <code>+Inf</code>)
 The default number of workers available on HPC schedulers with
 job queues.  If not set, the value of the
 <code class="env">R_FUTURE_BATCHTOOLS_WORKERS</code> environment variable is used.
 (Default: <code>100</code>)</p></dd>
 
-<dt><span class="option">future.batchtools.output</span>:</dt><dd><p>(logical)
+
+<dt><span class="option">future.batchtools.output</span>:</dt>
+<dd><p>(logical)
 If TRUE, <span class="pkg">batchtools</span> will produce extra output.
 If FALSE, such output will be disabled by setting <span class="pkg">batchtools</span>
 options <span class="option">batchtools.verbose</span> and <span class="option">batchtools.progress</span>
 to FALSE.
 (Default: <code>getOption("future.debug", FALSE)</code>)</p></dd>
 
-<dt><span class="option">future.batchtools.expiration.tail</span>:</dt><dd><p>(a positive numeric)
+
+<dt><span class="option">future.batchtools.expiration.tail</span>:</dt>
+<dd><p>(a positive numeric)
 When a <span class="pkg">batchtools</span> job expires, the last few lines will be
 relayed by batchtools futures to help troubleshooting.
 This option controls how many lines are displayed.
 (Default: <code>48L</code>)</p></dd>
 
-<dt><span class="option">future.cache.path</span> / <code class="env">R_FUTURE_CACHE_PATH</code>:</dt><dd><p>(character string)
+
+<dt><span class="option">future.cache.path</span> / <code class="env">R_FUTURE_CACHE_PATH</code>:</dt>
+<dd><p>(character string)
 An absolute or relative path specifying the root folder in which
 <span class="pkg">batchtools</span> registry folders are stored.
 This folder needs to be accessible from all hosts ("workers").
@@ -176,7 +182,9 @@ machine such as <code>file.path(tempdir(), ".future"</code> if an job scheduler
 on a HPC environment is used.
 (Default: <code>.future</code> in the current working directory)</p></dd>
 
-<dt><span class="option">future.delete</span>:</dt><dd><p>(logical)
+
+<dt><span class="option">future.delete</span>:</dt>
+<dd><p>(logical)
 Controls whether or not the future's <span class="pkg">batchtools</span> registry folder
 is deleted after the future result has been collected.
 If TRUE, it is always deleted.
@@ -186,14 +194,19 @@ mode and the batchtools job failed or expired, which helps to
 troubleshoot when running in batch mode.
 (Default: NULL (not set))</p></dd>
 
-</dl><h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Set an R option:</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>future.cache.path <span class="op">=</span> <span class="st">"/cluster-wide/folder/.future"</span><span class="op">)</span></span>
+
+</dl></div>
+
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Set an R option:</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.cache.path <span class="op">=</span> <span class="st">"/cluster-wide/folder/.future"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Set an environment variable:</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html">Sys.setenv</a></span><span class="op">(</span>R_FUTURE_CACHE_PATH <span class="op">=</span> <span class="st">"/cluster-wide/folder/.future"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>R_FUTURE_CACHE_PATH <span class="op">=</span> <span class="st">"/cluster-wide/folder/.future"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
@@ -206,7 +219,7 @@ troubleshoot when running in batch mode.
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9003.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9003.</p>
 </div>
 
       </footer></div>
