@@ -26,8 +26,7 @@
 #' `plan(cluster, workers = "localhost")`.
 #'
 #' An alternative to batchtools interactive futures is to use
-#' [transparent][future::transparent] futures of the
-#' \pkg{future} package.
+#' `plan(sequential, split = TRUE)` futures of the \pkg{future} package.
 #'
 #' @example incl/batchtools_local.R
 #'

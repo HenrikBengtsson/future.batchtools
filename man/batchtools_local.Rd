@@ -74,8 +74,7 @@ package with a single local background session, i.e.
 \code{plan(cluster, workers = "localhost")}.
 
 An alternative to batchtools interactive futures is to use
-\link[future:sequential]{transparent} futures of the
-\pkg{future} package.
+\code{plan(sequential, split = TRUE)} futures of the \pkg{future} package.
 }
 \examples{
 ## Use local batchtools futures
