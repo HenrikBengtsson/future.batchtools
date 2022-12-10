@@ -5,8 +5,8 @@
   if (inRCmdCheck()) {
     ## Don't write to current working directory when running R CMD check.
     path <- Sys.getenv("R_FUTURE_CACHE_PATH", NA_character_)
-    if (!is.na(path)) {
-      Sys.setenv("R_FUTURE_CACHE_PATH" = path)
+    if (is.na(path)) {
+      Sys.setenv("R_FUTURE_CACHE_PATH" = file.path(tempdir(), ".future"))
       if (debug) {
         mdebugf("R CMD check detected: Set R_FUTURE_CACHE_PATH=%s",
                 sQuote(Sys.getenv("R_FUTURE_CACHE_PATH")))
