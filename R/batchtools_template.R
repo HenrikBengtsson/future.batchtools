@@ -171,9 +171,8 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
     }
     stop(ex)
   })
-   if (is.na(pathname)) {
-     stop(sprintf("Failed to locate a batchtools template file: *%s.tmpl",
-                  template))
+  if (is.na(pathname)) {
+    stop("Failed to locate a batchtools template file: *%s.tmpl", template)
   }
 
   template <- pathname

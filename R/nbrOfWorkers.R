@@ -56,10 +56,10 @@ availableHpcWorkers <- function() {
   if (!is.null(value)) {
     if (!is.numeric(value) || length(value) != 1L ||
         is.na(value) || value < 1.0) {
-      stop(sprintf(
+      stopf(
         "Option %s does not specify a value >= 1: %s",
         sQuote(name), sQuote(value)
-      ))
+      )
     }
     value <- floor(value)
     return(value)
@@ -70,10 +70,10 @@ availableHpcWorkers <- function() {
   if (nzchar(value0)) {
     value <- as.numeric(value0)
     if (is.na(value) || value < 1.0) {
-      stop(sprintf(
+      stopf(
         "Environment variable %s does not specify a value >= 1: %s",
         sQuote(name), sQuote(value0)
-      ))
+      )
     }
     value <- floor(value)
     return(value)

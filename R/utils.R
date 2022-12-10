@@ -18,8 +18,7 @@ stop_if_not <- function(...) {
         mc <- match.call()
         call <- deparse(mc[[ii + 1]], width.cutoff = 60L)
         if (length(call) > 1L) call <- paste(call[1L], "....")
-        stop(sprintf("%s is not TRUE", sQuote(call)),
-             call. = FALSE, domain = NA)
+        stopf("%s is not TRUE", sQuote(call), call. = FALSE, domain = NA)
     }
   }
   
@@ -129,7 +128,7 @@ import_from <- function(name, default = NULL, package) {
   } else if (!is.null(default)) {
     default
   } else {
-    stop(sprintf("No such '%s' function: %s()", package, name))
+    stopf("No such '%s' function: %s()", package, name)
   }
 }
 
@@ -179,7 +178,7 @@ tempvar <- function(prefix = "var", value = NA, envir = parent.frame()) {
   }
 
   # Failed to find a unique temporary variable name
-  stop(sprintf("Failed to generate a unique non-existing temporary variable with prefix '%s'", prefix)) #nolint
+  stopf("Failed to generate a unique non-existing temporary variable with prefix '%s'", prefix) #nolint
 }
 
 

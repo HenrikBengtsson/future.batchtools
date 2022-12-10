@@ -347,7 +347,7 @@ result.BatchtoolsFuture <- function(future, cleanup = TRUE, ...) {
   if (is_na(stat)) {
     label <- future$label
     if (is.null(label)) label <- "<none>"
-    stop(sprintf("The result no longer exists (or never existed) for Future ('%s') of class %s", label, paste(sQuote(class(future)), collapse = ", "))) #nolint
+    stopf("The result no longer exists (or never existed) for Future ('%s') of class %s", label, paste(sQuote(class(future)), collapse = ", ")) #nolint
   }
 
   result <- await(future, cleanup = FALSE)
