@@ -18,7 +18,7 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] future.batchtools_0.10.0-9008 future_1.29.0-9001           
+[1] future.batchtools_0.10.0-9011 future_1.29.0-9001           
 
 loaded via a namespace (and not attached):
  [1] pillar_1.8.1           compiler_4.2.2         remotes_2.4.2         

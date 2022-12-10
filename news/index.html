@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.batchtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.10.0-9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.10.0-9011</span>
       </span>
     </div>
 
@@ -135,40 +135,45 @@
 <h3 id="significant-changes-development-version">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
 <ul><li>
 <code>R_FUTURE_BATCHTOOLS_*</code> environment variables are now only read when the <strong>future.batchtools</strong> package is loaded, where they set the corresponding <code>future.batchtools*</code> option. This is in line with how all packages in the Futureverse works.</li>
-</ul><div class="section level4">
-<h4 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h4>
+</ul></div>
+<div class="section level3">
+<h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<ul><li>
+<code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for BatchtoolsFuture now reports on the batchtools configuration file (an R script) and the the batchtools job template file (a shell script) with info on location, file size, and number of lines, if they exist.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li>Using <code>plan(batchtools_nnn, finalize = FALSE)</code> would give a warning on <code>Detected 1 unknown future arguments: 'finalize'</code>.</li>
 </ul></div>
 </div>
-</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.10.0" id="version-0100">Version 0.10.0<small>2021-01-04</small><a class="anchor" aria-label="anchor" href="#version-0100"></a></h2>
-<div class="section level4">
-<h4 id="significant-changes-0-10-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-10-0"></a></h4>
+<div class="section level3">
+<h3 id="significant-changes-0-10-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-10-0"></a></h3>
 <ul><li><p>Lazy batchtools futures only creates the internal <strong>batchtools</strong> registry when the future is launched.</p></li>
 <li><p>Removed S3 generic functions <code>await()</code>, <code>finished()</code>, and <code>status()</code>, which were functions that were used for internal purposes.</p></li>
 </ul></div>
-<div class="section level4">
-<h4 id="documentation-0-10-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-10-0"></a></h4>
+<div class="section level3">
+<h3 id="documentation-0-10-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-10-0"></a></h3>
 <ul><li>Document option <code>future.delete</code> and clarify option <code>future.cache.path</code> in <code><a href="../reference/future.batchtools.options.html">help("future.batchtools.options")</a></code>.</li>
 </ul></div>
-<div class="section level4">
-<h4 id="bug-fixes-0-10-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-10-0"></a></h4>
+<div class="section level3">
+<h3 id="bug-fixes-0-10-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-10-0"></a></h3>
 <ul><li>If <code><a href="https://future.futureverse.org/reference/run.html" class="external-link">run()</a></code> was called twice for a BatchtoolsFuture, it would not produce a FutureError but only a regular non-classed error.</li>
 </ul></div>
-<div class="section level4">
-<h4 id="deprecated-and-defunct-0-10-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-0-10-0"></a></h4>
+<div class="section level3">
+<h3 id="deprecated-and-defunct-0-10-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-0-10-0"></a></h3>
 <ul><li>Removed S3 generic functions <code>await()</code>, <code>finished()</code>, and <code>status()</code>, which were functions that were used for internal purposes.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.9.0" id="version-090">Version 0.9.0<small>2020-04-14</small><a class="anchor" aria-label="anchor" href="#version-090"></a></h2>
-<div class="section level4">
-<h4 id="significant-changes-0-9-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-9-0"></a></h4>
+<div class="section level3">
+<h3 id="significant-changes-0-9-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-9-0"></a></h3>
 <ul><li>The default number of workers on HPC environments is now 100. To revert to the previous default of +Inf, see below news entry.</li>
 </ul></div>
-<div class="section level4">
-<h4 id="new-features-0-9-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-9-0"></a></h4>
+<div class="section level3">
+<h3 id="new-features-0-9-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-9-0"></a></h3>
 <ul><li><p>It is now possible to configure the default number of workers on the job queue of an HPC scheduler via either R option <code>future.batchtools.workers</code> or environment variable <code>R_FUTURE_BATCHTOOLS_WORKERS</code>.</p></li>
 <li><p>It is now possible to configure the <strong>batchtools</strong> registries that are used by batchtools futures via new argument <code>registry</code> to <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan()</a></code>. This argument should be a named list of parameters recognized by the <strong>batchtools</strong> package, e.g. <code>plan(batchtools_sge, registry =    list(...))</code>. For notable example, see below news entries.</p></li>
 <li><p>The default working directory for batchtools futures is the current working directory of R <em>when</em> the batchtools future is created. This corresponds to specifying <code>plan(batchtools_nnn, registry =    list(work.dir = NULL)</code>. Sometimes it is useful to use a explicit working directory that is guaranteed to be available on all workers on a shared file system, e.g. <code>plan(batchtools_nnn, registry =    list(work.dir = "~"))</code>.</p></li>
@@ -176,88 +181,88 @@
 <li><p>The default location of the <code>.future</code> folder can be controlled by R option <code>future.cache.path</code> or environment variable <code>R_FUTURE_CACHE_PATH</code>.</p></li>
 <li><p><code><a href="../reference/batchtools_custom.html">batchtools_custom()</a></code> and BatchtoolsFuture gained argument <code>conf.file</code>. Using <code>plan(batchtools_custom)</code> will now use any <strong>batchtools</strong> configuration file (an R script) found on the <code><a href="https://rdrr.io/pkg/batchtools/man/findConfFile.html" class="external-link">batchtools::findConfFile()</a></code> search path.</p></li>
 </ul></div>
-<div class="section level4">
-<h4 id="documentation-0-9-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-9-0"></a></h4>
+<div class="section level3">
+<h3 id="documentation-0-9-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-9-0"></a></h3>
 <ul><li>Add <code><a href="../reference/future.batchtools.options.html">help("future.batchtools.options")</a></code> which descriptions R options and environment variables used specifically by the <strong>future.batchtools</strong> package.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.8.1" id="version-081">Version 0.8.1<small>2019-10-01</small><a class="anchor" aria-label="anchor" href="#version-081"></a></h2>
-<div class="section level4">
-<h4 id="bug-fixes-0-8-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-8-1"></a></h4>
+<div class="section level3">
+<h3 id="bug-fixes-0-8-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-8-1"></a></h3>
 <ul><li>
 <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for BatchtoolsFuture would produce an error if the underlying <strong>batchtools</strong> Registry was incomplete.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.8.0" id="version-080">Version 0.8.0<small>2019-05-05</small><a class="anchor" aria-label="anchor" href="#version-080"></a></h2>
-<div class="section level4">
-<h4 id="new-features-0-8-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-8-0"></a></h4>
+<div class="section level3">
+<h3 id="new-features-0-8-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-8-0"></a></h3>
 <ul><li><p>Setting option <code>future.delete</code> to FALSE will now prevent removal of the <strong>batchtools</strong> registry folders.</p></li>
 <li><p>When a <strong>batchtools</strong> job expires, for instance when the scheduler terminates it because the job was running out of its allocated resources, then a BatchtoolsFutureError is produced which by default outputs the tail of the output logged by <strong>batchtools</strong>. The default number of lines displayed from the end is now increased from six to 48 - a number which now can be set via option <code>future.batchtools.expiration.tail</code>.</p></li>
 <li><p>Now a more informative error message is produced if a <strong>batchtools</strong> <code>*.tmpl</code> template file was not found.</p></li>
 <li><p>Debug messages are now prepended with a timestamp.</p></li>
 </ul></div>
-<div class="section level4">
-<h4 id="bug-fixes-0-8-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-8-0"></a></h4>
+<div class="section level3">
+<h3 id="bug-fixes-0-8-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-8-0"></a></h3>
 <ul><li><p>Argument <code>workers</code> could not be a function.</p></li>
 <li><p>Argument <code>workers</code> of type character was silently accepted and effectively interpreted as <code>workers = length(workers)</code>.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.7.2" id="version-072">Version 0.7.2<small>2019-01-04</small><a class="anchor" aria-label="anchor" href="#version-072"></a></h2>
-<div class="section level4">
-<h4 id="documentation-0-7-2">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-7-2"></a></h4>
+<div class="section level3">
+<h3 id="documentation-0-7-2">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-7-2"></a></h3>
 <ul><li>Add a simple <code>example(future_custom)</code>.</li>
 </ul></div>
-<div class="section level4">
-<h4 id="fixes-0-7-2">Fixes<a class="anchor" aria-label="anchor" href="#fixes-0-7-2"></a></h4>
+<div class="section level3">
+<h3 id="fixes-0-7-2">Fixes<a class="anchor" aria-label="anchor" href="#fixes-0-7-2"></a></h3>
 <ul><li>Made internal code agile to upcoming changes in the <strong>future</strong> package on how a captured error is represented.</li>
 </ul></div>
-<div class="section level4">
-<h4 id="software-quality-0-7-2">Software Quality<a class="anchor" aria-label="anchor" href="#software-quality-0-7-2"></a></h4>
+<div class="section level3">
+<h3 id="software-quality-0-7-2">Software Quality<a class="anchor" aria-label="anchor" href="#software-quality-0-7-2"></a></h3>
 <ul><li>FYI: Every release is tested against one Torque/PBS and one SGE scheduler.</li>
 </ul></div>
-<div class="section level4">
-<h4 id="bug-fixes-0-7-2">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-7-2"></a></h4>
+<div class="section level3">
+<h3 id="bug-fixes-0-7-2">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-7-2"></a></h3>
 <ul><li>
 <code><a href="https://future.futureverse.org/reference/resolve.html" class="external-link">resolve()</a></code> on a lazy batchtools future would stall and never return.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.7.1" id="version-071">Version 0.7.1<small>2018-07-18</small><a class="anchor" aria-label="anchor" href="#version-071"></a></h2>
-<div class="section level4">
-<h4 id="new-features-0-7-1">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-7-1"></a></h4>
+<div class="section level3">
+<h3 id="new-features-0-7-1">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-7-1"></a></h3>
 <ul><li>The <code>batchtools_*</code> backends support the handling of the standard output as implemented in <strong>future</strong> (&gt;= 1.9.0).</li>
 </ul></div>
-<div class="section level4">
-<h4 id="bug-fixes-0-7-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-7-1"></a></h4>
+<div class="section level3">
+<h3 id="bug-fixes-0-7-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-7-1"></a></h3>
 <ul><li>A bug was introduced in <strong>future.batchtools</strong> 0.7.0 that could result in <code>Error in readLog(id, reg = reg) : Log file for job with id 1    not available"</code> when using one of the batchtools backends. It occurred when the value was queried. It was observed using <code>batchtools_torque</code> but not when using <code>batchtools_local</code>. This bug was missed because the 0.7.0 release was not tested on an TORQUE/PBS HPC scheduler as it should have.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.7.0" id="version-070">Version 0.7.0<small>2018-05-04</small><a class="anchor" aria-label="anchor" href="#version-070"></a></h2>
-<div class="section level4">
-<h4 id="new-features-0-7-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-7-0"></a></h4>
+<div class="section level3">
+<h3 id="new-features-0-7-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-7-0"></a></h3>
 <ul><li>Argument <code>workers</code> of future strategies may now also be a function, which is called without argument when the future strategy is set up and used as-is. For instance, <code>plan(callr, workers = halfCores)</code> where <code>halfCores &lt;- function() { max(1, round(availableCores() /    2)) }</code> will use half of the number of available cores. This is useful when using nested future strategies with remote machines.</li>
 </ul></div>
-<div class="section level4">
-<h4 id="code-refactoring-0-7-0">Code Refactoring<a class="anchor" aria-label="anchor" href="#code-refactoring-0-7-0"></a></h4>
+<div class="section level3">
+<h3 id="code-refactoring-0-7-0">Code Refactoring<a class="anchor" aria-label="anchor" href="#code-refactoring-0-7-0"></a></h3>
 <ul><li>Preparing for futures to gather a richer set of results from batchtools backends.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.6.0" id="version-060">Version 0.6.0<small>2017-09-11</small><a class="anchor" aria-label="anchor" href="#version-060"></a></h2>
-<div class="section level4">
-<h4 id="new-features-0-6-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-6-0"></a></h4>
+<div class="section level3">
+<h3 id="new-features-0-6-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-6-0"></a></h3>
 <ul><li><p>If the built-in attempts of <strong>batchtools</strong> for finding a default template file fails, then <code>system("templates", package =    "future.batchtools")</code> is searched for template files as well. Currently, there exists a <code>torque.tmpl</code> file.</p></li>
 <li><p>A job’s name in the scheduler is now set as the future’s label (requires <strong>batchtools</strong> 0.9.4 or newer). If no label is specified, the default job name is controlled by <strong>batchtools</strong>.</p></li>
 <li><p>The period between each poll of the scheduler to check whether a future (job) is finished or not now increases geometrically as a function of number of polls. This lowers the load on the scheduler for long running jobs.</p></li>
 <li><p>The error message for expired batchtools futures now include the last few lines of the logged output, which sometimes includes clues on why the future expired. For instance, if a TORQUE/PBS job use more than the allocated amount of memory it might be terminated by the scheduler leaving the message <code>PBS: job killed: vmem 1234000    exceeded limit 1048576</code> in the output.</p></li>
 <li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for BatchtoolsFuture returns the object invisibly.</p></li>
 </ul></div>
-<div class="section level4">
-<h4 id="bug-fixes-0-6-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-6-0"></a></h4>
+<div class="section level3">
+<h3 id="bug-fixes-0-6-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-6-0"></a></h3>
 <ul><li><p>Calling <code>future_lapply()</code> with functions containing globals part of non-default packages would when using batchtools futures give an error complaining that the global is missing. This was due to updates in <strong>future</strong> (&gt;= 1.4.0) that broke this package.</p></li>
 <li><p><code><a href="../reference/loggedOutput.html">loggedOutput()</a></code> for BatchtoolsFuture would always return NULL unless an error had occurred.</p></li>
 </ul></div>
@@ -267,38 +272,38 @@
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.0" id="version-040">Version 0.4.0<a class="anchor" aria-label="anchor" href="#version-040"></a></h2>
-<div class="section level4">
-<h4 id="new-features-0-4-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-4-0"></a></h4>
+<div class="section level3">
+<h3 id="new-features-0-4-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-4-0"></a></h3>
 <ul><li><p>Added <code><a href="../reference/batchtools_custom.html">batchtools_custom()</a></code> for specifying batchtools futures using any type of batchtools cluster functions.</p></li>
 <li><p><code>batchtools_template(pathname = NULL, type = &lt;type&gt;)</code> now relies on the <strong>batchtools</strong> package for locating the <code>&lt;type&gt;</code> template file.</p></li>
 <li><p><code><a href="https://future.futureverse.org/reference/nbrOfWorkers.html" class="external-link">nbrOfWorkers()</a></code> for batchtools futures now defaults to +Inf unless the evaluator’s <code>workers</code> or <code>cluster.functions</code> specify something else.</p></li>
 <li><p>Renamed argument <code>pathname</code> to <code>template</code> for <code>batchtools_&lt;tmpl&gt;()</code> functions.</p></li>
 </ul></div>
-<div class="section level4">
-<h4 id="bug-fixes-0-4-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-4-0"></a></h4>
+<div class="section level3">
+<h3 id="bug-fixes-0-4-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-4-0"></a></h3>
 <ul><li>Under <code>plan(batchtools_*)</code>, when being created futures would produce an error on <code>all(is.finite(workers)) is not TRUE</code> due to an outdated sanity check.</li>
 </ul></div>
-<div class="section level4">
-<h4 id="software-quality-0-4-0">Software Quality<a class="anchor" aria-label="anchor" href="#software-quality-0-4-0"></a></h4>
+<div class="section level3">
+<h3 id="software-quality-0-4-0">Software Quality<a class="anchor" aria-label="anchor" href="#software-quality-0-4-0"></a></h3>
 <ul><li><p>TESTS: Added test of <code>future_lapply()</code> for batchtools backends.</p></li>
 <li><p>TESTS: Added optional tests for <code>batchtools_*</code> HPC schedulers listed in environment variable <code>R_FUTURE_TESTS_STRATEGIES</code>.</p></li>
 </ul></div>
-<div class="section level4">
-<h4 id="code-refactoring-0-4-0">Code Refactoring<a class="anchor" aria-label="anchor" href="#code-refactoring-0-4-0"></a></h4>
+<div class="section level3">
+<h3 id="code-refactoring-0-4-0">Code Refactoring<a class="anchor" aria-label="anchor" href="#code-refactoring-0-4-0"></a></h3>
 <ul><li>CLEANUP: Package no longer depends on <strong>R.utils</strong>.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.0" id="version-030">Version 0.3.0<a class="anchor" aria-label="anchor" href="#version-030"></a></h2>
-<div class="section level4">
-<h4 id="new-features-0-3-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-3-0"></a></h4>
+<div class="section level3">
+<h3 id="new-features-0-3-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-3-0"></a></h3>
 <ul><li>The number of jobs one can add to the queues of HPC schedulers is in principle unlimited, which is why the number of available workers for such <code>batchtools_*</code> backends is reported as +Inf. However, as the number of workers is used by <code>future_lapply()</code> to decide how many futures should be used to best partition the elements, this means that <code>future_lapply()</code> will always use one future per element. Because of this, it is now possible to specify <code>plan(batchtools_*, workers = n)</code> where <code>n</code> is the target number of workers.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.0" id="version-020">Version 0.2.0<a class="anchor" aria-label="anchor" href="#version-020"></a></h2>
-<div class="section level4">
-<h4 id="globals-0-2-0">Globals<a class="anchor" aria-label="anchor" href="#globals-0-2-0"></a></h4>
+<div class="section level3">
+<h3 id="globals-0-2-0">Globals<a class="anchor" aria-label="anchor" href="#globals-0-2-0"></a></h3>
 <ul><li>
 <strong>batchtools</strong> (&gt;= 0.9.2) now supports exporting objects with any type of names (previously only possible if they mapped to strictly valid filenames). This allowed me to avoid lots of internal workaround code encoding and decoding globals.</li>
 </ul></div>
