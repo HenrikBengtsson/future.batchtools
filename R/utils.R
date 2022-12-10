@@ -118,6 +118,9 @@ trim <- function(x, ...) {
   sub("[\t\n\f\r ]*$", "", sub("^[\t\n\f\r ]*", "", x))
 }
 
+comma <- function(x, sep = ", ") paste(x, collapse = sep)
+
+commaq <- function(x, sep = ", ") paste(sQuote(x), collapse = sep)
 
 import_from <- function(name, default = NULL, package) {
   ns <- getNamespace(package)
