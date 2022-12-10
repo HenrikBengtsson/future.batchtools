@@ -4,7 +4,9 @@ future.batchtools package.
 See future::future.options for additional ones that apply to futures
 in general.
 
-WARNING: Note that the names and the default values of these options may change in future versions of the package.  Please use with care until further notice."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+WARNING: Note that the names and the default values of these options
+may change in future versions of the package.  Please use with care
+until further notice."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
@@ -28,7 +30,7 @@ WARNING: Note that the names and the default values of these options may change 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.batchtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.10.0-9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.10.0-9008</span>
       </span>
     </div>
 
@@ -139,7 +141,9 @@ WARNING: Note that the names and the default values of these options may change 
     <p>Below are the <span style="R">R</span> options and environment variables that are used by the
 <span class="pkg">future.batchtools</span> package.
 See <a href="https://future.futureverse.org/reference/future.options.html" class="external-link">future::future.options</a> for additional ones that apply to futures
-in general.<br><br><em>WARNING: Note that the names and the default values of these options may change in future versions of the package.  Please use with care until further notice.</em></p>
+in general.<br><br><em>WARNING: Note that the names and the default values of these options
+may change in future versions of the package.  Please use with care
+until further notice.</em></p>
     </div>
 
 
@@ -150,9 +154,7 @@ in general.<br><br><em>WARNING: Note that the names and the default values of th
 <dl><dt><span class="option">future.batchtools.workers</span>:</dt>
 <dd><p>(a positive numeric or <code>+Inf</code>)
 The default number of workers available on HPC schedulers with
-job queues.  If not set, the value of the
-<code class="env">R_FUTURE_BATCHTOOLS_WORKERS</code> environment variable is used.
-(Default: <code>100</code>)</p></dd>
+job queues.  (Default: <code>100</code>)</p></dd>
 
 
 <dt><span class="option">future.batchtools.output</span>:</dt>
@@ -172,7 +174,7 @@ This option controls how many lines are displayed.
 (Default: <code>48L</code>)</p></dd>
 
 
-<dt><span class="option">future.cache.path</span> / <code class="env">R_FUTURE_CACHE_PATH</code>:</dt>
+<dt><span class="option">future.cache.path</span>:</dt>
 <dd><p>(character string)
 An absolute or relative path specifying the root folder in which
 <span class="pkg">batchtools</span> registry folders are stored.
@@ -196,14 +198,23 @@ troubleshoot when running in batch mode.
 
 
 </dl></div>
+    <div id="environment-variables-that-set-r-options">
+    <h2>Environment variables that set R options</h2>
+    
+
+<p>All of the above <span style="R">R</span> <span class="option">future.batchtools.*</span> options can be set by
+corresponding environment variable <code class="env">R_FUTURE_BATCHTOOLS_*</code> <em>when
+the <span class="pkg">future.batchtools</span> package is loaded</em>.  This means that those
+environment variables must be set before the <span class="pkg">future.batchtools</span>
+package is loaded in order to have an effect.
+For example, if <code>R_FUTURE_BATCHTOOLS_WORKERS="200"</code> is set, then option
+<span class="option">future.batchtools.workers</span> is set to <code>200</code> (numeric).</p>
+    </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Set an R option:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.cache.path <span class="op">=</span> <span class="st">"/cluster-wide/folder/.future"</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Set an environment variable:</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>R_FUTURE_CACHE_PATH <span class="op">=</span> <span class="st">"/cluster-wide/folder/.future"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -219,7 +230,7 @@ troubleshoot when running in batch mode.
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9004.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9005.</p>
 </div>
 
       </footer></div>
