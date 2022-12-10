@@ -7,7 +7,14 @@
    the corresponding `future.batchtools*` option.  This is in line
    with how all packages in the Futureverse works.
 
-### Bug Fixes
+## New Features
+
+ * `print()` for BatchtoolsFuture now reports on the batchtools
+   configuration file (an R script) and the the batchtools job template
+   file (a shell script) with info on location, file size, and number
+   of lines, if they exist.
+
+## Bug Fixes
 
  * Using `plan(batchtools_nnn, finalize = FALSE)` would give a warning
    on `Detected 1 unknown future arguments: 'finalize'`.
@@ -15,7 +22,7 @@
 
 # Version 0.10.0 [2021-01-02]
 
-### Significant Changes
+## Significant Changes
 
  * Lazy batchtools futures only creates the internal **batchtools**
    registry when the future is launched.
@@ -25,19 +32,19 @@
    purposes.
 
 
-### Documentation
+## Documentation
 
  * Document option `future.delete` and clarify option
    `future.cache.path` in `help("future.batchtools.options")`.
 
 
-### Bug Fixes
+## Bug Fixes
 
  * If `run()` was called twice for a BatchtoolsFuture, it would not
    produce a FutureError but only a regular non-classed error.
 
 
-### Deprecated and Defunct
+## Deprecated and Defunct
 
  * Removed S3 generic functions `await()`, `finished()`, and
    `status()`, which were functions that were used for internal
@@ -46,13 +53,13 @@
 
 # Version 0.9.0 [2020-04-14]
 
-### Significant Changes
+## Significant Changes
 
  * The default number of workers on HPC environments is now 100. To
    revert to the previous default of +Inf, see below news entry.
 
 
-### New Features
+## New Features
 
  * It is now possible to configure the default number of workers on
    the job queue of an HPC scheduler via either R option
@@ -89,7 +96,7 @@
    `batchtools::findConfFile()` search path.
 
 
-### Documentation
+## Documentation
 
  * Add `help("future.batchtools.options")` which descriptions R
    options and environment variables used specifically by the
@@ -98,7 +105,7 @@
 
 # Version 0.8.1 [2019-09-30]
 
-### Bug Fixes
+## Bug Fixes
 
  * `print()` for BatchtoolsFuture would produce an error if the
    underlying **batchtools** Registry was incomplete.
@@ -106,7 +113,7 @@
 
 # Version 0.8.0 [2019-05-04]
 
-### New Features
+## New Features
 
  * Setting option `future.delete` to FALSE will now prevent removal of
    the **batchtools** registry folders.
@@ -125,7 +132,7 @@
  * Debug messages are now prepended with a timestamp.
 
 
-### Bug Fixes
+## Bug Fixes
 
  * Argument `workers` could not be a function.
 
@@ -135,24 +142,24 @@
 
 # Version 0.7.2 [2018-12-03]
 
-### Documentation
+## Documentation
 
  * Add a simple `example(future_custom)`.
 
 
-### Fixes
+## Fixes
 
  * Made internal code agile to upcoming changes in the **future** package
    on how a captured error is represented.
 
 
-### Software Quality
+## Software Quality
 
  * FYI: Every release is tested against one Torque/PBS and one SGE
    scheduler.
 
 
-### Bug Fixes
+## Bug Fixes
 
  * `resolve()` on a lazy batchtools future would stall and never
    return.
@@ -160,13 +167,13 @@
 
 # Version 0.7.1 [2018-07-18]
 
-### New Features
+## New Features
 
  * The `batchtools_*` backends support the handling of the standard
    output as implemented in **future** (>= 1.9.0).
 
 
-### Bug Fixes
+## Bug Fixes
 
  * A bug was introduced in **future.batchtools** 0.7.0 that could result
    in `Error in readLog(id, reg = reg) : Log file for job with id 1
@@ -179,7 +186,7 @@
 
 # Version 0.7.0 [2018-05-03]
 
-### New Features
+## New Features
 
  * Argument `workers` of future strategies may now also be a function,
    which is called without argument when the future strategy is set up
@@ -189,7 +196,7 @@
    useful when using nested future strategies with remote machines.
 
 
-### Code Refactoring
+## Code Refactoring
 
  * Preparing for futures to gather a richer set of results from
    batchtools backends.
@@ -197,7 +204,7 @@
 
 # Version 0.6.0 [2017-09-10]
 
-### New Features
+## New Features
 
  * If the built-in attempts of **batchtools** for finding a default
    template file fails, then `system("templates", package =
@@ -223,7 +230,7 @@
  * `print()` for BatchtoolsFuture returns the object invisibly.
 
 
-### Bug Fixes
+## Bug Fixes
 
  * Calling `future_lapply()` with functions containing globals part of
    non-default packages would when using batchtools futures give an
@@ -238,7 +245,7 @@
 
 # Version 0.4.0 [2017-05-16]
 
-### New Features
+## New Features
 
  * Added `batchtools_custom()` for specifying batchtools futures using
    any type of batchtools cluster functions.
@@ -254,14 +261,14 @@
    functions.
 
 
-### Bug Fixes
+## Bug Fixes
 
  * Under `plan(batchtools_*)`, when being created futures would
    produce an error on `all(is.finite(workers)) is not TRUE` due to an
    outdated sanity check.
 
 
-### Software Quality
+## Software Quality
 
  * TESTS: Added test of `future_lapply()` for batchtools backends.
 
@@ -269,14 +276,14 @@
    listed in environment variable `R_FUTURE_TESTS_STRATEGIES`.
 
 
-### Code Refactoring
+## Code Refactoring
 
  * CLEANUP: Package no longer depends on **R.utils**.
 
 
 # Version 0.3.0 [2017-03-19]
 
-### New Features
+## New Features
 
  * The number of jobs one can add to the queues of HPC schedulers is
    in principle unlimited, which is why the number of available
@@ -291,7 +298,7 @@
 
 # Version 0.2.0 [2017-02-23]
 
-### Globals
+## Globals
 
  * **batchtools** (>= 0.9.2) now supports exporting objects with any type
    of names (previously only possible if they mapped to strictly valid

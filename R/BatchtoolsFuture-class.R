@@ -149,17 +149,24 @@ as_BatchtoolsFuture <- function(future,
 #'
 #' @export
 #' @keywords internal
-print.BatchtoolsFuture <- function(x, ...) {
+print.BatchtoolsFuture <- function(x, ...) {  
   NextMethod()
 
   ## batchtools specific
-  reg <- x$config$reg
+  config <- x$config
 
+  conf.file <- config$conf.file
+  printf("batchtools configuration file: %s\n", file_info(conf.file))
+  
+  reg <- config$reg
   if (inherits(reg, "Registry")) {
+    cluster.functions <- reg$cluster.functions
     printf("batchtools cluster functions: %s\n",
-           sQuote(reg$cluster.functions$name))
+           sQuote(cluster.functions$name))
+    template <- attr(cluster.functions, "template")
+    printf("batchtools cluster functions template: %s\n", file_info(template))
   } else {
-    printf("batchtools cluster functions: N/A\n")
+    printf("batchtools cluster functions: <none>\n")
   }
 
   ## Ask for status once
@@ -179,7 +186,7 @@ print.BatchtoolsFuture <- function(x, ...) {
       printf("  Work dir exists: %s\n", file_test("-d", reg$work.dir))
       try(print(reg))
     } else {
-      printf("batchtools Registry: N/A\n")
+      printf("batchtools Registry: <NA>\n")
     }
   }
 

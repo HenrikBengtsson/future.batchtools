@@ -192,3 +192,18 @@ result_has_errors <- function(result) {
   
   FALSE
 }
+
+
+
+#' @importFrom utils file_test
+file_info <- function(file) {
+  if (is.null(file)) return("<NA>")
+  if (file_test("-f", file)) {
+    info <- sprintf("%d bytes", file.info(file)$size)
+    n <- length(readLines(file, warn = FALSE))
+    info <- sprintf("%s; %d lines", info, n)
+  } else {
+    info <- "<non-existing>"
+  }
+  sprintf("%s (%s)", sQuote(file), info)
+}
