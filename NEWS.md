@@ -1,5 +1,12 @@
 # Version (development version)
 
+## Significant Changes
+
+ * `R_FUTURE_BATCHTOOLS_*` environment variables are now only read
+   when the **future.batchtools** package is loaded, where they set
+   the corresponding `future.batchtools*` option.  This is in line
+   with how all packages in the Futureverse works.
+
 ### Bug Fixes
 
  * Using `plan(batchtools_nnn, finalize = FALSE)` would give a warning

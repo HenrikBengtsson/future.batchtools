@@ -1,11 +1,22 @@
 .onLoad <- function(libname, pkgname) {
+  debug <- getOption("future.debug", FALSE)
+  
   inRCmdCheck <- import_future("inRCmdCheck")
   if (inRCmdCheck()) {
     ## Don't write to current working directory when running R CMD check.
-    path <- Sys.getenv("R_FUTURE_CACHE_PATH", file.path(tempdir(), ".future"))
-    Sys.setenv("R_FUTURE_CACHE_PATH" = path)
+    path <- Sys.getenv("R_FUTURE_CACHE_PATH", NA_character_)
+    if (!is.na(path)) {
+      Sys.setenv("R_FUTURE_CACHE_PATH" = path)
+      if (debug) {
+        mdebugf("R CMD check detected: Set R_FUTURE_CACHE_PATH=%s",
+                sQuote(Sys.getenv("R_FUTURE_CACHE_PATH")))
+      }
+    }
   }
+
+  update_package_options(debug = debug)
 }
+
 
 #' @importFrom utils file_test
 .onUnload <- function(libpath) {

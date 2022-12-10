@@ -4,11 +4,14 @@
 \alias{future.batchtools.options}
 \alias{future.cache.path}
 \alias{future.delete}
+\alias{R_FUTURE_CACHE_PATH}
+\alias{R_FUTURE_DELETE}
 \alias{future.batchtools.expiration.tail}
 \alias{future.batchtools.output}
 \alias{future.batchtools.workers}
+\alias{R_FUTURE_BATCHTOOLS_EXPIRATION_TAIL}
+\alias{R_FUTURE_BATCHTOOLS_OUTPUT}
 \alias{R_FUTURE_BATCHTOOLS_WORKERS}
-\alias{R_FUTURE_FUTURE_CACHE_PATH}
 \title{Options used for batchtools futures}
 \description{
 Below are the \R options and environment variables that are used by the
@@ -16,16 +19,16 @@ Below are the \R options and environment variables that are used by the
 See \link[future:future.options]{future::future.options} for additional ones that apply to futures
 in general.\cr
 \cr
-\emph{WARNING: Note that the names and the default values of these options may change in future versions of the package.  Please use with care until further notice.}
+\emph{WARNING: Note that the names and the default values of these options
+may change in future versions of the package.  Please use with care
+until further notice.}
 }
 \section{Settings for batchtools futures}{
 
 \describe{
 \item{\option{future.batchtools.workers}:}{(a positive numeric or \code{+Inf})
 The default number of workers available on HPC schedulers with
-job queues.  If not set, the value of the
-\env{R_FUTURE_BATCHTOOLS_WORKERS} environment variable is used.
-(Default: \code{100})}
+job queues.  (Default: \code{100})}
 
 \item{\option{future.batchtools.output}:}{(logical)
 If TRUE, \pkg{batchtools} will produce extra output.
@@ -40,7 +43,7 @@ relayed by batchtools futures to help troubleshooting.
 This option controls how many lines are displayed.
 (Default: \code{48L})}
 
-\item{\option{future.cache.path} / \env{R_FUTURE_CACHE_PATH}:}{
+\item{\option{future.cache.path}:}{
 (character string)
 An absolute or relative path specifying the root folder in which
 \pkg{batchtools} registry folders are stored.
@@ -62,12 +65,20 @@ troubleshoot when running in batch mode.
 }
 }
 
+\section{Environment variables that set R options}{
+
+All of the above \R \option{future.batchtools.*} options can be set by
+corresponding environment variable \env{R_FUTURE_BATCHTOOLS_*} \emph{when
+the \pkg{future.batchtools} package is loaded}.  This means that those
+environment variables must be set before the \pkg{future.batchtools}
+package is loaded in order to have an effect.
+For example, if \code{R_FUTURE_BATCHTOOLS_WORKERS="200"} is set, then option
+\option{future.batchtools.workers} is set to \code{200} (numeric).
+}
+
 \examples{
 # Set an R option:
 options(future.cache.path = "/cluster-wide/folder/.future")
-
-# Set an environment variable:
-Sys.setenv(R_FUTURE_CACHE_PATH = "/cluster-wide/folder/.future")
 
 }
 \keyword{internal}
