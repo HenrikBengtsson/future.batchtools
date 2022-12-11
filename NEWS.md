@@ -11,6 +11,11 @@
    
 ## New Features
 
+ * It is now possible to tweak arguments used by an underlying
+   `batchtools::makeClusterFunctionsNnn()` function for some of the
+   `batchtools_nnn` backends, e.g. `plan(batchtools_slurm,
+   scheduler.latency = 60)`.
+ 
  * `plan(batchtools_multicore, workers = I(1))` overrides the fallback
    to `batchtools_local` and forces a single `batchtools_multicore`
    worker.
