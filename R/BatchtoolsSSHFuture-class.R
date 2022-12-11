@@ -1,23 +1,20 @@
 #' @rdname BatchtoolsFuture
 #' @importFrom batchtools makeClusterFunctionsSSH
-#' @importFrom parallelly availableWorkers
+#' @importFrom parallelly availableCores
 #' @export
-BatchtoolsSSHFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), workers = availableWorkers(), ...) {
+BatchtoolsSSHFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), workers = availableCores(), ...) {
   if (substitute) expr <- substitute(expr)
 
-  if (is.null(workers)) workers <- availableWorkers()
-  ssh_workers <- BatchtoolsSSHRegistry("start", workers = workers)
-  cf <- makeClusterFunctionsSSH(ssh_workers)
+  if (is.null(workers)) workers <- availableCores()
+  stopifnot(is.numeric(workers), length(workers) == 1L, !is.na(workers), is.finite(workers), workers >= 1L)
+  
+  ssh_worker <- list(Worker$new("localhost", ncpus = 1L))
+  cf <- makeClusterFunctionsSSH(ssh_worker)
 
-  nworkers <- sum(vapply(ssh_workers, FUN = function(worker) worker$ncpus, FUN.VALUE = NA_integer_))
-
-  future <- BatchtoolsCustomFuture(expr = expr, substitute = FALSE, envir = envir, workers = nworkers, ssh_workers = ssh_workers, cluster.functions = cf, ...)
+  future <- BatchtoolsCustomFuture(expr = expr, substitute = FALSE, envir = envir, workers = workers, cluster.functions = cf, ...)
   future <- structure(future, class = c("BatchtoolsSSHFuture", class(future)))
-
-
   
   future$workers <- workers
 
   future
 }
-

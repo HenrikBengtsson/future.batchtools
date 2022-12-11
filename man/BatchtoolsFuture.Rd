@@ -110,7 +110,7 @@ BatchtoolsSSHFuture(
   expr = NULL,
   substitute = TRUE,
   envir = parent.frame(),
-  workers = availableWorkers(),
+  workers = availableCores(),
   ...
 )
 

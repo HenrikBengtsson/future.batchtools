@@ -499,8 +499,7 @@ run.BatchtoolsFuture <- function(future, ...) {
   }
 
   ## 4. Wait for an available worker
-  ## FIXME/TODO
-  ## waitForWorker(type = class(future)[1], workers = future$workers)
+  waitForWorker(future, workers = future$workers)
 
   ## 5. Submit
   future$state <- "running"
@@ -511,10 +510,8 @@ run.BatchtoolsFuture <- function(future, ...) {
 
   mdebugf("Launched future #%d", jobid$job.id)
 
-  ## 6. Allocate future worker
-  ## FIXME/TODO
-  ## freg <- sprintf("workers-%s", class(future)[1])
-  ## FutureRegistry(freg, action = "add", future = future, earlySignal = FALSE)
+  ## 6. Rerserve worker for future
+  registerFuture(future)
 
   invisible(future)
 } ## run()
@@ -697,9 +694,8 @@ delete.BatchtoolsFuture <- function(future,
   result <- result(future, cleanup = FALSE)
   stop_if_not(inherits(result, "FutureResult"))
 
-  ## FIXME/TODO
-  ## freg <- sprintf("workers-%s", class(future)[1])
-  ## FutureRegistry(freg, action = "remove", future = future)
+  ## Free up worker
+  unregisterFuture(future)
 
   ## To simplify post mortem troubleshooting in non-interactive sessions,
   ## should the batchtools registry files be removed or not?

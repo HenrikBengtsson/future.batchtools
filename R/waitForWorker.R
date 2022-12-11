@@ -1,5 +1,40 @@
+waitForWorker <- function(future, ...) {
+  UseMethod("waitForWorker")
+}
+
+waitForWorker.default <- function(future, ...) NULL
+
+
+registerFuture <- function(future, ...) {
+  UseMethod("registerFuture")
+}
+
+registerFuture.default <- function(future, ...) NULL
+
+
+unregisterFuture <- function(future, ...) {
+  UseMethod("unregisterFuture")
+}
+
+unregisterFuture.default <- function(future, ...) NULL
+
+
+registerFuture.BatchtoolsSSHFuture <- function(future, ...) {
+  ## FutureRegistry to use
+  freg <- "workers-batchtools_ssh"
+  FutureRegistry(freg, action = "add", future = future, earlySignal = FALSE, ...)
+}
+
+
+unregisterFuture.BatchtoolsSSHFuture <- function(future, ...) {
+  ## FutureRegistry to use
+  freg <- "workers-batchtools_ssh"
+  FutureRegistry(freg, action = "remove", future = future, ...)
+}
+
+
 #' @importFrom future FutureError
-waitForWorker <- function(type,
+waitForWorker.BatchtoolsSSHFuture <- function(future,
          workers,
          await = NULL,
          timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60),
@@ -7,7 +42,6 @@ waitForWorker <- function(type,
          alpha = getOption("future.wait.alpha", 1.01)) {
   debug <- getOption("future.debug", FALSE)
 
-  stop_if_not(length(type) == 1, is.character(type), !is.na(type), nzchar(type))
   stop_if_not(is.null(await) || is.function(await))
   workers <- as.integer(workers)
   stop_if_not(length(workers) == 1, is.finite(workers), workers >= 1L)
@@ -15,7 +49,7 @@ waitForWorker <- function(type,
   stop_if_not(length(alpha) == 1, is.finite(alpha), alpha > 0)
 
   ## FutureRegistry to use
-  freg <- sprintf("workers-%s", type)
+  freg <- "workers-batchtools_ssh"
 
   ## Use a default await() function?
   if (is.null(await)) {

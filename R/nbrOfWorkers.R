@@ -92,6 +92,22 @@ nbrOfFreeWorkers.batchtools_uniprocess <- function(evaluator, background = FALSE
 }
 
 
+
+#' @export
+nbrOfFreeWorkers.batchtools_ssh <- function(evaluator, background = FALSE, ...) {
+  assert_no_positional_args_but_first()
+
+  workers <- nbrOfWorkers(evaluator)
+
+  freg <- "workers-batchtools_ssh"
+  usedWorkers <- length(FutureRegistry(freg, action = "list"))
+  
+  workers <- workers - usedWorkers
+  stop_if_not(length(workers) == 1L, !is.na(workers), workers >= 0L)
+  workers
+}
+
+
 ## Number of available workers in an HPC environment
 ##
 ## @return (numeric) A positive integer or `+Inf`.
