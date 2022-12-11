@@ -41,6 +41,9 @@
  * Using `plan(batchtools_nnn, finalize = FALSE)` would give a warning
    on `Detected 1 unknown future arguments: 'finalize'`.
 
+ * Template files in `system.file(package = "future.batchtools",
+   "templates")` were not found.
+
 
 # Version 0.10.0 [2021-01-02]
 
