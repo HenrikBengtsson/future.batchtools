@@ -5,6 +5,12 @@
 \alias{BatchtoolsFuture}
 \alias{BatchtoolsMultiprocessFuture}
 \alias{BatchtoolsMulticoreFuture}
+\alias{BatchtoolsTemplateFuture}
+\alias{BatchtoolsLsfFuture}
+\alias{BatchtoolsOpenLavaFuture}
+\alias{BatchtoolsSgeFuture}
+\alias{BatchtoolsSlurmFuture}
+\alias{BatchtoolsTorqueFuture}
 \alias{BatchtoolsUniprocessFuture}
 \alias{BatchtoolsLocalFuture}
 \alias{BatchtoolsInteractiveFuture}
@@ -34,6 +40,48 @@ BatchtoolsMultiprocessFuture(
 )
 
 BatchtoolsMulticoreFuture(
+  expr = NULL,
+  substitute = TRUE,
+  envir = parent.frame(),
+  ...
+)
+
+BatchtoolsTemplateFuture(
+  expr = NULL,
+  substitute = TRUE,
+  envir = parent.frame(),
+  ...
+)
+
+BatchtoolsLsfFuture(
+  expr = NULL,
+  substitute = TRUE,
+  envir = parent.frame(),
+  ...
+)
+
+BatchtoolsOpenLavaFuture(
+  expr = NULL,
+  substitute = TRUE,
+  envir = parent.frame(),
+  ...
+)
+
+BatchtoolsSgeFuture(
+  expr = NULL,
+  substitute = TRUE,
+  envir = parent.frame(),
+  ...
+)
+
+BatchtoolsSlurmFuture(
+  expr = NULL,
+  substitute = TRUE,
+  envir = parent.frame(),
+  ...
+)
+
+BatchtoolsTorqueFuture(
   expr = NULL,
   substitute = TRUE,
   envir = parent.frame(),

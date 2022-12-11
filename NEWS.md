@@ -7,10 +7,12 @@
    the corresponding `future.batchtools*` option.  This is in line
    with how all packages in the Futureverse works.
    
- * Add more specific BatchtoolsFuture classes: abstract
+ * Add specialized BatchtoolsFuture classes: abstract
    BatchtoolsUniprocessFuture, abstract BatchtoolsMultiprocessFuture,
-   BatchtoolsInteractiveFuture, BatchtoolsLocalFuture and
-   BatchtoolsMulticoreFuture.
+   BatchtoolsInteractiveFuture, BatchtoolsLocalFuture,
+   BatchtoolsMulticoreFuture, BatchtoolsLsfFuture,
+   BatchtoolsOpenLavaFuture, BatchtoolsSGEFuture,
+   BatchtoolsSlurmFuture, and BatchtoolsTorqueFuture.
    
  * Add `nbrOfFreeWorkers()` for `batchtools_interactive`,
    `batchtools_local` futures.

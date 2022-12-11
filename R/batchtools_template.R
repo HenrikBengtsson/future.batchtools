@@ -44,9 +44,11 @@ batchtools_lsf <- function(expr, envir = parent.frame(), substitute = TRUE,
                          type = "lsf", resources = resources,
                          workers = workers, registry = registry, ...)
 }
-class(batchtools_lsf) <- c("batchtools_lsf", "batchtools_template",
-                           "batchtools", "multiprocess", "future",
-                           "function")
+class(batchtools_lsf) <- c(
+  "batchtools_lsf", "batchtools_template",
+  "batchtools_multiprocess", "batchtools",
+  "multiprocess", "future", "function"
+)
 attr(batchtools_lsf, "tweakable") <- c("finalize")
 
 #' @export
@@ -63,9 +65,11 @@ batchtools_openlava <- function(expr, envir = parent.frame(), substitute = TRUE,
                          type = "openlava", resources = resources,
                          workers = workers, registry = registry, ...)
 }
-class(batchtools_openlava) <- c("batchtools_openlava", "batchtools_template",
-                                "batchtools", "multiprocess", "future",
-                                "function")
+class(batchtools_openlava) <- c(
+  "batchtools_openlava", "batchtools_template",
+  "batchtools_multiprocess", "batchtools",
+  "multiprocess", "future", "function"
+)
 attr(batchtools_openlava, "tweakable") <- c("finalize")
 
 #' @export
@@ -82,9 +86,11 @@ batchtools_sge <- function(expr, envir = parent.frame(), substitute = TRUE,
                          type = "sge", resources = resources,
                          workers = workers, registry = registry, ...)
 }
-class(batchtools_sge) <- c("batchtools_sge", "batchtools_template",
-                           "batchtools", "multiprocess", "future",
-                           "function")
+class(batchtools_sge) <- c(
+  "batchtools_sge", "batchtools_template",
+  "batchtools_multiprocess", "batchtools",
+  "multiprocess", "future", "function"
+)
 attr(batchtools_sge, "tweakable") <- c("finalize")
 
 #' @export
@@ -101,9 +107,11 @@ batchtools_slurm <- function(expr, envir = parent.frame(), substitute = TRUE,
                          type = "slurm", resources = resources,
                          workers = workers, registry = registry, ...)
 }
-class(batchtools_slurm) <- c("batchtools_slurm", "batchtools_template",
-                             "batchtools", "multiprocess", "future",
-                             "function")
+class(batchtools_slurm) <- c(
+  "batchtools_slurm", "batchtools_template",
+  "batchtools_multiprocess", "batchtools",
+  "multiprocess", "future", "function"
+)
 attr(batchtools_slurm, "tweakable") <- c("finalize")
 
 #' @export
@@ -120,10 +128,13 @@ batchtools_torque <- function(expr, envir = parent.frame(), substitute = TRUE,
                          type = "torque", resources = resources,
                          workers = workers, registry = registry, ...)
 }
-class(batchtools_torque) <- c("batchtools_torque", "batchtools_template",
-                              "batchtools", "multiprocess", "future",
-                              "function")
+class(batchtools_torque) <- c(
+  "batchtools_torque", "batchtools_template",
+  "batchtools_multiprocess", "batchtools",
+  "multiprocess", "future", "function"
+)
 attr(batchtools_torque, "tweakable") <- c("finalize")
+
 
 #' @importFrom batchtools findTemplateFile
 #' @importFrom batchtools makeClusterFunctionsLSF
@@ -180,14 +191,16 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
   cluster.functions <- make_cfs(template)
   attr(cluster.functions, "template") <- template
 
-  future <- BatchtoolsFuture(expr = expr, envir = envir, substitute = FALSE,
-                            globals = globals,
-                            label = label,
-                            cluster.functions = cluster.functions,
-                            registry = registry,
-                            resources = resources,
-                            workers = workers,
-                            ...)
+  future <- BatchtoolsTemplateFuture(
+    expr = expr, envir = envir, substitute = FALSE,
+    globals = globals,
+    label = label,
+    cluster.functions = cluster.functions,
+    registry = registry,
+    resources = resources,
+    workers = workers,
+    ...
+  )
 
   if (!future$lazy) future <- run(future)
 
