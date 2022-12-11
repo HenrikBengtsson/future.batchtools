@@ -8,7 +8,7 @@
 \alias{BatchtoolsTemplateFuture}
 \alias{BatchtoolsLsfFuture}
 \alias{BatchtoolsOpenLavaFuture}
-\alias{BatchtoolsSgeFuture}
+\alias{BatchtoolsSGEFuture}
 \alias{BatchtoolsSlurmFuture}
 \alias{BatchtoolsTorqueFuture}
 \alias{BatchtoolsUniprocessFuture}
@@ -67,7 +67,7 @@ BatchtoolsOpenLavaFuture(
   ...
 )
 
-BatchtoolsSgeFuture(
+BatchtoolsSGEFuture(
   expr = NULL,
   substitute = TRUE,
   envir = parent.frame(),
