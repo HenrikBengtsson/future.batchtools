@@ -1,7 +1,7 @@
 #' Gets the number of batchtools workers
 #'
 #' Tries to infer the total number of batchtools workers.  This is
-#' done using various ad hoc procedures based on code inspection
+#' done using various ad-hoc procedures based on code inspection
 #' of batchtools itself.
 #'
 #' @param evaluator A future evaluator function.
@@ -52,6 +52,14 @@ nbrOfWorkers.batchtools_uniprocess <- function(evaluator) {
   1L
 }
 
+#' @export
+nbrOfWorkers.batchtools_multicore <- function(evaluator) {
+  ## 1. Infer from 'workers' argument
+  expr <- formals(evaluator)$workers
+  workers <- eval(expr, enclos = baseenv())
+  stop_if_not(length(workers) == 1L, is.numeric(workers), !is.na(workers), is.finite(workers), workers >= 1)
+  workers
+}
 
 #' @importFrom future nbrOfWorkers nbrOfFreeWorkers
 #' @export
@@ -68,7 +76,7 @@ nbrOfFreeWorkers.batchtools <- function(evaluator, background = FALSE, ...) {
   ## In all other cases, we need to figure out how many workers
   ## are running at the moment
   
-  warnf("nbrOfFreeWorkers() for %s is not fully implemented. For now, it'll assume that none of the workers are occupied", class(evaluator)[1])
+  warnf("nbrOfFreeWorkers() for %s is not fully implemented. For now, it'll assume that none of the workers are occupied", setdiff(class(evaluator), c("FutureStrategy", "tweaked"))[1])
   usedWorkers <- 0L  ## Mockup for now
   
   workers <- workers - usedWorkers

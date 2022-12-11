@@ -51,12 +51,14 @@ batchtools_multicore <- function(expr, envir = parent.frame(),
 
   cf <- makeClusterFunctionsMulticore(ncpus = workers)
 
-  future <- BatchtoolsFuture(expr = expr, envir = envir, substitute = FALSE,
-                            globals = globals,
-                            label = label,
-                            cluster.functions = cf,
-                            registry = registry, 
-                            ...)
+  future <- BatchtoolsMulticoreFuture(
+    expr = expr, envir = envir, substitute = FALSE,
+    globals = globals,
+    label = label,
+    cluster.functions = cf,
+    registry = registry, 
+    ...
+  )
 
   if (!future$lazy) future <- run(future)
 
