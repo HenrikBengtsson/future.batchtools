@@ -46,16 +46,22 @@ nbrOfWorkers.batchtools <- function(evaluator) {
   availableHpcWorkers()
 }
 
+#' @export
+nbrOfWorkers.batchtools_uniprocess <- function(evaluator) {
+  assert_no_positional_args_but_first()
+  1L
+}
+
 
 #' @importFrom future nbrOfWorkers nbrOfFreeWorkers
 #' @export
-nbrOfFreeWorkers.batchtools <- function(evaluator = NULL, background = FALSE, ...) {
-  ## Special case #1: sequential processing
+nbrOfFreeWorkers.batchtools <- function(evaluator, background = FALSE, ...) {
+  ## Special case #1: Fall back to uniprocess processing
   if (inherits(evaluator, "uniprocess")) {
     return(NextMethod())
   }
   
-  ## Special case #2: infinite number of workers
+  ## Special case #2: Infinite number of workers
   workers <- nbrOfWorkers(evaluator)
   if (is.infinite(workers)) return(workers)
 
@@ -68,6 +74,13 @@ nbrOfFreeWorkers.batchtools <- function(evaluator = NULL, background = FALSE, ..
   workers <- workers - usedWorkers
   stop_if_not(length(workers) == 1L, !is.na(workers), workers >= 0L)
   workers
+}
+
+
+#' @export
+nbrOfFreeWorkers.batchtools_uniprocess <- function(evaluator, background = FALSE, ...) {
+  assert_no_positional_args_but_first()
+  if (isTRUE(background)) 0L else 1L
 }
 
 

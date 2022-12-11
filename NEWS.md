@@ -6,7 +6,13 @@
    when the **future.batchtools** package is loaded, where they set
    the corresponding `future.batchtools*` option.  This is in line
    with how all packages in the Futureverse works.
-
+   
+ * Add more specific BatchtoolsFuture classes:
+   BatchtoolsInteractiveFuture and BatchtoolsLocalFuture.
+   
+ * Add `nbrOfFreeWorkers()` for `batchtools_uniprocess` futures,
+   i.e. for `batchtools_interactive` and `batchtools_local` futures.
+   
 ## New Features
 
  * `print()` for BatchtoolsFuture now reports on the batchtools
