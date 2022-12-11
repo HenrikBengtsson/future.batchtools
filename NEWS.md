@@ -11,6 +11,10 @@
    
 ## New Features
 
+ * `plan(batchtools_multicore, workers = I(1))` overrides the fallback
+   to `batchtools_local` and forces a single `batchtools_multicore`
+   worker.
+ 
  * `print()` for BatchtoolsFuture now reports on the batchtools
    configuration file (an R script) and the the batchtools job template
    file (a shell script) with info on location, file size, and number
