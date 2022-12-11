@@ -28,7 +28,7 @@ Both types of futures will block until the futures are resolved."><!-- mathjax -
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.batchtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.10.0-9011</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.10.0-9020</span>
       </span>
     </div>
 
@@ -145,74 +145,25 @@ Both types of futures will block until the futures are resolved.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">batchtools_local</span><span class="op">(</span></span>
-<span>  <span class="va">expr</span>,</span>
-<span>  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  substitute <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  globals <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  workers <span class="op">=</span> <span class="fl">1L</span>,</span>
-<span>  registry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">batchtools_local</span><span class="op">(</span><span class="va">...</span>, envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>expr</dt>
-<dd><p>The R expression to be evaluated</p></dd>
-
-
-<dt>envir</dt>
+    <dl><dt>envir</dt>
 <dd><p>The environment in which global environment
 should be located.</p></dd>
 
 
-<dt>substitute</dt>
-<dd><p>Controls whether <code>expr</code> should be
-<code><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute()</a></code>:d or not.</p></dd>
-
-
-<dt>globals</dt>
-<dd><p>(optional) a logical, a character vector, a named list, or a
-<a href="https://globals.futureverse.org/reference/Globals.html" class="external-link">Globals</a> object.  If TRUE, globals are identified by code
-inspection based on <code>expr</code> and <code>tweak</code> searching from environment
-<code>envir</code>.  If FALSE, no globals are used.  If a character vector, then
-globals are identified by lookup based their names <code>globals</code> searching
-from environment <code>envir</code>.  If a named list or a Globals object, the
-globals are used as is.</p></dd>
-
-
-<dt>label</dt>
-<dd><p>(optional) Label of the future (where applicable, becomes the
-job name for most job schedulers).</p></dd>
-
-
-<dt>workers</dt>
-<dd><p>(optional) The maximum number of workers the batchtools
-backend may use at any time.   Interactive and "local" backends can only
-process one future at the time (<code>workers = 1L</code>), whereas HPC backends,
-where futures are resolved via separate jobs on a scheduler, can have
-multiple workers.  In the latter, the default is <code>workers = NULL</code>, which
-will resolve to <code>getOption("future.batchtools.workers")</code>.  If that is not
-specified, the value of environment variable <code>R_FUTURE_BATCHTOOLS_WORKERS</code>
-will be used.  If neither are specified, then the default is <code>100</code>.</p></dd>
-
-
-<dt>registry</dt>
-<dd><p>(optional) A named list of settings to control the setup
-of the batchtools registry.</p></dd>
-
-
 <dt>...</dt>
-<dd><p>Additional arguments passed to <code><a href="BatchtoolsFuture.html">BatchtoolsFuture()</a></code>.</p></dd>
+<dd><p>Additional arguments passed to <code><a href="BatchtoolsFuture.html">BatchtoolsUniprocessFuture()</a></code>.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>An object of class <code>BatchtoolsFuture</code>.</p>
+<p>An object of class <code>BatchtoolsUniprocessFuture</code>.</p>
     </div>
     <div id="details">
     <h2>Details</h2>

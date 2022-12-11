@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.batchtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.10.0-9011</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.10.0-9020</span>
       </span>
     </div>
 
@@ -133,17 +133,22 @@
 <h2 class="page-header" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <div class="section level3">
 <h3 id="significant-changes-development-version">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
-<ul><li>
-<code>R_FUTURE_BATCHTOOLS_*</code> environment variables are now only read when the <strong>future.batchtools</strong> package is loaded, where they set the corresponding <code>future.batchtools*</code> option. This is in line with how all packages in the Futureverse works.</li>
+<ul><li><p><code>R_FUTURE_BATCHTOOLS_*</code> environment variables are now only read when the <strong>future.batchtools</strong> package is loaded, where they set the corresponding <code>future.batchtools*</code> option. This is in line with how all packages in the Futureverse works.</p></li>
+<li><p>Add <code><a href="https://future.futureverse.org/reference/nbrOfWorkers.html" class="external-link">nbrOfFreeWorkers()</a></code> for batchtools futures.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li>
-<code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for BatchtoolsFuture now reports on the batchtools configuration file (an R script) and the the batchtools job template file (a shell script) with info on location, file size, and number of lines, if they exist.</li>
+<ul><li><p><code>plan(batchtools_multicore, workers = I(1))</code> overrides the fallback to <code>batchtools_local</code> and forces a single <code>batchtools_multicore</code> worker.</p></li>
+<li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for BatchtoolsFuture now reports on the batchtools configuration file (an R script) and the the batchtools job template file (a shell script) with info on location, file size, and number of lines, if they exist.</p></li>
+<li><p>Add BatchtoolsFuture subclasses; abstract BatchtoolsUniprocessFuture, abstract BatchtoolsMultiprocessFuture, BatchtoolsInteractiveFuture, BatchtoolsLocalFuture, BatchtoolsMulticoreFuture, BatchtoolsLsfFuture, BatchtoolsOpenLavaFuture, BatchtoolsSGEFuture, BatchtoolsSlurmFuture, BatchtoolsTorqueFuture, and BatchtoolsCustomFuture.</p></li>
+<li><p>Add <code>batchtools_bash</code> and BatchtoolsBashFuture to illustrate how to create a basic <code>batchtools_custom</code> future based on a <strong>batchtools</strong> template file <code>bash.tmpl</code> part of the package.</p></li>
+<li><p>Add <code>batchtools_ssh</code> and BatchtoolsSSHFuture for creating batchtools futures based on <strong>batchtools</strong> SSH workers created by <code><a href="https://rdrr.io/pkg/batchtools/man/makeClusterFunctionsSSH.html" class="external-link">batchtools::makeClusterFunctionsSSH()</a></code>.</p></li>
+<li><p>Add a template file for SGE.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>Using <code>plan(batchtools_nnn, finalize = FALSE)</code> would give a warning on <code>Detected 1 unknown future arguments: 'finalize'</code>.</li>
+<ul><li><p>Using <code>plan(batchtools_nnn, finalize = FALSE)</code> would give a warning on <code>Detected 1 unknown future arguments: 'finalize'</code>.</p></li>
+<li><p>Template files in <code>system.file(package = "future.batchtools",    "templates")</code> were not found.</p></li>
 </ul></div>
 </div>
     <div class="section level2">

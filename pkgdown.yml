@@ -3,7 +3,7 @@ pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   future.batchtools: future.batchtools.html
-last_built: 2022-12-10T20:31Z
+last_built: 2022-12-11T06:38Z
 urls:
   reference: https://future.batchtools.futureverse.org/reference
   article: https://future.batchtools.futureverse.org/articles

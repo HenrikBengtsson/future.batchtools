@@ -25,7 +25,7 @@ cluster via a job scheduler."><!-- mathjax --><script src="https://cdnjs.cloudfl
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.batchtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.10.0-9011</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.10.0-9020</span>
       </span>
     </div>
 
@@ -254,9 +254,8 @@ backend may use at any time.   Interactive and "local" backends can only
 process one future at the time (<code>workers = 1L</code>), whereas HPC backends,
 where futures are resolved via separate jobs on a scheduler, can have
 multiple workers.  In the latter, the default is <code>workers = NULL</code>, which
-will resolve to <code>getOption("future.batchtools.workers")</code>.  If that is not
-specified, the value of environment variable <code>R_FUTURE_BATCHTOOLS_WORKERS</code>
-will be used.  If neither are specified, then the default is <code>100</code>.</p></dd>
+will resolve to <code>getOption("future.batchtools.workers")</code>.  If neither
+are specified, then the default is <code>100</code>.</p></dd>
 
 
 <dt>registry</dt>
