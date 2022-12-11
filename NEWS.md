@@ -7,8 +7,7 @@
    the corresponding `future.batchtools*` option.  This is in line
    with how all packages in the Futureverse works.
    
- * Add `nbrOfFreeWorkers()` for `batchtools_interactive`,
-   `batchtools_local` futures.
+ * Add `nbrOfFreeWorkers()` for batchtools futures.
    
 ## New Features
 

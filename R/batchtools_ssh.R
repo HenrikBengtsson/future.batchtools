@@ -47,7 +47,8 @@ batchtools_ssh <- function(expr, envir = parent.frame(),
   future
 }
 class(batchtools_ssh) <- c(
-  "batchtools_ssh", "batchtools_custom", "batchtools",
+  "batchtools_ssh", "batchtools_custom",
+  "batchtools_multiprocess", "batchtools",
   "multiprocess", "future", "function"
 )
 attr(batchtools_multicore, "tweakable") <- c("finalize")

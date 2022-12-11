@@ -45,7 +45,7 @@ batchtools_custom <- function(expr, envir = parent.frame(), substitute = TRUE,
   future
 }
 class(batchtools_custom) <- c(
-  "batchtools_custom", "batchtools",
+  "batchtools_custom", "batchtools_multiprocess", "batchtools",
   "multiprocess", "future", "function"
 )
 attr(batchtools_custom, "tweakable") <- c("finalize")
