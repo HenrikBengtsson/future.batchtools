@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.batchtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.10.0-9020</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.10.0-9025</span>
       </span>
     </div>
 
@@ -138,7 +138,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li><p><code>plan(batchtools_multicore, workers = I(1))</code> overrides the fallback to <code>batchtools_local</code> and forces a single <code>batchtools_multicore</code> worker.</p></li>
+<ul><li><p>It is now possible to tweak arguments used by an underlying <code>batchtools::makeClusterFunctionsNnn()</code> function for some of the <code>batchtools_nnn</code> backends, e.g. <code>plan(batchtools_slurm,    scheduler.latency = 60)</code>.</p></li>
+<li><p><code>plan(batchtools_multicore, workers = I(1))</code> overrides the fallback to <code>batchtools_local</code> and forces a single <code>batchtools_multicore</code> worker.</p></li>
 <li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for BatchtoolsFuture now reports on the batchtools configuration file (an R script) and the the batchtools job template file (a shell script) with info on location, file size, and number of lines, if they exist.</p></li>
 <li><p>Add BatchtoolsFuture subclasses; abstract BatchtoolsUniprocessFuture, abstract BatchtoolsMultiprocessFuture, BatchtoolsInteractiveFuture, BatchtoolsLocalFuture, BatchtoolsMulticoreFuture, BatchtoolsLsfFuture, BatchtoolsOpenLavaFuture, BatchtoolsSGEFuture, BatchtoolsSlurmFuture, BatchtoolsTorqueFuture, and BatchtoolsCustomFuture.</p></li>
 <li><p>Add <code>batchtools_bash</code> and BatchtoolsBashFuture to illustrate how to create a basic <code>batchtools_custom</code> future based on a <strong>batchtools</strong> template file <code>bash.tmpl</code> part of the package.</p></li>
@@ -149,6 +150,7 @@
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li><p>Using <code>plan(batchtools_nnn, finalize = FALSE)</code> would give a warning on <code>Detected 1 unknown future arguments: 'finalize'</code>.</p></li>
 <li><p>Template files in <code>system.file(package = "future.batchtools",    "templates")</code> were not found.</p></li>
+<li><p><code><a href="https://future.futureverse.org/reference/run.html" class="external-link">run()</a></code>, <code><a href="https://future.futureverse.org/reference/resolved.html" class="external-link">resolved()</a></code>, and <code><a href="https://future.futureverse.org/reference/result.html" class="external-link">result()</a></code> for <code>BatchtoolsFuture</code> would update the RNG state.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
