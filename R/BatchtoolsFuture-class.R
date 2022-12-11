@@ -28,9 +28,8 @@
 #' process one future at the time (`workers = 1L`), whereas HPC backends,
 #' where futures are resolved via separate jobs on a scheduler, can have
 #' multiple workers.  In the latter, the default is `workers = NULL`, which
-#' will resolve to `getOption("future.batchtools.workers")`.  If that is not
-#' specified, the value of environment variable `R_FUTURE_BATCHTOOLS_WORKERS`
-#' will be used.  If neither are specified, then the default is `100`.
+#' will resolve to `getOption("future.batchtools.workers")`.  If neither
+#' are specified, then the default is `100`.
 #'
 #' @param finalize If TRUE, any underlying registries are
 #' deleted when this object is garbage collected, otherwise not.
@@ -95,10 +94,17 @@ as_BatchtoolsFuture <- function(future,
                                 registry = list(),
                                 ...) {
   if (is.function(workers)) workers <- workers()
-  if (!is.null(workers)) {
+  if (is.null(workers)) {
+    workers <- getOption("future.batchtools.workers", default = 100)
+    stop_if_not(
+      is.numeric(workers),
+      length(workers) == 1,
+      !is.na(workers), workers >= 1
+    )
+  } else {
     stop_if_not(length(workers) >= 1)
     if (is.numeric(workers)) {
-      stop_if_not(!anyNA(workers), all(workers >= 1))
+      stop_if_not(length(workers) == 1, !is.na(workers), workers >= 1)
     } else {
       stop("Argument 'workers' should be either a numeric or a function: ",
            mode(workers))
@@ -458,13 +464,13 @@ run.BatchtoolsFuture <- function(future, ...) {
   jobid <- batchMap(fun = geval, list(expr),
                     more.args = list(substitute = TRUE), reg = reg)
 
-  ## 1b. Set job name, if specified
+  ## 2. Set job name, if specified
   label <- future$label
   if (!is.null(label)) {
     setJobNames(ids = jobid, names = label, reg = reg)
   }
   
-  ## 2. Update
+  ## 3. Update
   future$config$jobid <- jobid
   mdebugf("Created %s future #%d", class(future)[1], jobid$job.id)
 
@@ -490,7 +496,11 @@ run.BatchtoolsFuture <- function(future, ...) {
     }, error = function(ex) list())
   }
 
-  ## 3. Submit
+  ## 4. Wait for an available worker
+  ## FIXME/TODO
+  ## waitForWorker(type = class(future)[1], workers = future$workers)
+
+  ## 5. Submit
   future$state <- "running"
   resources <- future$config$resources
   if (is.null(resources)) resources <- list()
@@ -498,6 +508,11 @@ run.BatchtoolsFuture <- function(future, ...) {
   batchtools::submitJobs(reg = reg, ids = jobid, resources = resources)
 
   mdebugf("Launched future #%d", jobid$job.id)
+
+  ## 6. Allocate future worker
+  ## FIXME/TODO
+  ## freg <- sprintf("workers-%s", class(future)[1])
+  ## FutureRegistry(freg, action = "add", future = future, earlySignal = FALSE)
 
   invisible(future)
 } ## run()
@@ -581,7 +596,7 @@ await <- function(future, cleanup = TRUE,
       msg <- sprintf("BatchtoolsDeleted: Cannot retrieve value. Future ('%s') deleted: %s", label, reg$file.dir) #nolint
       stop(BatchtoolsFutureError(msg, future = future))
     }
-    if (debug) { mstr(result) }
+    if (debug) { mstr(result) }    
   } else {
     cleanup <- FALSE
     msg <- sprintf("AsyncNotReadyError: Polled for results for %s seconds every %g seconds, but asynchronous evaluation for future ('%s') is still running: %s", timeout, delta, label, reg$file.dir) #nolint
@@ -679,6 +694,10 @@ delete.BatchtoolsFuture <- function(future,
   ## the internal batchtools registry
   result <- result(future, cleanup = FALSE)
   stop_if_not(inherits(result, "FutureResult"))
+
+  ## FIXME/TODO
+  ## freg <- sprintf("workers-%s", class(future)[1])
+  ## FutureRegistry(freg, action = "remove", future = future)
 
   ## To simplify post mortem troubleshooting in non-interactive sessions,
   ## should the batchtools registry files be removed or not?

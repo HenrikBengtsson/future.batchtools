@@ -47,9 +47,8 @@ backend may use at any time.   Interactive and "local" backends can only
 process one future at the time (\code{workers = 1L}), whereas HPC backends,
 where futures are resolved via separate jobs on a scheduler, can have
 multiple workers.  In the latter, the default is \code{workers = NULL}, which
-will resolve to \code{getOption("future.batchtools.workers")}.  If that is not
-specified, the value of environment variable \code{R_FUTURE_BATCHTOOLS_WORKERS}
-will be used.  If neither are specified, then the default is \code{100}.}
+will resolve to \code{getOption("future.batchtools.workers")}.  If neither
+are specified, then the default is \code{100}.}
 
 \item{conf.file}{(character) A batchtools configuration file as for
 instance returned by \code{\link[batchtools:findConfFile]{batchtools::findConfFile()}}.}

@@ -47,6 +47,30 @@ nbrOfWorkers.batchtools <- function(evaluator) {
 }
 
 
+#' @importFrom future nbrOfWorkers nbrOfFreeWorkers
+#' @export
+nbrOfFreeWorkers.batchtools <- function(evaluator = NULL, background = FALSE, ...) {
+  ## Special case #1: sequential processing
+  if (inherits(evaluator, "uniprocess")) {
+    return(NextMethod())
+  }
+  
+  ## Special case #2: infinite number of workers
+  workers <- nbrOfWorkers(evaluator)
+  if (is.infinite(workers)) return(workers)
+
+  ## In all other cases, we need to figure out how many workers
+  ## are running at the moment
+  
+  warnf("nbrOfFreeWorkers() for %s is not fully implemented. For now, it'll assume that none of the workers are occupied", class(evaluator)[1])
+  usedWorkers <- 0L  ## Mockup for now
+  
+  workers <- workers - usedWorkers
+  stop_if_not(length(workers) == 1L, !is.na(workers), workers >= 0L)
+  workers
+}
+
+
 ## Number of available workers in an HPC environment
 ##
 ## @return (numeric) A positive integer or `+Inf`.
