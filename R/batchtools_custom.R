@@ -28,20 +28,24 @@ batchtools_custom <- function(expr, envir = parent.frame(), substitute = TRUE,
                               ...) {
   if (substitute) expr <- substitute(expr)
 
-  future <- BatchtoolsFuture(expr = expr, envir = envir, substitute = FALSE,
-                            globals = globals,
-                            label = label,
-                            resources = resources,
-                            conf.file = conf.file,
-                            cluster.functions = cluster.functions,
-                            workers = workers,
-                            registry = registry,
-                            ...)
+  future <- BatchtoolsCustomFuture(
+    expr = expr, envir = envir, substitute = FALSE,
+    globals = globals,
+    label = label,
+    resources = resources,
+    conf.file = conf.file,
+    cluster.functions = cluster.functions,
+    workers = workers,
+    registry = registry,
+    ...
+  )
 
   if (!future$lazy) future <- run(future)
 
   future
 }
-class(batchtools_custom) <- c("batchtools_custom", "batchtools",
-                              "multiprocess", "future", "function")
+class(batchtools_custom) <- c(
+  "batchtools_custom", "batchtools",
+  "multiprocess", "future", "function"
+)
 attr(batchtools_custom, "tweakable") <- c("finalize")

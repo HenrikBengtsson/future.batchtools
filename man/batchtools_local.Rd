@@ -3,6 +3,7 @@
 \name{batchtools_local}
 \alias{batchtools_local}
 \alias{batchtools_interactive}
+\alias{batchtools_bash}
 \title{batchtools local and interactive futures}
 \usage{
 batchtools_local(..., envir = parent.frame())

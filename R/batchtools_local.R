@@ -31,11 +31,11 @@
 #' @example incl/batchtools_local.R
 #'
 #' @importFrom batchtools makeClusterFunctionsInteractive
-#' @aliases batchtools_interactive
+#' @aliases batchtools_interactive batchtools_bash
 #' @export
 batchtools_local <- function(..., envir = parent.frame()) {
   cf <- makeClusterFunctionsInteractive(external = TRUE)
-  future <- BatchtoolsInteractiveFuture(..., envir = envir, cluster.functions = cf)
+  future <- BatchtoolsLocalFuture(..., envir = envir, cluster.functions = cf)
   if (!future$lazy) future <- run(future)
   future
 }

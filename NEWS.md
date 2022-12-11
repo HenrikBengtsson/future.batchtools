@@ -7,13 +7,6 @@
    the corresponding `future.batchtools*` option.  This is in line
    with how all packages in the Futureverse works.
    
- * Add specialized BatchtoolsFuture classes: abstract
-   BatchtoolsUniprocessFuture, abstract BatchtoolsMultiprocessFuture,
-   BatchtoolsInteractiveFuture, BatchtoolsLocalFuture,
-   BatchtoolsMulticoreFuture, BatchtoolsLsfFuture,
-   BatchtoolsOpenLavaFuture, BatchtoolsSGEFuture,
-   BatchtoolsSlurmFuture, and BatchtoolsTorqueFuture.
-   
  * Add `nbrOfFreeWorkers()` for `batchtools_interactive`,
    `batchtools_local` futures.
    
@@ -23,6 +16,18 @@
    configuration file (an R script) and the the batchtools job template
    file (a shell script) with info on location, file size, and number
    of lines, if they exist.
+
+ * Add BatchtoolsFuture subclasses; abstract
+   BatchtoolsUniprocessFuture, abstract BatchtoolsMultiprocessFuture,
+   BatchtoolsInteractiveFuture, BatchtoolsLocalFuture,
+   BatchtoolsMulticoreFuture, BatchtoolsLsfFuture,
+   BatchtoolsOpenLavaFuture, BatchtoolsSGEFuture,
+   BatchtoolsSlurmFuture, BatchtoolsTorqueFuture, and
+   BatchtoolsCustomFuture.
+
+ * Add `batchtools_bash` and BatchtoolsBashFuture to illustrate how to
+   create a basic `batchtools_custom` future based on a **batchtools**
+   template file `bash.tmpl` part of the package.
 
 ## Bug Fixes
 

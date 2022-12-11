@@ -1,0 +1,9 @@
+#!/bin/bash
+######################################################################
+# A batchtools launch script template for a Bash
+#
+# Author: Henrik Bengtsson 
+######################################################################
+
+## Launch R and evaluated the batchtools R job
+Rscript -e 'batchtools::doJobCollection("<%= uri %>", output = "<%= log.file %>")'
