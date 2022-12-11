@@ -6,7 +6,7 @@ batchtools_bash <- function(..., envir = parent.frame(), template = "bash") {
   cf <- makeClusterFunctionsBash(template = template)
   future <- BatchtoolsBashFuture(..., envir = envir, cluster.functions = cf)
   if (!future$lazy) future <- run(future)
-  future
+  invisible(future)
 }
 class(batchtools_bash) <- c(
   "batchtools_bash", "batchtools_custom",

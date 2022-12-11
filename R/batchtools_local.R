@@ -37,7 +37,7 @@ batchtools_local <- function(..., envir = parent.frame()) {
   cf <- makeClusterFunctionsInteractive(external = TRUE)
   future <- BatchtoolsLocalFuture(..., envir = envir, cluster.functions = cf)
   if (!future$lazy) future <- run(future)
-  future
+  invisible(future)
 }
 class(batchtools_local) <- c(
   "batchtools_local", "batchtools_uniprocess", "batchtools",

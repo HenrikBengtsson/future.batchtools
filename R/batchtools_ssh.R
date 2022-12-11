@@ -44,7 +44,7 @@ batchtools_ssh <- function(expr, envir = parent.frame(),
 
   if (!future$lazy) future <- run(future)
 
-  future
+  invisible(future)
 }
 class(batchtools_ssh) <- c(
   "batchtools_ssh", "batchtools_custom",

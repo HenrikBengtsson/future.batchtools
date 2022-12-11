@@ -185,5 +185,5 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
 
   if (!future$lazy) future <- run(future)
 
-  future
+  invisible(future)
 } ## batchtools_by_template()

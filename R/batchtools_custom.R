@@ -42,7 +42,7 @@ batchtools_custom <- function(expr, envir = parent.frame(), substitute = TRUE,
 
   if (!future$lazy) future <- run(future)
 
-  future
+  invisible(future)
 }
 class(batchtools_custom) <- c(
   "batchtools_custom", "batchtools_multiprocess", "batchtools",

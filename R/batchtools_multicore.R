@@ -62,7 +62,7 @@ batchtools_multicore <- function(expr, envir = parent.frame(),
 
   if (!future$lazy) future <- run(future)
 
-  future
+  invisible(future)
 }
 class(batchtools_multicore) <- c(
   "batchtools_multicore", "batchtools_multiprocess", "batchtools",
