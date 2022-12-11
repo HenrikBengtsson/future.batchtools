@@ -105,6 +105,8 @@ as_BatchtoolsFuture <- function(future,
     stop_if_not(length(workers) >= 1)
     if (is.numeric(workers)) {
       stop_if_not(length(workers) == 1, !is.na(workers), workers >= 1)
+    } else if (is.character(workers)) {
+      stop_if_not(length(workers) >= 0, !anyNA(workers))
     } else {
       stop("Argument 'workers' should be either a numeric or a function: ",
            mode(workers))

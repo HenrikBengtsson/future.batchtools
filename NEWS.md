@@ -29,6 +29,10 @@
    create a basic `batchtools_custom` future based on a **batchtools**
    template file `bash.tmpl` part of the package.
 
+ * Add `batchtools_ssh` and BatchtoolsSSHFuture for creating
+   batchtools futures based on **batchtools** SSH workers created by
+   `batchtools::makeClusterFunctionsSSH()`.
+
 ## Bug Fixes
 
  * Using `plan(batchtools_nnn, finalize = FALSE)` would give a warning

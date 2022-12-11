@@ -14,7 +14,7 @@
 #' @param \ldots Additional arguments passed
 #' to [BatchtoolsFuture()].
 #'
-#' @return An object of class `BatchtoolsFuture`.
+#' @return An object of class `BatchtoolsMulticoreFuture`.
 #'
 #' @details
 #' batchtools multicore futures rely on the batchtools backend set
@@ -23,7 +23,7 @@
 #' supporting the `ps` command-line tool, e.g. Linux and macOS.
 #'
 #' @importFrom batchtools makeClusterFunctionsMulticore
-#' @importFrom future availableCores
+#' @importFrom parallelly availableCores
 #' @export
 #' @keywords internal
 batchtools_multicore <- function(expr, envir = parent.frame(),
@@ -64,6 +64,8 @@ batchtools_multicore <- function(expr, envir = parent.frame(),
 
   future
 }
-class(batchtools_multicore) <- c("batchtools_multicore", "batchtools",
-                                 "multiprocess", "future", "function")
+class(batchtools_multicore) <- c(
+  "batchtools_multicore", "batchtools_multiprocess", "batchtools",
+  "multiprocess", "future", "function"
+)
 attr(batchtools_multicore, "tweakable") <- c("finalize")
