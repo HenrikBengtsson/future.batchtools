@@ -222,7 +222,11 @@ status <- function(future, ...) {
       oopts <- list()
     }
     on.exit(options(oopts))
-    batchtools::getStatus(...)
+    ## WORKAROUND: batchtools::getStatus() updates the RNG state,
+    ## which we must make sure to undo.
+    with_stealth_rng({
+      batchtools::getStatus(...)
+    })
   } ## get_status()
 
   config <- future$config
@@ -463,8 +467,12 @@ run.BatchtoolsFuture <- function(future, ...) {
 
   ## 1. Add to batchtools for evaluation
   mdebug("batchtools::batchMap()")
-  jobid <- batchMap(fun = geval, list(expr),
-                    more.args = list(substitute = TRUE), reg = reg)
+  ## WORKAROUND: batchtools::batchMap() updates the RNG state,
+  ## which we must make sure to undo.
+  with_stealth_rng({
+    jobid <- batchMap(fun = geval, list(expr),
+                      more.args = list(substitute = TRUE), reg = reg)
+  })
 
   ## 2. Set job name, if specified
   label <- future$label
@@ -506,7 +514,11 @@ run.BatchtoolsFuture <- function(future, ...) {
   resources <- future$config$resources
   if (is.null(resources)) resources <- list()
 
-  batchtools::submitJobs(reg = reg, ids = jobid, resources = resources)
+  ## WORKAROUND: batchtools::submitJobs() updates the RNG state,
+  ## which we must make sure to undo.
+  with_stealth_rng({
+    submitJobs(reg = reg, ids = jobid, resources = resources)
+  })
 
   mdebugf("Launched future #%d", jobid$job.id)
 
@@ -729,15 +741,19 @@ delete.BatchtoolsFuture <- function(future,
   on.exit(options(oopts))
 
   ## Try to delete registry
-  interval <- delta
-  for (kk in seq_len(times)) {
-    try(clearRegistry(reg = reg), silent = TRUE)
-    try(removeRegistry(wait = 0.0, reg = reg), silent = FALSE)
-    if (!file_test("-d", path)) break
-    Sys.sleep(interval)
-    interval <- alpha * interval
-  }
-
+  ## WORKAROUND: batchtools::clearRegistry() and
+  ## batchtools::removeRegistry() update the RNG state,
+  ## which we must make sure to undo.
+  with_stealth_rng({
+    interval <- delta
+    for (kk in seq_len(times)) {
+      try(clearRegistry(reg = reg), silent = TRUE)
+      try(removeRegistry(wait = 0.0, reg = reg), silent = FALSE)
+      if (!file_test("-d", path)) break
+      Sys.sleep(interval)
+      interval <- alpha * interval
+    }
+  })
 
   ## Success?
   if (file_test("-d", path)) {

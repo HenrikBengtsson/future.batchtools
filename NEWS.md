@@ -46,6 +46,9 @@
  * Template files in `system.file(package = "future.batchtools",
    "templates")` were not found.
 
+ * `run()`, `resolved()`, and `result()` for `BatchtoolsFuture` would
+   update the RNG state.
+
 
 # Version 0.10.0 [2021-01-02]
 
