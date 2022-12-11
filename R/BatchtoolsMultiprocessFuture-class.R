@@ -3,7 +3,7 @@
 BatchtoolsMultiprocessFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), ...) {
   if (substitute) expr <- substitute(expr)
 
-  future <- BatchtoolsFuture(expr = expr, substitute = FALSE, envir = envir, ..., workers = 1L)
+  future <- BatchtoolsFuture(expr = expr, substitute = FALSE, envir = envir, ...)
   future <- structure(future, class = c("BatchtoolsMultiprocessFuture", class(future)))
   
   future
