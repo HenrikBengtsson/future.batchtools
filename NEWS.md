@@ -35,6 +35,8 @@
  * Add `batchtools_ssh` and BatchtoolsSSHFuture for creating
    batchtools futures based on **batchtools** SSH workers created by
    `batchtools::makeClusterFunctionsSSH()`.
+   
+ * Add a template file for SGE.
 
 ## Bug Fixes
 
