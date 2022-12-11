@@ -6,7 +6,9 @@ with_stealth_rng <- function(expr, substitute = TRUE, envir = parent.frame(), ..
   oseed <- .GlobalEnv$.Random.seed
   on.exit({
     if (is.null(oseed)) {
-      rm(list = ".Random.seed", envir = .GlobalEnv, inherits = FALSE)
+      if (exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)) {
+        rm(list = ".Random.seed", envir = .GlobalEnv, inherits = FALSE)
+      }	
     } else {
       .GlobalEnv$.Random.seed <- oseed
     }
