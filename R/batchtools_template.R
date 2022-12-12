@@ -212,7 +212,8 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
   if (length(keep) > 0) dotdotdot <- dotdotdot[-keep]
 
   args <- list(
-    expr = expr, substitute = FALSE, envir = envir,
+    expr = quote(expr),  ## Avoid 'expr' being resolved by do.call()
+    substitute = FALSE, envir = envir,
     globals = globals,
     label = label,
     cluster.functions = cluster.functions,
@@ -221,7 +222,7 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
     workers = workers
   )
   if (length(dotdotdot) > 0) args <- c(args, dotdotdot)
-  future <- do.call(constructor, args = args, quote = TRUE)
+  future <- do.call(constructor, args = args)
 
   if (!future$lazy) future <- run(future)
 

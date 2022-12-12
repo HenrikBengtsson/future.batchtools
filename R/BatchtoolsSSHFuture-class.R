@@ -20,13 +20,14 @@ BatchtoolsSSHFuture <- function(expr = NULL, substitute = TRUE, envir = parent.f
   if (length(keep) > 0) dotdotdot <- dotdotdot[-keep]
 
   args <- list(
-    expr = expr, substitute = FALSE, envir = envir,
+    expr = quote(expr),  ## Avoid 'expr' being resolved by do.call()
+    substitute = FALSE, envir = envir,
     workers = workers,
     cluster.functions = cluster.functions
   )
   if (length(dotdotdot) > 0) args <- c(args, dotdotdot)
 
-  future <- do.call(BatchtoolsCustomFuture, args = args, quote = TRUE)
+  future <- do.call(BatchtoolsCustomFuture, args = args)
 
   future <- structure(future, class = c("BatchtoolsSSHFuture", class(future)))
   
