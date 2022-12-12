@@ -2,6 +2,7 @@
 #' @export
 BatchtoolsUniprocessFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), ...) {
   if (substitute) expr <- substitute(expr)
+  assert_no_positional_args_but_first()
 
   future <- BatchtoolsFuture(expr = expr, substitute = FALSE, envir = envir, ..., workers = 1L)
   future <- structure(future, class = c("BatchtoolsUniprocessFuture", class(future)))
@@ -14,6 +15,7 @@ BatchtoolsUniprocessFuture <- function(expr = NULL, substitute = TRUE, envir = p
 #' @export
 BatchtoolsLocalFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), ...) {
   if (substitute) expr <- substitute(expr)
+  assert_no_positional_args_but_first()
 
   future <- BatchtoolsUniprocessFuture(expr = expr, substitute = FALSE, envir = envir, ...)
   future <- structure(future, class = c("BatchtoolsLocalFuture", class(future)))
@@ -26,6 +28,7 @@ BatchtoolsLocalFuture <- function(expr = NULL, substitute = TRUE, envir = parent
 #' @export
 BatchtoolsInteractiveFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), ...) {
   if (substitute) expr <- substitute(expr)
+  assert_no_positional_args_but_first()
 
   future <- BatchtoolsUniprocessFuture(expr = expr, substitute = FALSE, envir = envir, ...)
   future <- structure(future, class = c("BatchtoolsInteractiveFuture", class(future)))

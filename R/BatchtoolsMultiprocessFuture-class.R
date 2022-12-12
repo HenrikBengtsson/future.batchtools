@@ -2,6 +2,7 @@
 #' @export
 BatchtoolsMultiprocessFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), ...) {
   if (substitute) expr <- substitute(expr)
+  assert_no_positional_args_but_first()
 
   future <- BatchtoolsFuture(expr = expr, substitute = FALSE, envir = envir, ...)
   future <- structure(future, class = c("BatchtoolsMultiprocessFuture", class(future)))
@@ -14,6 +15,7 @@ BatchtoolsMultiprocessFuture <- function(expr = NULL, substitute = TRUE, envir =
 #' @export
 BatchtoolsMulticoreFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), ...) {
   if (substitute) expr <- substitute(expr)
+  assert_no_positional_args_but_first()
 
   future <- BatchtoolsMultiprocessFuture(expr = expr, substitute = FALSE, envir = envir, ...)
   future <- structure(future, class = c("BatchtoolsMulticoreFuture", class(future)))
@@ -26,6 +28,7 @@ BatchtoolsMulticoreFuture <- function(expr = NULL, substitute = TRUE, envir = pa
 #' @export
 BatchtoolsTemplateFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), ...) {
   if (substitute) expr <- substitute(expr)
+  assert_no_positional_args_but_first()
 
   future <- BatchtoolsMultiprocessFuture(expr = expr, substitute = FALSE, envir = envir, ...)
   future <- structure(future, class = c("BatchtoolsTemplateFuture", class(future)))
@@ -50,6 +53,7 @@ BatchtoolsLsfFuture <- function(expr = NULL, substitute = TRUE, envir = parent.f
 #' @export
 BatchtoolsOpenLavaFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), ...) {
   if (substitute) expr <- substitute(expr)
+  assert_no_positional_args_but_first()
 
   future <- BatchtoolsTemplateFuture(expr = expr, substitute = FALSE, envir = envir, ...)
   future <- structure(future, class = c("BatchtoolsOpenLavaFuture", class(future)))
@@ -62,6 +66,7 @@ BatchtoolsOpenLavaFuture <- function(expr = NULL, substitute = TRUE, envir = par
 #' @export
 BatchtoolsSGEFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), ...) {
   if (substitute) expr <- substitute(expr)
+  assert_no_positional_args_but_first()
 
   future <- BatchtoolsTemplateFuture(expr = expr, substitute = FALSE, envir = envir, ...)
   future <- structure(future, class = c("BatchtoolsSGEFuture", class(future)))
@@ -86,6 +91,7 @@ BatchtoolsSlurmFuture <- function(expr = NULL, substitute = TRUE, envir = parent
 #' @export
 BatchtoolsTorqueFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), ...) {
   if (substitute) expr <- substitute(expr)
+  assert_no_positional_args_but_first()
 
   future <- BatchtoolsTemplateFuture(expr = expr, substitute = FALSE, envir = envir, ...)
   future <- structure(future, class = c("BatchtoolsTorqueFuture", class(future)))

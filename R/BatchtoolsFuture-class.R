@@ -61,6 +61,7 @@ BatchtoolsFuture <- function(expr = NULL, envir = parent.frame(),
                              registry = list(),
                              ...) {
   if (substitute) expr <- substitute(expr)
+  assert_no_positional_args_but_first()
 
   ## Record globals
   gp <- getGlobalsAndPackages(expr, envir = envir, globals = globals)
