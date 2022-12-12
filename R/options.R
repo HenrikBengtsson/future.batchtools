@@ -74,7 +74,6 @@
 #' R_FUTURE_BATCHTOOLS_OUTPUT
 #' R_FUTURE_BATCHTOOLS_WORKERS
 #'
-#' @keywords internal
 #' @name future.batchtools.options
 NULL
 

@@ -81,4 +81,3 @@ For example, if \code{R_FUTURE_BATCHTOOLS_WORKERS="200"} is set, then option
 options(future.cache.path = "/cluster-wide/folder/.future")
 
 }
-\keyword{internal}
