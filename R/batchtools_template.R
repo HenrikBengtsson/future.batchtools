@@ -183,6 +183,14 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
     torque   = makeClusterFunctionsTORQUE
   )
 
+  constructor <- switch(type,
+    lsf      = BatchtoolsLsfFuture,
+    openlava = BatchtoolsOpenLavaFuture,
+    sge      = BatchtoolsSGEFuture,
+    slurm    = BatchtoolsSlurmFuture,
+    torque   = BatchtoolsTorqueFuture
+  )
+
   make_cfs_formals <- formals(make_cfs)
   
   ## Get the default template?
@@ -204,7 +212,7 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
   if (length(keep) > 0) dotdotdot <- dotdotdot[-keep]
 
   args <- list(
-    expr = expr, envir = envir, substitute = FALSE,
+    expr = expr, substitute = FALSE, envir = envir,
     globals = globals,
     label = label,
     cluster.functions = cluster.functions,
@@ -213,7 +221,7 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
     workers = workers
   )
   if (length(dotdotdot) > 0) args <- c(args, dotdotdot)
-  future <- do.call(BatchtoolsTemplateFuture, args = args)
+  future <- do.call(constructor, args = args)
 
   if (!future$lazy) future <- run(future)
 

@@ -39,7 +39,7 @@ BatchtoolsTemplateFuture <- function(expr = NULL, substitute = TRUE, envir = par
 BatchtoolsLsfFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), ...) {
   if (substitute) expr <- substitute(expr)
 
-  future <- BatchtoolsMultiprocessFuture(expr = expr, substitute = FALSE, envir = envir, ...)
+  future <- BatchtoolsTemplateFuture(expr = expr, substitute = FALSE, envir = envir, ...)
   future <- structure(future, class = c("BatchtoolsLsfFuture", class(future)))
   
   future
@@ -51,7 +51,7 @@ BatchtoolsLsfFuture <- function(expr = NULL, substitute = TRUE, envir = parent.f
 BatchtoolsOpenLavaFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), ...) {
   if (substitute) expr <- substitute(expr)
 
-  future <- BatchtoolsMultiprocessFuture(expr = expr, substitute = FALSE, envir = envir, ...)
+  future <- BatchtoolsTemplateFuture(expr = expr, substitute = FALSE, envir = envir, ...)
   future <- structure(future, class = c("BatchtoolsOpenLavaFuture", class(future)))
   
   future
@@ -63,7 +63,7 @@ BatchtoolsOpenLavaFuture <- function(expr = NULL, substitute = TRUE, envir = par
 BatchtoolsSGEFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), ...) {
   if (substitute) expr <- substitute(expr)
 
-  future <- BatchtoolsMultiprocessFuture(expr = expr, substitute = FALSE, envir = envir, ...)
+  future <- BatchtoolsTemplateFuture(expr = expr, substitute = FALSE, envir = envir, ...)
   future <- structure(future, class = c("BatchtoolsSGEFuture", class(future)))
   
   future
@@ -75,7 +75,7 @@ BatchtoolsSGEFuture <- function(expr = NULL, substitute = TRUE, envir = parent.f
 BatchtoolsSlurmFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), ...) {
   if (substitute) expr <- substitute(expr)
 
-  future <- BatchtoolsMultiprocessFuture(expr = expr, substitute = FALSE, envir = envir, ...)
+  future <- BatchtoolsTemplateFuture(expr = expr, substitute = FALSE, envir = envir, ...)
   future <- structure(future, class = c("BatchtoolsSlurmFuture", class(future)))
   
   future
@@ -87,7 +87,7 @@ BatchtoolsSlurmFuture <- function(expr = NULL, substitute = TRUE, envir = parent
 BatchtoolsTorqueFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), ...) {
   if (substitute) expr <- substitute(expr)
 
-  future <- BatchtoolsMultiprocessFuture(expr = expr, substitute = FALSE, envir = envir, ...)
+  future <- BatchtoolsTemplateFuture(expr = expr, substitute = FALSE, envir = envir, ...)
   future <- structure(future, class = c("BatchtoolsTorqueFuture", class(future)))
   
   future
