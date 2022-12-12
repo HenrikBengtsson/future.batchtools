@@ -574,10 +574,14 @@ await <- function(future, cleanup = TRUE,
     label <- future$label
     if (is.null(label)) label <- "<none>"
     if ("finished" %in% stat) {
+      mdebug("- batchtools::loadResult() ...")
       result <- loadResult(reg = reg, id = jobid)
+      mdebug("- batchtools::loadResult() ... done")
       if (inherits(result, "FutureResult")) {
         prototype_fields <- c(prototype_fields, "batchtools_log")
         result[["batchtools_log"]] <- try({
+          mdebug("- batchtools::getLog() ...")
+          on.exit(mdebug("- batchtools::getLog() ... done"))
           getLog(id = jobid, reg = reg)
         }, silent = TRUE)
         if (result_has_errors(result)) cleanup <- FALSE
