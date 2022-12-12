@@ -44,10 +44,16 @@ batchtools_lsf <- function(expr, envir = parent.frame(), substitute = TRUE,
                          type = "lsf", resources = resources,
                          workers = workers, registry = registry, ...)
 }
-class(batchtools_lsf) <- c("batchtools_lsf", "batchtools_template",
-                           "batchtools", "multiprocess", "future",
-                           "function")
-attr(batchtools_lsf, "tweakable") <- c("finalize")
+class(batchtools_lsf) <- c(
+  "batchtools_lsf", "batchtools_template",
+  "batchtools_multiprocess", "batchtools",
+  "multiprocess", "future", "function"
+)
+attr(batchtools_lsf, "tweakable") <- c(
+  "finalize",
+  ## Arguments to batchtools::makeClusterFunctionsLSF()
+  "scheduler.latency", "fs.latency"
+)
 
 #' @export
 #' @rdname batchtools_template
@@ -63,10 +69,16 @@ batchtools_openlava <- function(expr, envir = parent.frame(), substitute = TRUE,
                          type = "openlava", resources = resources,
                          workers = workers, registry = registry, ...)
 }
-class(batchtools_openlava) <- c("batchtools_openlava", "batchtools_template",
-                                "batchtools", "multiprocess", "future",
-                                "function")
-attr(batchtools_openlava, "tweakable") <- c("finalize")
+class(batchtools_openlava) <- c(
+  "batchtools_openlava", "batchtools_template",
+  "batchtools_multiprocess", "batchtools",
+  "multiprocess", "future", "function"
+)
+attr(batchtools_openlava, "tweakable") <- c(
+  "finalize",
+  ## Arguments to batchtools::makeClusterFunctionsOpenLava()
+  "scheduler.latency", "fs.latency"
+)
 
 #' @export
 #' @rdname batchtools_template
@@ -82,10 +94,16 @@ batchtools_sge <- function(expr, envir = parent.frame(), substitute = TRUE,
                          type = "sge", resources = resources,
                          workers = workers, registry = registry, ...)
 }
-class(batchtools_sge) <- c("batchtools_sge", "batchtools_template",
-                           "batchtools", "multiprocess", "future",
-                           "function")
-attr(batchtools_sge, "tweakable") <- c("finalize")
+class(batchtools_sge) <- c(
+  "batchtools_sge", "batchtools_template",
+  "batchtools_multiprocess", "batchtools",
+  "multiprocess", "future", "function"
+)
+attr(batchtools_sge, "tweakable") <- c(
+  "finalize",
+  ## Arguments to batchtools::makeClusterFunctionsSGE()
+  "nodename", "scheduler.latency", "fs.latency"
+)
 
 #' @export
 #' @rdname batchtools_template
@@ -101,10 +119,17 @@ batchtools_slurm <- function(expr, envir = parent.frame(), substitute = TRUE,
                          type = "slurm", resources = resources,
                          workers = workers, registry = registry, ...)
 }
-class(batchtools_slurm) <- c("batchtools_slurm", "batchtools_template",
-                             "batchtools", "multiprocess", "future",
-                             "function")
-attr(batchtools_slurm, "tweakable") <- c("finalize")
+class(batchtools_slurm) <- c(
+  "batchtools_slurm", "batchtools_template",
+  "batchtools_multiprocess", "batchtools",
+  "multiprocess", "future", "function"
+)
+attr(batchtools_slurm, "tweakable") <- c(
+  "finalize",
+  ## Arguments to batchtools::makeClusterFunctionsSlurm()
+  "array.jobs", "nodename", "scheduler.latency", "fs.latency"
+)
+
 
 #' @export
 #' @rdname batchtools_template
@@ -120,18 +145,23 @@ batchtools_torque <- function(expr, envir = parent.frame(), substitute = TRUE,
                          type = "torque", resources = resources,
                          workers = workers, registry = registry, ...)
 }
-class(batchtools_torque) <- c("batchtools_torque", "batchtools_template",
-                              "batchtools", "multiprocess", "future",
-                              "function")
-attr(batchtools_torque, "tweakable") <- c("finalize")
+class(batchtools_torque) <- c(
+  "batchtools_torque", "batchtools_template",
+  "batchtools_multiprocess", "batchtools",
+  "multiprocess", "future", "function"
+)
+attr(batchtools_torque, "tweakable") <- c(
+  "finalize",
+  ## Arguments to batchtools::makeClusterFunctionsTORQUE()
+  "scheduler.latency", "fs.latency"
+)
 
-#' @importFrom batchtools findTemplateFile
+
 #' @importFrom batchtools makeClusterFunctionsLSF
 #' @importFrom batchtools makeClusterFunctionsOpenLava
 #' @importFrom batchtools makeClusterFunctionsSGE
 #' @importFrom batchtools makeClusterFunctionsSlurm
 #' @importFrom batchtools makeClusterFunctionsTORQUE
-#' @importFrom utils file_test
 batchtools_by_template <- function(expr, envir = parent.frame(),
                                    substitute = TRUE, globals = TRUE,
                                    template = NULL,
@@ -143,6 +173,8 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
   if (substitute) expr <- substitute(expr)
   type <- match.arg(type)
 
+  dotdotdot <- list(...)
+
   make_cfs <- switch(type,
     lsf      = makeClusterFunctionsLSF,
     openlava = makeClusterFunctionsOpenLava,
@@ -151,46 +183,39 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
     torque   = makeClusterFunctionsTORQUE
   )
 
+  make_cfs_formals <- formals(make_cfs)
+  
   ## Get the default template?
   if (is.null(template)) {
-    template <- formals(make_cfs)$template
+    template <- make_cfs_formals$template
   }
 
   stop_if_not(is.character(template), length(template) == 1L,
               !is.na(template), nzchar(template))
 
-  ## Tweaked search for template file
-  pathname <- tryCatch({
-    findTemplateFile(template)
-  }, error = function(ex) {
-    ## Try to find it in this package?
-    if (grepl("Argument 'template'", conditionMessage(ex))) {
-      pathname <- system.file("templates", sprintf("%s.tmpl", template),
-                              package = "future.batchtools")
-      if (file_test("-f", pathname)) return(pathname)
-    }
-    stop(ex)
-  })
-   if (is.na(pathname)) {
-     stop(sprintf("Failed to locate a batchtools template file: *%s.tmpl",
-                  template))
-  }
+  template <- find_template_file(template)
 
-  template <- pathname
-
-  cluster.functions <- make_cfs(template)
+  keep <- which(names(dotdotdot) %in% names(make_cfs_formals))
+  args <- c(list(template = template), dotdotdot[keep])
+  cluster.functions <- do.call(make_cfs, args = args)
   attr(cluster.functions, "template") <- template
 
-  future <- BatchtoolsFuture(expr = expr, envir = envir, substitute = FALSE,
-                            globals = globals,
-                            label = label,
-                            cluster.functions = cluster.functions,
-                            registry = registry,
-                            resources = resources,
-                            workers = workers,
-                            ...)
+  ## Drop used '...' arguments
+  if (length(keep) > 0) dotdotdot <- dotdotdot[-keep]
+
+  args <- list(
+    expr = expr, envir = envir, substitute = FALSE,
+    globals = globals,
+    label = label,
+    cluster.functions = cluster.functions,
+    registry = registry,
+    resources = resources,
+    workers = workers
+  )
+  if (length(dotdotdot) > 0) args <- c(args, dotdotdot)
+  future <- do.call(BatchtoolsTemplateFuture, args = args)
 
   if (!future$lazy) future <- run(future)
 
-  future
+  invisible(future)
 } ## batchtools_by_template()

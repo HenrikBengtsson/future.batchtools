@@ -18,8 +18,7 @@ stop_if_not <- function(...) {
         mc <- match.call()
         call <- deparse(mc[[ii + 1]], width.cutoff = 60L)
         if (length(call) > 1L) call <- paste(call[1L], "....")
-        stop(sprintf("%s is not TRUE", sQuote(call)),
-             call. = FALSE, domain = NA)
+        stopf("%s is not TRUE", sQuote(call), call. = FALSE, domain = NA)
     }
   }
   
@@ -118,6 +117,9 @@ trim <- function(x, ...) {
   sub("[\t\n\f\r ]*$", "", sub("^[\t\n\f\r ]*", "", x))
 }
 
+comma <- function(x, sep = ", ") paste(x, collapse = sep)
+
+commaq <- function(x, sep = ", ") paste(sQuote(x), collapse = sep)
 
 import_from <- function(name, default = NULL, package) {
   ns <- getNamespace(package)
@@ -126,7 +128,7 @@ import_from <- function(name, default = NULL, package) {
   } else if (!is.null(default)) {
     default
   } else {
-    stop(sprintf("No such '%s' function: %s()", package, name))
+    stopf("No such '%s' function: %s()", package, name)
   }
 }
 
@@ -176,7 +178,7 @@ tempvar <- function(prefix = "var", value = NA, envir = parent.frame()) {
   }
 
   # Failed to find a unique temporary variable name
-  stop(sprintf("Failed to generate a unique non-existing temporary variable with prefix '%s'", prefix)) #nolint
+  stopf("Failed to generate a unique non-existing temporary variable with prefix '%s'", prefix) #nolint
 }
 
 
@@ -189,4 +191,33 @@ result_has_errors <- function(result) {
   }
   
   FALSE
+}
+
+
+
+#' @importFrom utils file_test
+file_info <- function(file) {
+  if (is.null(file) || is.na(file)) return("<NA>")
+  if (file_test("-f", file)) {
+    info <- sprintf("%d bytes", file.info(file)$size)
+    n <- length(readLines(file, warn = FALSE))
+    info <- sprintf("%s; %d lines", info, n)
+  } else {
+    info <- "<non-existing>"
+  }
+  sprintf("%s (%s)", sQuote(file), info)
+}
+
+
+assert_no_positional_args_but_first <- function(call = sys.call(sys.parent())) {
+  ast <- as.list(call)
+  if (length(ast) <= 2L) return()
+  ast <- ast[-(1:2)]
+  dots <- vapply(ast, FUN = identical, as.symbol("..."), FUN.VALUE = FALSE)
+  ast <- ast[!dots]
+  if (length(ast) == 0L) return()
+  names <- names(ast)
+  if (is.null(names) || any(names == "")) {    
+    stopf("Function %s() requires that all arguments beyond the first one are passed by name and not by position: %s", as.character(call[[1L]]), deparse(call, width.cutoff = 100L))
+  }
 }

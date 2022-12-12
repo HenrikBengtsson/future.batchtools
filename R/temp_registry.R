@@ -18,7 +18,11 @@ temp_registry <- local({
       on.exit(options(oopts))
     }
 
-    reg <- makeRegistry(work.dir = work.dir, ...)
+    ## WORKAROUND: batchtools::makeRegistry() updates the RNG state,
+    ## which we must make sure to undo.
+    with_stealth_rng({
+      reg <- makeRegistry(work.dir = work.dir, ...)
+    })
 
     if (!is.null(cluster.functions)) {    ### FIXME
       reg$cluster.functions <- cluster.functions
@@ -58,16 +62,19 @@ temp_registry <- local({
     ## filename characters. /HB 2016-10-19
     prefix <- as_valid_directory_prefix(prefix)
 
-    unique <- FALSE
-    while (!unique) {
-      ## The FutureRegistry key for this batchtools future - must be unique
-      key <- tempvar(prefix = prefix, value = NA, envir = regs)
-      ## The directory for this batchtools future
-      ##   e.g. .future/<datetimestamp>-<unique_id>/<key>/
-      path_registry <- file.path(path, key)
-      ## Should not happen, but just in case.
-      unique <- !file.exists(path_registry)
-    }
+    ## WORKAROUND: Avoid updating the RNG state
+    with_stealth_rng({
+      unique <- FALSE
+      while (!unique) {
+        ## The FutureRegistry key for this batchtools future - must be unique
+        key <- tempvar(prefix = prefix, value = NA, envir = regs)
+        ## The directory for this batchtools future
+        ##   e.g. .future/<datetimestamp>-<unique_id>/<key>/
+        path_registry <- file.path(path, key)
+        ## Should not happen, but just in case.
+        unique <- !file.exists(path_registry)
+      }
+    })
 
     ## FIXME: We need to make sure 'label' consists of only valid
     ## batchtools ID characters, i.e. it must match regular

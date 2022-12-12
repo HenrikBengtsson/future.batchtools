@@ -7,11 +7,11 @@
 #' be assigned to the calling environment rather than to a local one).
 #' Both types of futures will block until the futures are resolved.
 #'
-#' @inheritParams BatchtoolsFuture
+#' @inheritParams BatchtoolsUniprocessFuture
 #' 
-#' @param \ldots Additional arguments passed to [BatchtoolsFuture()].
+#' @param \ldots Additional arguments passed to [BatchtoolsUniprocessFuture()].
 #'
-#' @return An object of class `BatchtoolsFuture`.
+#' @return An object of class `BatchtoolsUniprocessFuture`.
 #'
 #' @details
 #' batchtools local futures rely on the batchtools backend set up by
@@ -26,34 +26,22 @@
 #' `plan(cluster, workers = "localhost")`.
 #'
 #' An alternative to batchtools interactive futures is to use
-#' [transparent][future::transparent] futures of the
-#' \pkg{future} package.
+#' `plan(sequential, split = TRUE)` futures of the \pkg{future} package.
 #'
 #' @example incl/batchtools_local.R
 #'
 #' @importFrom batchtools makeClusterFunctionsInteractive
-#' @aliases batchtools_interactive
+#' @aliases batchtools_interactive batchtools_bash
 #' @export
-batchtools_local <- function(expr, envir = parent.frame(), substitute = TRUE,
-                             globals = TRUE, label = NULL,
-                             workers = 1L, registry = list(), ...) {
-  if (substitute) expr <- substitute(expr)
-
+batchtools_local <- function(..., envir = parent.frame()) {
   cf <- makeClusterFunctionsInteractive(external = TRUE)
-
-  future <- BatchtoolsFuture(expr = expr, envir = envir, substitute = FALSE,
-                            globals = globals,
-                            label = label,
-                            workers = workers,
-                            cluster.functions = cf,
-                            registry = registry,
-                            ...)
-
+  future <- BatchtoolsLocalFuture(..., envir = envir, cluster.functions = cf)
   if (!future$lazy) future <- run(future)
-
-  future
+  invisible(future)
 }
-class(batchtools_local) <- c("batchtools_local", "batchtools", "uniprocess",
-                             "future", "function")
+class(batchtools_local) <- c(
+  "batchtools_local", "batchtools_uniprocess", "batchtools",
+  "uniprocess", "future", "function"
+)
 attr(batchtools_local, "tweakable") <- c("finalize")
 attr(batchtools_local, "untweakable") <- c("workers")

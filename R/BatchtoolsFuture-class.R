@@ -28,9 +28,8 @@
 #' process one future at the time (`workers = 1L`), whereas HPC backends,
 #' where futures are resolved via separate jobs on a scheduler, can have
 #' multiple workers.  In the latter, the default is `workers = NULL`, which
-#' will resolve to `getOption("future.batchtools.workers")`.  If that is not
-#' specified, the value of environment variable `R_FUTURE_BATCHTOOLS_WORKERS`
-#' will be used.  If neither are specified, then the default is `100`.
+#' will resolve to `getOption("future.batchtools.workers")`.  If neither
+#' are specified, then the default is `100`.
 #'
 #' @param finalize If TRUE, any underlying registries are
 #' deleted when this object is garbage collected, otherwise not.
@@ -95,10 +94,19 @@ as_BatchtoolsFuture <- function(future,
                                 registry = list(),
                                 ...) {
   if (is.function(workers)) workers <- workers()
-  if (!is.null(workers)) {
+  if (is.null(workers)) {
+    workers <- getOption("future.batchtools.workers", default = 100)
+    stop_if_not(
+      is.numeric(workers),
+      length(workers) == 1,
+      !is.na(workers), workers >= 1
+    )
+  } else {
     stop_if_not(length(workers) >= 1)
     if (is.numeric(workers)) {
-      stop_if_not(!anyNA(workers), all(workers >= 1))
+      stop_if_not(length(workers) == 1, !is.na(workers), workers >= 1)
+    } else if (is.character(workers)) {
+      stop_if_not(length(workers) >= 0, !anyNA(workers))
     } else {
       stop("Argument 'workers' should be either a numeric or a function: ",
            mode(workers))
@@ -149,17 +157,24 @@ as_BatchtoolsFuture <- function(future,
 #'
 #' @export
 #' @keywords internal
-print.BatchtoolsFuture <- function(x, ...) {
+print.BatchtoolsFuture <- function(x, ...) {  
   NextMethod()
 
   ## batchtools specific
-  reg <- x$config$reg
+  config <- x$config
 
+  conf.file <- config$conf.file
+  printf("batchtools configuration file: %s\n", file_info(conf.file))
+  
+  reg <- config$reg
   if (inherits(reg, "Registry")) {
+    cluster.functions <- reg$cluster.functions
     printf("batchtools cluster functions: %s\n",
-           sQuote(reg$cluster.functions$name))
+           sQuote(cluster.functions$name))
+    template <- attr(cluster.functions, "template")
+    printf("batchtools cluster functions template: %s\n", file_info(template))
   } else {
-    printf("batchtools cluster functions: N/A\n")
+    printf("batchtools cluster functions: <none>\n")
   }
 
   ## Ask for status once
@@ -179,7 +194,7 @@ print.BatchtoolsFuture <- function(x, ...) {
       printf("  Work dir exists: %s\n", file_test("-d", reg$work.dir))
       try(print(reg))
     } else {
-      printf("batchtools Registry: N/A\n")
+      printf("batchtools Registry: <NA>\n")
     }
   }
 
@@ -207,7 +222,11 @@ status <- function(future, ...) {
       oopts <- list()
     }
     on.exit(options(oopts))
-    batchtools::getStatus(...)
+    ## WORKAROUND: batchtools::getStatus() updates the RNG state,
+    ## which we must make sure to undo.
+    with_stealth_rng({
+      batchtools::getStatus(...)
+    })
   } ## get_status()
 
   config <- future$config
@@ -347,7 +366,7 @@ result.BatchtoolsFuture <- function(future, cleanup = TRUE, ...) {
   if (is_na(stat)) {
     label <- future$label
     if (is.null(label)) label <- "<none>"
-    stop(sprintf("The result no longer exists (or never existed) for Future ('%s') of class %s", label, paste(sQuote(class(future)), collapse = ", "))) #nolint
+    stopf("The result no longer exists (or never existed) for Future ('%s') of class %s", label, paste(sQuote(class(future)), collapse = ", ")) #nolint
   }
 
   result <- await(future, cleanup = FALSE)
@@ -448,16 +467,20 @@ run.BatchtoolsFuture <- function(future, ...) {
 
   ## 1. Add to batchtools for evaluation
   mdebug("batchtools::batchMap()")
-  jobid <- batchMap(fun = geval, list(expr),
-                    more.args = list(substitute = TRUE), reg = reg)
+  ## WORKAROUND: batchtools::batchMap() updates the RNG state,
+  ## which we must make sure to undo.
+  with_stealth_rng({
+    jobid <- batchMap(fun = geval, list(expr),
+                      more.args = list(substitute = TRUE), reg = reg)
+  })
 
-  ## 1b. Set job name, if specified
+  ## 2. Set job name, if specified
   label <- future$label
   if (!is.null(label)) {
     setJobNames(ids = jobid, names = label, reg = reg)
   }
   
-  ## 2. Update
+  ## 3. Update
   future$config$jobid <- jobid
   mdebugf("Created %s future #%d", class(future)[1], jobid$job.id)
 
@@ -483,14 +506,24 @@ run.BatchtoolsFuture <- function(future, ...) {
     }, error = function(ex) list())
   }
 
-  ## 3. Submit
+  ## 4. Wait for an available worker
+  waitForWorker(future, workers = future$workers)
+
+  ## 5. Submit
   future$state <- "running"
   resources <- future$config$resources
   if (is.null(resources)) resources <- list()
 
-  batchtools::submitJobs(reg = reg, ids = jobid, resources = resources)
+  ## WORKAROUND: batchtools::submitJobs() updates the RNG state,
+  ## which we must make sure to undo.
+  with_stealth_rng({
+    submitJobs(reg = reg, ids = jobid, resources = resources)
+  })
 
   mdebugf("Launched future #%d", jobid$job.id)
+
+  ## 6. Rerserve worker for future
+  registerFuture(future)
 
   invisible(future)
 } ## run()
@@ -574,7 +607,7 @@ await <- function(future, cleanup = TRUE,
       msg <- sprintf("BatchtoolsDeleted: Cannot retrieve value. Future ('%s') deleted: %s", label, reg$file.dir) #nolint
       stop(BatchtoolsFutureError(msg, future = future))
     }
-    if (debug) { mstr(result) }
+    if (debug) { mstr(result) }    
   } else {
     cleanup <- FALSE
     msg <- sprintf("AsyncNotReadyError: Polled for results for %s seconds every %g seconds, but asynchronous evaluation for future ('%s') is still running: %s", timeout, delta, label, reg$file.dir) #nolint
@@ -673,6 +706,9 @@ delete.BatchtoolsFuture <- function(future,
   result <- result(future, cleanup = FALSE)
   stop_if_not(inherits(result, "FutureResult"))
 
+  ## Free up worker
+  unregisterFuture(future)
+
   ## To simplify post mortem troubleshooting in non-interactive sessions,
   ## should the batchtools registry files be removed or not?
   mdebugf("delete(): Option 'future.delete = %s",
@@ -705,15 +741,19 @@ delete.BatchtoolsFuture <- function(future,
   on.exit(options(oopts))
 
   ## Try to delete registry
-  interval <- delta
-  for (kk in seq_len(times)) {
-    try(clearRegistry(reg = reg), silent = TRUE)
-    try(removeRegistry(wait = 0.0, reg = reg), silent = FALSE)
-    if (!file_test("-d", path)) break
-    Sys.sleep(interval)
-    interval <- alpha * interval
-  }
-
+  ## WORKAROUND: batchtools::clearRegistry() and
+  ## batchtools::removeRegistry() update the RNG state,
+  ## which we must make sure to undo.
+  with_stealth_rng({
+    interval <- delta
+    for (kk in seq_len(times)) {
+      try(clearRegistry(reg = reg), silent = TRUE)
+      try(removeRegistry(wait = 0.0, reg = reg), silent = FALSE)
+      if (!file_test("-d", path)) break
+      Sys.sleep(interval)
+      interval <- alpha * interval
+    }
+  })
 
   ## Success?
   if (file_test("-d", path)) {
