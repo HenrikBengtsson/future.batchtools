@@ -1,0 +1,23 @@
+#!/bin/bash
+######################################################################
+# A batchtools launch script template for Slurm
+#
+# Author: Henrik Bengtsson 
+######################################################################
+
+#SBATCH --job-name=<%= if (exists("job.name", mode = "character")) job.name else job.hash %>
+#SBATCH --output=<%= log.file %>-%j.out
+#SBATCH --mail-type=END,FAIL
+#SBATCH --nodes=1
+#SBATCH --time=00:05:00
+
+## Resources needed:
+<% if (length(resources) > 0) {
+  opts <- unlist(resources, use.names = TRUE)
+  opts <- sprintf("--%s=%s", names(opts), opts)
+  opts <- paste(opts, collapse = ",") %>
+#SBATCH <%= opts %>
+<% } %>
+
+## Launch R and evaluated the batchtools R job
+Rscript -e 'batchtools::doJobCollection("<%= uri %>")'
