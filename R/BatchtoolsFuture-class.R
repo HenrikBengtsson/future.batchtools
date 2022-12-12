@@ -580,6 +580,10 @@ await <- function(future, cleanup = TRUE,
       if (inherits(result, "FutureResult")) {
         prototype_fields <- c(prototype_fields, "batchtools_log")
         result[["batchtools_log"]] <- try({
+	  ## Since we're already collected the results, the log file
+	  ## should already exist, if it exists.  Because of this,
+	  ## only poll for the log file for a second before giving up.
+	  reg$cluster.functions$fs.latency <- 1.0
           mdebug("- batchtools::getLog() ...")
           on.exit(mdebug("- batchtools::getLog() ... done"))
           getLog(id = jobid, reg = reg)

@@ -43,6 +43,19 @@
    
  * Add a template file for SGE.
 
+## Miscellaneous
+
+ * `result()` for HPC batchtools backends would use a timeout of
+   `fs.latency` seconds (as set for the cluster functions) when trying
+   to collect the logged output.  However, since it has already
+   collected the results, the log file should be available already and
+   there would be no need to have to wait for the log file to appear.
+   Because of this, we temporarily set `fs.latency = 1.0` (second)
+   timeout for trying to find the log file.  This makes a big
+   difference in case the template used a `--output=<path>` location
+   other than `--output=<%= log.file %>`l in such cases the log file
+   would not be found, requiring a timeout.
+
 ## Bug Fixes
 
  * Using `plan(batchtools_nnn, finalize = FALSE)` would give a warning
