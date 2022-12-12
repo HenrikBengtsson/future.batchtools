@@ -41,7 +41,7 @@
    batchtools futures based on **batchtools** SSH workers created by
    `batchtools::makeClusterFunctionsSSH()`.
    
- * Add a template file for SGE.
+ * Add example template files for SGE and Slurm.
 
 ## Miscellaneous
 
