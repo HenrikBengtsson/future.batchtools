@@ -221,7 +221,7 @@ batchtools_by_template <- function(expr, envir = parent.frame(),
     workers = workers
   )
   if (length(dotdotdot) > 0) args <- c(args, dotdotdot)
-  future <- do.call(constructor, args = args)
+  future <- do.call(constructor, args = args, quote = TRUE)
 
   if (!future$lazy) future <- run(future)
 

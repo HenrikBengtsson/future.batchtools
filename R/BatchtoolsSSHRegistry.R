@@ -50,6 +50,6 @@ BatchtoolsSSHRegistry <- local({
   ncpus <- table(workers)
 
   mapply(names(ncpus), ncpus, FUN = function(hostname, ncpus) {
-    Worker$new(hostname, ncpus = ncpus)
+    Worker$new(hostname, ncpus = ncpus, max.load = Inf)
   })
 }
