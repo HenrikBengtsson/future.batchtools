@@ -51,4 +51,4 @@ class(batchtools_ssh) <- c(
   "batchtools_multiprocess", "batchtools",
   "multiprocess", "future", "function"
 )
-attr(batchtools_multicore, "tweakable") <- c("finalize")
+attr(batchtools_ssh, "tweakable") <- c("finalize")
