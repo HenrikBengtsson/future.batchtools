@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.batchtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.10.0-9026</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.10.0-9030</span>
       </span>
     </div>
 
@@ -145,6 +145,11 @@
 <li><p>Add <code>batchtools_bash</code> and BatchtoolsBashFuture to illustrate how to create a basic <code>batchtools_custom</code> future based on a <strong>batchtools</strong> template file <code>bash.tmpl</code> part of the package.</p></li>
 <li><p>Add <code>batchtools_ssh</code> and BatchtoolsSSHFuture for creating batchtools futures based on <strong>batchtools</strong> SSH workers created by <code><a href="https://rdrr.io/pkg/batchtools/man/makeClusterFunctionsSSH.html" class="external-link">batchtools::makeClusterFunctionsSSH()</a></code>.</p></li>
 <li><p>Add a template file for SGE.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="miscellaneous-development-version">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-development-version"></a></h3>
+<ul><li>
+<code><a href="https://future.futureverse.org/reference/result.html" class="external-link">result()</a></code> for HPC batchtools backends would use a timeout of <code>fs.latency</code> seconds (as set for the cluster functions) when trying to collect the logged output. However, since it has already collected the results, the log file should be available already and there would be no need to have to wait for the log file to appear. Because of this, we temporarily set <code>fs.latency = 1.0</code> (second) timeout for trying to find the log file. This makes a big difference in case the template used a <code>--output=&lt;path&gt;</code> location other than <code>--output=&lt;%= log.file %&gt;</code>l in such cases the log file would not be found, requiring a timeout.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
