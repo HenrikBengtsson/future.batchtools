@@ -383,6 +383,7 @@ result.BatchtoolsFuture <- function(future, cleanup = TRUE, ...) {
 
 #' @importFrom future run getExpression
 #' @importFrom batchtools batchExport batchMap saveRegistry setJobNames submitJobs
+#' @importFrom utils capture.output str
 #' @export
 run.BatchtoolsFuture <- function(future, ...) {
   if (future$state != "created") {
@@ -517,8 +518,19 @@ run.BatchtoolsFuture <- function(future, ...) {
 
   ## WORKAROUND: batchtools::submitJobs() updates the RNG state,
   ## which we must make sure to undo.
-  with_stealth_rng({
-    submitJobs(reg = reg, ids = jobid, resources = resources)
+  tryCatch({
+    with_stealth_rng({
+      submitJobs(reg = reg, ids = jobid, resources = resources)
+    })
+  }, error = function(ex) {
+    msg <- conditionMessage(ex)
+    label <- future$label
+    if (is.null(label)) label <- "<none>"
+    msg <- sprintf("Failed to submit %s (%s). The reason was: %s", class(future)[1], label, msg)
+    info <- capture.output(str(resources))
+    info <- paste(info, collapse = "\n")
+    msg <- sprintf("%s\nTROUBLESHOOTING INFORMATION:\nbatchtools::submitJobs() was called with the following 'resources' argument:\n%s\n", msg, info)
+    stop(BatchtoolsFutureError(msg, future = future))
   })
 
   mdebugf("Launched future #%d", jobid$job.id)

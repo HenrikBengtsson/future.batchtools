@@ -25,6 +25,10 @@
    file (a shell script) with info on location, file size, and number
    of lines, if they exist.
 
+ * `run()` for BatchtoolsFuture now produce an informative
+   BatchtoolsFutureError in case `batchtools::submitJobs()` fails, for
+   instance, due to invalid job-scheduler rsource specifications.
+ 
  * Add BatchtoolsFuture subclasses; abstract
    BatchtoolsUniprocessFuture, abstract BatchtoolsMultiprocessFuture,
    BatchtoolsInteractiveFuture, BatchtoolsLocalFuture,
