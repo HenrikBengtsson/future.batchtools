@@ -28,7 +28,7 @@
   ## As-is resource specifications, e.g.
   ## sge_options <- c("-pe smp 2", "-R yes")
   ## plan(batchtools_sge, resources = list(asis = sge_options))
-  if ("asis" %in% names(resouces)) {
+  if ("asis" %in% names(resources)) {
     cat(sprintf("#$ %s\n", resources[["asis"]]))
     resources <- resources[names(resources) != "asis"]
   }
