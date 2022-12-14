@@ -18,16 +18,16 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] future.batchtools_0.10.0-9030 future_1.29.0-9002           
-[3] parallelly_1.32.1-9012       
+[1] future.batchtools_0.11.0-9000 future_1.29.0-9002           
+[3] parallelly_1.32.1-9018       
 
 loaded via a namespace (and not attached):
  [1] pillar_1.8.1       compiler_4.2.2     remotes_2.4.2      prettyunits_1.1.1 
  [5] progress_1.2.2     tools_4.2.2        digest_0.6.31      downlit_0.4.2     
- [9] debugme_1.1.0      checkmate_2.1.0    evaluate_0.18      memoise_2.0.1     
+ [9] debugme_1.1.0      checkmate_2.1.0    evaluate_0.19      memoise_2.0.1     
 [13] lifecycle_1.0.3    tibble_3.1.8       pkgconfig_2.0.3    rlang_1.0.6       
 [17] cli_3.4.1.9000     rstudioapi_0.14    curl_4.3.3         yaml_2.3.6        
-[21] parallel_4.2.2     pkgdown_2.0.6      xfun_0.35          fastmap_1.1.0     
+[21] parallel_4.2.2     pkgdown_2.0.7      xfun_0.35          fastmap_1.1.0     
 [25] withr_2.5.0        httr_1.4.4         knitr_1.41.1       xml2_1.3.3        
 [29] systemfonts_1.0.4  rappdirs_0.3.3     hms_1.1.2          desc_1.4.2        
 [33] fs_1.5.2           vctrs_0.5.1        globals_0.16.2     rprojroot_2.0.3   
