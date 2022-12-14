@@ -10,6 +10,9 @@
 ^OVERVIEW[.]md$
 ^README[.]md$
 ^CONDUCT[.]md$
+^CONTRIBUTING[.]md$
+^docs
+^pkgdown
 
 #----------------------------
 # devtools
@@ -61,4 +64,3 @@ Rplots.pdf$
 
 ^.*\.Rproj$
 ^\.Rproj\.user$
-

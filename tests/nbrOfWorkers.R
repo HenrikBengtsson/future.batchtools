@@ -9,22 +9,55 @@ n <- nbrOfWorkers(batchtools_local)
 message("Number of workers: ", n)
 stopifnot(n == 1L)
 
+n <- nbrOfFreeWorkers(batchtools_local)
+message("Number of free workers: ", n)
+stopifnot(n == 1L)
+
+n <- nbrOfFreeWorkers(batchtools_local, background = TRUE)
+message("Number of free background workers: ", n)
+stopifnot(n == 0L)
+
 n <- nbrOfWorkers(batchtools_interactive)
 message("Number of workers: ", n)
 stopifnot(n == 1L)
+
+n <- nbrOfFreeWorkers(batchtools_interactive)
+message("Number of free workers: ", n)
+stopifnot(n == 1L)
+
+n <- nbrOfFreeWorkers(batchtools_interactive, background = TRUE)
+message("Number of free background workers: ", n)
+stopifnot(n == 0L)
+
 
 plan(batchtools_local)
 n <- nbrOfWorkers()
 message("Number of workers: ", n)
 stopifnot(n == 1L)
 
+n <- nbrOfFreeWorkers()
+message("Number of free workers: ", n)
+stopifnot(n == 1L)
+
+n <- nbrOfFreeWorkers(background = TRUE)
+message("Number of free background workers: ", n)
+stopifnot(n == 0L)
+
 plan(batchtools_interactive)
 n <- nbrOfWorkers()
 message("Number of workers: ", n)
 stopifnot(n == 1L)
 
-message("*** nbrOfWorkers() - local, interactive ... DONE")
+n <- nbrOfFreeWorkers()
+message("Number of free workers: ", n)
+stopifnot(n == 1L)
 
+n <- nbrOfFreeWorkers(background = TRUE)
+message("Number of free background workers: ", n)
+stopifnot(n == 0L)
+
+
+message("*** nbrOfWorkers() - local, interactive ... DONE")
 
 ncores <- availableCores("multicore")
 if (ncores >= 2L) {
@@ -34,10 +67,26 @@ n <- nbrOfWorkers(batchtools_multicore)
 message("Number of workers: ", n)
 stopifnot(n == ncores)
 
-plan(batchtools_multicore)
+n <- nbrOfFreeWorkers(batchtools_multicore)
+message("Number of free workers: ", n)
+stopifnot(n == ncores)
+
+n <- nbrOfFreeWorkers(batchtools_multicore, background = TRUE)
+message("Number of free background workers: ", n)
+stopifnot(n == ncores)
+
+plan(batchtools_multicore, workers = 2L)
 n <- nbrOfWorkers()
 message("Number of workers: ", n)
-stopifnot(n == ncores)
+stopifnot(n == 2L)
+
+n <- nbrOfFreeWorkers()
+message("Number of free workers: ", n)
+stopifnot(n == 2L)
+
+n <- nbrOfFreeWorkers(background = TRUE)
+message("Number of free background workers: ", n)
+stopifnot(n == 2L)
 
 workers <- min(2L, ncores)
 plan(batchtools_multicore, workers = workers)

@@ -1,26 +1,16 @@
-#' @inheritParams BatchtoolsFuture
+#' @inheritParams BatchtoolsUniprocessFuture
 #'
 #' @importFrom batchtools makeClusterFunctionsInteractive
 #' @export
-batchtools_interactive <- function(expr, envir = parent.frame(),
-                                   substitute = TRUE, globals = TRUE,
-                                   label = NULL, workers = 1L,
-                                   registry = list(), ...) {
-  if (substitute) expr <- substitute(expr)
-
+batchtools_interactive <- function(..., envir = parent.frame()) {
   cf <- makeClusterFunctionsInteractive(external = FALSE)
-
-  future <- BatchtoolsFuture(expr = expr, envir = envir, substitute = FALSE,
-                            globals = globals,
-                            label = label,
-                            workers = workers,
-                            cluster.functions = cf,
-                            registry = registry, 
-                            ...)
-
+  future <- BatchtoolsInteractiveFuture(..., envir = envir, cluster.functions = cf)
   if (!future$lazy) future <- run(future)
-
-  future
+  invisible(future)
 }
-class(batchtools_interactive) <- c("batchtools_interactive", "batchtools",
-                                   "uniprocess", "future", "function")
+class(batchtools_interactive) <- c(
+  "batchtools_interactive", "batchtools_uniprocess", "batchtools",
+  "uniprocess", "future", "function"
+)
+attr(batchtools_interactive, "tweakable") <- c("finalize")
+attr(batchtools_interactive, "untweakable") <- c("workers")

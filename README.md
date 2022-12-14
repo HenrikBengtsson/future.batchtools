@@ -1,4 +1,10 @@
-# future.batchtools: A Future API for Parallel and Distributed Processing using 'batchtools'
+
+
+<div id="badges"><!-- pkgdown markup -->
+<a href="https://CRAN.R-project.org/web/checks/check_results_future.batchtools.html"><img border="0" src="https://www.r-pkg.org/badges/version/future.batchtools" alt="CRAN check status"/></a> <a href="https://github.com/HenrikBengtsson/future.batchtools/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/HenrikBengtsson/future.batchtools/actions/workflows/R-CMD-check.yaml/badge.svg?branch=develop" alt="R CMD check status"/></a>  <a href="https://github.com/HenrikBengtsson/future.batchtools/actions?query=workflow%3Afuture_tests"><img border="0" src="https://github.com/HenrikBengtsson/future.batchtools/actions/workflows/future_tests.yaml/badge.svg?branch=develop" alt="future.tests checks status"/></a>   <a href="https://codecov.io/gh/HenrikBengtsson/future.batchtools"><img border="0" src="https://codecov.io/gh/HenrikBengtsson/future.batchtools/branch/develop/graph/badge.svg" alt="Coverage Status"/></a> 
+</div>
+
+# future.batchtools: A Future API for Parallel and Distributed Processing using 'batchtools' 
 
 ## Introduction
 The [future] package provides a generic API for using futures in R.
@@ -205,27 +211,19 @@ R package future.batchtools is available on [CRAN](https://cran.r-project.org/pa
 install.packages("future.batchtools")
 ```
 
+
 ### Pre-release version
 
 To install the pre-release version that is available in Git branch `develop` on GitHub, use:
 ```r
-remotes::install_github("HenrikBengtsson/future.batchtools@develop")
+remotes::install_github("HenrikBengtsson/future.batchtools", ref="develop")
 ```
 This will install the package from source.  
 
+<!-- pkgdown-drop-below -->
 
 
-## Contributions
+## Contributing
 
-This Git repository uses the [Git Flow](http://nvie.com/posts/a-successful-git-branching-model/) branching model (the [`git flow`](https://github.com/petervanderdoes/gitflow-avh) extension is useful for this).  The [`develop`](https://github.com/HenrikBengtsson/future.batchtools/tree/develop) branch contains the latest contributions and other code that will appear in the next release, and the [`master`](https://github.com/HenrikBengtsson/future.batchtools) branch contains the code of the latest release, which is exactly what is currently on [CRAN](https://cran.r-project.org/package=future.batchtools).
+To contribute to this package, please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Contributing to this package is easy.  Just send a [pull request](https://help.github.com/articles/using-pull-requests/).  When you send your PR, make sure `develop` is the destination branch on the [future.batchtools repository](https://github.com/HenrikBengtsson/future.batchtools).  Your PR should pass `R CMD check --as-cran`, which will also be checked by <a href="https://travis-ci.org/HenrikBengtsson/future.batchtools">Travis CI</a> and <a href="https://ci.appveyor.com/project/HenrikBengtsson/future-batchtools">AppVeyor CI</a> when the PR is submitted.
-
-
-## Software status
-
-| Resource      | CRAN        | GitHub Actions      | Travis CI       | AppVeyor CI      |
-| ------------- | ------------------- | ------------------- | --------------- | ---------------- |
-| _Platforms:_  | _Multiple_          | _Multiple_          | _Linux & macOS_ | _Windows_        |
-| R CMD check   | <a href="https://cran.r-project.org/web/checks/check_results_future.batchtools.html"><img border="0" src="http://www.r-pkg.org/badges/version/future.batchtools" alt="CRAN version"></a> | <a href="https://github.com/HenrikBengtsson/future.batchtools/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/HenrikBengtsson/future.batchtools/workflows/R-CMD-check/badge.svg?branch=develop" alt="Build status"></a>       | <a href="https://travis-ci.org/HenrikBengtsson/future.batchtools"><img src="https://travis-ci.org/HenrikBengtsson/future.batchtools.svg" alt="Build status"></a>   | <a href="https://ci.appveyor.com/project/HenrikBengtsson/future-batchtools"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/future.batchtools?svg=true" alt="Build status"></a> |
-| Test coverage |                     |                     | <a href="https://codecov.io/gh/HenrikBengtsson/future.batchtools"><img src="https://codecov.io/gh/HenrikBengtsson/future.batchtools/branch/develop/graph/badge.svg" alt="Coverage Status"/></a>     |                  |

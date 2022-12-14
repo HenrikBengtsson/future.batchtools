@@ -16,7 +16,7 @@ A number in \eqn{[1, Inf]}.
 }
 \description{
 Tries to infer the total number of batchtools workers.  This is
-done using various ad hoc procedures based on code inspection
+done using various ad-hoc procedures based on code inspection
 of batchtools itself.
 }
 \keyword{internal}

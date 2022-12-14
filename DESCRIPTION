@@ -1,8 +1,9 @@
 Package: future.batchtools
-Version: 0.10.0
+Version: 0.11.0
 Depends:
     R (>= 3.2.0),
-    future (>= 1.17.0)
+    parallelly,
+    future (>= 1.29.0)
 Imports:
     batchtools (>= 0.9.13),
     utils
@@ -24,7 +25,7 @@ Description: Implementation of the Future API on top of the 'batchtools' package
     e.g. 'y <- future.apply::future_lapply(files, FUN = process)'.
 License: LGPL (>= 2.1)
 LazyLoad: TRUE
-URL: https://github.com/HenrikBengtsson/future.batchtools
+URL: https://future.batchtools.futureverse.org, https://github.com/HenrikBengtsson/future.batchtools
 BugReports: https://github.com/HenrikBengtsson/future.batchtools/issues
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)

@@ -45,7 +45,7 @@ of the batchtools registry.}
 to \code{\link[=BatchtoolsFuture]{BatchtoolsFuture()}}.}
 }
 \value{
-An object of class \code{BatchtoolsFuture}.
+An object of class \code{BatchtoolsMulticoreFuture}.
 }
 \description{
 A batchtools multicore future is an asynchronous multiprocess

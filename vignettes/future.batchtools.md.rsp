@@ -218,5 +218,3 @@ demo("mandelbrot", package = "future", ask = FALSE)
 [Load Sharing Facility (LSF)]: https://en.wikipedia.org/wiki/Platform_LSF
 [OpenLava]: https://en.wikipedia.org/wiki/OpenLava
 [Docker Swarm]: https://docs.docker.com/swarm/
----
-Copyright Henrik Bengtsson, 2017
