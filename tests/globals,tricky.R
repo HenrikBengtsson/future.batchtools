@@ -85,10 +85,10 @@ x$b <- y
 
 print(x)
 
-y0 <- lapply(x, FUN = listenv::map)
+y0 <- lapply(x, FUN = listenv::mapping)
 str(list(y0 = y0))
 
-y <- flapply(x, FUN = listenv::map)
+y <- flapply(x, FUN = listenv::mapping)
 str(list(y = y))
 stopifnot(identical(y, y0))
 
