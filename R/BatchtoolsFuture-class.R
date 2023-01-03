@@ -342,7 +342,13 @@ resolved.BatchtoolsFuture <- function(x, ...) {
   ## If not, checks the batchtools registry status
   resolved <- finished(x)
   if (is.na(resolved)) return(FALSE)
- 
+
+  ## Collect and relay immediateCondition if they exists
+  conditions <- readImmediateConditions(signal = TRUE)
+  ## Record conditions as signaled
+  signaled <- c(x$.signaledConditions, conditions)
+  x$.signaledConditions <- signaled
+
   resolved
 }
 
@@ -372,8 +378,23 @@ result.BatchtoolsFuture <- function(future, cleanup = TRUE, ...) {
 
   result <- await(future, cleanup = FALSE)
   stop_if_not(inherits(result, "FutureResult"))
+
+  ## Collect and relay immediateCondition if they exists
+  conditions <- readImmediateConditions()
+  ## Record conditions as signaled
+  signaled <- c(future$.signaledConditions, conditions)
+  future$.signaledConditions <- signaled
+  
+  ## Record conditions
+  result$conditions <- c(result$conditions, signaled)
+  signaled <- NULL
+
   future$result <- result
   future$state <- "finished"
+
+  ## Always signal immediateCondition:s and as soon as possible.
+  ## They will always be signaled if they exist.
+  signalImmediateConditions(future)
 
   if (cleanup) delete(future)
 
@@ -833,4 +854,29 @@ add_finalizer.BatchtoolsFuture <- function(future, debug = FALSE, ...) {
   }, onexit = TRUE)
 
   invisible(future)
+}
+
+
+#' @export
+getExpression.BatchtoolsFuture <- function(future, expr = future$expr, immediateConditions = TRUE, conditionClasses = future$conditions, resignalImmediateConditions = getOption("future.batchtools.relay.immediate", immediateConditions), ...) {
+  if (is.list(tmpl_expr_send_immediateConditions_via_file)) {
+    ## Inject code for resignaling immediateCondition:s?
+    if (resignalImmediateConditions && immediateConditions) {
+      ## Preserve condition classes to be ignored
+      exclude <- attr(conditionClasses, "exclude", exact = TRUE)
+    
+      immediateConditionClasses <- getOption("future.relay.immediate", "immediateCondition")
+      conditionClasses <- unique(c(conditionClasses, immediateConditionClasses))
+  
+      if (length(conditionClasses) > 0L) {
+        ## Communicate via the file system
+        expr <- bquote_apply(tmpl_expr_send_immediateConditions_via_file)
+      } ## if (length(conditionClasses) > 0)
+      
+      ## Set condition classes to be ignored in case changed
+      attr(conditionClasses, "exclude") <- exclude
+    } ## if (resignalImmediateConditions && immediateConditions)
+  }
+ 
+  NextMethod(expr = expr, immediateConditions = immediateConditions, conditionClasses = conditionClasses)
 }

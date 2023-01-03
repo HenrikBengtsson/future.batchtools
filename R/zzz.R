@@ -4,6 +4,8 @@ FutureRegistry <- NULL
 .onLoad <- function(libname, pkgname) {
   ## Import private functions from 'future'
   FutureRegistry <<- import_future("FutureRegistry")
+
+  import_immediateConditions()
   
   debug <- getOption("future.debug", FALSE)
   
