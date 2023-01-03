@@ -121,21 +121,6 @@ comma <- function(x, sep = ", ") paste(x, collapse = sep)
 
 commaq <- function(x, sep = ", ") paste(sQuote(x), collapse = sep)
 
-import_from <- function(name, default = NULL, package) {
-  ns <- getNamespace(package)
-  if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
-    get(name, mode = "function", envir = ns, inherits = FALSE)
-  } else if (!is.null(default)) {
-    default
-  } else {
-    stopf("No such '%s' function: %s()", package, name)
-  }
-}
-
-import_future <- function(name, default = NULL) {
-  import_from(name, default = default, package = "future")
-}
-
 ## Evaluates an expression in global environment.
 ## Because geval() is exported, we want to keep its environment()
 ## as small as possible, which is why we use local().  Without,
