@@ -354,7 +354,7 @@ resolved.BatchtoolsFuture <- function(x, ...) {
   if (is.na(resolved)) return(FALSE)
 
   ## Collect and relay immediateCondition if they exists
-  conditions <- readImmediateConditions(immediateConditionsPath(rootPath = "."), signal = TRUE)
+  conditions <- readImmediateConditions(immediateConditionsPath(rootPath = x$config$reg$file.dir), signal = TRUE)
   ## Record conditions as signaled
   signaled <- c(x$.signaledConditions, conditions)
   x$.signaledConditions <- signaled
@@ -393,7 +393,7 @@ result.BatchtoolsFuture <- function(future, cleanup = TRUE, ...) {
   stop_if_not(inherits(result, "FutureResult"))
 
   ## Collect and relay immediateCondition if they exists
-  conditions <- readImmediateConditions(immediateConditionsPath(rootPath = "."))
+  conditions <- readImmediateConditions(immediateConditionsPath(rootPath = future$config$reg$file.dir))
   ## Record conditions as signaled
   signaled <- c(future$.signaledConditions, conditions)
   future$.signaledConditions <- signaled
@@ -442,11 +442,6 @@ run.BatchtoolsFuture <- function(future, ...) {
     oopts <- list()
   }
   on.exit(options(oopts))
-
-  expr <- getExpression(future)
-
-  ## Always evaluate in local environment
-  expr <- substitute(local(expr), list(expr = expr))
 
   ## (i) Create batchtools registry
   reg <- future$config$reg
@@ -500,6 +495,11 @@ run.BatchtoolsFuture <- function(future, ...) {
   if (length(future$globals) > 0) {
     batchExport(export = future$globals, reg = reg)
   }
+
+  expr <- getExpression(future)
+
+  ## Always evaluate in local environment
+  expr <- substitute(local(expr), list(expr = expr))
 
   ## 1. Add to batchtools for evaluation
   mdebug("batchtools::batchMap()")
@@ -888,7 +888,7 @@ getExpression.BatchtoolsFuture <- function(future, expr = future$expr, immediate
   
       if (length(conditionClasses) > 0L) {
         ## Communicate via the file system
-        saveImmediateCondition_path <- immediateConditionsPath(rootPath = ".")
+        saveImmediateCondition_path <- immediateConditionsPath(rootPath = future$config$reg$file.dir)
         expr <- bquote_apply(tmpl_expr_send_immediateConditions_via_file)
       } ## if (length(conditionClasses) > 0)
       
