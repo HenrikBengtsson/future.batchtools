@@ -875,6 +875,7 @@ add_finalizer.BatchtoolsFuture <- function(future, debug = FALSE, ...) {
 }
 
 
+#' @importFrom utils file_test
 #' @export
 getExpression.BatchtoolsFuture <- function(future, expr = future$expr, immediateConditions = TRUE, conditionClasses = future$conditions, resignalImmediateConditions = getOption("future.batchtools.relay.immediate", immediateConditions), ...) {
   if (is.list(tmpl_expr_send_immediateConditions_via_file)) {
@@ -888,8 +889,9 @@ getExpression.BatchtoolsFuture <- function(future, expr = future$expr, immediate
   
       if (length(conditionClasses) > 0L) {
         ## Communicate via the file system
-        saveImmediateCondition_path <- file.path(future_cache_path(), "immediateConditions")
-	dir.create(saveImmediateCondition_path, recursive = TRUE)
+        path <- file.path(future_cache_path(), "immediateConditions")
+        if (!file_test("-d", path)) dir.create(path, recursive = TRUE)
+        saveImmediateCondition_path <- path  ## used by template
         expr <- bquote_apply(tmpl_expr_send_immediateConditions_via_file)
       } ## if (length(conditionClasses) > 0)
       
