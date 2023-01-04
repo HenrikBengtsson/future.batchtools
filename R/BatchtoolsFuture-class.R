@@ -335,14 +335,27 @@ loggedOutput.BatchtoolsFuture <- function(future, ...) {
 #' @export
 #' @keywords internal
 resolved.BatchtoolsFuture <- function(x, ...) {
-  ## Has internal future state already been switched to be resolved
-  resolved <- NextMethod()
-  if (resolved) return(TRUE)
+  signalEarly <- import_future("signalEarly")
+  
+  ## Is value already collected?
+  if (!is.null(x$result)) {
+    ## Signal conditions early?
+    signalEarly(x, ...)
+    return(TRUE)
+  }
+
+  ## Assert that the process that created the future is
+  ## also the one that evaluates/resolves/queries it.
+  assertOwner <- import_future("assertOwner")
+  assertOwner(x)
 
   ## If not, checks the batchtools registry status
   resolved <- finished(x)
   if (is.na(resolved)) return(FALSE)
- 
+
+  ## Signal conditions early? (happens only iff requested)
+  if (resolved) signalEarly(x, ...)
+
   resolved
 }
 
@@ -538,6 +551,11 @@ run.BatchtoolsFuture <- function(future, ...) {
   ## 6. Rerserve worker for future
   registerFuture(future)
 
+  ## 7. Trigger early signalling
+  if (inherits(future, "BatchtoolsUniprocessFuture")) {
+    resolved(future)
+  }
+  
   invisible(future)
 } ## run()
 
