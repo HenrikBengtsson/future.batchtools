@@ -335,19 +335,32 @@ loggedOutput.BatchtoolsFuture <- function(future, ...) {
 #' @export
 #' @keywords internal
 resolved.BatchtoolsFuture <- function(x, ...) {
-  ## Has internal future state already been switched to be resolved
-  resolved <- NextMethod()
-  if (resolved) return(TRUE)
+  signalEarly <- import_future("signalEarly")
+  
+  ## Is value already collected?
+  if (!is.null(x$result)) {
+    ## Signal conditions early?
+    signalEarly(x, ...)
+    return(TRUE)
+  }
+
+  ## Assert that the process that created the future is
+  ## also the one that evaluates/resolves/queries it.
+  assertOwner <- import_future("assertOwner")
+  assertOwner(x)
 
   ## If not, checks the batchtools registry status
   resolved <- finished(x)
   if (is.na(resolved)) return(FALSE)
 
   ## Collect and relay immediateCondition if they exists
-  conditions <- readImmediateConditions(signal = TRUE)
+  conditions <- readImmediateConditions(immediateConditionsPath(rootPath = "."), signal = TRUE)
   ## Record conditions as signaled
   signaled <- c(x$.signaledConditions, conditions)
   x$.signaledConditions <- signaled
+
+  ## Signal conditions early? (happens only iff requested)
+  if (resolved) signalEarly(x, ...)
 
   resolved
 }
@@ -380,7 +393,7 @@ result.BatchtoolsFuture <- function(future, cleanup = TRUE, ...) {
   stop_if_not(inherits(result, "FutureResult"))
 
   ## Collect and relay immediateCondition if they exists
-  conditions <- readImmediateConditions()
+  conditions <- readImmediateConditions(immediateConditionsPath(rootPath = "."))
   ## Record conditions as signaled
   signaled <- c(future$.signaledConditions, conditions)
   future$.signaledConditions <- signaled
@@ -559,6 +572,11 @@ run.BatchtoolsFuture <- function(future, ...) {
   ## 6. Rerserve worker for future
   registerFuture(future)
 
+  ## 7. Trigger early signalling
+  if (inherits(future, "BatchtoolsUniprocessFuture")) {
+    resolved(future)
+  }
+  
   invisible(future)
 } ## run()
 
@@ -870,6 +888,7 @@ getExpression.BatchtoolsFuture <- function(future, expr = future$expr, immediate
   
       if (length(conditionClasses) > 0L) {
         ## Communicate via the file system
+        saveImmediateCondition_path <- immediateConditionsPath(rootPath = ".")
         expr <- bquote_apply(tmpl_expr_send_immediateConditions_via_file)
       } ## if (length(conditionClasses) > 0)
       
