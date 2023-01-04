@@ -354,7 +354,7 @@ resolved.BatchtoolsFuture <- function(x, ...) {
   if (is.na(resolved)) return(FALSE)
 
   ## Collect and relay immediateCondition if they exists
-  conditions <- readImmediateConditions(immediateConditionsPath(rootPath = x$config$reg$file.dir), signal = TRUE)
+  conditions <- readImmediateConditions(path = file.path(future_cache_path(), "immediateConditions"), signal = TRUE)
   ## Record conditions as signaled
   signaled <- c(x$.signaledConditions, conditions)
   x$.signaledConditions <- signaled
@@ -393,7 +393,7 @@ result.BatchtoolsFuture <- function(future, cleanup = TRUE, ...) {
   stop_if_not(inherits(result, "FutureResult"))
 
   ## Collect and relay immediateCondition if they exists
-  conditions <- readImmediateConditions(immediateConditionsPath(rootPath = future$config$reg$file.dir))
+  conditions <- readImmediateConditions(path = file.path(future_cache_path(), "immediateConditions"))
   ## Record conditions as signaled
   signaled <- c(future$.signaledConditions, conditions)
   future$.signaledConditions <- signaled
@@ -888,7 +888,8 @@ getExpression.BatchtoolsFuture <- function(future, expr = future$expr, immediate
   
       if (length(conditionClasses) > 0L) {
         ## Communicate via the file system
-        saveImmediateCondition_path <- immediateConditionsPath(rootPath = future$config$reg$file.dir)
+        saveImmediateCondition_path <- file.path(future_cache_path(), "immediateConditions")
+	dir.create(saveImmediateCondition_path, recursive = TRUE)
         expr <- bquote_apply(tmpl_expr_send_immediateConditions_via_file)
       } ## if (length(conditionClasses) > 0)
       
