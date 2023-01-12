@@ -7,7 +7,7 @@ FutureRegistry <- NULL
   
   debug <- getOption("future.debug", FALSE)
   
-  inRCmdCheck <- import_future("inRCmdCheck")
+  inRCmdCheck <- import_parallelly("inRCmdCheck")
   if (inRCmdCheck()) {
     ## Don't write to current working directory when running R CMD check.
     path <- Sys.getenv("R_FUTURE_CACHE_PATH", NA_character_)

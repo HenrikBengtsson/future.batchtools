@@ -9,6 +9,10 @@ import_from <- function(name, mode = "function", default = NULL, package) {
   }
 }
 
-import_future <- function(name, ...) {
-  import_from(name, ..., package = "future")
+import_future <- function(...) {
+  import_from(..., package = "future")
+}
+
+import_parallelly <- function(...) {
+  import_from(..., package = "parallelly")
 }
