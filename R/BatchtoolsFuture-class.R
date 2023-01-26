@@ -230,6 +230,14 @@ status <- function(future, ...) {
     })
   } ## get_status()
 
+  ## Known to be in its final state?
+  if (getOption("future.batchtools.status.cache", TRUE)) {
+    status <- future$.status
+    if (identical(status, c("defined", "finished", "started", "submitted"))) {
+      return(status)
+    }
+  }
+
   config <- future$config
   reg <- config$reg
   if (!inherits(reg, "Registry")) return(NA_character_)
@@ -251,6 +259,9 @@ status <- function(future, ...) {
     if (result_has_errors(result)) status <- unique(c("error", status))
   }
 
+  ## Cache result
+  future$.status <- status
+  
   if (debug) mdebug("- status: ", paste(sQuote(status), collapse = ", "))
 
   status

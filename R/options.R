@@ -165,4 +165,5 @@ update_package_options <- function(debug = FALSE) {
   update_package_option("future.batchtools.expiration.tail", mode = "integer", debug = debug)
   update_package_option("future.batchtools.output", mode = "logical", debug = debug)
   update_package_option("future.batchtools.workers", mode = "numeric", debug = debug)
+  update_package_option("future.batchtools.status.cache", mode = "logical", default = TRUE, debug = debug)
 }

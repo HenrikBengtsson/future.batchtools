@@ -1,6 +1,12 @@
 # Version (development version)
 
- * ...
+## New Features
+
+ * Improved performance of batchtools futures by avoiding re-checking
+   the **batchtools** status if the **batchtools** job has already
+   been observed to be resolved.  Checking the **batchtools** status
+   is fairly expense, especially since each status check queries a set
+   of files on the file system.
 
 
 # Version 0.11.0 [2022-12-13]
@@ -286,7 +292,6 @@
 
  * `print()` for BatchtoolsFuture returns the object invisibly.
 
-
 ## Bug Fixes
 
  * Calling `future_lapply()` with functions containing globals part of
@@ -299,6 +304,7 @@
 
 
 # Version 0.5.0 [2017-06-02]
+
 
 # Version 0.4.0 [2017-05-16]
 
@@ -364,4 +370,3 @@
 
 
 # Version 0.1.0 [2017-02-11]
-
