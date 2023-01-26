@@ -8,6 +8,9 @@
    is fairly expense, especially since each status check queries a set
    of files on the file system.
 
+ * Improved performance of batchtools futures by making the removal of
+   the **batchtools** registry about 300% faster.
+
 
 # Version 0.11.0 [2022-12-13]
 
