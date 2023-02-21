@@ -41,7 +41,7 @@
 
  * `run()` for BatchtoolsFuture now produce an informative
    BatchtoolsFutureError in case `batchtools::submitJobs()` fails, for
-   instance, due to invalid job-scheduler rsource specifications.
+   instance, due to invalid job-scheduler resource specifications.
  
  * Add BatchtoolsFuture subclasses; abstract
    BatchtoolsUniprocessFuture, abstract BatchtoolsMultiprocessFuture,
