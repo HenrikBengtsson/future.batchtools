@@ -826,6 +826,8 @@ delete.BatchtoolsFuture <- function(future,
   with_stealth_rng({
     interval <- delta
     for (kk in seq_len(times)) {
+      try(unlink(path, recursive = TRUE), silent = FALSE)
+      if (!file_test("-d", path)) break
       try(removeRegistry(wait = 0.0, reg = reg), silent = FALSE)
       if (!file_test("-d", path)) break
       try(clearRegistry(reg = reg), silent = TRUE)
