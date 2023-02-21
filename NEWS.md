@@ -9,7 +9,7 @@
    of files on the file system.
 
  * Improved performance of batchtools futures by making the removal of
-   the **batchtools** registry about 300% faster.
+   the **batchtools** registry about 10-15 times faster.
 
 
 # Version 0.11.0 [2022-12-13]
