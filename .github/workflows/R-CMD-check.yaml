@@ -65,7 +65,6 @@ jobs:
       - name: Install package itself (special case)
         run: |
           install.packages(".", repos = NULL, type = "source")  ## self vignette engine
-          if (getRversion() < "3.5.0") install.packages("https://cran.r-project.org/src/contrib/Archive/xfun/xfun_0.36.tar.gz")
         shell: Rscript {0}
 
       - name: Session info
@@ -84,7 +83,7 @@ jobs:
       - name: Check
         run: |
           rcmdcheck::rcmdcheck(
-            args = c("--no-manual", "--as-cran"),
+            args = c("--no-manual", "--as-cran", if (getRversion() < "3.5.0") "--ignore-vignettes"),
             check_dir = "check"
           )
         shell: Rscript {0}
