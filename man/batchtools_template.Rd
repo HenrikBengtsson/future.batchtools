@@ -108,7 +108,7 @@ process one future at the time (\code{workers = 1L}), whereas HPC backends,
 where futures are resolved via separate jobs on a scheduler, can have
 multiple workers.  In the latter, the default is \code{workers = NULL}, which
 will resolve to
-\code{\link[=future.batchtools.options]{getOption("future.batchtools.workers")}}.
+\code{getOption("\link{future.batchtools.workers}")}.
 If neither are specified, then the default is \code{100}.}
 
 \item{registry}{(optional) A named list of settings to control the setup

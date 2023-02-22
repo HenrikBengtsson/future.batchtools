@@ -83,7 +83,7 @@ jobs:
       - name: Check
         run: |
           rcmdcheck::rcmdcheck(
-            args = c("--no-manual", "--as-cran", if (getRversion() < "3.5.0") "--ignore-vignettes"),
+            args = c("--no-manual", "--as-cran", if (getRversion() < "3.5.0") "--no-vignettes"),
             check_dir = "check"
           )
         shell: Rscript {0}
