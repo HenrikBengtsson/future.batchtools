@@ -18,8 +18,8 @@ The package has been verified using `R CMD check --as-cran` on:
 | 3.4.x     | L      |        |                 |
 | 4.0.x     | L      |        |                 |
 | 4.1.x     | L M W  |   M    |                 |
-| 4.2.x     | L M W  | L   W  | M1 W            |
-| devel     | L M W  | L      | M1 W            |
+| 4.2.x     | L M W  | .   W  | M1 W            |
+| devel     | L M W  | .      | M1 .            |
 
 _Legend: OS: L = Linux, M = macOS, M1 = macOS M1, W = Windows_
 
