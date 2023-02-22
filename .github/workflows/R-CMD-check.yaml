@@ -64,8 +64,8 @@ jobs:
 
       - name: Install package itself (special case)
         run: |
-	  if (getRversion() < "3.5.0") install.packages("https://cran.r-project.org/src/contrib/Archive/xfun/xfun_0.36.tar.gz")
           install.packages(".", repos = NULL, type = "source")  ## self vignette engine
+          if (getRversion() < "3.5.0") install.packages("https://cran.r-project.org/src/contrib/Archive/xfun/xfun_0.36.tar.gz")
         shell: Rscript {0}
 
       - name: Session info
