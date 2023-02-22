@@ -28,8 +28,9 @@
 #' process one future at the time (`workers = 1L`), whereas HPC backends,
 #' where futures are resolved via separate jobs on a scheduler, can have
 #' multiple workers.  In the latter, the default is `workers = NULL`, which
-#' will resolve to `getOption("future.batchtools.workers")`.  If neither
-#' are specified, then the default is `100`.
+#' will resolve to
+#' \link[future.batchtools.options]{`getOption("future.batchtools.workers")`}.
+#' If neither are specified, then the default is `100`.
 #'
 #' @param finalize If TRUE, any underlying registries are
 #' deleted when this object is garbage collected, otherwise not.
