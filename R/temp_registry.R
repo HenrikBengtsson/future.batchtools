@@ -33,7 +33,9 @@ temp_registry <- local({
     if (length(config) > 0L) {
       names <- names(config)
       for (name in names) reg[[name]] <- config[[name]]
-      saveRegistry(reg)
+      with_stealth_rng({
+        saveRegistry(reg)
+      })
     }
     
     reg

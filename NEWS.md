@@ -11,6 +11,11 @@
  * Improved performance of batchtools futures by making the removal of
    the **batchtools** registry about 10-15 times faster.
 
+## Bug Fixes
+
+ * `run()` for `BatchtoolsFuture` would update the RNG state, if the
+   future would attach packages.
+
 
 # Version 0.11.0 [2022-12-13]
 
