@@ -18,6 +18,7 @@ nbrOfWorkers.batchtools <- function(evaluator) {
   expr <- formals(evaluator)$workers
   workers <- eval(expr, enclos = baseenv())
   if (!is.null(workers)) {
+    if (is.function(workers)) workers <- workers()
     stop_if_not(length(workers) >= 1)
     if (is.numeric(workers)) return(prod(workers))
     if (is.character(workers)) return(length(workers))
@@ -57,6 +58,7 @@ nbrOfWorkers.batchtools_multicore <- function(evaluator) {
   ## 1. Infer from 'workers' argument
   expr <- formals(evaluator)$workers
   workers <- eval(expr, enclos = baseenv())
+  if (is.function(workers)) workers <- workers()
   stop_if_not(length(workers) == 1L, is.numeric(workers), !is.na(workers), is.finite(workers), workers >= 1)
   workers
 }

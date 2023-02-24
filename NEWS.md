@@ -1,6 +1,9 @@
 # Version (development version)
 
- * ...
+## Bug Fixes
+
+ * `plan(batchtools_multicore)` did not support `workers` argument
+   being a function.
 
 
 # Version 0.12.0 [2023-02-24]
