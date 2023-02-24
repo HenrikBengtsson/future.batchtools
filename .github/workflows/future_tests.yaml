@@ -18,6 +18,7 @@ jobs:
         future:
           - { plan: 'future.batchtools::batchtools_local'       }
           - { plan: 'future.batchtools::batchtools_multicore'   }
+          - { plan: 'future.batchtools::batchtools_bash'        }
           - { plan: 'future.batchtools::batchtools_interactive' }
 
     env:
