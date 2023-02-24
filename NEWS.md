@@ -84,8 +84,8 @@
    Because of this, we temporarily set `fs.latency = 1.0` (second)
    timeout for trying to find the log file.  This makes a big
    difference in case the template used a `--output=<path>` location
-   other than `--output=<%= log.file %>`l in such cases the log file
-   would not be found, requiring a timeout.
+   other than `--output=<%= log.file %>`. In such cases, the log file
+   would not be found, requiring a full timeout to complete.
 
 ## Bug Fixes
 
