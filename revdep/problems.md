@@ -2,11 +2,11 @@
 
 <details>
 
-* Version: 0.9.14
+* Version: 0.9.16
 * GitHub: https://github.com/mllg/batchtools
 * Source code: https://github.com/cran/batchtools
-* Date/Publication: 2020-10-21 20:50:03 UTC
-* Number of recursive dependencies: 79
+* Date/Publication: 2023-02-03 13:52:38 UTC
+* Number of recursive dependencies: 82
 
 Run `revdep_details(, "batchtools")` for more info
 
@@ -14,17 +14,41 @@ Run `revdep_details(, "batchtools")` for more info
 
 ## In both
 
-*   checking dependencies in R code ... NOTE
+*   checking package dependencies ... NOTE
     ```
-    --------------------------------------------------------------------------
-    [[5464,1],0]: A high-performance Open MPI point-to-point messaging module
-    was unable to find any relevant network interfaces:
-    
-    Module: OpenFabrics (openib)
-      Host: c4-dev2
-    
-    Another transport will be used instead, although this may result in
-    lower performance.
-    --------------------------------------------------------------------------
+    Package suggested but not available for checking: ‘doMPI’
+    ```
+
+*   checking Rd cross-references ... NOTE
+    ```
+    Package unavailable to check Rd xrefs: ‘Rmpi’
+    ```
+
+# SimDesign
+
+<details>
+
+* Version: 2.10.1
+* GitHub: https://github.com/philchalmers/SimDesign
+* Source code: https://github.com/cran/SimDesign
+* Date/Publication: 2023-02-01 15:30:02 UTC
+* Number of recursive dependencies: 104
+
+Run `revdep_details(, "SimDesign")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... NOTE
+    ```
+    Package suggested but not available for checking: ‘doMPI’
+    ```
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  6.8Mb
+      sub-directories of 1Mb or more:
+        doc   6.2Mb
     ```
 

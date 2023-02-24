@@ -1,3 +1,22 @@
+# Version 0.12.0 [2023-02-24]
+
+## New Features
+
+ * Improved performance of batchtools futures by avoiding re-checking
+   the **batchtools** status if the **batchtools** job has already
+   been observed to be resolved.  Checking the **batchtools** status
+   is fairly expense, especially since each status check queries a set
+   of files on the file system.
+
+ * Improved performance of batchtools futures by making the removal of
+   the **batchtools** registry about 10-15 times faster.
+
+## Bug Fixes
+
+ * `run()` for `BatchtoolsFuture` would update the RNG state, if the
+   future would attach packages.
+
+
 # Version 0.11.0 [2022-12-13]
 
 ## Significant Changes
@@ -27,7 +46,7 @@
 
  * `run()` for BatchtoolsFuture now produce an informative
    BatchtoolsFutureError in case `batchtools::submitJobs()` fails, for
-   instance, due to invalid job-scheduler rsource specifications.
+   instance, due to invalid job-scheduler resource specifications.
  
  * Add BatchtoolsFuture subclasses; abstract
    BatchtoolsUniprocessFuture, abstract BatchtoolsMultiprocessFuture,
@@ -281,7 +300,6 @@
 
  * `print()` for BatchtoolsFuture returns the object invisibly.
 
-
 ## Bug Fixes
 
  * Calling `future_lapply()` with functions containing globals part of
@@ -294,6 +312,7 @@
 
 
 # Version 0.5.0 [2017-06-02]
+
 
 # Version 0.4.0 [2017-05-16]
 
@@ -359,4 +378,3 @@
 
 
 # Version 0.1.0 [2017-02-11]
-

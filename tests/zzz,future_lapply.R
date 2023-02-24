@@ -127,7 +127,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   
   print(x)
   
-  y0 <- lapply(x, FUN = listenv::map)
+  y0 <- lapply(x, FUN = listenv::mapping)
   str(list(y0 = y0))
   
   for (strategy in strategies) {
@@ -137,7 +137,7 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
     stopifnot(nbrOfWorkers() < Inf)
     
     for (scheduling in list(FALSE, TRUE)) {
-      y <- future_lapply(x, FUN = listenv::map, future.scheduling = scheduling)
+      y <- future_lapply(x, FUN = listenv::mapping, future.scheduling = scheduling)
       str(list(y = y))
       stopifnot(identical(y, y0))
     }

@@ -28,8 +28,9 @@
 #' process one future at the time (`workers = 1L`), whereas HPC backends,
 #' where futures are resolved via separate jobs on a scheduler, can have
 #' multiple workers.  In the latter, the default is `workers = NULL`, which
-#' will resolve to `getOption("future.batchtools.workers")`.  If neither
-#' are specified, then the default is `100`.
+#' will resolve to
+#' \code{getOption("\link{future.batchtools.workers}")}.
+#' If neither are specified, then the default is `100`.
 #'
 #' @param finalize If TRUE, any underlying registries are
 #' deleted when this object is garbage collected, otherwise not.
@@ -230,6 +231,14 @@ status <- function(future, ...) {
     })
   } ## get_status()
 
+  ## Known to be in its final state?
+  if (getOption("future.batchtools.status.cache", TRUE)) {
+    status <- future$.status
+    if (identical(status, c("defined", "finished", "started", "submitted"))) {
+      return(status)
+    }
+  }
+
   config <- future$config
   reg <- config$reg
   if (!inherits(reg, "Registry")) return(NA_character_)
@@ -251,6 +260,9 @@ status <- function(future, ...) {
     if (result_has_errors(result)) status <- unique(c("error", status))
   }
 
+  ## Cache result
+  future$.status <- status
+  
   if (debug) mdebug("- status: ", paste(sQuote(status), collapse = ", "))
 
   status
@@ -335,14 +347,27 @@ loggedOutput.BatchtoolsFuture <- function(future, ...) {
 #' @export
 #' @keywords internal
 resolved.BatchtoolsFuture <- function(x, ...) {
-  ## Has internal future state already been switched to be resolved
-  resolved <- NextMethod()
-  if (resolved) return(TRUE)
+  signalEarly <- import_future("signalEarly")
+  
+  ## Is value already collected?
+  if (!is.null(x$result)) {
+    ## Signal conditions early?
+    signalEarly(x, ...)
+    return(TRUE)
+  }
+
+  ## Assert that the process that created the future is
+  ## also the one that evaluates/resolves/queries it.
+  assertOwner <- import_future("assertOwner")
+  assertOwner(x)
 
   ## If not, checks the batchtools registry status
   resolved <- finished(x)
   if (is.na(resolved)) return(FALSE)
- 
+
+  ## Signal conditions early? (happens only iff requested)
+  if (resolved) signalEarly(x, ...)
+
   resolved
 }
 
@@ -350,19 +375,33 @@ resolved.BatchtoolsFuture <- function(x, ...) {
 #' @export
 #' @keywords internal
 result.BatchtoolsFuture <- function(future, cleanup = TRUE, ...) {
+
+  debug <- getOption("future.debug", FALSE)
+  if (debug) {
+    mdebug("result() for BatchtoolsFuture ...")
+    on.exit(mdebug("result() for BatchtoolsFuture ... done"), add = TRUE)
+  }
+
   ## Has the value already been collected?
   result <- future$result
-  if (inherits(result, "FutureResult")) return(result)
+  if (inherits(result, "FutureResult")) {
+    if (debug) mdebug("- FutureResult already collected")
+    return(result)
+  }
 
   ## Has the value already been collected? - take two
   if (future$state %in% c("finished", "failed", "interrupted")) {
+    if (debug) mdebug("- FutureResult already collected - take 2")
     return(NextMethod())
   }
 
   if (future$state == "created") {
+    if (debug) mdebug("- starting future ...")
     future <- run(future)
+    if (debug) mdebug("- starting future ... done")
   }
 
+  if (debug) mdebug("- getting batchtools status")
   stat <- status(future)
   if (is_na(stat)) {
     label <- future$label
@@ -370,13 +409,20 @@ result.BatchtoolsFuture <- function(future, cleanup = TRUE, ...) {
     stopf("The result no longer exists (or never existed) for Future ('%s') of class %s", label, paste(sQuote(class(future)), collapse = ", ")) #nolint
   }
 
+  if (debug) mdebug("- waiting for batchtools job to finish ...")
   result <- await(future, cleanup = FALSE)
+  if (debug) mdebug("- waiting for batchtools job to finish ... done")
   stop_if_not(inherits(result, "FutureResult"))
   future$result <- result
   future$state <- "finished"
 
-  if (cleanup) delete(future)
+  if (cleanup) {
+    if (debug) mdebugf("- delete %s ...", class(future)[1])
+    delete(future)
+    if (debug) mdebugf("- delete %s ... done", class(future)[1])
+  }
 
+  if (debug) mdebug("- NextMethod()")
   NextMethod()
 }
 
@@ -454,7 +500,9 @@ run.BatchtoolsFuture <- function(future, ...) {
     ## will have the same state of (loaded, attached) packages.
 
     reg$packages <- packages
-    saveRegistry(reg = reg)
+    with_stealth_rng({
+      saveRegistry(reg = reg)
+    })
 
     mdebugf("Attaching %d packages (%s) ... DONE",
                     length(packages), hpaste(sQuote(packages)))
@@ -538,6 +586,11 @@ run.BatchtoolsFuture <- function(future, ...) {
   ## 6. Rerserve worker for future
   registerFuture(future)
 
+  ## 7. Trigger early signalling
+  if (inherits(future, "BatchtoolsUniprocessFuture")) {
+    resolved(future)
+  }
+  
   invisible(future)
 } ## run()
 
@@ -553,6 +606,7 @@ await <- function(future, cleanup = TRUE,
   stop_if_not(is.finite(alpha), alpha > 0)
   
   debug <- getOption("future.debug", FALSE)
+  if (debug) mdebug("future.batchtools:::await() ...")
 
   expr <- future$expr
   config <- future$config
@@ -571,10 +625,12 @@ await <- function(future, cleanup = TRUE,
  
   res <- waitForJobs(ids = jobid, timeout = timeout, sleep = sleep_fcn,
                      stop.on.error = FALSE, reg = reg)
-  mdebugf("- batchtools::waitForJobs(): %s", res)
+  if (debug) mdebugf("- batchtools::waitForJobs(): %s", res)
   stat <- status(future)
-  mdebugf("- status(): %s", paste(sQuote(stat), collapse = ", "))
-  mdebug("batchtools::waitForJobs() ... done")
+  if (debug) {
+    mdebugf("- status(): %s", paste(sQuote(stat), collapse = ", "))
+    mdebug("batchtools::waitForJobs() ... done")
+  }
 
   finished <- is_na(stat) || any(c("finished", "error", "expired") %in% stat)
 
@@ -587,20 +643,23 @@ await <- function(future, cleanup = TRUE,
     label <- future$label
     if (is.null(label)) label <- "<none>"
     if ("finished" %in% stat) {
-      mdebug("- batchtools::loadResult() ...")
+      if (debug) mdebug("- batchtools::loadResult() ...")
       result <- loadResult(reg = reg, id = jobid)
-      mdebug("- batchtools::loadResult() ... done")
+      if (debug) mdebug("- batchtools::loadResult() ... done")
+      
       if (inherits(result, "FutureResult")) {
         prototype_fields <- c(prototype_fields, "batchtools_log")
-        result[["batchtools_log"]] <- try({
-          mdebug("- batchtools::getLog() ...")
-          on.exit(mdebug("- batchtools::getLog() ... done"))
+        result[["batchtools_log"]] <- try(local({
+          if (debug) {
+            mdebug("- batchtools::getLog() ...")
+            on.exit(mdebug("- batchtools::getLog() ... done"))
+          }
 	  ## Since we're already collected the results, the log file
 	  ## should already exist, if it exists.  Because of this,
 	  ## only poll for the log file for a second before giving up.
 	  reg$cluster.functions$fs.latency <- 1.0
           getLog(id = jobid, reg = reg)
-        }, silent = TRUE)
+        }), silent = TRUE)
         if (result_has_errors(result)) cleanup <- FALSE
       }
     } else if ("error" %in% stat) {
@@ -643,6 +702,8 @@ await <- function(future, cleanup = TRUE,
   if (cleanup) {
     delete(future, delta = 0.5 * delta, ...)
   }
+
+  if (debug) mdebug("future.batchtools:::await() ... done")
 
   result
 } # await()
@@ -768,6 +829,10 @@ delete.BatchtoolsFuture <- function(future,
   with_stealth_rng({
     interval <- delta
     for (kk in seq_len(times)) {
+      try(unlink(path, recursive = TRUE), silent = FALSE)
+      if (!file_test("-d", path)) break
+      try(removeRegistry(wait = 0.0, reg = reg), silent = FALSE)
+      if (!file_test("-d", path)) break
       try(clearRegistry(reg = reg), silent = TRUE)
       try(removeRegistry(wait = 0.0, reg = reg), silent = FALSE)
       if (!file_test("-d", path)) break
