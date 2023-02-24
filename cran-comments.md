@@ -1,6 +1,6 @@
 # CRAN submission future.batchtools 0.12.0
 
-on 2023-02-22
+on 2023-02-24
 
 I've verified this submission has no negative impact on any of the 5 reverse package dependencies available on CRAN.
 
@@ -40,49 +40,47 @@ print(res)
 gives
 
 ```
-── future.batchtools 0.11.0-9010: OK
+── future.batchtools 0.12.0: OK
 
-  Build ID:   future.batchtools_0.11.0-9010.tar.gz-cec23839000e4562956e576cede5aff1
+  Build ID:   future.batchtools_0.12.0.tar.gz-641472edd3b5461d9aecf43df6440b2b
   Platform:   Debian Linux, R-devel, clang, ISO-8859-15 locale
-  Submitted:  5h 5m 40.7s ago
-  Build time: 1h 14m 49.9s
+  Submitted:  1h 47m 26.1s ago
+  Build time: 1h 10m 17.8s
 
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
-── future.batchtools 0.11.0-9010: OK
+── future.batchtools 0.12.0: IN-PROGRESS
 
-  Build ID:   future.batchtools_0.11.0-9010.tar.gz-6a75a93970d149c78a2383425f8f8f87
+  Build ID:   future.batchtools_0.12.0.tar.gz-7a87266bfdb64039bcec5c69000be01c
   Platform:   Fedora Linux, R-devel, GCC
-  Submitted:  5h 5m 40.7s ago
-  Build time: 53m 17s
+  Submitted:  1h 47m 26.1s ago
 
-0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
-── future.batchtools 0.11.0-9010: IN-PROGRESS
+── future.batchtools 0.12.0: IN-PROGRESS
 
-  Build ID:   future.batchtools_0.11.0-9010.tar.gz-ab2cc44e423c4f8686aa21f04941d9ce
+  Build ID:   future.batchtools_0.12.0.tar.gz-ee81fb66f73c41d8908a2dff029f1479
   Platform:   Debian Linux, R-patched, GCC
-  Submitted:  5h 5m 40.7s ago
+  Submitted:  1h 47m 26.1s ago
 
 
-── future.batchtools 0.11.0-9010: WARNING
+── future.batchtools 0.12.0: WARNING
 
-  Build ID:   future.batchtools_0.11.0-9010.tar.gz-b3582ca9a54c48648c91418627b525fe
+  Build ID:   future.batchtools_0.12.0.tar.gz-77b23546d6c94278b9afa8b7d1807eff
   Platform:   macOS 10.13.6 High Sierra, R-release, CRAN's setup
-  Submitted:  5h 5m 40.7s ago
-  Build time: 6m 3.9s
+  Submitted:  1h 47m 26.1s ago
+  Build time: 6m 1.1s
 
 ❯ checking whether package ‘future.batchtools’ can be installed ... WARNING
   See below...
 
 0 errors ✔ | 1 warning ✖ | 0 notes ✔
 
-── future.batchtools 0.11.0-9010: OK
+── future.batchtools 0.12.0: OK
 
-  Build ID:   future.batchtools_0.11.0-9010.tar.gz-6dea9742aec6431c9eb0a5dd7a450a47
+  Build ID:   future.batchtools_0.12.0.tar.gz-680748ca9a384491932b2502119bab87
   Platform:   Windows Server 2022, R-release, 32/64 bit
-  Submitted:  5h 5m 40.7s ago
-  Build time: 10m 23.5s
+  Submitted:  1h 47m 26.1s ago
+  Build time: 5m 43.7s
 
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 ```
