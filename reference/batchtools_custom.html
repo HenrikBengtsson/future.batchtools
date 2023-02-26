@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future.batchtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.11.0-9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.0-9001</span>
       </span>
     </div>
 
@@ -193,8 +193,9 @@ backend may use at any time.   Interactive and "local" backends can only
 process one future at the time (<code>workers = 1L</code>), whereas HPC backends,
 where futures are resolved via separate jobs on a scheduler, can have
 multiple workers.  In the latter, the default is <code>workers = NULL</code>, which
-will resolve to <code>getOption("future.batchtools.workers")</code>.  If neither
-are specified, then the default is <code>100</code>.</p></dd>
+will resolve to
+<code>getOption("<a href="future.batchtools.options.html">future.batchtools.workers</a>")</code>.
+If neither are specified, then the default is <code>100</code>.</p></dd>
 
 
 <dt>conf.file</dt>
@@ -275,7 +276,7 @@ of the batchtools registry.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Lazy evaluation: FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Asynchronous evaluation: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Local evaluation: TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Environment: 0x563abf479518</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Environment: 0x5618b2264aa8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Capture standard output: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Capture condition classes: ‘condition’ (excluding ‘nothing’)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Globals: &lt;none&gt;</span>
@@ -285,7 +286,7 @@ of the batchtools registry.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Value: &lt;not collected&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Conditions captured: &lt;none&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Early signaling: FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Owner process: 969d0601-80ea-3bb9-bf1f-12d9fe21cf79</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Owner process: 81e7f219-a4ee-1d22-8a83-87808beb4f41</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class: ‘BatchtoolsCustomFuture’, ‘BatchtoolsFuture’, ‘Future’, ‘environment’</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> batchtools configuration file: &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> batchtools cluster functions: ‘Interactive’</span>
@@ -296,13 +297,13 @@ of the batchtools registry.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Work dir exists: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Job Registry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Backend  : Interactive</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   File dir : /tmp/hb/RtmpQ3dmZa/future.batchtools/docs/reference/.future/20221215_152353-X3afxo/batchtools_1098198616</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Work dir : /tmp/hb/RtmpQ3dmZa/future.batchtools/docs/reference</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   File dir : /tmp/Rtmp6Xgrq1/future.batchtools/docs/reference/.future/20230226_111926-VUQLPb/batchtools_1734594153</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Work dir : /tmp/Rtmp6Xgrq1/future.batchtools/docs/reference</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Jobs     : 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Seed     : 10330</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Seed     : 12966</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Writeable: TRUE</span>
 <span class="r-in"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/value.html" class="external-link">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PID: 2807760 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PID: 629684 </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 42</span>
 <span class="r-in"><span></span></span>
@@ -325,7 +326,7 @@ of the batchtools registry.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Lazy evaluation: FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Asynchronous evaluation: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Local evaluation: TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Environment: 0x563abf479518</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Environment: 0x5618b2264aa8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Capture standard output: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Capture condition classes: ‘condition’ (excluding ‘nothing’)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Globals: &lt;none&gt;</span>
@@ -335,7 +336,7 @@ of the batchtools registry.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Value: &lt;not collected&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Conditions captured: &lt;none&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Early signaling: FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Owner process: 969d0601-80ea-3bb9-bf1f-12d9fe21cf79</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Owner process: 81e7f219-a4ee-1d22-8a83-87808beb4f41</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class: ‘BatchtoolsCustomFuture’, ‘BatchtoolsFuture’, ‘Future’, ‘environment’</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> batchtools configuration file: &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> batchtools cluster functions: ‘Interactive’</span>
@@ -346,13 +347,13 @@ of the batchtools registry.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Work dir exists: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Job Registry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Backend  : Interactive</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   File dir : /tmp/hb/RtmpQ3dmZa/future.batchtools/docs/reference/.future/20221215_152353-X3afxo/batchtools_1625651915</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Work dir : /tmp/hb/RtmpQ3dmZa/future.batchtools/docs/reference</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   File dir : /tmp/Rtmp6Xgrq1/future.batchtools/docs/reference/.future/20230226_111926-VUQLPb/batchtools_886859155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Work dir : /tmp/Rtmp6Xgrq1/future.batchtools/docs/reference</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Jobs     : 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Seed     : 27561</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Seed     : 9047</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Writeable: TRUE</span>
 <span class="r-in"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/value.html" class="external-link">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PID: 2807802 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PID: 629703 </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 42</span>
 <span class="r-in"><span></span></span>
@@ -364,7 +365,7 @@ of the batchtools registry.</p></dd>
 <span class="r-in"><span>  <span class="fl">42L</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.futureverse.org/reference/value.html" class="external-link">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PID: 2807850 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PID: 629723 </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 42</span>
 </code></pre></div>
