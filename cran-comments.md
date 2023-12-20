@@ -1,6 +1,6 @@
-# CRAN submission future.batchtools 0.12.0
+# CRAN submission future.batchtools 0.12.1
 
-on 2023-02-24
+on 2023-12-19
 
 I've verified this submission has no negative impact on any of the 5 reverse package dependencies available on CRAN.
 
@@ -13,13 +13,13 @@ Thank you
 
 The package has been verified using `R CMD check --as-cran` on:
 
-| R version | GitHub | R-hub  | mac/win-builder |
-| --------- | ------ | ------ | --------------- |
-| 3.4.x     | L      |        |                 |
-| 4.0.x     | L      |        |                 |
-| 4.1.x     | L M W  |   M    |                 |
-| 4.2.x     | L M W  | L   W  | M1 W            |
-| devel     | L M W  | L      | M1 W            |
+| R version | GitHub | R-hub | mac/win-builder |
+| --------- | ------ | ----- | --------------- |
+| 3.6.x     | L      |       |                 |
+| 4.1.x     | L      |       |                 |
+| 4.2.x     | L M W  |       |                 |
+| 4.3.x     | L M W  | .   W | M1 W            |
+| devel     | L M W  | .     |    W            |
 
 _Legend: OS: L = Linux, M = macOS, M1 = macOS M1, W = Windows_
 
@@ -31,7 +31,6 @@ res <- rhub::check(platforms = c(
   "debian-clang-devel", 
   "fedora-gcc-devel",
   "debian-gcc-patched", 
-  "macos-highsierra-release-cran",
   "windows-x86_64-release"
 ))
 print(res)
@@ -40,47 +39,39 @@ print(res)
 gives
 
 ```
-── future.batchtools 0.12.0: OK
+── future.batchtools 0.12.1: OK
 
-  Build ID:   future.batchtools_0.12.0.tar.gz-641472edd3b5461d9aecf43df6440b2b
+  Build ID:   future.batchtools_0.12.1.tar.gz-0cf2af4123d14ff3ac742eb611644044
   Platform:   Debian Linux, R-devel, clang, ISO-8859-15 locale
-  Submitted:  1h 47m 26.1s ago
-  Build time: 1h 10m 17.8s
+  Submitted:  3h 40m 16.2s ago
+  Build time: 1h 10m 30.4s
 
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
-── future.batchtools 0.12.0: IN-PROGRESS
+── future.batchtools 0.12.1: OK
 
-  Build ID:   future.batchtools_0.12.0.tar.gz-7a87266bfdb64039bcec5c69000be01c
+  Build ID:   future.batchtools_0.12.1.tar.gz-f68417d7155c4af6a5ac7d6619aff851
   Platform:   Fedora Linux, R-devel, GCC
-  Submitted:  1h 47m 26.1s ago
+  Submitted:  3h 40m 16.2s ago
+  Build time: 52m 37.8s
 
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
-── future.batchtools 0.12.0: IN-PROGRESS
+── future.batchtools 0.12.1: OK
 
-  Build ID:   future.batchtools_0.12.0.tar.gz-ee81fb66f73c41d8908a2dff029f1479
+  Build ID:   future.batchtools_0.12.1.tar.gz-26c0209f468c4dd5af5f3f4f908cb3c7
   Platform:   Debian Linux, R-patched, GCC
-  Submitted:  1h 47m 26.1s ago
+  Submitted:  3h 40m 16.2s ago
+  Build time: 1h 5m 2.8s
 
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
-── future.batchtools 0.12.0: WARNING
+── future.batchtools 0.12.1: OK
 
-  Build ID:   future.batchtools_0.12.0.tar.gz-77b23546d6c94278b9afa8b7d1807eff
-  Platform:   macOS 10.13.6 High Sierra, R-release, CRAN's setup
-  Submitted:  1h 47m 26.1s ago
-  Build time: 6m 1.1s
-
-❯ checking whether package ‘future.batchtools’ can be installed ... WARNING
-  See below...
-
-0 errors ✔ | 1 warning ✖ | 0 notes ✔
-
-── future.batchtools 0.12.0: OK
-
-  Build ID:   future.batchtools_0.12.0.tar.gz-680748ca9a384491932b2502119bab87
+  Build ID:   future.batchtools_0.12.1.tar.gz-64ca57c8a5b543e68b5122ba5eb2a3d1
   Platform:   Windows Server 2022, R-release, 32/64 bit
-  Submitted:  1h 47m 26.1s ago
-  Build time: 5m 43.7s
+  Submitted:  3h 40m 16.2s ago
+  Build time: 6m 41s
 
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 ```
