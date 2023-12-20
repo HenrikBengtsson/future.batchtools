@@ -294,6 +294,7 @@ loggedError <- function(...) UseMethod("loggedError")
 
 
 #' @importFrom batchtools getErrorMessages
+#' @rdname loggedOutput
 #' @export
 loggedError.BatchtoolsFuture <- function(future, ...) {
   stat <- status(future)

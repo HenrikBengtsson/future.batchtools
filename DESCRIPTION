@@ -1,11 +1,11 @@
 Package: future.batchtools
-Version: 0.12.0
+Version: 0.12.1
 Depends:
     R (>= 3.2.0),
     parallelly,
     future (>= 1.31.0)
 Imports:
-    batchtools (>= 0.9.13),
+    batchtools (>= 0.9.16),
     utils
 Suggests:
     globals,
@@ -16,8 +16,10 @@ Suggests:
 VignetteBuilder:
     R.rsp
 Title: A Future API for Parallel and Distributed Processing using 'batchtools'
-Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
-                                          email = "henrikb@braju.com"))
+Authors@R: c(person("Henrik", "Bengtsson",
+                    role = c("aut", "cre", "cph"),
+                    email = "henrikb@braju.com",
+                    comment = c(ORCID = "0000-0002-7579-5165")))
 Description: Implementation of the Future API on top of the 'batchtools' package.
     This allows you to process futures, as defined by the 'future' package,
     in parallel out of the box, not only on your local machine or ad-hoc

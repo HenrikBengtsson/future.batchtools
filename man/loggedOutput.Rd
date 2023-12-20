@@ -3,9 +3,12 @@
 \name{loggedOutput}
 \alias{loggedOutput}
 \alias{loggedError}
+\alias{loggedError.BatchtoolsFuture}
 \title{Logged output of batchtools future}
 \usage{
 loggedOutput(...)
+
+\method{loggedError}{BatchtoolsFuture}(future, ...)
 }
 \arguments{
 \item{future}{The future.}

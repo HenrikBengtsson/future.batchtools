@@ -20,24 +20,26 @@ options(mc.cores = 2L)
 # A Future for batchtools
 
 ## Introduction
-The [future] package provides a generic API for using futures in R.
-A future is a simple yet powerful mechanism to evaluate an R expression
-and retrieve its value at some point in time.  Futures can be resolved
-in many different ways depending on which strategy is used.
-There are various types of synchronous and asynchronous futures to
-choose from in the [future] package.
 
-This package, [future.batchtools], provides a type of futures that
-utilizes the [batchtools] package.  This means that _any_ type of
-backend that the batchtools package supports can be used as a future.
-More specifically, future.batchtools will allow you or users of your
-package to leverage the compute power of high-performance computing
-(HPC) clusters via a simple switch in settings - without having to
-change any code at all.
+The **[future]** package provides a generic API for using futures in
+R.  A future is a simple yet powerful mechanism to evaluate an R
+expression and retrieve its value at some point in time.  Futures can
+be resolved in many different ways depending on which strategy is
+used.  There are various types of synchronous and asynchronous futures
+to choose from in the **[future]** package.
 
-For instance, if batchtools is properly configures, the below two
+This package, **[future.batchtools]**, provides a type of futures that
+utilizes the **[batchtools]** package.  This means that _any_ type of
+backend that the **batchtools** package supports can be used as a
+future.  More specifically, **future.batchtools** will allow you or
+users of your package to leverage the compute power of
+high-performance computing (HPC) clusters via a simple switch in
+settings - without having to change any code at all.
+
+For instance, if **batchtools** is properly configures, the below two
 expressions for futures `x` and `y` will be processed on two different
 compute nodes:
+
 ```r
 > library("future.batchtools")
 > plan(batchtools_torque)
@@ -47,8 +49,9 @@ compute nodes:
 > x + y
 [1] 5.85
 ```
-This is obviously a toy example to illustrate what futures look like
-and how to work with them.
+
+This is just a toy example to illustrate what futures look like and
+how to work with them.
 
 A more realistic example comes from the field of cancer research
 where very large data FASTQ files, which hold a large number of short
@@ -59,6 +62,7 @@ we can have each file be processed by a separate compute node and each
 node we can use 24 parallel processes such that each process aligns a
 separate chromosome.  Here is an outline of how this nested parallelism
 could be implemented using futures.
+
 ```r
 library("future")
 library("listenv")
@@ -94,22 +98,29 @@ for (ss in seq_along(fqs)) {
 ## Resolve the "sample" futures and return as a list
 bams <- as.list(bams)
 ```
-Note that a user who do not have access to a cluster could use the same script processing samples sequentially and chromosomes in parallel on a single machine using:
+
+Note that a user who do not have access to a cluster could use the
+same script processing samples sequentially and chromosomes in
+parallel on a single machine using:
+
 ```r
 plan(list(sequential, multisession))
 ```
+
 or samples in parallel and chromosomes sequentially using:
+
 ```r
 plan(list(multisession, sequential))
 ```
 
 For an introduction as well as full details on how to use futures,
-please consult the package vignettes of the [future] package.
+please consult the package vignettes of the **[future]** package.
 
 
 
 ## Choosing batchtools backend
-The future.batchtools package implements a generic future wrapper
+
+The **future.batchtools** package implements a generic future wrapper
 for all batchtools backends.  Below are the most common types of
 batchtools backends.
 
@@ -123,18 +134,22 @@ batchtools backends.
 | `batchtools_openlava`    | Futures are evaluated via an [OpenLava] job scheduler                    | N/A
 <%-- | `batchtools_docker`       | Futures are evaluated via a [Docker Swarm] cluster                       | N/A --%>
 | `batchtools_custom`      | Futures are evaluated via a custom batchtools configuration R script or via a set of cluster functions  | N/A
-| `batchtools_interactive` | sequential evaluation in the calling R environment                       | `plan(transparent)`
 | `batchtools_multicore`   | parallel evaluation by forking the current R process                     | `plan(multicore)`
 | `batchtools_local`       | sequential evaluation in a separate R process (on current machine)       | `plan(cluster, workers = "localhost")`
 
 
 ### Examples
 
-Below is an examples illustrating how to use `batchtools_torque` to configure the batchtools backend.  For further details and examples on how to configure batchtools, see the [batchtools configuration] wiki page.
+Below is an examples illustrating how to use `batchtools_torque` to
+configure the batchtools backend.  For further details and examples on
+how to configure batchtools, see the [batchtools configuration] wiki
+page.
 
-To configure batchtools for job schedulers we need to setup a `*.tmpl` template
-file that is used to generate the script used by the scheduler.
-This is what a template file for TORQUE / PBS may look like:
+To configure **batchtools** for job schedulers we need to setup a
+`*.tmpl` template file that is used to generate the script used by the
+scheduler.  This is what a template file for TORQUE / PBS may look
+like:
+
 ```sh
 #!/bin/bash
 
@@ -161,45 +176,69 @@ This is what a template file for TORQUE / PBS may look like:
 ## Launch R and evaluated the batchtools R job
 Rscript -e 'batchtools::doJobCollection("<%%= uri %%>")'
 ```
-If this template is saved to file `batchtools.torque.tmpl` (without period)
-in the working directory or as `.batchtools.torque.tmpl` (with period) the
-user's home directory, then it will be automatically located by the
-batchtools framework and loaded when doing:
+
+If this template is saved to file `batchtools.torque.tmpl` (without
+period) in the working directory or as `.batchtools.torque.tmpl` (with
+period) the user's home directory, then it will be automatically
+located by the **batchtools** framework and loaded when doing:
+
 ```r
 > plan(batchtools_torque)
 ```
-Resource parameters can be specified via argument `resources` which should be a named list and is passed as is to the template file.  For example, to request that each job would get alloted 12 cores (one a single machine) and up to  5 GiB of memory, use:
+
+Resource parameters can be specified via argument `resources` which
+should be a named list and is passed as is to the template file.  For
+example, to request that each job would get alloted 12 cores (one a
+single machine) and up to 5 GiB of memory, use:
+
 ```r
 > plan(batchtools_torque, resources = list(nodes = "1:ppn=12", vmem = "5gb"))
 ```
 
-To specify the `resources` argument at the same time as using nested future strategies, one can use `tweak()` to tweak the default arguments.  For instance,
+To specify the `resources` argument at the same time as using nested
+future strategies, one can use `tweak()` to tweak the default
+arguments.  For instance,
+
 ```r
 plan(list(
   tweak(batchtools_torque, resources = list(nodes = "1:ppn=12", vmem = "5gb")),
   multisession
 ))
 ```
-causes the first level of futures to be submitted via the TORQUE job scheduler requesting 12 cores and 5 GiB of memory per job.  The second level of futures will be evaluated using multisession using the 12 cores given to each job by the scheduler.
 
-A similar filename format is used for the other types of job schedulers supported.  For instance, for Slurm the template file should be named `./batchtools.slurm.tmpl` or `~/.batchtools.slurm.tmpl` in order for
+causes the first level of futures to be submitted via the TORQUE job
+scheduler requesting 12 cores and 5 GiB of memory per job.  The second
+level of futures will be evaluated using multisession using the 12
+cores given to each job by the scheduler.
+
+A similar filename format is used for the other types of job
+schedulers supported.  For instance, for Slurm the template file
+should be named `./batchtools.slurm.tmpl` or
+`~/.batchtools.slurm.tmpl` in order for
+
 ```r
 > plan(batchtools_slurm)
 ```
-to locate the file automatically.  To specify this template file explicitly, use argument `template`, e.g.
+
+to locate the file automatically.  To specify this template file
+explicitly, use argument `template`, e.g.
+
 ```r
 > plan(batchtools_slurm, template = "/path/to/batchtools.slurm.tmpl")
 ```
 
-For further details and examples on how to configure batchtools per se, see the [batchtools configuration] wiki page.
+For further details and examples on how to configure **batchtools** per
+se, see the [batchtools configuration] wiki page.
 
 
 ## Demos
-The [future] package provides a demo using futures for calculating a
-set of Mandelbrot planes.  The demo does not assume anything about
-what type of futures are used.
-_The user has full control of how futures are evaluated_.
-For instance, to use local batchtools futures, run the demo as:
+
+The **[future]** package provides a demo using futures for calculating
+a set of Mandelbrot planes.  The demo does not assume anything about
+what type of futures are used.  _The user has full control of how
+futures are evaluated_.  For instance, to use local batchtools
+futures, run the demo as:
+
 ```r
 library("future.batchtools")
 plan(batchtools_local)
